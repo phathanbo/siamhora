@@ -1,0 +1,90 @@
+"use strict";
+
+const COLOR_MASTER = Object.freeze({
+    "อาทิตย์": { bg:"#e63946", lucky:"แดง", wealth:"เขียว", power:"ชมพู", forbidden:"น้ำเงิน", direction:"อีสาน", cWealth:"#00ff00", cPower:"#ff69b4", cForbidden:"#5da9ff"},
+    "จันทร์": { bg:"#ffb703", lucky:"เหลือง", wealth:"ม่วง", power:"เขียว", forbidden:"แดง", direction:"บูรพา", cWealth:"#da70d6", cPower:"#00ff00", cForbidden:"#ff4d4d"},
+    "อังคาร": { bg:"#ff85a1", lucky:"ชมพู", wealth:"ส้ม", power:"ม่วง", forbidden:"เหลือง", direction:"อาคเนย์", cWealth:"#ff9800", cPower:"#da70d6", cForbidden:"#ffff00"},
+    "พุธ": { bg:"#2a9d8f", lucky:"เขียว", wealth:"ฟ้า", power:"ส้ม", forbidden:"ชมพู", direction:"ทักษิณ", cWealth:"#5da9ff", cPower:"#ff9800", cForbidden:"#ff69b4"},
+    "พฤหัสบดี": { bg:"#f4a261", lucky:"ส้ม", wealth:"แดง", power:"ฟ้า", forbidden:"ม่วง", direction:"พายัพ", cWealth:"#ff4d4d", cPower:"#5da9ff", cForbidden:"#da70d6"},
+    "ศุกร์": { bg:"#a2d2ff", lucky:"ฟ้า", wealth:"ชมพู", power:"ขาว", forbidden:"ดำ", direction:"อุดร", cWealth:"#ff69b4", cPower:"#ffffff", cForbidden:"#000000"},
+    "เสาร์": { bg:"#7209b7", lucky:"ม่วง", wealth:"ฟ้า", power:"แดง", forbidden:"เขียว", direction:"หรดี", cWealth:"#5da9ff", cPower:"#ff4d4d", cForbidden:"#00ff00"}
+});
+
+// สร้างฟังก์ชันช่วยใส่ขอบตัวอักษร (Text Shadow)
+const textOutline = "text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 4px rgba(0,0,0,0.2);";
+const darkOutline = "text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;";
+
+function getThaiDayName(){
+    const thaiDays = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+    const now = new Date();
+    const index = now.getDay();
+    if(index < 0 || index > 6) return "อาทิตย์";
+    return thaiDays[index];
+}
+
+function renderDailyColors(){
+    const headerDiv = document.getElementById("dailyColorHeader");
+    if(!headerDiv) return;
+    const dayName = getThaiDayName();
+    const data = COLOR_MASTER[dayName];
+    if(!data){
+        console.error("COLOR_MASTER missing day:", dayName);
+        return;
+    }
+    headerDiv.innerHTML = `
+    <div class="card border-0 shadow-sm mb-2"
+        style="background:linear-gradient(90deg,#1a1a1a,${data.bg});
+        color:white;border-radius:12px;border:1px solid rgba(255,255,255,0.1);">
+        <div class="card-body py-2 px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>สีมงคล</strong>วัน${dayName}
+                </div>
+                <div class="text-end ">
+                    <strong>สีแห่งโชคลาภ: </strong><span style="color:${data.cWealth}">สี${data.wealth}</span> |
+                    <strong>สีแห่งอำนาจ: </strong><span style="color:${data.cPower}">สี${data.power}</span> |
+                    <strong>สีที่ต้องห้าม: </strong><span style="color:${data.cForbidden}">สี${data.forbidden}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+function showWeeklyTable(){
+    const tableWrapper = document.getElementById("weeklyTableWrapper");
+    const tableBody = document.getElementById("weeklyTableBody");
+    if(!tableWrapper || !tableBody) return;
+
+    const days = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+    const currentDay = getThaiDayName();
+    let html = "";
+
+    days.forEach(day => {
+        const d = COLOR_MASTER[day];
+        const isToday = day === currentDay;
+        
+        // กำหนดสไตล์สำหรับแถวที่เป็นวันปัจจุบัน
+        const rowStyle = isToday 
+            ? `background-color: rgba(255, 215, 0, 0.15); border: 2px solid #ffd700; transition: 0.3s;` 
+            : `border-bottom: 1px solid rgba(255,255,255,0.1);`;
+        html += `
+        <tr style="${rowStyle}">
+            <td style="color:${d.bg}; font-weight:bold; font-size:16px;">
+                ${isToday ? '▶ ' : ''} วัน${day}
+            </td>
+            <td style="color:${d.cWealth}; ">สี${d.wealth}</td>
+            <td style="color:${d.cPower}; ">สี${d.power}</td>
+            <td style="color:${d.cForbidden}; ">สี${d.forbidden}</td>
+            <td style="color:white; ">${d.direction}</td>
+        </tr>`;
+    });
+
+    tableBody.innerHTML = html;
+    tableWrapper.style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderDailyColors();
+    showWeeklyTable();
+});
