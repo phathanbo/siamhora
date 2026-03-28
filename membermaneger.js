@@ -64,13 +64,48 @@ async function syncDataFromFirestore() {
         querySnapshot.forEach((doc) => {
             history.push({ id: doc.id, ...doc.data() });
         });
+        
+        // เก็บลง LocalStorage ตามเดิม
         localStorage.setItem('horo_history', JSON.stringify(history));
-        loadHistory(); // อัปเดตตาราง
-        console.log("✅ ซิงค์สำเร็จ");
+        
+        // --- ส่วนที่เพิ่มใหม่: กระจายรายชื่อไปทุกหน้า ---
+        updateAllMemberSelectors(history);
+        
+        if (typeof loadHistory === 'function') loadHistory(); 
+        console.log("✅ ซิงค์และอัปเดตรายชื่อสำเร็จ");
     } catch (err) {
         console.error("❌ ซิงค์ล้มเหลว:", err);
     }
 }
+
+// สร้างฟังก์ชันใหม่ไว้ข้างนอก (ในไฟล์เดิม)
+function updateAllMemberSelectors(history) {
+    // ดึง Select ทุกตัวที่มี id หรือ class ที่เรากำหนดไว้
+    // แนะนำให้ใช้คลาส .member-selector-shared เพื่อความแม่นยำ
+    const selectors = document.querySelectorAll('#memberSelect, .member-selector-shared');
+    
+    selectors.forEach(select => {
+        const currentVal = select.value; // เก็บค่าที่เลือกค้างไว้ก่อนหน้า (ถ้ามี)
+        select.innerHTML = '<option value="">-- เลือกสมาชิก --</option>';
+        
+        history.forEach(member => {
+            const option = document.createElement('option');
+            // สำคัญ: เราจะเก็บข้อมูลวันที่ไว้ใน value เพื่อให้ฟังก์ชันอื่นดึงไปใช้ง่ายๆ
+            option.value = member.birthdate || ""; 
+            option.textContent = member.name;
+            // ถ้ามีข้อมูลอายุ/วันที่ ให้เก็บไว้ใน data attribute เผื่อเรียกใช้
+            option.setAttribute('data-name', member.name);
+            select.appendChild(option);
+        });
+        
+        select.value = currentVal; // คืนค่าที่เลือกไว้
+    });
+}
+
+// ส่งฟังก์ชันออกไปให้โลกภายนอกรู้จัก (เพราะไฟล์นี้เป็น Module)
+window.syncDataFromFirestore = syncDataFromFirestore;
+
+// --- ส่วนที่เพิ่มใหม่: กระจายรายชื่อไปทุกหน้า ---
 
 /**
  * ลบข้อมูลสมาชิก
@@ -687,3 +722,85 @@ window.searchHistory = () => {
         };
     }
     // end of exports
+
+    // ฟังก์ชันนี้จะถูกเรียกเมื่อมีการเปลี่ยนรายชื่อสมาชิก
+window.autoFillMemberData = function(birthDate) {
+    if (!birthDate) return;
+
+    // 1. ค้นหาข้อมูลสมาชิกตัวเต็มจาก Array (เพื่อเอาชื่อ)
+    // หมายเหตุ: ประธานต้องดูว่าในสมาชิกมีฟิลด์ name เก็บไว้ยังไงนะครับ
+    const history = JSON.parse(localStorage.getItem('horo_history') || '[]');
+    const member = history.find(m => m.birthdate === birthDate);
+
+    // 2. แปลงวันที่ให้เป็น yyyy-MM-dd
+    function formatToInputDate(dateStr) {
+        if (!dateStr) return "";
+        if (dateStr.includes('/')) {
+            const parts = dateStr.split('/');
+            let year = parseInt(parts[2]);
+            if (year > 2400) year -= 543; 
+            return `${year}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+        return dateStr.split('T')[0];
+    }
+
+    const formattedDate = formatToInputDate(birthDate);
+    
+    // 3. ตรวจเช็คว่าตอนนี้อยู่หน้าไหน
+    const isMahathaksaPage = document.getElementById('mahathaksaPage')?.style.display !== 'none';
+    const isChatraPage = document.getElementById('chatraPage')?.style.display !== 'none';
+    const isNamePage = document.getElementById('nameAnalysisPage')?.style.display !== 'none';
+
+    // --- กรณีหน้าวิเคราะห์ชื่อ (Name Analysis) ---
+    if (isNamePage && member) {
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const birthDaySelect = document.getElementById('birthDaynumSelect');
+
+        if (firstNameInput && member.name) {
+            // หั่นชื่อกับนามสกุล (ถ้าเก็บรวมกันด้วยช่องว่าง)
+            const nameParts = member.name.trim().split(/\s+/);
+            firstNameInput.value = nameParts[0] || "";
+            if (lastNameInput) lastNameInput.value = nameParts[1] || "";
+        }
+
+        if (birthDaySelect && formattedDate) {
+            // หาเลขวันในสัปดาห์ (0-6) เพื่อเลือกวันเกิดอัตโนมัติ
+            const dayOfWeek = new Date(formattedDate).getDay(); 
+            // หมายเหตุ: ต้องระวังเรื่องวันพุธกลางคืน ถ้าในประวัติไม่ได้เก็บไว้ ระบบจะเลือกพุธกลางวัน (3) ให้ก่อนครับ
+            birthDaySelect.value = dayOfWeek;
+        }
+
+        console.log("🔮 หยอดชื่อ-นามสกุล เรียบร้อย");
+    }
+
+    // --- ส่วนของหน้า มหาทักษา (เหมือนเดิม) ---
+    if (isMahathaksaPage) {
+        const thaksaDateInput = document.getElementById('birthDate');
+        if (thaksaDateInput) {
+            thaksaDateInput.value = formattedDate;
+            setTimeout(() => { if (typeof calculateThaksa === 'function') calculateThaksa(false); }, 100);
+        }
+    }
+
+    // --- ส่วนของหน้า ฉัตร 3 ชั้น (เหมือนเดิม) ---
+    if (isChatraPage) {
+        const chatraAgeInput = document.getElementById('chatraAge');
+        if (chatraAgeInput) {
+            const birthYear = new Date(formattedDate).getFullYear();
+            chatraAgeInput.value = new Date().getFullYear() - birthYear;
+            setTimeout(() => { if (typeof calculateChatra === 'function') calculateChatra(); }, 100);
+        }
+    }
+    const isAscendantPage = document.getElementById('ascendantPage')?.style.display !== 'none';
+    if (isAscendantPage) {
+    const dateInput = document.getElementById('ascBirthDate');
+    const timeInput = document.getElementById('ascBirthTime');
+    
+    if (dateInput) dateInput.value = formattedDate;
+    if (timeInput && member.birthtime) {
+        // เติมเวลาเกิดจาก Firebase (สมมติเก็บในชื่อ birthtime)
+        timeInput.value = member.birthtime; 
+    }
+}
+};

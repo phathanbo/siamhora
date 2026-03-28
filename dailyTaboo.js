@@ -65,6 +65,34 @@ const ZODIAC_RELATIONS = {
     "กุน": { great: ["เถาะ", "มะแม"], bad: ["มะเส็ง"] }
 };
 
+// 1. สร้างฟังก์ชันเตรียมไว้ (ป้องกัน Error: is not defined)
+function updateDailyTaboo(dayIndex) {
+    console.log("🔄 กำลังอัปเดตข้อมูลรายวันสำหรับดัชนีวันหน้าจอ:", dayIndex);
+    
+    // ตรงนี้คือ Logic การแสดงผล (ประธานสามารถนำโค้ดเดิมมาใส่ในปีกกานี้ได้)
+    const displayArea = document.getElementById('dailyTabooContent'); // เช็ค ID ให้ตรงกับ HTML
+    if (!displayArea) return;
+
+    const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+    const currentDay = days[dayIndex];
+    
+    // ตัวอย่างการแสดงผลแบบง่าย
+    displayArea.innerHTML = `📅 วันนี้วัน${currentDay} (กำลังโหลดคำทำนาย...)`;
+}
+
+// 2. ส่วนที่เรียกใช้งาน (บรรทัดที่ 78 ที่เคยพัง)
+$(document).ready(function() {
+    const now = new Date();
+    const dayIndex = now.getDay(); // 0 = อาทิตย์, 1 = จันทร์...
+    
+    console.log("เริ่มโหลดข้อมูลรายวัน: เดือนที่ " + (now.getMonth() + 1));
+    
+    // เรียกใช้งานฟังก์ชันที่สร้างไว้ด้านบน
+    if (typeof updateDailyTaboo === 'function') {
+        updateDailyTaboo(dayIndex);
+    }
+});
+
 // ฟังก์ชันหลักที่ทำงานตอนโหลดหน้า (ป้องกันข้อมูลหายตอน F5)
 document.addEventListener('DOMContentLoaded', () => {
     // แก้ไขปัญหา month is not defined โดยการประกาศตรงนี้

@@ -20,13 +20,13 @@ body {
 header {
     background: linear-gradient(135deg, var(--royal-black) 0%, #333 100%) !important;
     border-bottom: 3px solid var(--gold);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 header h1 {
     color: var(--gold);
     font-weight: 600;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* --- การ์ด (Card Design) --- */
@@ -91,12 +91,13 @@ header h1 {
 
 /* --- กระดาษทำนายแบบโบราณ --- */
 .book-page {
-    background: #fdf6e3; /* สีพื้นหลังกระดาษถนอมสายตา */
+    background: #fdf6e3;
+    /* สีพื้นหลังกระดาษถนอมสายตา */
     padding: 40px;
     border: 2px solid #d4af37;
     position: relative;
     color: #5d4037;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1);
     min-height: 400px;
     border-radius: 8px;
     font-family: 'Sarabun', sans-serif;
@@ -118,7 +119,7 @@ header h1 {
     background: white;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     animation: fadeIn 0.5s ease;
 }
@@ -127,7 +128,7 @@ header h1 {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: 20px;              
+    margin-bottom: 20px;
     object-fit: cover;
     border: 3px solid var(--gold);
 }
@@ -145,8 +146,15 @@ header h1 {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 #result:not(.hidden) {
@@ -155,19 +163,37 @@ header h1 {
 
 /* --- สำหรับการพิมพ์ (Print Mode) --- */
 @media print {
-    header, footer, #form, #historySection, #authSection, .btn, .input-group, .no-print {
+
+    header,
+    footer,
+    #form,
+    #historySection,
+    #authSection,
+    .btn,
+    .input-group,
+    .no-print {
         display: none !important;
     }
-    body { background: white; }
-    .card { border: none !important; box-shadow: none !important; }
+
+    body {
+        background: white;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
     #result {
         display: block !important;
         width: 100%;
         margin: 0;
         padding: 0;
     }
+
     .book-page {
-        border: 2px solid #000; /* เปลี่ยนเป็นสีดำเพื่อประหยัดหมึกพิมพ์ */
+        border: 2px solid #000;
+        /* เปลี่ยนเป็นสีดำเพื่อประหยัดหมึกพิมพ์ */
         box-shadow: none;
         background: transparent;
     }
@@ -191,8 +217,10 @@ header h1 {
     color: #333;
 }
 
-.calendar-table th, .calendar-table td {
-    width: 14.28%; /* แบ่ง 7 วันเท่าๆ กัน */
+.calendar-table th,
+.calendar-table td {
+    width: 14.28%;
+    /* แบ่ง 7 วันเท่าๆ กัน */
     height: 100px;
     vertical-align: top;
     padding: 10px;
@@ -212,29 +240,47 @@ header h1 {
 }
 
 /* สีพื้นหลังสำหรับวันมงคล/อัปมงคล */
-.bg-ausp-thongchai { background-color: #d4edda; border-left: 5px solid #28a745; }
-.bg-ausp-athibadi { background-color: #cce5ff; border-left: 5px solid #007bff; }
-.bg-ausp-ubart { background-color: #fff3cd; border-left: 5px solid #ffc107; }
-.bg-ausp-lokawinat { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+.bg-ausp-thongchai {
+    background-color: #d4edda;
+    border-left: 5px solid #28a745;
+}
+
+.bg-ausp-athibadi {
+    background-color: #cce5ff;
+    border-left: 5px solid #007bff;
+}
+
+.bg-ausp-ubart {
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+}
+
+.bg-ausp-lokawinat {
+    background-color: #f8d7da;
+    border-left: 5px solid #dc3545;
+}
 
 .calendar-day {
     font-size: 1.25rem;
     font-weight: bold;
     color: #333;
 }
+
 .day-status {
     display: block;
     font-size: 0.75rem;
     margin-top: 5px;
     white-space: nowrap;
 }
+
 .calendar-table td {
     border: 1px solid #dee2e6 !important;
 }
 
 #dailyLuckyBar {
     background: linear-gradient(to right, #ffffff, #fff9e6);
-    border-bottom: 2px solid #e0c097 !important; /* เส้นขอบทอง */
+    border-bottom: 2px solid #e0c097 !important;
+    /* เส้นขอบทอง */
 }
 
 #dailyLuckyBar .badge {
@@ -269,7 +315,7 @@ header h1 {
 }
 
 .shadow-inner {
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .border-bottom-gold {
@@ -324,20 +370,35 @@ header h1 {
     margin-top: 5px;
 }
 
-.border-gold { border: 2px solid #d4af37 !important; }
-.text-gold { color: #d4af37 !important; }
-.btn-gold { 
-    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%); 
-    color: #000; 
+.border-gold {
+    border: 2px solid #d4af37 !important;
+}
+
+.text-gold {
+    color: #d4af37 !important;
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    color: #000;
     border: none;
 }
-.btn-gold:hover { background: #b8860b; color: #fff; }
-.shadow-inner { box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+
+.btn-gold:hover {
+    background: #b8860b;
+    color: #fff;
+}
+
+.shadow-inner {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 /* ตกแต่งพื้นหลัง Dropdown */
 .dropdown-menu.bg-dark {
-    background-color: #1a1a1a !important; /* ดำเข้ม */
-    border: 1px solid #d4af37; /* ขอบทอง */
+    background-color: #1a1a1a !important;
+    /* ดำเข้ม */
+    border: 1px solid #d4af37;
+    /* ขอบทอง */
     border-radius: 10px;
     margin-top: 10px;
 }
@@ -350,8 +411,10 @@ header h1 {
 
 /* เมื่อเอาเมาส์ไปชี้ที่เมนู */
 .dropdown-item:hover {
-    background-color: #d4af37 !important; /* พื้นหลังสีทอง */
-    color: #000 !important; /* ตัวหนังสือสีดำ */
+    background-color: #d4af37 !important;
+    /* พื้นหลังสีทอง */
+    color: #000 !important;
+    /* ตัวหนังสือสีดำ */
 }
 
 /* สำหรับมือถือ: ให้ลูกศร Dropdown เป็นสีขาว */
@@ -361,10 +424,12 @@ header h1 {
 
 /* สไตล์พื้นหลังเมนู Dropdown */
 .dropdown-menu.bg-dark {
-    background-color: #121212 !important; /* ดำสนิท */
-    border: 1px solid #d4af37; /* ขอบทองเส้นบาง */
+    background-color: #121212 !important;
+    /* ดำสนิท */
+    border: 1px solid #d4af37;
+    /* ขอบทองเส้นบาง */
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     padding: 10px 0;
 }
 
@@ -397,8 +462,10 @@ header h1 {
 @media (min-width: 992px) {
     .nav-item.dropdown:hover .dropdown-menu {
         display: block;
-        margin-top: 0; /* ให้เมนูชิดกับแถบด้านบนพอดี */
-        animation: fadeInDown 0.3s ease; /* เพิ่ม Effect เลื่อนลงเบาๆ */
+        margin-top: 0;
+        /* ให้เมนูชิดกับแถบด้านบนพอดี */
+        animation: fadeInDown 0.3s ease;
+        /* เพิ่ม Effect เลื่อนลงเบาๆ */
     }
 }
 
@@ -408,6 +475,7 @@ header h1 {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -506,8 +574,10 @@ header h1 {
 }
 
 /* ใส่ใน <style> ของคุณ */
-#birthDaySelect, #userAge {
-    height: 55px !important; /* ความสูงกำลังพอดี */
+#birthDaySelect,
+#userAge {
+    height: 55px !important;
+    /* ความสูงกำลังพอดี */
     background-color: #1a1a1a !important;
     border: 1px solid #d4af37 !important;
     color: white !important;
@@ -606,11 +676,13 @@ header h1 {
 .hover-effect {
     transition: all 0.3s ease;
 }
+
 .hover-effect:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3) !important;
     background: rgba(212, 175, 55, 0.05) !important;
 }
+
 .icon-circle {
     width: 80px;
     height: 80px;
@@ -624,7 +696,8 @@ header h1 {
 
 /* สไตล์สำหรับการเซฟภาพโดยเฉพาะ */
 #dailyMapCapture {
-    max-width: 500px; /* จำกัดความกว้างให้พอดีกับหน้าจอมือถือ */
+    max-width: 500px;
+    /* จำกัดความกว้างให้พอดีกับหน้าจอมือถือ */
     margin: 0 auto;
     background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
     border: 3px solid #d4af37 !important;
@@ -652,12 +725,13 @@ header h1 {
 /* --- 2. สไตล์พิเศษสำหรับหน้าจอมือถือ (หน้าจอเล็กกว่า 768px) --- */
 @media (max-width: 767.98px) {
     #dailyMapCapture {
-        padding: 15px 10px !important; /* ลดช่องว่างขอบ */
+        padding: 15px 10px !important;
+        /* ลดช่องว่างขอบ */
     }
 
     /* สั่งให้จากเดิมที่แบ่ง 2 คอลัมน์ (ซ้าย-ขวา) กลายเป็นเรียงต่อกันเป็นแนวยาว */
     #dailyMapCapture .row {
-        display: block !important; 
+        display: block !important;
     }
 
     #dailyMapCapture .col-md-6 {
@@ -669,7 +743,7 @@ header h1 {
     .yarm-row-mobile strong {
         font-size: 1.1rem !important;
     }
-    
+
     .yarm-row-mobile .text-success {
         font-size: 0.9rem !important;
     }
@@ -678,7 +752,7 @@ header h1 {
 /* ปรับแต่ง Dropdown ของสยามโหรามงคล */
 .dropdown-menu {
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     padding: 10px 0;
 }
 
@@ -688,9 +762,11 @@ header h1 {
 }
 
 .dropdown-item:hover {
-    background-color: rgba(212, 175, 55, 0.2); /* สีทองจางๆ */
+    background-color: rgba(212, 175, 55, 0.2);
+    /* สีทองจางๆ */
     color: #d4af37 !important;
-    padding-left: 25px; /* เพิ่ม Effect เลื่อนนิ้วเวลา Hover */
+    padding-left: 25px;
+    /* เพิ่ม Effect เลื่อนนิ้วเวลา Hover */
 }
 
 .dropdown-divider {
@@ -739,13 +815,13 @@ body.light-mode .text-muted {
     color: #3c2f2f !important;
 }
 
-body.light-mode h1, 
-body.light-mode h2, 
-body.light-mode h3, 
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
 body.light-mode h4,
 body.light-mode .text-gold {
     color: #b8860b !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* ปุ่มทองพรีเมียม */
@@ -819,8 +895,10 @@ body.light-mode .card {
     margin-bottom: 20px;
 }
 
-#sevenDigitsTable th, #sevenDigitsTable td {
-    border: 1px solid #d4af37 !important; /* เส้นขอบสีทอง */
+#sevenDigitsTable th,
+#sevenDigitsTable td {
+    border: 1px solid #d4af37 !important;
+    /* เส้นขอบสีทอง */
     padding: 10px;
     vertical-align: middle;
 }
@@ -830,8 +908,14 @@ body.light-mode .card {
     color: #d4af37;
 }
 
-.text-gold { color: #d4af37; }
-.text-muted { font-size: 0.8rem; color: #aaa !important; }
+.text-gold {
+    color: #d4af37;
+}
+
+.text-muted {
+    font-size: 0.8rem;
+    color: #aaa !important;
+}
 
 .border-gold-sub {
     border-left: 3px solid #d4af37;
@@ -840,6 +924,7 @@ body.light-mode .card {
     border-radius: 0 5px 5px 0;
     height: 100%;
 }
+
 .bg-dark-light {
     background: rgba(0, 0, 0, 0.2);
 }
@@ -850,6 +935,7 @@ body.light-mode .card {
     transform: scale(1.05);
     z-index: 10;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -875,10 +961,24 @@ select.form-control {
 }
 
 /* สีพื้นหลังแยกตามช่วงวัย (จางๆ เพื่อให้ตัวหนังสือยังอ่านง่าย) */
-.row-early { background-color: rgba(0, 123, 255, 0.05); }  /* ฟ้าจางๆ - วัยต้น */
-.row-mid { background-color: rgba(40, 167, 69, 0.05); }    /* เขียวจางๆ - วัยกลาง */
-.row-late { background-color: rgba(255, 193, 7, 0.05); }   /* เหลืองจางๆ - วัยปลาย */
-.row-summary { background-color: rgba(255, 255, 255, 0.02); }
+.row-early {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* ฟ้าจางๆ - วัยต้น */
+.row-mid {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+/* เขียวจางๆ - วัยกลาง */
+.row-late {
+    background-color: rgba(255, 193, 7, 0.05);
+}
+
+/* เหลืองจางๆ - วัยปลาย */
+.row-summary {
+    background-color: rgba(255, 255, 255, 0.02);
+}
 
 /* เอฟเฟกต์เมื่อ Hover */
 .sd-cell:hover {
@@ -897,12 +997,28 @@ select.form-control {
 }
 
 /* บังคับความกว้างขั้นต่ำของคอลัมน์เพื่อให้ชื่อภพไม่ตัดคำจนอ่านไม่รู้เรื่อง */
-.table-responsive { overflow-x: auto; }
+.table-responsive {
+    overflow-x: auto;
+}
+
 @media (max-width: 576px) {
-    table { font-size: 0.85rem; }
-    th, td { padding: 0.4rem !important; min-width: 60px; }
-    .sd-cell .h5 { font-size: 1.1rem; }
-    .sd-cell small { font-size: 0.6rem; }
+    table {
+        font-size: 0.85rem;
+    }
+
+    th,
+    td {
+        padding: 0.4rem !important;
+        min-width: 60px;
+    }
+
+    .sd-cell .h5 {
+        font-size: 1.1rem;
+    }
+
+    .sd-cell small {
+        font-size: 0.6rem;
+    }
 }
 
 /* ปรับเฉพาะคอลัมน์แรก (ชื่อฐาน) ให้กว้างกว่าคอลัมน์เลข */
@@ -923,7 +1039,8 @@ select.form-control {
 .sd-cell small {
     display: block;
     line-height: 1;
-    white-space: nowrap; /* ป้องกันการขึ้นบรรทัดใหม่ในช่องเดียว */
+    white-space: nowrap;
+    /* ป้องกันการขึ้นบรรทัดใหม่ในช่องเดียว */
 }
 
 .summary-card {
@@ -933,22 +1050,41 @@ select.form-control {
     border-radius: 10px;
     color: white;
 }
-.bg-success-soft { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
-.bg-danger-soft { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
+
+.bg-success-soft {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.bg-danger-soft {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
 
 .border-gold {
     border: 1px solid #d4af37 !important;
-    border-left: 4px solid #d4af37 !important; /* เน้นขอบซ้ายให้ดูมีมิติ */
+    border-left: 4px solid #d4af37 !important;
+    /* เน้นขอบซ้ายให้ดูมีมิติ */
 }
+
 .bg-dark {
     background-color: #1a1a1a !important;
 }
+
 .text-gold-50 {
     color: rgba(212, 175, 55, 0.7);
 }
 
-.badge-gold { background-color: #d4af37; color: white; }
-.text-gold { color: #d4af37; }
+.badge-gold {
+    background-color: #d4af37;
+    color: white;
+}
+
+.text-gold {
+    color: #d4af37;
+}
 
 .swal2-popup-custom {
     max-height: 85vh !important;
@@ -986,33 +1122,44 @@ select.form-control {
 }
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 #calendarBody td {
-    min-width: 45px; /* ป้องกันช่องแคบเกินไป */
-    word-break: break-all; /* ตัดคำถ้า Badge ยาวเกิน */
+    min-width: 45px;
+    /* ป้องกันช่องแคบเกินไป */
+    word-break: break-all;
+    /* ตัดคำถ้า Badge ยาวเกิน */
 }
 
 @media (max-width: 576px) {
     #calendarBody td {
-        height: 80px !important; /* ลดความสูงลงในมือถือ */
+        height: 80px !important;
+        /* ลดความสูงลงในมือถือ */
         font-size: 0.8rem;
     }
 }
 
 #taksaWheel .taksa-card {
     margin-bottom: 5px !important;
-    padding: 10px !important; /* ลด padding ลงเพื่อให้ภาพไม่บวม */
+    padding: 10px !important;
+    /* ลด padding ลงเพื่อให้ภาพไม่บวม */
 }
 
 #taksaWheel h5 {
-    font-size: 0.9rem !important; /* ลดขนาดหัวข้อในการ์ด */
+    font-size: 0.9rem !important;
+    /* ลดขนาดหัวข้อในการ์ด */
 }
 
 #taksaWheel p {
-    font-size: 0.8rem !important; /* ลดขนาดข้อความอธิบายในการ์ด */
+    font-size: 0.8rem !important;
+    /* ลดขนาดข้อความอธิบายในการ์ด */
 }
 
 /* ปรับแต่งปุ่มและตารางให้ดูเป็นสไตล์มหาโหรา */
@@ -1088,6 +1235,7 @@ select.form-control {
     color: #d4af37;
     border-color: #d4af37;
 }
+
 .btn-outline-gold:hover {
     background-color: #d4af37;
     color: #fff;
@@ -1103,25 +1251,25 @@ select.form-control {
     border: 2px solid #d4af37;
     margin: 5px 0;
     padding: 15px;
-    background: linear-gradient(180deg, rgba(212, 175, 55, 0.2) 0%, rgba(0,0,0,0) 100%);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     transition: all 0.5s ease;
 }
 
-.tier-top { 
-    width: 40%; 
-    border-radius: 100px 100px 10px 10px; 
+.tier-top {
+    width: 40%;
+    border-radius: 100px 100px 10px 10px;
     border-bottom: 4px double #d4af37;
 }
 
-.tier-mid { 
-    width: 65%; 
+.tier-mid {
+    width: 65%;
     border-radius: 20px 20px 10px 10px;
     border-bottom: 4px double #d4af37;
 }
 
-.tier-base { 
-    width: 90%; 
+.tier-base {
+    width: 90%;
     border-radius: 20px 20px 50px 50px;
 }
 
@@ -1158,7 +1306,8 @@ select.form-control {
 .text-success-gold {
     color: #ffd700 !important;
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    font-size: 1.4rem; /* ขยายขนาดเพิ่มความปัง */
+    font-size: 1.4rem;
+    /* ขยายขนาดเพิ่มความปัง */
 }
 
 /* สีฟ้าพยากรณ์ */
@@ -1172,8 +1321,13 @@ select.form-control {
 }
 
 @keyframes goldGlow {
-    from { text-shadow: 0 0 5px #ffd700; }
-    to { text-shadow: 0 0 20px #ffd700, 0 0 30px #d4af37; }
+    from {
+        text-shadow: 0 0 5px #ffd700;
+    }
+
+    to {
+        text-shadow: 0 0 20px #ffd700, 0 0 30px #d4af37;
+    }
 }
 
 /* การจัดวางตำแหน่งตรงกลาง */
@@ -1201,27 +1355,33 @@ select.form-control {
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
 }
 
-.tier-content { text-align: center; padding: 10px; width: 100%; }
+.tier-content {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
 
 /* ขนาดของแต่ละชั้น (ล่างไปบน) */
-.tier-top { 
-    width: 200px; 
-    border-radius: 50% 50% 10px 10px; 
+.tier-top {
+    width: 200px;
+    border-radius: 50% 50% 10px 10px;
     min-height: 80px;
 }
-.tier-mid { 
-    width: 320px; 
-    border-radius: 20px 20px 10px 10px; 
+
+.tier-mid {
+    width: 320px;
+    border-radius: 20px 20px 10px 10px;
     min-height: 90px;
 }
-.tier-base { 
-    width: 450px; 
-    border-radius: 15px 15px 100px 100px; 
+
+.tier-base {
+    width: 450px;
+    border-radius: 15px 15px 100px 100px;
     min-height: 100px;
     border-bottom: 4px solid #d4af37;
 }
@@ -1235,9 +1395,20 @@ select.form-control {
 }
 
 /* สีสันตามผลลัพธ์ */
-.text-danger-bright { color: #ff4d4d !important; text-shadow: 0 0 8px rgba(255,0,0,0.6); }
-.text-gold-bright { color: #ffd700 !important; text-shadow: 0 0 12px rgba(212, 175, 55, 0.8); font-weight: 800; }
-.text-info-bright { color: #00e5ff !important; }
+.text-danger-bright {
+    color: #ff4d4d !important;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+.text-gold-bright {
+    color: #ffd700 !important;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+    font-weight: 800;
+}
+
+.text-info-bright {
+    color: #00e5ff !important;
+}
 
 /* เอฟเฟกต์ Glow สำหรับคนดวงดีมาก */
 .chatra-tier.glow-gold {
@@ -1247,10 +1418,15 @@ select.form-control {
 }
 
 /* การจัดตำแหน่งฉัตรให้สมดุล */
-.chatra-visual-area { position: relative; width: 100%; margin: 0 auto; }
+.chatra-visual-area {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
 
 .chatra-pinnacle {
-    width: 0; height: 0;
+    width: 0;
+    height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 30px solid #d4af37;
@@ -1271,25 +1447,66 @@ select.form-control {
     padding: 10px;
 }
 
-.tier-top { width: 220px; border-radius: 100px 100px 10px 10px; min-height: 80px; }
-.tier-mid { width: 340px; border-radius: 20px 20px 10px 10px; min-height: 90px; }
-.tier-base { width: 460px; border-radius: 15px 15px 80px 80px; min-height: 100px; border-bottom-width: 5px; }
+.tier-top {
+    width: 220px;
+    border-radius: 100px 100px 10px 10px;
+    min-height: 80px;
+}
 
-.chatra-pole { width: 12px; height: 40px; background: #d4af37; border-radius: 0 0 5px 5px; }
+.tier-mid {
+    width: 340px;
+    border-radius: 20px 20px 10px 10px;
+    min-height: 90px;
+}
+
+.tier-base {
+    width: 460px;
+    border-radius: 15px 15px 80px 80px;
+    min-height: 100px;
+    border-bottom-width: 5px;
+}
+
+.chatra-pole {
+    width: 12px;
+    height: 40px;
+    background: #d4af37;
+    border-radius: 0 0 5px 5px;
+}
 
 /* สีและเอฟเฟกต์พิเศษ */
-.text-danger-bright { color: #ff4757 !important; text-shadow: 0 0 10px #ff4757; }
-.text-success-gold { color: #ffd700 !important; text-shadow: 0 0 15px #ffd700; font-weight: bold; }
-.text-info-bright { color: #2ed573 !important; }
-.text-warning-bright { color: #ffa502 !important; }
+.text-danger-bright {
+    color: #ff4757 !important;
+    text-shadow: 0 0 10px #ff4757;
+}
 
-.glow-gold { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6) !important; border-color: #fff !important; }
-.glow-red { box-shadow: 0 0 20px rgba(255, 71, 87, 0.5) !important; border-color: #ff4757 !important; }
+.text-success-gold {
+    color: #ffd700 !important;
+    text-shadow: 0 0 15px #ffd700;
+    font-weight: bold;
+}
+
+.text-info-bright {
+    color: #2ed573 !important;
+}
+
+.text-warning-bright {
+    color: #ffa502 !important;
+}
+
+.glow-gold {
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6) !important;
+    border-color: #fff !important;
+}
+
+.glow-red {
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.5) !important;
+    border-color: #ff4757 !important;
+}
 
 .fortune-box {
     background: rgba(212, 175, 55, 0.05);
     border: 1px dashed #d4af37;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .btn-outline-gold {
@@ -1308,7 +1525,8 @@ select.form-control {
 
 /* สไตล์พิเศษสำหรับรองรับการถ่ายภาพ */
 #chatraDisplay {
-    max-width: 600px; /* บีบขนาดให้เป็นทรงที่เหมาะกับ Social Media */
+    max-width: 600px;
+    /* บีบขนาดให้เป็นทรงที่เหมาะกับ Social Media */
     margin: 0 auto;
     border-radius: 15px;
     padding: 20px;
@@ -1323,23 +1541,46 @@ select.form-control {
 }
 
 /* กราฟิกเทียน */
-.candle-container { position: relative; width: 60px; height: 120px; margin: 0 auto; }
-.candle { 
-    width: 40px; height: 80px; background: #e0e0e0; 
-    border-radius: 5px; position: absolute; bottom: 0; left: 10px;
-    box-shadow: inset -10px 0 10px rgba(0,0,0,0.2);
+.candle-container {
+    position: relative;
+    width: 60px;
+    height: 120px;
+    margin: 0 auto;
 }
+
+.candle {
+    width: 40px;
+    height: 80px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    box-shadow: inset -10px 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .flame {
-    width: 20px; height: 35px; background: #ff9800;
+    width: 20px;
+    height: 35px;
+    background: #ff9800;
     border-radius: 50% 50% 20% 20%;
-    position: absolute; top: 0; left: 20px;
+    position: absolute;
+    top: 0;
+    left: 20px;
     box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722;
     animation: flicker 0.5s infinite alternate;
 }
 
 @keyframes flicker {
-    0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
-    100% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+    0% {
+        transform: scale(1) rotate(-2deg);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1.1) rotate(2deg);
+        opacity: 1;
+    }
 }
 
 .prayer-text-container {
@@ -1354,31 +1595,61 @@ select.form-control {
 .prayer-content {
     position: absolute;
     width: 100%;
-    bottom: -100%; /* เริ่มจากข้างล่าง */
+    bottom: -100%;
+    /* เริ่มจากข้างล่าง */
 }
 
 @keyframes scrollUp {
-    0% { bottom: -100%; }
-    100% { bottom: 100%; } /* เลื่อนขึ้นไปจนลับขอบบน */
+    0% {
+        bottom: -100%;
+    }
+
+    100% {
+        bottom: 100%;
+    }
+
+    /* เลื่อนขึ้นไปจนลับขอบบน */
 }
 
 /* ตกแต่งกล่องให้ดูขลัง */
 .ritual-box::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, rgba(0,0,0,0) 80%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0) 80%);
     pointer-events: none;
 }
 
-.border-gold { border: 1px solid #d4af37 !important; }
-.border-left-gold { border-left: 4px solid #d4af37 !important; padding-left: 20px; }
-.badge-gold { background-color: #d4af37; color: #000; font-weight: bold; }
+.border-gold {
+    border: 1px solid #d4af37 !important;
+}
 
-.scroll-y::-webkit-scrollbar { width: 5px; }
-.scroll-y::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+.border-left-gold {
+    border-left: 4px solid #d4af37 !important;
+    padding-left: 20px;
+}
 
-.border-bottom-dark { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.badge-gold {
+    background-color: #d4af37;
+    color: #000;
+    font-weight: bold;
+}
+
+.scroll-y::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 10px;
+}
+
+.border-bottom-dark {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
 
 #yearlyRadarChart {
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
@@ -1388,7 +1659,56 @@ select.form-control {
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     border: 2px solid #d4af37 !important;
 }
-.text-success-gold { color: #28a745; font-weight: bold; }
-hr.border-gold { border-top: 1px solid rgba(212, 175, 55, 0.3); }
 
-.transition-all { transition: all 0.3s ease; }
+.text-success-gold {
+    color: #28a745;
+    font-weight: bold;
+}
+
+hr.border-gold {
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* บังคับให้หน้าที่จะซ่อน ต้องหายไปจริงๆ */
+.main-section {
+    display: none;
+}
+
+/* หน้าหลักหรือหน้าที่กำลังใช้งานเท่านั้นถึงจะแสดง */
+.main-section.active {
+    display: block;
+}
+
+/* ป้องกันเมนูจมหรือหายไปในมือถือ */
+@media (max-width: 991px) {
+    .dropdown-menu {
+        position: static !important; /* บังคับให้ดันเนื้อหาลงไป ไม่ลอยทับ */
+        float: none;
+        width: 100%;
+        margin-top: 10px;
+        background-color: rgba(0, 0, 0, 0.5) !important; /* ให้เห็นชัดขึ้น */
+    }
+}
+
+/* เส้นคั่นกลางระหว่างซ้าย-ขวาบนจอใหญ่ */
+@media (min-width: 768px) {
+    .border-right-gold {
+        border-right: 1px solid rgba(212, 175, 55, 0.3);
+    }
+}
+
+/* ปรับฟอนต์ตารางให้แคบลงเพื่อให้ลงภาพสวย */
+#houseTableBody td {
+    padding: 2px 5px !important;
+}
+
+/* คุมโทนเวลาแคปภาพด้วย html2canvas */
+#ascResult {
+    max-width: 650px; /* คุมขนาดภาพไม่ให้บานเกินไป */
+    margin-left: auto;
+    margin-right: auto;
+}

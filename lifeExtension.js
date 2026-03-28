@@ -73,9 +73,6 @@ const adviceDict = {
     }
 };
 
-    // Default สำหรับเดือนที่ยังไม่ได้ระบุ
-    const result = adviceDict[month] || { advice: "หมั่นทำบุญโลงศพ เสริมดวงชะตาให้แคล้วคลาด", do: "บริจาคเลือด/ทำบุญโลงศพ", avoid: "การค้ำประกันผู้อื่น" };
-
 function startRitual() {
     const month = document.getElementById('birthMonth').value;
     if (!month) {

@@ -299,9 +299,9 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
         };
 
         const boriwanName = getStarName("บริวาร");
-        const sriName     = getStarName("ศรี");
-        const kalaName    = getStarName("กาลกิณี");
-        const detName     = getStarName("เดช");
+        const sriName = getStarName("ศรี");
+        const kalaName = getStarName("กาลกิณี");
+        const detName = getStarName("เดช");
 
         if (boriwanName === "ไม่ทราบ") {
             return `<div class="p-3 text-center text-white-50">-- ไม่สามารถสร้างคำทำนายรายปีได้ --</div>`;
@@ -317,7 +317,7 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
         const tone = gender === 'female' ? "อ่อนโยนแต่เฉียบคม" : "มั่นคงและเด็ดขาด";
 
         let paragraph1 = `
-            ปี ${new Date().getFullYear()+543} นี้ ดวงชะตาของ${genderAdj}เกิด${boriwanStar.name}จร ดูเหมือนจะเป็นปีที่ชีวิตเริ่มแสดงพลังออกมาอย่างชัดเจน 
+            ปี ${new Date().getFullYear() + 543} นี้ ดวงชะตาของ${genderAdj}เกิด${boriwanStar.name}จร ดูเหมือนจะเป็นปีที่ชีวิตเริ่มแสดงพลังออกมาอย่างชัดเจน 
             ด้วยดาว${boriwanStar.name}เป็นตัวนำทางหลัก ทำให้เรื่องราวเกี่ยวกับคนรอบข้าง ความสัมพันธ์ 
             และการเป็นที่พึ่งพิงของกันและกันกลายเป็นประเด็นสำคัญที่สุดของปีนี้ 
             ครอบครัว เพื่อนสนิท ลูกหลาน หรือลูกน้อง/ทีมงาน จะมีบทบาทเด่นมากขึ้น
@@ -356,7 +356,7 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
         return `
             <div id="yearSummarySection" class="card bg-gradient-taksa border-gold mt-4 mb-4 shadow-lg">
                 <div class="card-header text-center py-3" style="background: rgba(212, 175, 55, 0.2);">
-                    <h4 class="mb-0 text-gold">บทสรุปดวงชะตาปี ${new Date().getFullYear()+543}</h4>
+                    <h4 class="mb-0 text-gold">บทสรุปดวงชะตาปี ${new Date().getFullYear() + 543}</h4>
                     <small class="text-white-50">${age ? 'อายุย่าง ' + age + ' ปี' : ''}</small>
                 </div>
                 <div class="card-body p-4 text-white" style="line-height: 1.8; font-size: 1.05rem;">
@@ -377,7 +377,7 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
 // ฟังก์ชันแสดงผลทั้งหมด
 function renderTaksaResult(taksa) {
     const order = ["บริวาร", "อายุ", "เดช", "ศรี", "มูละ", "อุตสาหะ", "มนตรี", "กาลกิณี"];
-    
+
 
     // --- ส่วนหัว ---
     let html = `
@@ -412,7 +412,7 @@ function renderTaksaResult(taksa) {
 
     // --- ส่วนที่ 2: ทิศมงคลและคำสรุป (ใส่ ID: taksaDetails เพื่อแคปภาพสรุปดวง) ---
     html += `<div id="taksaDetails" class="p-3 rounded" style="background: rgba(26, 26, 46, 0.8);">`;
-    
+
     if (taksa.sri && taksa.kalakini) {
         html += `
             <div class="card bg-gradient-taksa border-gold mb-4 shadow-xl">
@@ -439,7 +439,7 @@ function renderTaksaResult(taksa) {
     // --- ก้อนที่ 3: สรุปดวงปี ---
     const age = document.getElementById('userAge')?.value;
     const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
-    
+
     html += `<div id="taksaDetails">`; // เริ่มก้อนที่จะแคปภาพ
     html += generateYearSummary(taksa, age, gender);
     html += `</div>`; // จบก้อนที่จะแคปภาพ (ปุ่มต้องอยู่นอก div นี้)
@@ -471,7 +471,7 @@ function renderTaksaResult(taksa) {
         </div>
     `;
 
-// ... ส่วนท้ายฟังก์ชัน ...
+    // ... ส่วนท้ายฟังก์ชัน ...
 
     const resultEl = document.getElementById('taksaResult');
     if (resultEl) {

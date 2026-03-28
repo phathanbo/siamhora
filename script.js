@@ -417,42 +417,60 @@ function downloadImageFromProfile() {
 }
 
 
-// ฟังก์ชันสลับหน้าและจำสถานะ
-function navigateTo(pageId) {
-    // 1. หาหน้าจอทั้งหมดที่มีคลาส main-section
+/**
+ * ฟังก์ชันนำทางหลัก - รองรับปุ่มย้อนกลับ และจัดการสถานะหน้าจอ
+ */
+function navigateTo(pageId, addHistory = true) {
+    console.log("🚀 กำลังนำทางไปที่หน้า:", pageId);
+
+    // 1. หาหน้าเป้าหมายใน HTML
+    const targetPage = document.getElementById(pageId);
+    if (!targetPage) {
+        console.error(`❌ หาหน้า ID "${pageId}" ไม่เจอใน HTML!`);
+        // ถ้าหาไม่เจอ ให้เด้งกลับหน้าหลักกันหน้าขาว
+        if(pageId !== 'mainpage') navigateTo('mainpage', false);
+        return;
+    }
+
+    // 2. จัดการเรื่องหน้าความรู้ (Knowledge Page) - ดึงจาก Logic เดิมของประธาน
+    if (pageId === 'knowledgePage' && typeof initKnowledgeTable === 'function') {
+        initKnowledgeTable();
+    }
+
+    if (pageId === 'auspiciousPage') {
+    setTimeout(() => {
+        if (typeof renderAuspiciousCalendar === 'function') {
+            renderAuspiciousCalendar();
+        }
+    }, 50); // หน่วงเวลา 0.05 วินาที
+}
+
+    // 3. สั่งซ่อนทุกหน้าที่มีคลาส .main-section
     const allPages = document.querySelectorAll('.main-section');
-    
-    // เก็บประวัติหน้าก่อนหน้า (ถ้ามีระบบปุ่มย้อนกลับจะใช้ประโยชน์ได้มาก)
-    const activePage = document.querySelector('.main-section:not(.hidden)');
-    if (activePage && activePage.id !== pageId) {
-        previousPage = activePage.id;
-    }
-
-    // 2. จัดการเรื่องหน้าความรู้ (Knowledge Page)
-    if (pageId === 'knowledgePage') {
-        if (typeof initKnowledgeTable === 'function') {
-            initKnowledgeTable();
-        } else {
-            console.error("หาฟังก์ชัน initKnowledgeTable ไม่เจอ! อย่าลืมเชื่อมไฟล์ knowledge.js นะครับ");
-        }
-    }
-
-    // 3. สลับการแสดงผลหน้าจอ
     allPages.forEach(page => {
-        if (page.id === pageId) {
-            page.classList.remove('hidden'); 
-            page.style.display = 'block'; // บังคับแสดงผล
-        } else {
-            page.classList.add('hidden'); 
-            page.style.display = 'none';  // บังคับซ่อน
-        }
+        page.classList.add('hidden');    // ใส่คลาสซ่อน (เผื่อมี CSS คุม)
+        page.classList.remove('active'); // เอาคลาสแสดงออก
+        page.style.display = 'none';     // บังคับซ่อนจริงๆ
     });
 
-    // 4. บันทึก ID ลงในเครื่องผู้ใช้ (LocalStorage)
+    // 4. แสดงหน้าเป้าหมาย
+    targetPage.classList.remove('hidden');
+    targetPage.classList.add('active');
+    targetPage.style.display = 'block'; // บังคับแสดงผล
+
+    // 5. บันทึกประวัติลง Browser (เพื่อให้กดย้อนกลับที่มือถือได้)
+    if (addHistory) {
+        history.pushState({ pageId: pageId }, "", "#" + pageId);
+    }
+
+    // 6. บันทึกลง LocalStorage (เผื่อผู้ใช้ปิดแอปแล้วเปิดใหม่)
     localStorage.setItem('currentPage', pageId);
-    
-    // 5. เลื่อนหน้าจอกลับไปบนสุด
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // เพิ่ม behavior smooth ให้ดูนุ่มนวลขึ้น
+
+    // 7. เลื่อนหน้าจอกลับไปบนสุดแบบนุ่มนวล
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 8. โหลดข้อมูลผู้ใช้มาเติม (ถ้ามีระบบ Profile)
+    if (typeof UserProfile !== 'undefined') UserProfile.load();
 }
 
 // ฟังก์ชันย้อนกลับที่ใช้หน้าที่เก็บไว้
@@ -564,4 +582,23 @@ async function captureCustomArea(element, fileName) {
 window.onload = function() {
     const savedPage = localStorage.getItem('currentPage') || 'mainContent';
     navigateTo(savedPage);
+};
+
+// --- ส่วนดักจับปุ่มย้อนกลับของ Browser ---
+window.onpopstate = function(event) {
+    // 1. ลองดึงค่าจาก State ก่อน
+    let pageId = event.state ? event.state.pageId : null;
+
+    // 2. ถ้า State ไม่มี ให้ลองดึงจาก Hash (#) บน URL
+    if (!pageId) {
+        pageId = window.location.hash.replace('#', '');
+    }
+
+    // 3. ถ้าสุดท้ายแล้วไม่มีจริงๆ (หน้าแรกสุด) ค่อยไป mainpage
+    if (!pageId || pageId === "") {
+        pageId = 'mainpage';
+    }
+
+    console.log("Navigation Change to:", pageId);
+    navigateTo(pageId, false); // ส่ง false เพื่อไม่ให้เกิดการบันทึกประวัติซ้ำซ้อน
 };

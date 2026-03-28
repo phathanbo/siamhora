@@ -5,6 +5,7 @@
  * ชั้น 3: อายุ + 3 % 8
  */
 
+
 function showChatraPage() {
     $('.main-section').addClass('hidden').hide(); 
     $('#chatraPage').removeClass('hidden').fadeIn(500);
@@ -249,3 +250,5 @@ function downloadChatraImage(e) {
         btn.disabled = false;
     });
 }
+
+

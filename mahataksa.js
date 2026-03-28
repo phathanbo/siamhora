@@ -19,76 +19,76 @@ const THAKSA_INFO = {
 };
 
 const ANGEL_DATA = [
-    { 
+    {
         name: "พระอาทิตย์", vehicle: "ราชสีห์", power: 6, direction: "ทิศตะวันออก (บูรพา)", type: "บาปเคราะห์", resistance: "พระจันทร์",
         desc: "เด่นด้านยศศักดิ์ อำนาจ และบารมี", location: "สถิตย์ในทิศบูรพา",
         prediction: "จะเกิดลาภผลพูนผล มีเกียรติยศชื่อเสียง จะมีผู้ใหญ่สนับสนุนในหน้าที่การงานดีนัก",
         shrine: "ควรทำบุญทางทิศตะวันออกเพื่อเสริมบารมี",
-        animal: "นามครุฑ", alphabet: "ก ข ค ง", 
-        luckyColor: "สีแดง", bg:"#e63946",
+        animal: "นามครุฑ", alphabet: "ก ข ค ง",
+        luckyColor: "สีแดง", bg: "#e63946",
         unluckyColor: "สีฟ้า, สีน้ำเงิน"
     },
-    { 
+    {
         name: "พระจันทร์", vehicle: "อัศวราช (ม้า)", power: 15, direction: "ทิศตะวันออกเฉียงใต้ (อาคเนย์)", type: "ศุภเคราะห์", resistance: "พระอาทิตย์",
         desc: "เด่นด้านเสน่ห์ เมตตา และโชคลาภ", location: "สถิตย์ในทิศอาคเนย์",
         prediction: "จะมีความสุขสบาย มีโชคลาภจากเพศตรงข้าม ได้ของถูกใจ มีเสน่ห์แก่คนทั้งหลาย",
         shrine: "ควรทำบุญทางทิศตะวันออกเฉียงใต้จะเสริมโชคลาภ",
-        animal: "นามพยัคฆ์ (เสือ)", alphabet: "จ ฉ ช ซ ฌ ญ", 
-        luckyColor: "สีขาว, สีเหลืองนวล", bg:"#ffb703",
+        animal: "นามพยัคฆ์ (เสือ)", alphabet: "จ ฉ ช ซ ฌ ญ",
+        luckyColor: "สีขาว, สีเหลืองนวล", bg: "#ffb703",
         unluckyColor: "สีแดง"
     },
-    { 
+    {
         name: "พระอังคาร", vehicle: "มหิงสา (กระบือ)", power: 8, direction: "ทิศใต้ (ทักษิณ)", type: "บาปเคราะห์", resistance: "พระพุธ",
         desc: "เด่นด้านความกล้าหาญ ชัยชนะ และพละกำลัง", location: "สถิตย์ในทิศทักษิณ",
         prediction: "ให้ระวังการขัดแย้ง ทะเลาะวิวาท หรือของหาย จะมีเรื่องร้อนใจจากมิตรสหายหรือญาติพี่น้อง",
         shrine: "ควรหมั่นทำบุญปล่อยสัตว์หรืออุทิศส่วนกุศลไปทางทิศใต้",
-        animal: "นามสีหะ (สิงโต)", alphabet: "ฏ ฐ ด ต ถ น", 
-        luckyColor: "สีชมพู, สีม่วงแดง", bg:"#f76c8c",
+        animal: "นามสีหะ (สิงโต)", alphabet: "ฏ ฐ ด ต ถ น",
+        luckyColor: "สีชมพู, สีม่วงแดง", bg: "#f76c8c",
         unluckyColor: "สีขาว, สีเหลือง"
     },
-    { 
+    {
         name: "พระพุธ", vehicle: "คชสาร (ช้าง)", power: 17, direction: "ทิศตะวันตกเฉียงใต้ (หรดี)", type: "ศุภเคราะห์", resistance: "พระอังคาร",
         desc: "เด่นด้านการเจรจา ปัญญา และการค้าขาย", location: "สถิตย์ในทิศหรดี",
         prediction: "จะได้ลาภจากทางไกล การเจรจาติดต่อจะสำเร็จผลดี มีสติปัญญาเฉลียวฉลาด แก้ปัญหาได้ทุกประการ",
         shrine: "ควรทำบุญถวายหนังสือหรือเครื่องเขียนทางทิศตะวันตกเฉียงใต้",
-        animal: "นามโสณ (สุนัข)", alphabet: "บ ป ผ ฝ พ ฟ ภ ม", 
-        luckyColor: "สีเขียวทุกชนิด", bg:"#2bff00",
+        animal: "นามโสณ (สุนัข)", alphabet: "บ ป ผ ฝ พ ฟ ภ ม",
+        luckyColor: "สีเขียวทุกชนิด", bg: "#2bff00",
         unluckyColor: "สีชมพู"
     },
-    { 
+    {
         name: "พระเสาร์", vehicle: "พยัคฆราช (เสือ)", power: 10, direction: "ทิศตะวันตก (ประจิม)", type: "บาปเคราะห์", resistance: "พระพฤหัสบดี",
         desc: "เด่นด้านความอดทน ที่ดิน และความมั่นคง", location: "สถิตย์ในทิศประจิม",
         prediction: "จะมีความทุกข์ยากลำบาก ระวังโรคภัยไข้เจ็บหรือเสียของรัก ให้ถือความอดทนเป็นที่ตั้ง",
         shrine: "ควรไปไหว้พระปางนาคปรกหรือทำบุญทางทิศตะวันตก",
-        animal: "นามนาค (งูใหญ่)", alphabet: "ย ร ล ว", 
-        luckyColor: "สีดำ, สีม่วงเข้ม, สีน้ำเงินเข้ม", bg:"#5d009b",
+        animal: "นามนาค (งูใหญ่)", alphabet: "ย ร ล ว",
+        luckyColor: "สีดำ, สีม่วงเข้ม, สีน้ำเงินเข้ม", bg: "#5d009b",
         unluckyColor: "สีเขียว"
     },
-    { 
+    {
         name: "พระพฤหัสบดี", vehicle: "มฤคราช (กวาง)", power: 19, direction: "ทิศตะวันตกเฉียงเหนือ (พายัพ)", type: "ศุภเคราะห์", resistance: "พระเสาร์",
         desc: "เด่นด้านสติปัญญา ผู้ใหญ่ และศีลธรรม", location: "สถิตย์ในทิศพายัพ",
         prediction: "จะได้ลาภเป็นของมีค่า ผู้ใหญ่และครูบาอาจารย์จะเมตตาปราณี จิตใจจะผ่องใสในธรรม",
         shrine: "ควรทำบุญถวายภัตตาหารหรือไหว้พระพุทธรูปปางสมาธิทางทิศตะวันตกเฉียงเหนือ",
-        animal: "นามมูสิกะ (หนู)", alphabet: "ศ ษ ส ห ฬ อ", 
-        luckyColor: "สีส้ม, สีทอง, สีเหลืองเข้ม", bg:"#ff7300",
+        animal: "นามมูสิกะ (หนู)", alphabet: "ศ ษ ส ห ฬ อ",
+        luckyColor: "สีส้ม, สีทอง, สีเหลืองเข้ม", bg: "#ff7300",
         unluckyColor: "สีดำ, สีม่วง"
     },
-    { 
+    {
         name: "พระราหู", vehicle: "พยัคฆ์", power: 12, direction: "ทิศเหนือ (อุดร)", type: "บาปเคราะห์", resistance: "พระศุกร์",
         desc: "เด่นด้านลาภลอย การเปลี่ยนแปลง และไหวพริบ", location: "สถิตย์ในทิศอุดร",
         prediction: "จะเกิดการเปลี่ยนแปลงกะทันหัน มีลาภลอยหรือได้โชคแบบไม่คาดฝัน ระวังความลุ่มหลงมัวเมา",
         shrine: "ควรทำบุญปล่อยนกปล่อยปลาไปทางทิศเหนือ",
-        animal: "นามคชะ (ช้างตัวใหญ่)", alphabet: "ฎ ฏ", 
-        luckyColor: "สีบรอนซ์, สีเทาเข้ม, สีควันบุหรี่", bg:"#9c9c9c",
+        animal: "นามคชะ (ช้างตัวใหญ่)", alphabet: "ฎ ฏ",
+        luckyColor: "สีบรอนซ์, สีเทาเข้ม, สีควันบุหรี่", bg: "#9c9c9c",
         unluckyColor: "สีส้ม, สีแสด"
     },
-    { 
+    {
         name: "พระศุกร์", vehicle: "โคอุสุภราช (วัว)", power: 21, direction: "ทิศตะวันออกเฉียงเหนือ (อีสาน)", type: "ศุภเคราะห์", resistance: "พระราหู",
         desc: "เด่นด้านความรัก ความสุข และการเงิน", location: "สถิตย์ในทิศอีสาน",
         prediction: "จะได้ลาภจากทางใกล้และไกล จะมีความรื่นรมย์ในชีวิต ความรักสมหวัง เงินทองไหลมาเทมา",
         shrine: "ควรทำบุญด้วยดอกไม้หอมหรือของสวยงามทางทิศตะวันออกเฉียงเหนือ",
-        animal: "นามมนุษย์ (คน)", alphabet: "สระทั้งหมด", 
-        luckyColor: "สีฟ้า, สีน้ำเงิน, สีคราม", bg:"#0084ff",
+        animal: "นามมนุษย์ (คน)", alphabet: "สระทั้งหมด",
+        luckyColor: "สีฟ้า, สีน้ำเงิน, สีคราม", bg: "#0084ff",
         unluckyColor: "สีบรอนซ์, สีเทา"
     }
 ];
@@ -107,7 +107,7 @@ const BIRTH_DESTINY_DATA = [
 
 const PLANET_RELATIONS = {
     // คู่มิตร (หน้า 29): ส่งเสริม ช่วยเหลือ เมตตา
-    partners: { 
+    partners: {
         "๑": { target: "๕", name: "พระพฤหัสบดี", desc: "ผู้ใหญ่เอ็นดู มีบารมี" },
         "๒": { target: "๔", name: "พระพุธ", desc: "เสน่ห์เมตตา เจรจาค้าขายดี" },
         "๓": { target: "๖", name: "พระศุกร์", desc: "โชคลาภเงินทอง ความรักสมหวัง" },
@@ -138,19 +138,19 @@ const PLANET_RELATIONS = {
         "๖": { target: "๑", name: "พระอาทิตย์", desc: "วาสนาดี มีคนเกรงใจ" },
         "๗": { target: "๔", name: "พระพุธ", desc: "ขยันขันแข็ง งานสำเร็จราบรื่น" },
         "๘": { target: "๒", name: "พระจันทร์", desc: "เมตตามหานิยม มีโชคจากทางไกล" }
-    }    
+    }
 };
 
 // เพิ่มคู่ธาตุ (ตามหน้า 29-30)
 const ELEMENT_PAIRS = {
-        "๑": { target: "๗", name: "พระเสาร์", element: "ธาตุไฟ", desc: "เสริมอำนาจ บารมี และความร้อนแรง" },
-        "๒": { target: "๕", name: "พระพฤหัสบดี", element: "ธาตุดิน", desc: "เสริมความมั่นคง หลักฐาน และทรัพย์สิน" },
-        "๓": { target: "๘", name: "พระราหู", element: "ธาตุลม", desc: "เสริมความกล้าหาญ การฉวยโอกาส และโชคลาภ" },
-        "๔": { target: "๖", name: "พระศุกร์", element: "ธาตุน้ำ", desc: "เสริมเมตตา ความร่มเย็น และการเงิน" },
-        "๕": { target: "๒", name: "พระจันทร์", element: "ธาตุดิน", desc: "เสริมความเมตตาจากผู้ใหญ่ และความมั่นคง" },
-        "๖": { target: "๔", name: "พระพุธ", element: "ธาตุน้ำ", desc: "เสริมเสน่ห์ การเจรจา และความสุข" },
-        "๗": { target: "๑", name: "พระอาทิตย์", element: "ธาตุไฟ", desc: "เสริมยศศักดิ์ และความเด็ดขาด" },
-        "๘": { target: "๓", name: "พระอังคาร", element: "ธาตุลม", desc: "เสริมพละกำลัง และการเอาชนะอุปสรรค" }
+    "๑": { target: "๗", name: "พระเสาร์", element: "ธาตุไฟ", desc: "เสริมอำนาจ บารมี และความร้อนแรง" },
+    "๒": { target: "๕", name: "พระพฤหัสบดี", element: "ธาตุดิน", desc: "เสริมความมั่นคง หลักฐาน และทรัพย์สิน" },
+    "๓": { target: "๘", name: "พระราหู", element: "ธาตุลม", desc: "เสริมความกล้าหาญ การฉวยโอกาส และโชคลาภ" },
+    "๔": { target: "๖", name: "พระศุกร์", element: "ธาตุน้ำ", desc: "เสริมเมตตา ความร่มเย็น และการเงิน" },
+    "๕": { target: "๒", name: "พระจันทร์", element: "ธาตุดิน", desc: "เสริมความเมตตาจากผู้ใหญ่ และความมั่นคง" },
+    "๖": { target: "๔", name: "พระพุธ", element: "ธาตุน้ำ", desc: "เสริมเสน่ห์ การเจรจา และความสุข" },
+    "๗": { target: "๑", name: "พระอาทิตย์", element: "ธาตุไฟ", desc: "เสริมยศศักดิ์ และความเด็ดขาด" },
+    "๘": { target: "๓", name: "พระอังคาร", element: "ธาตุลม", desc: "เสริมพละกำลัง และการเอาชนะอุปสรรค" }
 };
 
 const SUN_SAWOEI_DATA = {
@@ -307,44 +307,44 @@ const STAR_CORE_TRAITS = {
 };
 
 const STAR_ADVICE = {
-    1: { 
+    1: {
         advice: "ช่วงนี้บารมีแรง มีเกณฑ์ได้ลาภยศหรือตำแหน่ง แต่ต้องระวัง 'ทิฐิจริต' จะทำให้คนรอบข้างหมั่นไส้ ควรลดความใจร้อนและเลิกเอาตัวเองเป็นศูนย์กลาง ลองรับฟังความเห็นผู้อื่นบ้างจะรุ่งมาก",
-        remedy: "ทำบุญด้วยแสงสว่าง เติมน้ำมันตะเกียง หรือบริจาคหลอดไฟให้วัด/โรงเรียน" 
+        remedy: "ทำบุญด้วยแสงสว่าง เติมน้ำมันตะเกียง หรือบริจาคหลอดไฟให้วัด/โรงเรียน"
     },
-    2: { 
+    2: {
         advice: "ตกใน 'ราคะจริต' จิตใจจะอ่อนไหวง่าย เพลิดเพลินไปกับสิ่งสวยงามและคำหวาน ระวังจะถูกหลอกเพราะความขี้สงสาร หรือเสียเงินไปกับของไม่จำเป็น จิตใจช่วงนี้จะรวนเรเหมือนน้ำขึ้นน้ำลง",
-        remedy: "ทำบุญเกี่ยวกับน้ำดื่ม หรือบริจาคเงินสมทบทุนช่วยเหลือสตรีและเด็ก" 
+        remedy: "ทำบุญเกี่ยวกับน้ำดื่ม หรือบริจาคเงินสมทบทุนช่วยเหลือสตรีและเด็ก"
     },
-    3: { 
+    3: {
         advice: "พลัง 'โทสะจริต' รุนแรงมาก จะขยันผิดปกติ อยากทำนู่นทำนี่ตลอดเวลา แต่ระวังอารมณ์วู่วามจะพาซวย มีเกณฑ์ปากเสียงหรืออุบัติเหตุจากความประมาท อย่าด่วนตัดสินใจอะไรในขณะที่โกรธ",
-        remedy: "บริจาคโลหิต หรือทำบุญซื้ออุปกรณ์การแพทย์ เครื่องมือตัดเย็บ" 
+        remedy: "บริจาคโลหิต หรือทำบุญซื้ออุปกรณ์การแพทย์ เครื่องมือตัดเย็บ"
     },
-    4: { 
+    4: {
         advice: "ตก 'ศรัทธาจริต' เชื่อคนง่าย ใครพูดอะไรก็เคลิ้มตามได้หมด แม้จะเจรจาเก่งค้าขายดี แต่ต้องระวังการเซ็นเอกสารหรือการรับปากใครสุ่มสี่สุ่มห้า ช่วงนี้ข้อมูลจะเยอะจนสับสน ควรมีสติในการคัดกรอง",
-        remedy: "ทำบุญด้วยหนังสือธรรมะ หนังสือเรียน หรือบริจาคเครื่องเขียนให้เด็กยากไร้" 
+        remedy: "ทำบุญด้วยหนังสือธรรมะ หนังสือเรียน หรือบริจาคเครื่องเขียนให้เด็กยากไร้"
     },
-    5: { 
+    5: {
         advice: "อยู่ในช่วง 'พุทธจริต' สติปัญญาดีเยี่ยม เหมาะแก่การเรียนรู้หรือวางแผนระยะยาว ผู้ใหญ่จะเมตตาเป็นพิเศษ แต่ระวังจะกลายเป็นคนเจ้าระเบียบเกินไปจนคนข้างๆ อึดอัด อย่าเอาบรรทัดฐานตัวเองไปวัดคนอื่น",
-        remedy: "ถวายสังฆทานยา บริจาคผ้าไตรจีวร หรือสมทบทุนสร้างสถานศึกษา" 
+        remedy: "ถวายสังฆทานยา บริจาคผ้าไตรจีวร หรือสมทบทุนสร้างสถานศึกษา"
     },
-    6: { 
+    6: {
         advice: "กิเลสสมบัติเข้าครอบงำ ตกใน 'ราคะจริต' สายสุนทรีย์ อยากกินของอร่อย อยากเที่ยว อยากใช้เงินแก้ปัญหา ระวังเรื่องความรักแทรกซ้อนหรือความหลงมัวเมาในกามารมณ์จะทำให้เสียงาน",
-        remedy: "ทำบุญด้วยของหอม ธูปหอม ดอกไม้สด หรืออาสากวาดลานวัด" 
+        remedy: "ทำบุญด้วยของหอม ธูปหอม ดอกไม้สด หรืออาสากวาดลานวัด"
     },
-    7: { 
+    7: {
         advice: "พลัง 'วิตกจริต' ทำงานหนัก คิดวนเวียนอยู่กับเรื่องเก่าๆ หรือกังวลอนาคตที่ยังไม่มาถึง มีเกณฑ์เหนื่อยหนักแบกภาระแทนคนอื่น ระวังสุขภาพทางจิตหรือโรคเครียดลงกระเพาะ",
-        remedy: "ทำบุญโลงศพ บริจาคให้โรงพยาบาลโรคทางจิต หรือปลูกต้นไม้ในที่สาธารณะ" 
+        remedy: "ทำบุญโลงศพ บริจาคให้โรงพยาบาลโรคทางจิต หรือปลูกต้นไม้ในที่สาธารณะ"
     },
-    8: { 
+    8: {
         advice: "ตกอยู่ใน 'โมหะจริต' มัวเมาไปกับอบายมุขหรือสิ่งลวงตาได้ง่าย จิตใจพร่ามัว ตัดสินใจผิดพลาดเพราะความหลงผิด ระวังการถูกชักชวนไปในทางที่ไม่ดีหรือการพนันจะทำให้ทรัพย์ละลาย",
-        remedy: "ทำบุญเกี่ยวกับการให้ปัญญา บริจาคแว่นตา หรือร่วมหล่อพระพุทธรูป" 
+        remedy: "ทำบุญเกี่ยวกับการให้ปัญญา บริจาคแว่นตา หรือร่วมหล่อพระพุทธรูป"
     }
 };
 
 // 2. ฟังก์ชันแปลง DD/MM/YYYY เป็น YYYY-MM-DD เพื่อใช้กับ Input Date
 function formatToInputDate(dateStr) {
     if (!dateStr) return "";
-    
+
     // กรณีข้อมูลมาเป็น DD/MM/YYYY
     if (dateStr.includes('/')) {
         const parts = dateStr.split('/');
@@ -355,7 +355,7 @@ function formatToInputDate(dateStr) {
             return `${year}-${month}-${day}`;
         }
     }
-    
+
     return dateStr; // กรณีข้อมูลมาเป็น YYYY-MM-DD อยู่แล้ว
 }
 
@@ -367,7 +367,7 @@ async function loadMembersToThaksa() {
     try {
         const db = getFirestore();
         const currentUser = localStorage.getItem('thaiHoroUserName');
-        
+
         let q = collection(db, "horo_history");
         if (currentUser) {
             q = query(collection(db, "horo_history"), where("owner", "==", currentUser));
@@ -379,11 +379,11 @@ async function loadMembersToThaksa() {
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const option = document.createElement('option');
-            option.value = data.birthdate; 
+            option.value = data.birthdate;
             option.textContent = `${data.name} (${data.birthdate})`;
             memberSelect.appendChild(option);
         });
-        
+
         console.log("โหลดรายชื่อสมาชิกสำเร็จ");
     } catch (error) {
         console.error("Error loading members:", error);
@@ -397,17 +397,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const memberSelect = document.getElementById('memberSelect');
     if (memberSelect) {
-        memberSelect.addEventListener('change', function(e) {
+        memberSelect.addEventListener('change', function (e) {
             const rawDate = e.target.value;
             if (rawDate) {
                 const bDateInput = document.getElementById('birthDate');
                 if (bDateInput) {
                     const formattedDate = formatToInputDate(rawDate);
-                    bDateInput.value = formattedDate; 
-                    
+                    bDateInput.value = formattedDate;
+
                     // เรียกฟังก์ชันคำนวณหลักของประธาน (ตรวจสอบชื่อให้ตรงกับในไฟล์เดิม)
                     if (typeof window.updateThaksaUI === 'function') {
-                        window.updateThaksaUI(); 
+                        window.updateThaksaUI();
                     } else if (typeof updateThaksaUI === 'function') {
                         updateThaksaUI();
                     }
@@ -417,28 +417,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.getElementById('memberSelect').addEventListener('change', function(e) {
-    const rawDate = e.target.value; 
+document.getElementById('memberSelect').addEventListener('change', function (e) {
+    const rawDate = e.target.value;
     if (rawDate) {
         const bDateInput = document.getElementById('birthDate');
         if (bDateInput) {
             // 1. แปลงฟอร์แมตวันที่
             const formattedDate = formatToInputDate(rawDate);
-            bDateInput.value = formattedDate; 
-            
-            // 2. กระตุ้น Event "change" ด้วยมือ (Manual Trigger) 
-            // เพื่อให้ฟังก์ชันที่ผูกไว้กับ input วันเกิดทำงาน
+            bDateInput.value = formattedDate;
+
+            // 2. กระตุ้น Event เพื่อให้ UI รับรู้
             bDateInput.dispatchEvent(new Event('change'));
             bDateInput.dispatchEvent(new Event('input'));
 
-            // 3. เรียกฟังก์ชันคำนวณโดยตรง (เผื่อไว้ถ้าวิธีที่ 2 ไม่ทำงาน)
-            // เช็กชื่อฟังก์ชันของประธานให้ดีนะครับ (ปกติคือ updateThaksaUI หรือชื่อที่ใช้ในปุ่มคำนวณ)
-            if (typeof updateThaksaUI === 'function') {
-                updateThaksaUI(); 
-                console.log("คำนวณอัตโนมัติสำเร็จ");
+            // 3. เรียกฟังก์ชันคำนวณโดยตรง (เปลี่ยนชื่อเป็น calculateThaksa)
+            if (typeof calculateThaksa === 'function') {
+                calculateThaksa(false); // ใส่ false เพื่อบอกว่าไม่ได้แก้ด้วยมือ (Manual)
+                console.log("✅ คำนวณมหาทักษาอัตโนมัติสำเร็จ");
             } else {
-                // ถ้าประธานใช้ชื่ออื่น ลองเช็กในไฟล์เดิมดูครับ
-                console.error("หาฟังก์ชันคำนวณไม่เจอ");
+                // ถ้ายังหาไม่เจออีก ให้ลองเช็กว่าฟังก์ชันถูกส่งออกไปที่ window หรือยัง
+                if (typeof window.calculateThaksa === 'function') {
+                    window.calculateThaksa(false);
+                    console.log("✅ คำนวณผ่าน window.calculateThaksa สำเร็จ");
+                } else {
+                    console.error("❌ หาฟังก์ชัน calculateThaksa ไม่เจอในระบบ");
+                }
             }
         }
     }
@@ -466,12 +469,12 @@ function getSubPeriodHTML(planetData) {
                     <h5 class="text-warning text-center border-bottom pb-2">
                         <i class="fas fa- calendar-alt mr-2"></i>ช่วงแทรกย่อย: ${planetData.mainName} เสวยอายุ
                     </h5>`;
-    
+
     planetData.subPeriods.forEach(sub => {
         const y = Math.floor(sub.days / 360);
         const m = Math.floor((sub.days % 360) / 30);
         const d = sub.days % 30;
-        
+
         let duration = `${y > 0 ? y + ' ปี ' : ''}${m > 0 ? m + ' เดือน ' : ''}${d > 0 ? d + ' วัน' : ''}`;
 
         html += `
@@ -579,17 +582,17 @@ function calculateThaksaAge(birthDateStr) {
 function findSubPeriodByDate(birthDateStr, targetDateStr = null) {
     const birthDate = new Date(birthDateStr);
     const targetDate = targetDateStr ? new Date(targetDateStr) : new Date();
-    
+
     // 1. คำนวณหาจำนวนวันที่ใช้ชีวิตมาทั้งหมด (1 ปีโหร = 360 วัน)
     // ใช้เกณฑ์มหาทักษา: อายุเต็ม + 1 = อายุย่าง
     // เราจะหา "วันสะสม" ในรอบ 108 ปี (38,880 วัน)
     const diffTime = targetDate - birthDate;
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
+
     // หาตำแหน่งวันในรอบ 108 ปี
-    const totalDaysInCycle = 108 * 360; 
+    const totalDaysInCycle = 108 * 360;
     let currentCycleDay = diffDays % totalDaysInCycle;
-    
+
     // ลำดับดาวเสวยและจำนวนวัน (ปี * 360)
     const sawoeiPlanets = [
         { id: 1, name: "อาทิตย์", years: 6, days: 2160 },
@@ -622,7 +625,7 @@ function findSubPeriodByDate(birthDateStr, targetDateStr = null) {
     const planetIds = [1, 2, 3, 4, 7, 5, 8, 6];
     let startIndex = planetIds.indexOf(mainPlanet.id);
     let sortedSubPlanets = [];
-    
+
     for (let i = 0; i < 8; i++) {
         let pId = planetIds[(startIndex + i) % 8];
         let pInfo = sawoeiPlanets.find(x => x.id === pId);
@@ -645,12 +648,12 @@ function findSubPeriodByDate(birthDateStr, targetDateStr = null) {
     }
 
     return {
-    main: mainPlanet.name,
-    sub: currentSubPlanet.name,
-    subNum: currentSubPlanet.id,
-    daysInSub: Math.floor(daysIntoSubPlanet),
-    totalSubDays: currentSubPlanet.subDays,
-    percent: ((daysIntoSubPlanet / currentSubPlanet.subDays) * 100).toFixed(2)
+        main: mainPlanet.name,
+        sub: currentSubPlanet.name,
+        subNum: currentSubPlanet.id,
+        daysInSub: Math.floor(daysIntoSubPlanet),
+        totalSubDays: currentSubPlanet.subDays,
+        percent: ((daysIntoSubPlanet / currentSubPlanet.subDays) * 100).toFixed(2)
     };
 }
 
@@ -670,7 +673,9 @@ function showBirthDestiny(startDayIndex) {
     `;
 }
 
-function calculateThaksa(isManualChange = false) {
+window.calculateThaksa = function(isManualChange = false) {
+    // ... โค้ดคำนวณข้างในเหมือนเดิมทุกอย่าง ...
+    console.log("⚡ กำลังคำนวณมหาทักษา...");
     const daySelect = document.getElementById('birthDaySelecttaksa');
     const bDateInput = document.getElementById('birthDate');
     const display = document.getElementById('thaksaDisplay');
@@ -686,10 +691,10 @@ function calculateThaksa(isManualChange = false) {
     if (bDateInput && bDateInput.value) {
         const bDate = new Date(bDateInput.value);
         const today = new Date();
-        
+
         // ปีปัจจุบัน - ปีเกิด + 1 (หลักโหราศาสตร์ไทย)
         ageYang = (today.getFullYear() - bDate.getFullYear()) + 1;
-        
+
         if (ageLabel) {
             ageLabel.innerHTML = `อายุย่าง ${ageYang} ปี`;
             ageLabel.style.display = "inline-block";
@@ -697,7 +702,7 @@ function calculateThaksa(isManualChange = false) {
 
         // ถ้าเปิดหน้ามาครั้งแรก หรือเปลี่ยนวันที่ปฏิทิน ให้ Auto Select วันเกิดในทักษา
         if (!isManualChange) {
-            const dayOfWeek = bDate.getDay(); 
+            const dayOfWeek = bDate.getDay();
             const thaksaMapping = [0, 1, 2, 3, 5, 7, 4]; // อา(0), จ(1), อ(2), พุธ(3), พฤ(5), ศ(7), ส(4)
             daySelect.value = thaksaMapping[dayOfWeek];
         }
@@ -706,7 +711,7 @@ function calculateThaksa(isManualChange = false) {
     }
 
     let startDay = parseInt(daySelect.value);
-    
+
     // 2. คำนวณภูมิเสวย (ตำแหน่งที่อายุตก)
     let currentPos = (startDay + (ageYang > 0 ? ageYang - 1 : 0)) % 8;
 
@@ -717,9 +722,9 @@ function calculateThaksa(isManualChange = false) {
         let planetIndex = (startDay + i) % 8;
         let isCurrent = (planetIndex === currentPos && ageYang > 0);
         let thaksaType = THAKSA_NAMES[i];
-        
-        let activeStyle = isCurrent 
-            ? "border: 2px solid #d4af37; background: rgba(212,175,55,0.3); box-shadow: 0 0 20px rgba(212,175,55,0.5); transform: scale(1.05);" 
+
+        let activeStyle = isCurrent
+            ? "border: 2px solid #d4af37; background: rgba(212,175,55,0.3); box-shadow: 0 0 20px rgba(212,175,55,0.5); transform: scale(1.05);"
             : "border: 1px solid rgba(212,175,55,0.3); background: rgba(0,0,0,0.2);";
 
         resultHTML += `
@@ -748,12 +753,12 @@ function calculateThaksa(isManualChange = false) {
     const somphon = PLANET_RELATIONS.somphon[planetNum];
     const elementPair = ELEMENT_PAIRS[planetNum];
 
-    
+
 
     const result = findSubPeriodByDate("1995-03-02");
 
     // 1. เรียกใช้ฟังก์ชันคำนวณอายุที่สร้างไว้ก่อนหน้า
-    const userStatus = calculateThaksaAge("1995-03-02"); 
+    const userStatus = calculateThaksaAge("1995-03-02");
 
     // 2. สร้างที่เก็บข้อมูลรวม (รวบรวมตัวแปรที่เราสร้างไว้ ๑-๖)
     const ALL_SAWOEI_DATA = {
@@ -779,16 +784,16 @@ function calculateThaksa(isManualChange = false) {
             currentYearPrediction = currentMainData.subPeriods[subIdx].text;
         }
     }
-    
+
     // คำนวณดาวคู่ต้านทาน
     const resister = angel.resistance;
 
     // วันที่ปัจจุบันที่ใช้คำนวณดาวแทรก
     const currentDate = new Date();
 
-    const starNameToNum = { 
-    "อาทิตย์": 1, "จันทร์": 2, "อังคาร": 3, "พุธ": 4, 
-    "เสาร์": 7, "พฤหัสบดี": 5, "ราหู": 8, "ศุกร์": 6 
+    const starNameToNum = {
+        "อาทิตย์": 1, "จันทร์": 2, "อังคาร": 3, "พุธ": 4,
+        "เสาร์": 7, "พฤหัสบดี": 5, "ราหู": 8, "ศุกร์": 6
     };
 
     // 2. ดึงเลขดาวจากชื่อดาวที่อยู่ใน result.sub
@@ -804,7 +809,7 @@ function calculateThaksa(isManualChange = false) {
     // กรณีไม่มีเลขดาว ให้เทียบจากชื่อแทน
     const starMap = { "อาทิตย์": 1, "จันทร์": 2, "อังคาร": 3, "พุธ": 4, "เสาร์": 7, "พฤหัสบดี": 5, "ราหู": 8, "ศุกร์": 6 };
     const currentId = starMap[result.sub]; // แปลงชื่อ "อาทิตย์" เป็นเลข 1
-        
+
 
     const card1_HTML = `
     <div id="capture-card1" class="p-3 mb-2" style="background: #000; border-radius: 15px;">
@@ -898,7 +903,7 @@ function calculateThaksa(isManualChange = false) {
     <div id="capture-card4" class="p-3 mb-2" style="background: #000; border-radius: 15px;">
         <div class="prediction-card p-4 rounded shadow" style="background: #1a1a1a; border-left: 5px solid gold;">
         <h4 class="text-warning">วิเคราะห์ดวงรายวัน</h4> 
-        <h3 class="text-gold">วัน <b>${currentDate.getDate() !== undefined ? ` ${["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"][currentDate.getDay()]}` : ''}</b> ที่ <b>${currentDate.getDate() !== undefined ? ` ${currentDate.getDate()}` : ''}</b> <b>${currentDate.getMonth() + 1!== undefined ? ` ${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][currentDate.getMonth()]} ` : ''}</b> พ.ศ. <b>${currentDate.getFullYear()+543}</b></h3>
+        <h3 class="text-gold">วัน <b>${currentDate.getDate() !== undefined ? ` ${["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"][currentDate.getDay()]}` : ''}</b> ที่ <b>${currentDate.getDate() !== undefined ? ` ${currentDate.getDate()}` : ''}</b> <b>${currentDate.getMonth() + 1 !== undefined ? ` ${["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"][currentDate.getMonth()]} ` : ''}</b> พ.ศ. <b>${currentDate.getFullYear() + 543}</b></h3>
         <p class="text-white">ปัจจุบันคุณอยู่ในช่วง: <b>${result.main} เสวยอายุ</b></p>
         <div class="sub-info bg-dark p-3 rounded border border-secondary">
             <span class="text-info">ดาวแทรกขณะนี้: <b>${result.sub}</b></span>
@@ -945,7 +950,7 @@ function calculateThaksa(isManualChange = false) {
     
 
 
-       `; 
+       `;
 
     const controls_HTML = `
             <div class="save-controls mt-4 p-3 border-top border-gold text-center">
@@ -968,11 +973,11 @@ function calculateThaksa(isManualChange = false) {
             </div>
             
             `;
-        
-        
-        detail.innerHTML = card1_HTML + card2_HTML + card3_HTML + card4_HTML;
-        detail.innerHTML += controls_HTML;  
-} 
+
+
+    detail.innerHTML = card1_HTML + card2_HTML + card3_HTML + card4_HTML;
+    detail.innerHTML += controls_HTML;
+}
 
 
 // ผูก Event ทั้งหมด
@@ -988,12 +993,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bDateInput) {
         bDateInput.addEventListener('change', () => calculateThaksa(false));
     }
-    
+
     // รันครั้งแรกถ้ามีค่าอยู่แล้ว
     calculateThaksa();
 });
 
-window.saveCard = function(cardId) {
+window.saveCard = function (cardId) {
     const element = document.getElementById(cardId);
     if (!element) return;
 

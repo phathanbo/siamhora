@@ -1,48 +1,70 @@
 "use strict";
 
+// เพิ่ม 'ascendantPage' และ 'auspiciousPage' เข้าไปในรายการ
 const APP_MENU = [
+    { id: 'ascendantPage', title: 'คำนวณลัคนา', icon: 'fa-star-and-crescent', color: '#d4af37' },
+    { id: 'auspiciousPage', title: 'ปฏิทินฤกษ์มงคล', icon: 'fa-calendar-check', color: '#d4af37' },
     { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 9', icon: 'fa-layer-group', color: '#d4af37' },
     { id: 'taksaPage', title: 'ทักษา', icon: 'fa-chart-line', color: '#d4af37' },
     { id: 'yarmPage', title: 'ยามอัฏฐกาล', icon: 'fa-clock', color: '#d4af37' },
+    { id: 'chatraPage', title: 'ฉัตร 3 ชั้น', icon: 'fa-tree', color: '#d4af37' },
+    { id: 'weeklyColorSection', title: 'สีมงคลประจำวัน', icon: 'fa-fill', color: '#d4af37' },
     { id: 'planetRelationPage', title: 'คู่มิตร-ศัตรู', icon: 'fa-user-friends', color: '#d4af37' },
     { id: 'numerologyPage', title: 'เบอร์มงคล', icon: 'fa-mobile-alt', color: '#d4af37' },
-    { id: 'weeklyColorSection', title: 'สีมงคล', icon: 'fa-fill', color: '#d4af37'},
-    { id: 'dreamPage', title: 'ทำนายฝัน', icon: 'fa-sun', color: '#d4af37'},
-    { id: 'nameAnalysisPage', title: 'วิเคราะห์ชื่อ', icon: 'fa-user', color: '#d4af37'},
-    { id: 'lifeExtensionPage', title: 'ต่อชะตา' , icon: 'fa-fire', color: '#d4af37'},
-    { id: 'elementManualPage' , title: 'คู่ธาตุ' , icon: 'fa-water', color: '#d4af37'},
-    { id: 'chatraPage', title: 'ฉัตร 3 ชั้น', icon: 'fa-tree', color: '#d4af37'},
-    { id: 'lottoPage', title: 'เลขเด็ด', icon: 'fa-dice', color: '#d4af37'},
+    { id: 'dreamPage', title: 'ทำนายฝัน', icon: 'fa-moon', color: '#d4af37' },
+    { id: 'nameAnalysisPage', title: 'วิเคราะห์ชื่อ', icon: 'fa-signature', color: '#d4af37' },
+    { id: 'lottoPage', title: 'เลขเด็ด', icon: 'fa-dice', color: '#d4af37' },
 ];
 
-/**
- * สร้างเมนู Dashboard บนหน้าหลัก
- */
+const UserProfile = {
+    save: function() {
+        const data = {
+            birthDay: document.getElementById('birthDay')?.value || '',
+            birthDate: document.getElementById('birthDate')?.value || '',
+            birthTime: document.getElementById('birthTime')?.value || ''
+        };
+        localStorage.setItem('siamHora_Profile', JSON.stringify(data));
+    },
+    load: function() {
+        const saved = localStorage.getItem('siamHora_Profile');
+        if (saved) {
+            const data = JSON.parse(saved);
+            // เติมค่าให้ทุก Input ที่มี Class เหล่านี้ (ใช้ Class แทน ID เพื่อให้เติมได้หลายหน้าพร้อมกัน)
+            if (data.birthDay) $('.birth-day-input').val(data.birthDay);
+            if (data.birthDate) $('.birth-date-input').val(data.birthDate);
+            if (data.birthTime) $('.birth-time-input').val(data.birthTime);
+            return data;
+        }
+        return null;
+    }
+};
+
 function buildDashboard() {
     const menuGrid = document.getElementById('menuGrid');
-    if(!menuGrid) return;
+    if (!menuGrid) return;
 
     menuGrid.innerHTML = APP_MENU.map(item => `
-        <div class="col-6 col-md-4 mb-4">
-            <div class="card h-100 bg-dark border-gold py-4 shadow-sm" 
-                 style="cursor:pointer; transition: 0.3s;" 
+        <div class="col-6 col-md-4 col-lg-3 mb-4"> <div class="card h-100 bg-dark border-gold py-3 shadow-sm" 
+                 style="cursor:pointer; transition: 0.3s; border: 1px solid #d4af37;" 
                  onclick="navigateTo('${item.id}')"
-                 onmouseover="this.style.transform='scale(1.05)'"
-                 onmouseout="this.style.transform='scale(1)'">
-                <div class="card-body">
+                 onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='translateY(-5px)'"
+                 onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
+                <div class="card-body text-center">
                     <i class="fas ${item.icon} fa-3x mb-3" style="color:${item.color}"></i>
-                    <h5 class="text-white">${item.title}</h5>
+                    <h6 class="text-white mb-0">${item.title}</h6>
                 </div>
             </div>
         </div>
     `).join('');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     buildDashboard();
-    
-    // ตรวจสอบฟังก์ชันอัปเดตยามจากไฟล์ yarmPage.js
-    if(typeof updateNavYarm === 'function') {
+
+    // แสดงหน้าหลักทันทีที่โหลดเสร็จ
+    $('#mainpage').fadeIn();
+
+    if (typeof updateNavYarm === 'function') {
         updateNavYarm();
         setInterval(updateNavYarm, 60000);
     }

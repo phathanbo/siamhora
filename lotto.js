@@ -12,24 +12,24 @@ const LOTTO_THEORY = {
 
 // ตารางเลขตามวันเกิด
 const dayNumbers = {
-    "อาทิตย์": [1,6],
-    "จันทร์": [2,5],
-    "อังคาร": [3,8],
-    "พุธ": [4,7],
-    "พฤหัสบดี": [5,9],
-    "ศุกร์": [6,3],
-    "เสาร์": [7,4]
+    "อาทิตย์": [1, 6],
+    "จันทร์": [2, 5],
+    "อังคาร": [3, 8],
+    "พุธ": [4, 7],
+    "พฤหัสบดี": [5, 9],
+    "ศุกร์": [6, 3],
+    "เสาร์": [7, 4]
 };
 
 // เลขพื้นฐานวันเกิด
 const birthBase = {
-    "อาทิตย์":1,
-    "จันทร์":2,
-    "อังคาร":3,
-    "พุธ":4,
-    "พฤหัสบดี":5,
-    "ศุกร์":6,
-    "เสาร์":7
+    "อาทิตย์": 1,
+    "จันทร์": 2,
+    "อังคาร": 3,
+    "พุธ": 4,
+    "พฤหัสบดี": 5,
+    "ศุกร์": 6,
+    "เสาร์": 7
 };
 
 
@@ -51,7 +51,7 @@ function getNextLottoDate() {
         target = new Date(today.getFullYear(), today.getMonth() + 1, 1);
     }
 
-    const days = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+    const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 
     return {
         date: target,
@@ -81,7 +81,7 @@ function showLottoPage() {
 
 
 // 2. ฟังก์ชันหาปฏิทินหวยออกงวดหน้า (ต้องมีเพื่อให้ generateLuckyNumbers ทำงานได้)
-function getNextLottoDate(){
+function getNextLottoDate() {
 
     const now = new Date();
     const day = now.getDate();
@@ -90,27 +90,27 @@ function getNextLottoDate(){
 
     let target;
 
-    if(day < 16){
-        target = new Date(year,month,16);
-    }else{
-        target = new Date(year,month+1,1);
+    if (day < 16) {
+        target = new Date(year, month, 16);
+    } else {
+        target = new Date(year, month + 1, 1);
     }
 
-    const thaiDays = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
-    const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+    const thaiDays = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+    const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
 
-    return{
+    return {
         date: target.getDate(),
-        month: target.getMonth()+1,
+        month: target.getMonth() + 1,
         year: target.getFullYear(),
-        fullDate:`${target.getDate()} ${thaiMonths[target.getMonth()]} ${target.getFullYear()+543}`,
-        dayName:thaiDays[target.getDay()]
+        fullDate: `${target.getDate()} ${thaiMonths[target.getMonth()]} ${target.getFullYear() + 543}`,
+        dayName: thaiDays[target.getDay()]
     }
 
 }
 
 // คำนวณเลขเด่นงวด
-function calculateMainNumbers(birthDay){
+function calculateMainNumbers(birthDay) {
 
     const next = getNextLottoDate();
     const base = birthBase[birthDay];
@@ -119,7 +119,7 @@ function calculateMainNumbers(birthDay){
     const secondary = (main + next.month) % 10;
     const forbidden = (main + secondary + 3) % 10;
 
-    return{
+    return {
         main,
         secondary,
         forbidden
@@ -129,19 +129,19 @@ function calculateMainNumbers(birthDay){
 
 
 // สุ่มเลข 2 ตัว (กันเลขซ้ำ + กันเลขกลับ)
-function generateTwoDigits(main,secondary,count=6){
+function generateTwoDigits(main, secondary, count = 6) {
 
-    const nums=[];
+    const nums = [];
 
-    while(nums.length < count){
+    while (nums.length < count) {
 
-        const d1 = Math.random()<0.5 ? main : secondary;
-        const d2 = Math.floor(Math.random()*10);
+        const d1 = Math.random() < 0.5 ? main : secondary;
+        const d2 = Math.floor(Math.random() * 10);
 
         const num = `${d1}${d2}`;
         const rev = `${d2}${d1}`;
 
-        if(!nums.includes(num) && !nums.includes(rev)){
+        if (!nums.includes(num) && !nums.includes(rev)) {
             nums.push(num);
         }
 
@@ -153,19 +153,19 @@ function generateTwoDigits(main,secondary,count=6){
 
 
 // สุ่มเลข 3 ตัว
-function generateThreeDigits(main,secondary,count=6){
+function generateThreeDigits(main, secondary, count = 6) {
 
-    const nums=[];
+    const nums = [];
 
-    while(nums.length < count){
+    while (nums.length < count) {
 
-        const d1 = Math.random()<0.5 ? main : secondary;
-        const d2 = Math.floor(Math.random()*10);
-        const d3 = Math.floor(Math.random()*10);
+        const d1 = Math.random() < 0.5 ? main : secondary;
+        const d2 = Math.floor(Math.random() * 10);
+        const d3 = Math.floor(Math.random() * 10);
 
-        const num=`${d1}${d2}${d3}`;
+        const num = `${d1}${d2}${d3}`;
 
-        if(!nums.includes(num)){
+        if (!nums.includes(num)) {
             nums.push(num);
         }
 
@@ -181,17 +181,17 @@ function generateThreeDigits(main,secondary,count=6){
 // วิเคราะห์วันเกิดผู้ใช้
 // ต้องมี select id="birthDay"
 // =============================
-function analyzeBirthDay(){
+function analyzeBirthDay() {
 
-    const day=document.getElementById("birthDay");
+    const day = document.getElementById("birthDay");
 
-    if(!day) return "ไม่ได้ระบุวันเกิด";
+    if (!day) return "ไม่ได้ระบุวันเกิด";
 
-    const value=day.value;
+    const value = day.value;
 
-    if(!LOTTO_THEORY[value]) return "ไม่ได้ระบุวันเกิด";
+    if (!LOTTO_THEORY[value]) return "ไม่ได้ระบุวันเกิด";
 
-    const data=LOTTO_THEORY[value];
+    const data = LOTTO_THEORY[value];
 
     return `
     คนเกิดวัน${value}
@@ -202,16 +202,16 @@ function analyzeBirthDay(){
 
 
 // 3. ฟังก์ชันหลักในการสร้างเลข
-function generateLuckyNumbers(){
+function generateLuckyNumbers() {
 
-    const birthDay=document.getElementById("birthDay").value;
-    const next=getNextLottoDate();
-    const calc=calculateMainNumbers(birthDay);
-    const twoDigits=generateTwoDigits(calc.main,calc.secondary,6);
-    const threeDigits=generateThreeDigits(calc.main,calc.secondary,6);
+    const birthDay = document.getElementById("birthDay").value;
+    const next = getNextLottoDate();
+    const calc = calculateMainNumbers(birthDay);
+    const twoDigits = generateTwoDigits(calc.main, calc.secondary, 6);
+    const threeDigits = generateThreeDigits(calc.main, calc.secondary, 6);
 
 
-    const html=`
+    const html = `
 
     <div class="card shadow mt-4 border-0">
         <div class="card-body">
@@ -236,7 +236,7 @@ function generateLuckyNumbers(){
         </div>
     </div>
     `;
-    document.getElementById("lottoResult").innerHTML=html;
+    document.getElementById("lottoResult").innerHTML = html;
 }
 
 
