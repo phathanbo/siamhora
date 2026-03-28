@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,13 @@
 <body>
     <header class="bg-dark text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1>🔮 สยามโหรามงคล</h1>        
+            <h1>🔮 สยามโหรามงคล</h1>
             <nav>
                 <ul class="nav">
                     <li class="nav-item d-flex align-items-center ml-3">
-                        <div id="navYarmBadge" class="badge badge-gold p-2" style="border: 1px solid #d4af37; background: rgba(212, 175, 55, 0.1); cursor: pointer;" onclick="quickPredictYarm()">
+                        <div id="navYarmBadge" class="badge badge-gold p-2"
+                            style="border: 1px solid #d4af37; background: rgba(212, 175, 55, 0.1); cursor: pointer;"
+                            onclick="quickPredictYarm()">
                             <i class="fas fa-clock mr-1"></i>
                             <span id="navYarmName">กำลังคำนวณยาม...</span>
                         </div>
@@ -25,282 +28,310 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#mainContent" onclick="goBack()">🏠 หน้าหลัก</a>
                     </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="servicesDropdown" role="button" data-toggle="dropdown">
-                            🔮 บริการของเรา
-                        </a>
 
-                        <div class="dropdown-menu bg-dark border-gold shadow-lg">
-                            <h6 class="dropdown-header text-gold opacity-75 small">📅 ฤกษ์ยาม & การเดินทาง</h6>
-
-                            <a class="dropdown-item text-white" href="#" onclick="navigateTo('mainpage')">
-                                <i class="fas fa-home mr-2 text-success"></i> ห้องพยากรณ์
-                            </a>
-
-                            <a class="dropdown-item text-white" href="#" onclick="showDailyHighlightPage()">
-                                <i class="fas fa-map-marked-alt mr-2 text-warning"></i> แผนที่ฤกษ์มงคลรายวัน
-                            </a>
-                            <a class="dropdown-item text-white" href="#" onclick="showDailyTabooPage()">
-                                <i class="fas fa-scroll mr-2 text-warning"></i> ข้อห้ามมงคลวันนี้
-                            </a>
-                            
-                            <a class="dropdown-item text-white" href="#" onclick="showAuspiciousPage()">
-                                <i class="fas fa-calendar-check mr-2 text-warning"></i> ตรวจสอบฤกษ์มงคล
-                            </a>                            
-                            
-
-                        <div class="dropdown-divider border-gold opacity-25"></div>
-                            <h6 class="dropdown-header text-gold opacity-75 small">✨ วิเคราะห์ชะตา</h6>
-                            
-                            <a class="dropdown-item text-white" href="#" onclick="navigateTo('weeklyColorSection')">
-                                <i class="fas fa-palette mr-2 text-info"></i> สีมงคลประจำสัปดาห์
-                            </a>
-                            
-                            
-                            <a class="dropdown-item text-white" href="#" onclick="navigateTo('compatibilityPage')">
-                                <i class="fas fa-heart mr-2 text-info"></i> วิเคราะห์ดวงสมพงษ์
-                            </a>
-                            
-                            <a class="dropdown-item text-white" href="#" onclick="navigateTo('taksaPage')">
-                                <i class="fas fa-star mr-2 text-info"></i> ทักษาพยากรณ์
-                            </a>                      
-                            
-                            
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#mainpage" onclick="navigateTo('mainpage')">
+                            ห้องพยากรณ์</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" onclick="navigateTo('knowledgePage')">
+                        <a class="nav-link text-white" href="#knowledgePage" onclick="navigateTo('knowledgePage')">
                             📜 ความรู้พื้นฐาน
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" onclick="navigateTo('historySection')">
+                        <a class="nav-link text-white" href="#historySection" onclick="navigateTo('historySection')">
                             <i class="fas fa-history mr-2"></i> 📜 ประวัติ
                         </a>
                     </li>
-                    
+
 
 
                 </ul>
             </nav>
         </div>
-            <div id="dailyColorHeader" class="container mt-3"></div>
+        <div id="dailyColorHeader" class="container mt-3"></div>
     </header>
 
-    <main class="container py-4">
-        <div id="authSection" class="card shadow-sm mb-4 border-gold main-section">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <span id="userGreeting" class="h5">✨ ยินดีต้อนรับคุณ <strong>ผู้มาเยือน</strong></span>
-                <div id="authButtons">
-                    <button class="btn btn-gold btn-sm" onclick="login()">เข้าสู่ระบบ / สมัครสมาชิก</button>
+
+
+    <div id="mainContent" class="main-section">
+        <span id="userGreeting" class="text-center font-weight-bold mb-4 d-block" style="font-size: 50px;">✨
+            ยินดีต้อนรับท่านเจ้าชะตา ✨</span>
+        <section id="form" class="card shadow-sm mb-4">
+
+            <div class="card-body">
+                <h2 class="text-center mb-4">กรอกข้อมูลเพื่อทำนายดวง</h2>
+                <div class="form-group">
+                    <label>ชื่อผู้รับคำทำนาย:</label>
+                    <input type="text" class="form-control" id="targetName" placeholder="กรุณาเข้าสู่ระบบหรือกรอกชื่อ"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">วันเกิด (ปี ค.ศ.):</label>
+                    <input type="text" class="form-control" id="birthdate" placeholder="วว/ดด/ปปปป" required
+                        autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="birthtime">เวลาเกิด:</label>
+                    <input type="time" class="form-control" id="birthtime" required>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-gold btn-block" onclick="calculateEsh()">ดูดวงชะตา</button>
                 </div>
             </div>
-        </div>
-
-        <div id="mainContent" class="main-section">
-            <span id="userGreeting" class="text-center font-weight-bold mb-4 d-block" style="font-size: 50px;">✨ ยินดีต้อนรับท่านเจ้าชะตา ✨</span>
-            <section id="form" class="card shadow-sm mb-4">
-                
-                <div class="card-body">
-                    <h2 class="text-center mb-4">กรอกข้อมูลเพื่อทำนายดวง</h2>
-                    <div class="form-group">
-                        <label>ชื่อผู้รับคำทำนาย:</label>
-                        <input type="text" class="form-control" id="targetName" placeholder="กรุณาเข้าสู่ระบบหรือกรอกชื่อ" required>
-                    </div>                
-                    <div class="form-group">
-                        <label for="birthdate">วันเกิด (ปี ค.ศ.):</label>
-                        <input type="text" class="form-control" id="birthdate" placeholder="วว/ดด/ปปปป" required autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label for="birthtime">เวลาเกิด:</label>
-                        <input type="time" class="form-control" id="birthtime" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-gold btn-block" onclick="calculateEsh()">ดูดวงชะตา</button>
-                    </div>
-                </div>
-            </section>
-        </div>        
+        </section>
+    </div>
     </main>
 
-<section id="historySection" class="main-section hidden">
-    <div class="card-body">
+    <section id="historySection" class="main-section" style="display: none;">
+        <div class="card-body">
             <h4 class="card-title text-center mb-4">📜 ประวัติสมาชิก</h4>
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="🔍 ค้นหาชื่อหรือรหัส..." onkeyup="searchHistory()">
-                    <div class="table-responsive">
-                        <table class="table table-hover text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>รหัสสมาชิก</th>
-                                    <th>ชื่อ</th>
-                                    <th>วันเกิด</th>
-                                    <th>นักษัตร</th>
-                                    <th>ยาม</th>
-                                    <th>จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyBody"></tbody>
-                        </table>
-                    </div>
+            <input type="text" id="searchInput" class="form-control mb-3" placeholder="🔍 ค้นหาชื่อหรือรหัส..."
+                onkeyup="searchHistory()">
+            <div class="table-responsive">
+                <table class="table table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>รหัสสมาชิก</th>
+                            <th>ชื่อ</th>
+                            <th>วันเกิด</th>
+                            <th>นักษัตร</th>
+                            <th>ยาม</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
             <div id="historyCount" class="text-right small text-muted"></div>
-    </div>
-</section>
+        </div>
+    </section>
 
-<section id="profilePage" class="main-section hidden">
+    <section id="profilePage" class="main-section" style="display: none;">
         <div class="row">
             <div class="col-md-4">
-                    <div class="card shadow-sm border-gold mb-3">
-                        <div class="card-body text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="100" class="rounded-circle mb-3">
-                            <h3 id="profName">-</h3>
-                            <p class="badge badge-primary" id="profId">ID: -</p>
-                            <hr>
-                            <div class="text-left">
-                                <p><strong>วันเกิด:</strong> <span id="profBirth">-</span></p>
-                                <p><strong>เวลาเกิด:</strong> <span id="profTime">-</span></p>
-                                <p><strong>ปีนักษัตร:</strong> <span id="profZodiac">-</span></p>
-                                <p><strong>ยามที่:</strong> <span id="profYam">-</span></p>
-                            </div>
+                <div class="card shadow-sm border-gold mb-3">
+                    <div class="card-body text-center">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="100"
+                            class="rounded-circle mb-3">
+                        <h3 id="profName">-</h3>
+                        <p class="badge badge-primary" id="profId">ID: -</p>
+                        <hr>
+                        <div class="text-left">
+                            <p><strong>วันเกิด:</strong> <span id="profBirth">-</span></p>
+                            <p><strong>เวลาเกิด:</strong> <span id="profTime">-</span></p>
+                            <p><strong>ปีนักษัตร:</strong> <span id="profZodiac">-</span></p>
+                            <p><strong>ยามที่:</strong> <span id="profYam">-</span></p>
                         </div>
                     </div>
-                            
-                    <div id="personalFortuneArea" class="mt-4"></div>
-                            <button type="button" class="btn btn-outline-primary btn-block mt-2" onclick="calculateLifeGraph()">✨ กราฟชีวิตพยากรณ์</button>
-                            <button type="button" class="btn btn-outline-gold btn-block mt-2"onclick="navigateTo('nameAnalysisPage'); analyzeName();">🔮 วิเคราะห์ชื่อสมาชิกทันที</button>
-                            <button type="button" class="btn btn-outline-warning btn-block mt-2"onclick="navigateTo('mahathaksaPage'); calculateThaksa(false);"><i class="fas fa-dharmachakra mr-2"></i> มหาทักษาพยากรณ์</button>
-                            <button class="btn btn-secondary btn-block mb-3" onclick="goBack()">🔙 กลับหน้าหลัก</button>                            
-                            <button class="btn btn-secondary btn-block mb-3" onclick="navigateTo('historySection')">🔙 ทะเบียนสมาชิก</button>
+                </div>
+
+                <div id="personalFortuneArea" class="mt-4"></div>
+                <button type="button" class="btn btn-outline-primary btn-block mt-2" onclick="calculateLifeGraph()">✨
+                    กราฟชีวิตพยากรณ์</button>
+                <button type="button" class="btn btn-outline-gold btn-block mt-2"
+                    onclick="navigateTo('nameAnalysisPage'); analyzeName();">🔮 วิเคราะห์ชื่อสมาชิกทันที</button>
+                <button type="button" class="btn btn-outline-warning btn-block mt-2"
+                    onclick="navigateTo('mahathaksaPage'); calculateThaksa(false);"><i
+                        class="fas fa-dharmachakra mr-2"></i> มหาทักษาพยากรณ์</button>
+                <button class="btn btn-secondary btn-block mb-3" onclick="goBack()">🔙 กลับหน้าหลัก</button>
+                <button class="btn btn-secondary btn-block mb-3" onclick="navigateTo('historySection')">🔙
+                    ทะเบียนสมาชิก</button>
 
             </div>
             <div class="col-md-8">
-                    <div class="card shadow-lg">
-                        <div class="card-body book-page" id="profPredictionArea"></div>
-                    </div>
-                    <div class="text-center mt-3">
-                        <button class="btn btn-success" onclick="downloadImageFromProfile()">📸 บันทึกเป็นรูปภาพ</button>
-                    </div>
+                <div class="card shadow-lg">
+                    <div class="card-body book-page" id="profPredictionArea"></div>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-success" onclick="downloadImageFromProfile()">📸 บันทึกเป็นรูปภาพ</button>
+                </div>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
             </div>
         </div>
-</section>
+    </section>
 
-<section id="elementManualPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold">
-        <div class="card-header bg-white text-gold text-center py-4">
-            <h2 class="mb-1" style="font-weight: 700;">📜 คัมภีร์ธาตุพยากรณ์</h2>
-            <p class="text-muted mb-0" style="font-size: 1.1rem;">วิชาว่าด้วยการหนุนส่งและหักล้างของเบญจธาตุ</p>
+    <section id="elementManualPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold">
+            <div class="card-header bg-white text-gold text-center py-4">
+                <h2 class="mb-1" style="font-weight: 700;">📜 คัมภีร์ธาตุพยากรณ์</h2>
+                <p class="text-muted mb-0" style="font-size: 1.1rem;">วิชาว่าด้วยการหนุนส่งและหักล้างของเบญจธาตุ</p>
+            </div>
+
+            <div class="card-body bg-light text-dark">
+                <div id="userElementSummary" class="alert bg-white border-gold mb-4 text-center shadow-sm"
+                    style="display:none;">
+                    <h6 class="text-gold mb-2">✨ ธาตุประจำตัวของคุณ ✨</h6>
+                    <div id="userElementBadges" class="d-flex justify-content-center flex-wrap gap-2">
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h5 class="text-gold mb-3"
+                        style="border-left: 4px solid #b8860b; padding-left: 10px; font-weight: 600;">
+                        ✨ วงจรหนุนส่ง (Creative Cycle)
+                    </h5>
+                    <p class="text-muted small mb-3">ธาตุที่ส่งเสริมกัน
+                        อยู่ด้วยกันแล้วจะช่วยผลักดันให้เกิดความเจริญรุ่งเรือง</p>
+                    <div class="row text-center g-2">
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-ไม้" class="p-3 border bg-white rounded shadow-sm">🌳 ไม้ <span
+                                    class="text-gold">→</span> 🔥 ไฟ<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-ไฟ" class="p-3 border bg-white rounded shadow-sm">🔥 ไฟ <span
+                                    class="text-gold">→</span> ⛰️ ดิน<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-ดิน" class="p-3 border bg-white rounded shadow-sm">⛰️ ดิน <span
+                                    class="text-gold">→</span> 🪙 ทอง<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-ทอง" class="p-3 border bg-white rounded shadow-sm">🪙 ทอง <span
+                                    class="text-gold">→</span> 💧 น้ำ<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-น้ำ" class="p-3 border bg-white rounded shadow-sm">💧 น้ำ <span
+                                    class="text-gold">→</span> 🌳 ไม้<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div id="manual-ลม" class="p-3 border bg-white rounded shadow-sm">🌬️ ลม <span
+                                    class="text-gold">→</span> 🔥 ไฟ<br><small
+                                    class="user-label text-primary font-weight-bold"></small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h5 class="text-danger mb-3"
+                        style="border-left: 4px solid #dc3545; padding-left: 10px; font-weight: 600;">
+                        ⚔️ วงจรหักล้าง (Destructive Cycle)
+                    </h5>
+                    <p class="text-muted small mb-3">ธาตุที่เป็นอริกัน อาจทำให้เกิดอุปสรรคหรือความขัดแย้งหากไม่ปรับตัว
+                    </p>
+                    <div class="row text-center g-2" id="destructiveRows">
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="ไฟ-ทอง">🔥 ไฟ <span
+                                    class="text-danger">⚔️</span> 🪙 ทอง</div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="ทอง-ไม้">🪙 ทอง <span
+                                    class="text-danger">⚔️</span> 🌳 ไม้</div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="ไม้-ดิน">🌳 ไม้ <span
+                                    class="text-danger">⚔️</span> ⛰️ ดิน</div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="ดิน-น้ำ">⛰️ ดิน <span
+                                    class="text-danger">⚔️</span> 💧 น้ำ</div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="น้ำ-ไฟ">💧 น้ำ <span
+                                    class="text-danger">⚔️</span> 🔥 ไฟ</div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-2">
+                            <div class="p-3 border bg-white rounded shadow-sm" data-pair="ทอง-ลม">🪙 ทอง <span
+                                    class="text-danger">⚔️</span> 🌬️ ลม</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-secondary border-gold bg-white p-4 shadow-sm">
+                    <h5 class="text-gold text-center mb-4" style="font-weight: 700;">
+                        <i class="fas fa-lightbulb"></i> 💡 เคล็ดลับการประสานธาตุ (The Mediator)
+                    </h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered mb-0" id="mediatorTable"
+                            style="font-size: 1.05rem;">
+                            <thead class="table-dark text-gold">
+                                <tr class="text-center">
+                                    <th style="width: 50%;">คู่หักล้าง</th>
+                                    <th style="width: 50%;">ธาตุประสาน (ตัวช่วย)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr data-pair="ไฟ-ทอง">
+                                    <td>🔥 ไฟ vs 🪙 ทอง</td>
+                                    <td class="bg-warning-subtle text-dark">⛰️ <b>ดิน</b></td>
+                                </tr>
+                                <tr data-pair="ทอง-ไม้">
+                                    <td>🪙 ทอง vs 🌳 ไม้</td>
+                                    <td class="bg-primary-subtle text-dark">💧 <b>น้ำ</b></td>
+                                </tr>
+                                <tr data-pair="ไม้-ดิน">
+                                    <td>🌳 ไม้ vs ⛰️ ดิน</td>
+                                    <td class="bg-danger-subtle text-dark">🔥 <b>ไฟ</b></td>
+                                </tr>
+                                <tr data-pair="ดิน-น้ำ">
+                                    <td>⛰️ ดิน vs 💧 น้ำ</td>
+                                    <td class="bg-secondary-subtle text-dark">🪙 <b>ทอง</b></td>
+                                </tr>
+                                <tr data-pair="น้ำ-ไฟ">
+                                    <td>💧 น้ำ vs 🔥 ไฟ</td>
+                                    <td class="bg-success-subtle text-dark">🌳 <b>ไม้</b></td>
+                                </tr>
+                                <tr data-pair="ทอง-ลม">
+                                    <td>🪙 ทอง vs 🌬️ ลม</td>
+                                    <td class="bg-info-subtle text-dark">💧 <b>น้ำ</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <button class="btn btn-gold btn-lg btn-block mt-4 py-3 shadow" onclick="goBack()"
+                    style="font-weight: 600;">
+                    🔙 กลับหน้าหลัก
+                </button>
+            </div>
         </div>
+    </section>
 
-        <div class="card-body bg-light text-dark">
-            <div id="userElementSummary" class="alert bg-white border-gold mb-4 text-center shadow-sm" style="display:none;">
-                <h6 class="text-gold mb-2">✨ ธาตุประจำตัวของคุณ ✨</h6>
-                <div id="userElementBadges" class="d-flex justify-content-center flex-wrap gap-2">
-                    </div>
-            </div>
-            
-            <div class="mb-5">
-                <h5 class="text-gold mb-3" style="border-left: 4px solid #b8860b; padding-left: 10px; font-weight: 600;">
-                    ✨ วงจรหนุนส่ง (Creative Cycle)
-                </h5>
-                <p class="text-muted small mb-3">ธาตุที่ส่งเสริมกัน อยู่ด้วยกันแล้วจะช่วยผลักดันให้เกิดความเจริญรุ่งเรือง</p>
-                <div class="row text-center g-2">
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-ไม้" class="p-3 border bg-white rounded shadow-sm">🌳 ไม้ <span class="text-gold">→</span> 🔥 ไฟ<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-ไฟ" class="p-3 border bg-white rounded shadow-sm">🔥 ไฟ <span class="text-gold">→</span> ⛰️ ดิน<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-ดิน" class="p-3 border bg-white rounded shadow-sm">⛰️ ดิน <span class="text-gold">→</span> 🪙 ทอง<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-ทอง" class="p-3 border bg-white rounded shadow-sm">🪙 ทอง <span class="text-gold">→</span> 💧 น้ำ<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-น้ำ" class="p-3 border bg-white rounded shadow-sm">💧 น้ำ <span class="text-gold">→</span> 🌳 ไม้<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-2">
-                        <div id="manual-ลม" class="p-3 border bg-white rounded shadow-sm">🌬️ ลม <span class="text-gold">→</span> 🔥 ไฟ<br><small class="user-label text-primary font-weight-bold"></small></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-5">
-                <h5 class="text-danger mb-3" style="border-left: 4px solid #dc3545; padding-left: 10px; font-weight: 600;">
-                    ⚔️ วงจรหักล้าง (Destructive Cycle)
-                </h5>
-                <p class="text-muted small mb-3">ธาตุที่เป็นอริกัน อาจทำให้เกิดอุปสรรคหรือความขัดแย้งหากไม่ปรับตัว</p>
-                <div class="row text-center g-2" id="destructiveRows">
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="ไฟ-ทอง">🔥 ไฟ <span class="text-danger">⚔️</span> 🪙 ทอง</div></div>
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="ทอง-ไม้">🪙 ทอง <span class="text-danger">⚔️</span> 🌳 ไม้</div></div>
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="ไม้-ดิน">🌳 ไม้ <span class="text-danger">⚔️</span> ⛰️ ดิน</div></div>
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="ดิน-น้ำ">⛰️ ดิน <span class="text-danger">⚔️</span> 💧 น้ำ</div></div>
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="น้ำ-ไฟ">💧 น้ำ <span class="text-danger">⚔️</span> 🔥 ไฟ</div></div>
-                    <div class="col-6 col-md-4 mb-2"><div class="p-3 border bg-white rounded shadow-sm" data-pair="ทอง-ลม">🪙 ทอง <span class="text-danger">⚔️</span> 🌬️ ลม</div></div>
-                </div>
-            </div>
-
-            <div class="alert alert-secondary border-gold bg-white p-4 shadow-sm">
-                <h5 class="text-gold text-center mb-4" style="font-weight: 700;">
-                    <i class="fas fa-lightbulb"></i> 💡 เคล็ดลับการประสานธาตุ (The Mediator)
-                </h5>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered mb-0" id="mediatorTable" style="font-size: 1.05rem;">
-                        <thead class="table-dark text-gold">
-                            <tr class="text-center">
-                                <th style="width: 50%;">คู่หักล้าง</th>
-                                <th style="width: 50%;">ธาตุประสาน (ตัวช่วย)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr data-pair="ไฟ-ทอง"><td>🔥 ไฟ vs 🪙 ทอง</td><td class="bg-warning-subtle text-dark">⛰️ <b>ดิน</b></td></tr>
-                            <tr data-pair="ทอง-ไม้"><td>🪙 ทอง vs 🌳 ไม้</td><td class="bg-primary-subtle text-dark">💧 <b>น้ำ</b></td></tr>
-                            <tr data-pair="ไม้-ดิน"><td>🌳 ไม้ vs ⛰️ ดิน</td><td class="bg-danger-subtle text-dark">🔥 <b>ไฟ</b></td></tr>
-                            <tr data-pair="ดิน-น้ำ"><td>⛰️ ดิน vs 💧 น้ำ</td><td class="bg-secondary-subtle text-dark">🪙 <b>ทอง</b></td></tr>
-                            <tr data-pair="น้ำ-ไฟ"><td>💧 น้ำ vs 🔥 ไฟ</td><td class="bg-success-subtle text-dark">🌳 <b>ไม้</b></td></tr>
-                            <tr data-pair="ทอง-ลม"><td>🪙 ทอง vs 🌬️ ลม</td><td class="bg-info-subtle text-dark">💧 <b>น้ำ</b></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <button class="btn btn-gold btn-lg btn-block mt-4 py-3 shadow" onclick="goBack()" style="font-weight: 600;">
-                🔙 กลับหน้าหลัก
-            </button>
-        </div>
-    </div>
-</section>
-
-<section id="auspiciousPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold">
+    <section id="auspiciousPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold">
             <div class="card-header bg-dark text-gold text-center py-4">
-            <div class="d-flex justify-content-between align-items-center">
-            <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(-1)">◀ เดือนก่อนหน้า</button>
-            <div>
-                <h2 class="mb-0">📅 ปฏิทินฤกษ์มงคล</h2>
-                <p class="text-white-50-size-30" id="currentMonthYear"></p>
-                <button onclick="goToToday()" style="background-color: #fab005; ">📍 วันนี้</button>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(-1)">◀
+                        เดือนก่อนหน้า</button>
+                    <div>
+                        <h2 class="mb-0">📅 ปฏิทินฤกษ์มงคล</h2>
+                        <p class="text-white-50-size-30" id="currentMonthYear"></p>
+                        <button onclick="goToToday()" style="background-color: #fab005; ">📍 วันนี้</button>
+                    </div>
+                    <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(1)">เดือนถัดไป
+                        ▶</button>
+                </div>
             </div>
-            <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(1)">เดือนถัดไป ▶</button>
+            <div class="card-body p-0">
+                <table class="table table-bordered calendar-table mb-0">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-danger">อาทิตย์</th>
+                            <th>จันทร์</th>
+                            <th>อังคาร</th>
+                            <th>พุธ</th>
+                            <th>พฤหัสบดี</th>
+                            <th>ศุกร์</th>
+                            <th>เสาร์</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarBody"></tbody>
+                </table>
             </div>
-            </div>
-        <div class="card-body p-0">
-            <table class="table table-bordered calendar-table mb-0">
-                <thead>
-                    <tr class="text-center">
-                        <th class="text-danger">อาทิตย์</th>
-                        <th>จันทร์</th>
-                        <th>อังคาร</th>
-                        <th>พุธ</th>
-                        <th>พฤหัสบดี</th>
-                        <th>ศุกร์</th>
-                        <th>เสาร์</th>
-                    </tr>
-                </thead>
-                <tbody id="calendarBody"></tbody> 
-            </table>
-        </div>
         </div>
         <div class="card-footer bg-light">
             <div class="row text-center small">
@@ -309,7 +340,7 @@
                 <div class="col"><span class="badge bg-warning text-dark">อุบาทว์</span> ควรระวัง</div>
                 <div class="col"><span class="badge bg-danger text-white">โลกาวินาศ</span> ห้ามทำการมงคล</div>
             </div>
-                <div class="alert alert-info mt-3 small">
+            <div class="alert alert-info mt-3 small">
                 <strong>📖 เกร็ดตำรากาลโยค:</strong><br>
                 • <strong>วันธงชัย:</strong> เหมาะแก่การมงคล ขึ้นบ้านใหม่ เริ่มงานใหม่ จะมีชัยชนะ<br>
                 • <strong>วันอธิบดี:</strong> เหมาะแก่การปกครอง การเข้าหาผู้ใหญ่ หรือเริ่มโครงการระยะยาว<br>
@@ -317,259 +348,284 @@
             </div>
             <button class="btn btn-secondary btn-block mt-4" onclick="goBack()">🔙 กลับหน้าหลัก</button>
         </div>
-</section>
-        
+    </section>
 
-<section id="planetRelationPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold">
-        <div class="card-header bg-white text-gold text-center py-4">
-            <h2 class="mb-0">🌟 ตำราดาวคู่มิตร - คู่ศัตรู</h2>
-            <p class="text-gold-50 mb-0">สรุปความสัมพันธ์ของคนเกิดทั้ง 7 วัน</p>
-        </div>
-        <div class="card-body bg-light">
-            <div class="row" id="relationTableBody">
+
+    <section id="planetRelationPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold">
+            <div class="card-header bg-white text-gold text-center py-4">
+                <h2 class="mb-0">🌟 ตำราดาวคู่มิตร - คู่ศัตรู</h2>
+                <p class="text-gold-50 mb-0">สรุปความสัมพันธ์ของคนเกิดทั้ง 7 วัน</p>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row" id="relationTableBody">
                 </div>
-            
-            <hr>
-            <div class="alert alert-warning small py-2">
-                <b>หมายเหตุ:</b> ใช้สำหรับพิจารณาการหาหุ้นส่วน คู่ครอง หรือบุคคลที่จะขอความช่วยเหลือ
+
+                <hr>
+                <div class="alert alert-warning small py-2">
+                    <b>หมายเหตุ:</b> ใช้สำหรับพิจารณาการหาหุ้นส่วน คู่ครอง หรือบุคคลที่จะขอความช่วยเหลือ
+                </div>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+
+                <button class="btn btn-secondary btn-block mt-3" onclick="goBack()">🔙 กลับหน้าหลัก</button>
             </div>
-            <button class="btn btn-secondary btn-block mt-3" onclick="goBack()">🔙 กลับหน้าหลัก</button>
         </div>
-    </div>
-</section>
+    </section>
 
-   
-<section id="numerologyPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold overflow-hidden">
-        <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
-            <h2 class="text-gold mb-1">🔮 วิเคราะห์เลขศาสตร์มงคล</h2>
-            <p class="text-white-50 mb-0 small">ทำนายพลังตัวเลขที่ส่งผลต่อชีวิตคุณ</p>
-        </div>        
-        <div class="card-body bg-light">
-            <div class="btn-group btn-group-toggle w-100 mb-4 shadow-sm" data-toggle="buttons">
-                <label class="btn btn-outline-gold active flex-fill">
-                    <input type="radio" name="numType" value="phone" checked onchange="updateNumUI('phone')"> 📱 เบอร์มือถือ
-                </label>
-                <label class="btn btn-outline-gold flex-fill">
-                    <input type="radio" name="numType" value="car" onchange="updateNumUI('car')"> 🚗 ทะเบียนรถ
-                </label>
-                <label class="btn btn-outline-gold flex-fill">
-                    <input type="radio" name="numType" value="home" onchange="updateNumUI('home')"> 🏠 เลขที่บ้าน
-                </label>
+
+    <section id="numerologyPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
+                <h2 class="text-gold mb-1">🔮 วิเคราะห์เลขศาสตร์มงคล</h2>
+                <p class="text-white-50 mb-0 small">ทำนายพลังตัวเลขที่ส่งผลต่อชีวิตคุณ</p>
             </div>
+            <div class="card-body bg-light">
+                <div class="btn-group btn-group-toggle w-100 mb-4 shadow-sm" data-toggle="buttons">
+                    <label class="btn btn-outline-gold active flex-fill">
+                        <input type="radio" name="numType" value="phone" checked onchange="updateNumUI('phone')"> 📱
+                        เบอร์มือถือ
+                    </label>
+                    <label class="btn btn-outline-gold flex-fill">
+                        <input type="radio" name="numType" value="car" onchange="updateNumUI('car')"> 🚗 ทะเบียนรถ
+                    </label>
+                    <label class="btn btn-outline-gold flex-fill">
+                        <input type="radio" name="numType" value="home" onchange="updateNumUI('home')"> 🏠 เลขที่บ้าน
+                    </label>
+                </div>
 
-            <div class="form-group text-center">
-                <label for="phoneNumber" class="font-weight-bold text-dark" id="inputLabel">กรอกหมายเลข:</label>
-                <input type="text" 
-                class="form-control form-control-lg border-gold text-center shadow-inner" 
-                id="phoneNumber" 
-                placeholder="08XXXXXXXX" 
-                oninput="validateInput(this)"
-                style="font-size: 1.5rem; letter-spacing: 2px; border-radius: 15px;">
-                <small class="text-muted mt-2 d-block" id="inputHelp">*ระบบจะลบช่องว่างและอักษรพิเศษออกให้อัตโนมัติ</small>
-            </div>
+                <div class="form-group text-center">
+                    <label for="phoneNumber" class="font-weight-bold text-dark" id="inputLabel">กรอกหมายเลข:</label>
+                    <input type="text" class="form-control form-control-lg border-gold text-center shadow-inner"
+                        id="phoneNumber" placeholder="08XXXXXXXX" oninput="validateInput(this)"
+                        style="font-size: 1.5rem; letter-spacing: 2px; border-radius: 15px;">
+                    <small class="text-muted mt-2 d-block"
+                        id="inputHelp">*ระบบจะลบช่องว่างและอักษรพิเศษออกให้อัตโนมัติ</small>
+                </div>
 
-            <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold" 
-                    id="btnAnalyze" 
+                <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold" id="btnAnalyze"
                     onclick="analyzeNumber()">
-                ✨ วิเคราะห์เบอร์มือถือ
-            </button>            
-            <div id="numerologyResult" class="mt-4"></div>
+                    ✨ วิเคราะห์เบอร์มือถือ
+                </button>
+                <div id="numerologyResult" class="mt-4"></div>
 
-            <div id="numResult" class="mt-4 p-4 rounded-lg" style="display:none; background: #222; border: 1px solid #444;">
-                <div id="numScoreDisplay"></div>
-                <div id="numMeaningDisplay"></div>
-                
-                <div class="text-center mt-4">
-                    <button class="btn btn-gold btn-lg px-5 share-num-btn" onclick="downloadNumerologyImage(this)">
-                        <i class="fas fa-certificate mr-2"></i> เซฟใบพยากรณ์แชร์ลง Facebook
-                    </button>
-                </div>
-            </div>
+                <div id="numResult" class="mt-4 p-4 rounded-lg"
+                    style="display:none; background: #222; border: 1px solid #444;">
+                    <div id="numScoreDisplay"></div>
+                    <div id="numMeaningDisplay"></div>
 
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-        </div>
-    </div>
-</section>
-
-<section id="compatibilityPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold overflow-hidden">
-        <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
-            <h2 class="text-gold mb-1">🔮 วิเคราะห์ดวงสมพงษ์</h2>
-            <p class="text-white-50 mb-0 small">ตรวจเช็คคู่ครองและพันธมิตร ตามตำราพรหมชาติไทย</p>
-        </div>
-        
-        <div class="card-body bg-light">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group text-center">
-                        <label class="font-weight-bold text-dark">นักษัตรของคุณ:</label>
-                        <select id="myZodiac" class="form-control form-control-lg border-gold shadow-inner" style="border-radius: 15px; color: #b8860b;">
-                            <option value="ชวด">ปีชวด (หนู)</option>
-                            <option value="ฉลู">ปีฉลู (วัว)</option>
-                            <option value="ขาล">ปีขาล (เสือ)</option>
-                            <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
-                            <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
-                            <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
-                            <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
-                            <option value="มะแม">ปีมะแม (แพะ)</option>
-                            <option value="วอก">ปีวอก (ลิง)</option>
-                            <option value="ระกา">ปีระกา (ไก่)</option>
-                            <option value="จอ">ปีจอ (หมา)</option>
-                            <option value="กุน">ปีกุน (หมู)</option>
-                        </select>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-gold btn-lg px-5 share-num-btn" onclick="downloadNumerologyImage(this)">
+                            <i class="fas fa-certificate mr-2"></i> เซฟใบพยากรณ์แชร์ลง Facebook
+                        </button>
                     </div>
                 </div>
 
-                <div class="col-md-2 text-center d-flex align-items: center; justify-content: center;">
-                    <h1 class="text-gold animate__animated animate__pulse animate__infinite" style="font-size: 3rem; line-height: 100px;">❤️</h1>
-                </div>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
 
-                <div class="col-md-5">
-                    <div class="form-group text-center">
-                        <label class="font-weight-bold text-dark">นักษัตรของคู่:</label>
-                        <select id="partnerZodiac" class="form-control form-control-lg border-gold shadow-inner" style="border-radius: 15px; color: #b8860b;">
-                            <option value="ชวด">ปีชวด (หนู)</option>
-                            <option value="ฉลู">ปีฉลู (วัว)</option>
-                            <option value="ขาล">ปีขาล (เสือ)</option>
-                            <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
-                            <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
-                            <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
-                            <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
-                            <option value="มะแม">ปีมะแม (แพะ)</option>
-                            <option value="วอก">ปีวอก (ลิง)</option>
-                            <option value="ระกา">ปีระกา (ไก่)</option>
-                            <option value="จอ">ปีจอ (หมา)</option>
-                            <option value="กุน">ปีกุน (หมู)</option>
-                        </select>
-                    </div>
-                </div>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="compatibilityPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
+                <h2 class="text-gold mb-1">🔮 วิเคราะห์ดวงสมพงษ์</h2>
+                <p class="text-white-50 mb-0 small">ตรวจเช็คคู่ครองและพันธมิตร ตามตำราพรหมชาติไทย</p>
             </div>
 
-            <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold" 
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group text-center">
+                            <label class="font-weight-bold text-dark">นักษัตรของคุณ:</label>
+                            <select id="myZodiac" class="form-control form-control-lg border-gold shadow-inner"
+                                style="border-radius: 15px; color: #b8860b;">
+                                <option value="ชวด">ปีชวด (หนู)</option>
+                                <option value="ฉลู">ปีฉลู (วัว)</option>
+                                <option value="ขาล">ปีขาล (เสือ)</option>
+                                <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
+                                <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
+                                <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
+                                <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
+                                <option value="มะแม">ปีมะแม (แพะ)</option>
+                                <option value="วอก">ปีวอก (ลิง)</option>
+                                <option value="ระกา">ปีระกา (ไก่)</option>
+                                <option value="จอ">ปีจอ (หมา)</option>
+                                <option value="กุน">ปีกุน (หมู)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 text-center d-flex align-items: center; justify-content: center;">
+                        <h1 class="text-gold animate__animated animate__pulse animate__infinite"
+                            style="font-size: 3rem; line-height: 100px;">❤️</h1>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group text-center">
+                            <label class="font-weight-bold text-dark">นักษัตรของคู่:</label>
+                            <select id="partnerZodiac" class="form-control form-control-lg border-gold shadow-inner"
+                                style="border-radius: 15px; color: #b8860b;">
+                                <option value="ชวด">ปีชวด (หนู)</option>
+                                <option value="ฉลู">ปีฉลู (วัว)</option>
+                                <option value="ขาล">ปีขาล (เสือ)</option>
+                                <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
+                                <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
+                                <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
+                                <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
+                                <option value="มะแม">ปีมะแม (แพะ)</option>
+                                <option value="วอก">ปีวอก (ลิง)</option>
+                                <option value="ระกา">ปีระกา (ไก่)</option>
+                                <option value="จอ">ปีจอ (หมา)</option>
+                                <option value="กุน">ปีกุน (หมู)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold"
                     onclick="processCompatibility()">
-                ✨ วิเคราะห์ดวงสมพงษ์
-            </button> 
+                    ✨ วิเคราะห์ดวงสมพงษ์
+                </button>
 
-            <div id="compatResult" class="mt-4"></div>            
+                <div id="compatResult" class="mt-4"></div>
 
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+                </button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section id="lottoPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold overflow-hidden">
-        <div class="card-header bg-dark text-white text-center py-4">
-            <h2 class="text-gold mb-1">🎰 หอคำนวณเลขมงคล</h2>
-            <p class="text-white-50 mb-0 small">สุ่มเลขนำโชคอ้างอิงตามกำลังวันและฐานดวงเกิด</p>
-        </div>
+    <section id="lottoPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4">
+                <h2 class="text-gold mb-1">🎰 หอคำนวณเลขมงคล</h2>
+                <p class="text-white-50 mb-0 small">สุ่มเลขนำโชคอ้างอิงตามกำลังวันและฐานดวงเกิด</p>
+            </div>
 
-        <div class="card-body bg-light text-center">
+            <div class="card-body bg-light text-center">
 
-            <div class="py-5" id="beforeGenerate">
+                <div class="py-5" id="beforeGenerate">
 
-                <i class="fas fa-dice-d20 fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
+                    <i
+                        class="fas fa-dice-d20 fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
 
-                <h3>พร้อมเสี่ยงทายเลขมงคลหรือยัง?</h3>
+                    <h3>พร้อมเสี่ยงทายเลขมงคลหรือยัง?</h3>
 
-                <p class="text-muted">
-                ระบบจะนำวันเกิดของคุณมาคำนวณหาตัวเลขที่สมพงษ์ที่สุดในงวดนี้
-                </p>
+                    <p class="text-muted">
+                        ระบบจะนำวันเกิดของคุณมาคำนวณหาตัวเลขที่สมพงษ์ที่สุดในงวดนี้
+                    </p>
 
-                <!-- เพิ่มตรงนี้ -->
-                <div class="mt-4 mb-3">
-                    <label class="font-weight-bold">เลือกวันเกิดของคุณ</label>
-                    <select id="birthDay" class="form-control text-center">
-                        <option value="">เลือกวันเกิด</option>
-                        <option>อาทิตย์</option>
-                        <option>จันทร์</option>
-                        <option>อังคาร</option>
-                        <option>พุธ</option>
-                        <option>พฤหัสบดี</option>
-                        <option>ศุกร์</option>
-                        <option>เสาร์</option>
-                    </select>
+                    <!-- เพิ่มตรงนี้ -->
+                    <div class="mt-4 mb-3">
+                        <label class="font-weight-bold">เลือกวันเกิดของคุณ</label>
+                        <select id="birthDay" class="form-control text-center">
+                            <option value="">เลือกวันเกิด</option>
+                            <option>อาทิตย์</option>
+                            <option>จันทร์</option>
+                            <option>อังคาร</option>
+                            <option>พุธ</option>
+                            <option>พฤหัสบดี</option>
+                            <option>ศุกร์</option>
+                            <option>เสาร์</option>
+                        </select>
+                    </div>
+                    <!-- จบส่วนเพิ่ม -->
+
+                    <button class="btn btn-gold btn-lg px-5 mt-3" onclick="generateLuckyNumbers()">
+                        🔮 เริ่มการเสี่ยงทาย
+                    </button>
+
                 </div>
-                <!-- จบส่วนเพิ่ม -->
 
-                <button class="btn btn-gold btn-lg px-5 mt-3" onclick="generateLuckyNumbers()">
-                    🔮 เริ่มการเสี่ยงทาย
+                <div id="lottoResult" class="mt-2"></div>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
                 </button>
 
             </div>
-
-            <div id="lottoResult" class="mt-2"></div>
-
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section id="weeklyColorSection" class="main-section hidden">
-            <div class="card-header bg-dark text-white text-center py-4">
-                <i class="fas fa-palette fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
-                <h2 class="text-gold mb-1">✨ หอพยากรณ์สีมงคล</h2>
-                <h3>ตรวจสอบตารางสีประจำสัปดาห์</h3>
-                <p class="text-white-50 mb-0 small">วางแผนเสริมดวงชะตา เลือกสีเสื้อผ้าและทิศมงคลให้เฮงตลอดทั้งอาทิตย์</p>
-                <p class="text-muted">ให้พลังแห่งสีสรรค์ช่วยส่งเสริมความสำเร็จในทุกการเจรจาของคุณ</p>
-            </div>            
-            <div id="weeklyTableWrapper" class="mt-2" style="display: none;">
-                <div class="weekly-card animate__animated animate__fadeInUp">
-                    <div class="table-responsive">
-                        <table class="table table-borderless text-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-gold-light">วัน</th>
-                                    <th class="text-gold-light">โชคลาภ (เงิน)</th>
-                                    <th class="text-gold-light">บารมี (งาน)</th>
-                                    <th class="text-gold-light">กาลกิณี (ห้าม)</th>
-                                    <th class="text-gold-light">ทิศมงคล</th>
-                                </tr>
-                            </thead>
-                            <tbody id="weeklyTableBody">
-                                </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="mt-4 animate__animated animate__fadeIn" style="text-align: center;">
-                    <span class="badge badge-outline-gold p-2 " style="white-space: normal;">
-                        <i class="fas fa-info-circle mr-1"></i> เคล็ดลับ: หากต้องไปเจรจางานสำคัญ ให้เน้นสีในช่อง "บารมี" เป็นหลัก
-                    </span>
+    <section id="weeklyColorSection" class="main-section" style="display: none;">
+        <div class="card-header bg-dark text-white text-center py-4">
+            <i class="fas fa-palette fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
+            <h2 class="text-gold mb-1">✨ หอพยากรณ์สีมงคล</h2>
+            <h3>ตรวจสอบตารางสีประจำสัปดาห์</h3>
+            <p class="text-white-50 mb-0 small">วางแผนเสริมดวงชะตา เลือกสีเสื้อผ้าและทิศมงคลให้เฮงตลอดทั้งอาทิตย์</p>
+            <p class="text-muted">ให้พลังแห่งสีสรรค์ช่วยส่งเสริมความสำเร็จในทุกการเจรจาของคุณ</p>
+        </div>
+        <div id="weeklyTableWrapper" class="mt-2" style="display: none;">
+            <div class="weekly-card animate__animated animate__fadeInUp">
+                <div class="table-responsive">
+                    <table class="table table-borderless text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-gold-light">วัน</th>
+                                <th class="text-gold-light">โชคลาภ (เงิน)</th>
+                                <th class="text-gold-light">บารมี (งาน)</th>
+                                <th class="text-gold-light">กาลกิณี (ห้าม)</th>
+                                <th class="text-gold-light">ทิศมงคล</th>
+                            </tr>
+                        </thead>
+                        <tbody id="weeklyTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-        </div>
-    </div>
-</section>
-
-
-<section id="taksaPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold overflow-hidden bg-dark text-white">
-        <div class="card-header bg-dark border-gold text-center py-4">
-            <h2 class="text-gold mb-1">☸️ ทักษาพยากรณ์</h2>
-            <p class="text-white-50 mb-0 small">คำนวณดาวเสวยอายุและภูมิพยากรณ์ตามตำราหลวง</p>
+            <div class="mt-4 animate__animated animate__fadeIn" style="text-align: center;">
+                <span class="badge badge-outline-gold p-2 " style="white-space: normal;">
+                    <i class="fas fa-info-circle mr-1"></i> เคล็ดลับ: หากต้องไปเจรจางานสำคัญ ให้เน้นสีในช่อง "บารมี"
+                    เป็นหลัก
+                </span>
+            </div>
         </div>
 
-        <div class="card-body text-center">
-            <div id="taksaInput" class="py-4">
+        <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+        </button>
+
+        <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+            <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+        </button>
+        </div>
+        </div>
+    </section>
+
+
+    <section id="taksaPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold overflow-hidden bg-dark text-white">
+            <div class="card-header bg-dark border-gold text-center py-4">
+                <h2 class="text-gold mb-1">☸️ ทักษาพยากรณ์</h2>
+                <p class="text-white-50 mb-0 small">คำนวณดาวเสวยอายุและภูมิพยากรณ์ตามตำราหลวง</p>
+            </div>
+
+            <div class="card-body text-center">
+                <div id="taksaInput" class="py-4">
                     <i class="fas fa-dharmachakra fa-5x text-gold mb-4 animate__animated animate__rotateIn"></i>
                     <h4>ระบุข้อมูลเพื่อผูกดวงทักษา</h4>
-                    
+
                     <div class="btn-group btn-group-toggle mt-3 mb-3" data-toggle="buttons">
                         <label class="btn btn-outline-gold active text-white">
                             <input type="radio" name="gender" value="male" checked> ชาย (เวียนขวา)
@@ -581,7 +637,8 @@
 
                     <div class="form-group mt-2 mx-auto" style="max-width: 300px;">
                         <label class="text-white-50">วันเกิดของคุณ</label>
-                        <select id="birthDaySelect" class="form-control bg-dark text-white border-gold" style="height: 55px;">
+                        <select id="birthDaySelect" class="form-control bg-dark text-white border-gold"
+                            style="height: 55px;">
                             <option value="0">วันอาทิตย์</option>
                             <option value="1">วันจันทร์</option>
                             <option value="2">วันอังคาร</option>
@@ -593,525 +650,608 @@
                         </select>
                     </div>
                     <div class="form-group mt-2 mx-auto" style="max-width: 300px;">
-                        <label class="text-white-50">อายุย่าง = อายุในปีปัจจุบัน <br>(นับแบบไทย ถ้ายังไม่ถึงวันเกิดให้ +1)</label>
-                        <input type="number" id="userAge" class="form-control bg-dark text-white border-gold" placeholder="เช่น 25" min="1" max="120" required style="height: 55px;">
+                        <label class="text-white-50">อายุย่าง = อายุในปีปัจจุบัน <br>(นับแบบไทย ถ้ายังไม่ถึงวันเกิดให้
+                            +1)</label>
+                        <input type="number" id="userAge" class="form-control bg-dark text-white border-gold"
+                            placeholder="เช่น 25" min="1" max="120" required style="height: 55px;">
                     </div>
-                    <button class="btn btn-gold btn-lg px-5 mt-4 shadow-lg" onclick="calculateAndShowTaksa()" id="taksaBtn">
+                    <button class="btn btn-gold btn-lg px-5 mt-4 shadow-lg" onclick="calculateAndShowTaksa()"
+                        id="taksaBtn">
                         ✨ ผูกดวงทักษา
                     </button>
                 </div>
 
-            <div id="taksaResult" class="mt-2" style="display: none;">
-                <div id="taksaDisplay"></div>
-            </div>
-
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-        </div>
-    </div>
-</section>
-
-
-<section id="yarmPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold bg-dark text-white text-center">
-        <div class="card-header bg-dark border-gold py-4">
-            <h2 class="text-gold mb-1">🕰️ ยามอัฏฐกาลพยากรณ์</h2>
-            <p class="text-white-50 mb-0">เลือกเวลาเพื่อดูฤกษ์ยามมงคลตามตำราพรหมชาติ</p>
-        </div>
-        <div class="card-body">
-            <div id="currentTimeYarm" class="mb-4 p-3 rounded-circle border-gold mx-auto animate__animated animate__pulse animate__infinite" style="width: 200px; height: 200px; display: flex; flex-direction: column; justify-content: center; background: rgba(212, 175, 55, 0.05);">
-                <h6 class="text-gold mb-0 small">ยามปัจจุบัน</h6>
-                <h3 id="yarmNowName" class="mb-0">...</h3>
-                <small id="yarmNowTime" class="text-white-50">...</small>
-            </div>
-
-            <div class="form-row justify-content-center mb-4">
-                <div class="col-md-4">
-                    <label class="text-white-50">เลือกวัน</label>
-                    <select id="yarmDaySelect" onchange="calculateYarm()" class="form-control bg-dark text-white border-gold" style="height: auto;">
-                        <option value="0">วันอาทิตย์</option>
-                        <option value="1">วันจันทร์</option>
-                        <option value="2">วันอังคาร</option>
-                        <option value="3">วันพุธ</option>
-                        <option value="4">วันพฤหัสบดี</option>
-                        <option value="5">วันศุกร์</option>
-                        <option value="6">วันเสาร์</option>
-                    </select>
+                <div id="taksaResult" class="mt-2" style="display: none;">
+                    <div id="taksaDisplay"></div>
                 </div>
-                <div class="col-md-4">
-                    <label class="text-white-50">ระบุเวลา</label>
-                    <input type="time" id="yarmTimeInput" onchange="calculateYarm()" class="form-control bg-dark text-white border-gold" style="height: auto;">
-                </div>
-            </div>
-            
-            <button class="btn btn-gold btn-lg px-5 mb-4 shadow" onclick="calculateYarm()">🔍 ดูคำทำนายยาม</button>
 
-            <div id="yarmResult" class="text-left animate__animated animate__fadeIn" style="display: none;">
-                <div class="p-4 bg-dark-soft rounded border-gold">
-                    <h4 id="resYarmTitle" class="text-gold mb-3"></h4>
-                    <div id="resYarmDetail" class="text-white"></div>
-                    <hr class="border-gold opacity-25">
-                    <div class="row text-center mt-3">
-                        <div class="col-6 border-right">
-                            <small class="text-success d-block">เหมาะสำหรับ</small>
-                            <span id="yarmGood"></span>
-                        </div>
-                        <div class="col-6">
-                            <small class="text-danger d-block">ควรระวัง</small>
-                            <span id="yarmBad"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section id="dailyHighlightPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold bg-dark text-white">
-        <div class="card-header bg-dark border-gold py-3 text-center">
-            <h2 class="text-gold mb-1">📅 แผนที่ฤกษ์มงคลรายวัน</h2>
-            <p class="text-white-50">วางแผนชีวิตตามจังหวะดวงดาว</p>
-        </div>
-        <div class="card-body">
-            <div class="form-row justify-content-center mb-4">
-                <div class="col-md-6">
-                    <label class="text-white-50">เลือกวันที่ต้องการวางแผน</label>
-                    <input type="date" id="highlightDatePicker" class="form-control bg-dark text-white border-gold" onchange="generateDailyMap()">
-                </div>
-            </div>
-
-            <div id="dailyMapCapture" class="p-3 rounded bg-dark" style="border: 2px solid #d4af37;">
-                <div class="text-center mb-3">
-                    <h4 id="mapDateTitle" class="text-gold"></h4>
-                    <hr class="border-gold opacity-25">
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="text-warning text-center"><i class="fas fa-sun"></i> ภาคกลางวัน</h6>
-                        <div id="dayYarmList"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="text-info text-center mt-3 mt-md-0"><i class="fas fa-moon"></i> ภาคกลางคืน</h6>
-                        <div id="nightYarmList"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-4">
-                <button class="btn btn-gold btn-lg px-5 download-btn" onclick="downloadDailyMap(this)">
-                    <i class="fas fa-image mr-2"></i> เซฟเป็นรูปภาพเก็บไว้
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
                 </button>
-                <button class="btn btn-outline-light btn-lg ml-2" onclick="goBack()">ย้อนกลับ</button>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+                </button>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="dailyTabooPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold bg-dark text-white">
-        <div class="card-header bg-dark border-gold py-3 text-center">
-            <h2 class="text-gold mb-1">📜 ตำราพรหมชาติ & นักษัตรรายวัน</h2>
-            <p class="text-white-50">เช็คฤกษ์มงคล ข้อห้าม และดวงปีเกิดรายบุคคล</p>
-        </div>
-        <div class="card-body">
-        <div id="tabooCaptureArea" class="p-4 rounded text-center" style="background: #1a1a1a; border: 2px solid #d4af37;">
-        <h3 id="tabooDayTitle" class="text-gold mb-0">วัน...</h3>
-        <div class="text-white-50 small mb-4">สยามโหรามงคล • พรหมชาติ & กาลโยค</div>
-        
-        <div class="col-12 mb-3">
-            <div class="p-3 rounded border-gold" style="background: rgba(212, 175, 55, 0.05);">
-                <h6 class="text-gold text-center mb-3"><i class="fas fa-calendar-alt"></i> เคล็ดลับมงคลรายวัน</h6>
-                <div class="row text-left">
-                    <div class="col-6 border-right" style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
-                        <div class="text-center mb-2"><span class="badge badge-success">✅ สิ่งที่ควรทำ</span></div>
-                        <ul id="goodList" class="mb-0 pl-3 small text-white" style="list-style-type: circle;"></ul>
+
+    <section id="yarmPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold bg-dark text-white text-center">
+            <div class="card-header bg-dark border-gold py-4">
+                <h2 class="text-gold mb-1">🕰️ ยามอัฏฐกาลพยากรณ์</h2>
+                <p class="text-white-50 mb-0">เลือกเวลาเพื่อดูฤกษ์ยามมงคลตามตำราพรหมชาติ</p>
+            </div>
+            <div class="card-body">
+                <div id="currentTimeYarm"
+                    class="mb-4 p-3 rounded-circle border-gold mx-auto animate__animated animate__pulse animate__infinite"
+                    style="width: 200px; height: 200px; display: flex; flex-direction: column; justify-content: center; background: rgba(212, 175, 55, 0.05);">
+                    <h6 class="text-gold mb-0 small">ยามปัจจุบัน</h6>
+                    <h3 id="yarmNowName" class="mb-0">...</h3>
+                    <small id="yarmNowTime" class="text-white-50">...</small>
+                </div>
+
+                <div class="form-row justify-content-center mb-4">
+                    <div class="col-md-4">
+                        <label class="text-white-50">เลือกวัน</label>
+                        <select id="yarmDaySelect" onchange="calculateYarm()"
+                            class="form-control bg-dark text-white border-gold" style="height: auto;">
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ</option>
+                            <option value="4">วันพฤหัสบดี</option>
+                            <option value="5">วันศุกร์</option>
+                            <option value="6">วันเสาร์</option>
+                        </select>
                     </div>
-                    <div class="col-6">
-                        <div class="text-center mb-2"><span class="badge badge-danger">🚫 สิ่งที่ควรเลี่ยง</span></div>
-                        <ul id="badList" class="mb-0 pl-3 small text-white" style="list-style-type: circle;"></ul>
+                    <div class="col-md-4">
+                        <label class="text-white-50">ระบุเวลา</label>
+                        <input type="time" id="yarmTimeInput" onchange="calculateYarm()"
+                            class="form-control bg-dark text-white border-gold" style="height: auto;">
+                    </div>
+                </div>
+
+                <button class="btn btn-gold btn-lg px-5 mb-4 shadow" onclick="calculateYarm()">🔍 ดูคำทำนายยาม</button>
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <div id="yarmResult" class="text-left animate__animated animate__fadeIn" style="display: none;">
+                    <div class="p-4 bg-dark-soft rounded border-gold">
+                        <h4 id="resYarmTitle" class="text-gold mb-3"></h4>
+                        <div id="resYarmDetail" class="text-white"></div>
+                        <hr class="border-gold opacity-25">
+                        <div class="row text-center mt-3">
+                            <div class="col-6 border-right">
+                                <small class="text-success d-block">เหมาะสำหรับ</small>
+                                <span id="yarmGood"></span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-danger d-block">ควรระวัง</small>
+                                <span id="yarmBad"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div id="directionContainer" class="col-12 mb-3"></div>
 
-        <div class="col-12 mb-2">
-            <div class="p-3 rounded border-gold" style="background: rgba(212, 175, 55, 0.05);">
-                <h6 class="text-gold text-center mb-3"><i class="fas fa-star"></i> ดวงตามปีนักษัตร</h6>
-                <div class="row text-center">
-                    <div class="col-6 border-right" style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
-                        <span class="badge badge-success mb-2">🚀 ปีที่มงคลยิ่ง</span>
-                        <div id="zodiacGreat" class="small text-white font-weight-bold"></div>
+    <section id="dailyHighlightPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📅 แผนที่ฤกษ์มงคลรายวัน</h2>
+                <p class="text-white-50">วางแผนชีวิตตามจังหวะดวงดาว</p>
+            </div>
+            <div class="card-body">
+                <div class="form-row justify-content-center mb-4">
+                    <div class="col-md-6">
+                        <label class="text-white-50">เลือกวันที่ต้องการวางแผน</label>
+                        <input type="date" id="highlightDatePicker" class="form-control bg-dark text-white border-gold"
+                            onchange="generateDailyMap()">
                     </div>
-                    <div class="col-6">
-                        <span class="badge badge-danger mb-2">⚠️ ปีที่ควรระวัง</span>
-                        <div id="zodiacBad" class="small text-white font-weight-bold"></div>
+                </div>
+
+                <div id="dailyMapCapture" class="p-3 rounded bg-dark" style="border: 2px solid #d4af37;">
+                    <div class="text-center mb-3">
+                        <h4 id="mapDateTitle" class="text-gold"></h4>
+                        <hr class="border-gold opacity-25">
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-warning text-center"><i class="fas fa-sun"></i> ภาคกลางวัน</h6>
+                            <div id="dayYarmList"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-info text-center mt-3 mt-md-0"><i class="fas fa-moon"></i> ภาคกลางคืน</h6>
+                            <div id="nightYarmList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-gold btn-lg px-5 download-btn" onclick="downloadDailyMap(this)">
+                        <i class="fas fa-image mr-2"></i> เซฟเป็นรูปภาพเก็บไว้
+                    </button>
+                    <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                    <button class="btn btn-outline-light btn-lg ml-2" onclick="goBack()">ย้อนกลับ</button>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
+    <section id="dailyTabooPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📜 ตำราพรหมชาติ & นักษัตรรายวัน</h2>
+                <p class="text-white-50">เช็คฤกษ์มงคล ข้อห้าม และดวงปีเกิดรายบุคคล</p>
+            </div>
+            <div class="card-body">
+                <div id="tabooCaptureArea" class="p-4 rounded text-center"
+                    style="background: #1a1a1a; border: 2px solid #d4af37;">
+                    <h3 id="tabooDayTitle" class="text-gold mb-0">วัน...</h3>
+                    <div class="text-white-50 small mb-4">สยามโหรามงคล • พรหมชาติ & กาลโยค</div>
+
+                    <div class="col-12 mb-3">
+                        <div class="p-3 rounded border-gold" style="background: rgba(212, 175, 55, 0.05);">
+                            <h6 class="text-gold text-center mb-3"><i class="fas fa-calendar-alt"></i>
+                                เคล็ดลับมงคลรายวัน</h6>
+                            <div class="row text-left">
+                                <div class="col-6 border-right"
+                                    style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
+                                    <div class="text-center mb-2"><span class="badge badge-success">✅
+                                            สิ่งที่ควรทำ</span></div>
+                                    <ul id="goodList" class="mb-0 pl-3 small text-white"
+                                        style="list-style-type: circle;"></ul>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center mb-2"><span class="badge badge-danger">🚫
+                                            สิ่งที่ควรเลี่ยง</span></div>
+                                    <ul id="badList" class="mb-0 pl-3 small text-white"
+                                        style="list-style-type: circle;"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="directionContainer" class="col-12 mb-3"></div>
+
+                    <div class="col-12 mb-2">
+                        <div class="p-3 rounded border-gold" style="background: rgba(212, 175, 55, 0.05);">
+                            <h6 class="text-gold text-center mb-3"><i class="fas fa-star"></i> ดวงตามปีนักษัตร</h6>
+                            <div class="row text-center">
+                                <div class="col-6 border-right"
+                                    style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
+                                    <span class="badge badge-success mb-2">🚀 ปีที่มงคลยิ่ง</span>
+                                    <div id="zodiacGreat" class="small text-white font-weight-bold"></div>
+                                </div>
+                                <div class="col-6">
+                                    <span class="badge badge-danger mb-2">⚠️ ปีที่ควรระวัง</span>
+                                    <div id="zodiacBad" class="small text-white font-weight-bold"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="text-center mt-4">
-                <button class="btn btn-gold btn-lg px-4" onclick="downloadTabooImage()"><i class="fas fa-image mr-2"></i> บันทึกภาพดวงวันนี้</button>
+                <button class="btn btn-gold btn-lg px-4" onclick="downloadTabooImage()"><i
+                        class="fas fa-image mr-2"></i> บันทึกภาพดวงวันนี้</button>
                 <button class="btn btn-gold btn-lg px-4" onclick="goBack()">กลับหน้าหลัก</button>
             </div>
-    </div>
-</section>
-
-<section id="lifeGraphPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold bg-dark text-white">
-        <div class="card-header bg-dark border-gold py-3 text-center">
-            <h2 class="text-gold mb-1">📈 กราฟชีวิตพยากรณ์</h2>
-            <p class="text-white-50">วิเคราะห์ดวงชะตา 12 ด้านตามหลักเลขศาสตร์โบราณ</p>
         </div>
-        
-        <div class="card-body">
-            <div class="p-3 rounded bg-white mb-4" style="height: 300px; position: relative;">
-                <canvas id="lifeGraphCanvas"></canvas>
+    </section>
+
+    <section id="lifeGraphPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📈 กราฟชีวิตพยากรณ์</h2>
+                <p class="text-white-50">วิเคราะห์ดวงชะตา 12 ด้านตามหลักเลขศาสตร์โบราณ</p>
             </div>
 
-            <div id="lifeGraphResult" class="row">
+            <div class="card-body">
+                <div class="p-3 rounded bg-white mb-4" style="height: 300px; position: relative;">
+                    <canvas id="lifeGraphCanvas"></canvas>
                 </div>
 
-            
-            <div class="text-center mt-4">
-                <button class="btn btn-gold btn-lg share-graph-btn" onclick="downloadLifeGraphImage(this)">
-                    <i class="fas fa-chart-line mr-2"></i> เซฟรูปกราฟชีวิตแชร์ลง Facebook
-                </button><b></b>
+                <div id="lifeGraphResult" class="row">
+                </div>
+
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-gold btn-lg share-graph-btn" onclick="downloadLifeGraphImage(this)">
+                        <i class="fas fa-chart-line mr-2"></i> เซฟรูปกราฟชีวิตแชร์ลง Facebook
+                    </button><b></b>
+
+                    <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                    <button class="btn btn-outline-light btn-lg ml-2" onclick="goBack()">กลับ</button>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="dreamPage" class="main-section" style="display: none;">
+        <div class="text-center mb-4">
+            <h2 class="text-gold">🔮 ทำนายฝัน + เลขเด็ด</h2>
+            <p class="text-muted">พิมพ์สิ่งที่ฝันเห็น (เช่น งู, ฟันหลุด, ทอง) แล้วกดค้นหา</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="input-group mb-4">
+                    <input type="text" id="dreamKeyword" class="form-control form-control-lg"
+                        placeholder="ฝันเห็นอะไร... เช่น งู ฟันหลุด ทอง" autocomplete="off" list="dreamSuggestions">
+                    <datalist id="dreamSuggestions"></datalist>
+                    <div class="input-group-append">
+                        <button class="btn btn-gold btn-lg" onclick="interpretDream()">ตีฝันเลย!</button>
+                    </div>
+                </div>
+
+                <div id="dreamResult" class="card border-gold shadow-sm p-4" style="min-height: 200px; display: none;">
+                    <div id="dreamMeaning" class="mb-3"></div>
+                    <div id="dreamNumbers" class="font-weight-bold text-gold h5"></div>
+                </div>
+                <div class="text-center mt-4 no-capture">
+                    <button class="btn btn-outline-gold share-dream-btn" onclick="downloadDreamImage(this)">
+                        <i class="fas fa-share-alt mr-2"></i> เซฟรูปเลขเด็ดแชร์ลง Facebook
+                    </button>
+                </div>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+
+
                 <button class="btn btn-outline-light btn-lg ml-2" onclick="goBack()">กลับ</button>
-            
+
             </div>
-            
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section id="dreamPage" class="main-section hidden container my-5">
-    <div class="text-center mb-4">
-        <h2 class="text-gold">🔮 ทำนายฝัน + เลขเด็ด</h2>
-        <p class="text-muted">พิมพ์สิ่งที่ฝันเห็น (เช่น งู, ฟันหลุด, ทอง) แล้วกดค้นหา</p>
-    </div>
+    <section id="sevenDigitsPage" class="main-section" style="display: none;">
+        <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold text-center py-4">
+                <h2 class="text-gold mb-1">🔢 เลข 7 ตัว 4 ฐาน</h2>
+                <p class="text-white-50 mb-0 small">พยากรณ์ดวงชะตาพื้นฐานและเหตุการณ์จรตามตำราพรหมชาติ</p>
+            </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="input-group mb-4">
-                <input type="text" id="dreamKeyword" class="form-control form-control-lg" 
-                    placeholder="ฝันเห็นอะไร... เช่น งู ฟันหลุด ทอง" 
-                    autocomplete="off" list="dreamSuggestions">
-                <datalist id="dreamSuggestions"></datalist>
-                <div class="input-group-append">
-                    <button class="btn btn-gold btn-lg" onclick="interpretDream()">ตีฝันเลย!</button>
+            <div class="card-body">
+                <div id="sevenDigitsInput" class="text-center py-4">
+                    <i class="fas fa- dice-d6 fa-4x text-gold mb-4"></i>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">วันเกิด (อาทิตย์ - เสาร์)</label>
+                                <select id="sdDay" class="form-control bg-dark text-white border-gold"
+                                    style="height: auto;">
+                                    <option value="1">วันอาทิตย์</option>
+                                    <option value="2">วันจันทร์</option>
+                                    <option value="3">วันอังคาร</option>
+                                    <option value="4">วันพุธ</option>
+                                    <option value="5">วันพฤหัสบดี</option>
+                                    <option value="6">วันศุกร์</option>
+                                    <option value="7">วันเสาร์</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">เดือนเกิด (ไทย: เดือน 5 - เดือน 4)</label>
+                                <select id="sdMonth" class="form-control bg-dark text-white border-gold"
+                                    style="height: auto;">
+                                    <option value="5">เดือน 5 (เมษายน)</option>
+                                    <option value="6">เดือน 6 (พฤษภาคม)</option>
+                                    <option value="7">เดือน 7 (มิถุนายน)</option>
+                                    <option value="8">เดือน 8 (กรกฎาคม)</option>
+                                    <option value="9">เดือน 9 (สิงหาคม)</option>
+                                    <option value="10">เดือน 10 (กันยายน)</option>
+                                    <option value="11">เดือน 11 (ตุลาคม)</option>
+                                    <option value="12">เดือน 12 (พฤศจิกายน)</option>
+                                    <option value="1">เดือน 1 (ธันวาคม)</option>
+                                    <option value="2">เดือน 2 (มกราคม)</option>
+                                    <option value="3">เดือน 3 (กุมภาพันธ์)</option>
+                                    <option value="4">เดือน 4 (มีนาคม)</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">ปีนักษัตร</label>
+                                <select id="sdYear" class="form-control bg-dark text-white border-gold "
+                                    style="height: auto;">
+                                    <option value="1">ปีชวด</option>
+                                    <option value="2">ปีฉลู</option>
+                                    <option value="3">ปีขาล</option>
+                                    <option value="4">ปีเถาะ</option>
+                                    <option value="5">ปีมะโรง</option>
+                                    <option value="6">ปีมะเส็ง</option>
+                                    <option value="7">ปีมะเมีย</option>
+                                    <option value="8">ปีมะแม</option>
+                                    <option value="9">ปีวอก</option>
+                                    <option value="10">ปีระกา</option>
+                                    <option value="11">ปีจอ</option>
+                                    <option value="12">ปีกุน</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">อายุปัจจุบัน (เพื่อพยากรณ์จรปีนี้)</label>
+                                <input type="number" id="sdAge" class="form-control bg-dark text-white border-gold"
+                                    placeholder="เช่น 25">
+                            </div>
+                            <button class="btn btn-gold btn-block btn-lg mt-4" onclick="calculateSevenDigits()">✨
+                                ตั้งดวงพยากรณ์</button>
+                            <div id="sevenDigitsResult" class="mt-4" style="display: none;">
+                                <div id="resultArea" class="p-3 bg-dark border border-gold rounded">
+                                    <h4 class="text-gold text-center mb-3">ดวงชะตาของคุณ</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-white text-center"
+                                            id="sevenDigitsTable">
+                                        </table>
+                                    </div>
+                                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark"></div>
+                                </div>
+                            </div>
+                            <button onclick="exportToImage()" class="btn btn-secondary btn-block mt-2">💾
+                                บันทึกรูปภาพ</button>
+                        </div>
+                    </div>
                 </div>
+
+                <div id="sevenDigitsResult" class="mt-4" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-white text-center" id="sevenDigitsTable">
+                        </table>
+                    </div>
+                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark">
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="knowledgePage" class="main-section" style="display: none;">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">📚 คลังความรู้มหาโหรา</h4>
+
+            <input type="text" id="knowledgeSearchInput" class="form-control mb-3"
+                placeholder="🔍 ค้นหาหัวข้อตำรา หรือเคล็ดวิชา..." onkeyup="searchKnowledge()">
+
+            <div class="d-flex flex-wrap justify-content-center mb-4" id="knowledgeCategoryFilter">
+                <button class="btn btn-sm btn-outline-gold m-1 active" onclick="filterKnowledge('all')">ทั้งหมด</button>
+                <button class="btn btn-sm btn-outline-gold m-1"
+                    onclick="filterKnowledge('ตำราโบราณ')">ตำราโบราณ</button>
+                <button class="btn btn-sm btn-outline-gold m-1"
+                    onclick="filterKnowledge('โหราศาสตร์')">โหราศาสตร์</button>
+                <button class="btn btn-sm btn-outline-gold m-1"
+                    onclick="filterKnowledge('วิถีสิริมงคล')">สิริมงคล</button>
+                <button class="btn btn-sm btn-outline-gold m-1"
+                    onclick="filterKnowledge('วิเคราะห์ลักษณะ')">ลักษณะบุคคล</button>
             </div>
 
-            <div id="dreamResult" class="card border-gold shadow-sm p-4" style="min-height: 200px; display: none;">
-                <div id="dreamMeaning" class="mb-3"></div>
-                <div id="dreamNumbers" class="font-weight-bold text-gold h5"></div>
+            <div class="table-responsive">
+                <table class="table table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>หมวดหมู่</th>
+                            <th>หัวข้อตำรา</th>
+                            <th>ประเภท</th>
+                            <th>ระดับความรู้</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="knowledgeBody">
+                    </tbody>
+                </table>
             </div>
-            <div class="text-center mt-4 no-capture"> 
-                <button class="btn btn-outline-gold share-dream-btn" onclick="downloadDreamImage(this)">
-                    <i class="fas fa-share-alt mr-2"></i> เซฟรูปเลขเด็ดแชร์ลง Facebook
+            <div id="knowledgeCount" class="text-right small text-muted"></div>
+        </div>
+    </section>
+
+    <section id="articleViewPage" class="main-section" style="display: none;">
+        <div class="card-body">
+            <div class="mb-4">
+                <button class="btn btn-outline-gold btn-sm" onclick="navigateTo('knowledgePage')">
+                    <i class="fas fa-chevron-left"></i> ย้อนกลับไปคลังความรู้
                 </button>
             </div>
 
-            <button class="btn btn-outline-light btn-lg ml-2" onclick="goBack()">กลับ</button>
+            <div id="fullContentArea" class="article-container"></div>
 
+            <div id="articleAction" class="text-center mt-5 pb-5"></div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <section id="nameAnalysisPage" class="main-section" style="display: none;">
+        <div class="container py-4">
+            <div class="card bg-dark border-gold text-white p-3 text-center">
+                <h3 class="text-gold">🔮 วิเคราะห์เลขศาสตร์ ชื่อ-นามสกุล</h3>
+                <p class="small text-white-50">ถอดรหัสตัวเลขและตรวจสอบอักษรกาลกิณี</p>
 
-<section id="sevenDigitsPage" class="main-section hidden">
-    <div class="card shadow-lg border-gold bg-dark text-white">
-        <div class="card-header bg-dark border-gold text-center py-4">
-            <h2 class="text-gold mb-1">🔢 เลข 7 ตัว 4 ฐาน</h2>
-            <p class="text-white-50 mb-0 small">พยากรณ์ดวงชะตาพื้นฐานและเหตุการณ์จรตามตำราพรหมชาติ</p>
-        </div>
+                  <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                            <select id="memberSelect"
+                                class="form-control bg-dark text-white border-gold member-selector-shared"
+                                onchange="autoFillMemberData(this.value)">
+                                <option value="">-- เลือกสมาชิก --</option>
+                            </select>
+                
 
-        <div class="card-body">
-            <div id="sevenDigitsInput" class="text-center py-4">
-                <i class="fas fa- dice-d6 fa-4x text-gold mb-4"></i>
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="form-group text-left">
-                            <label class="text-gold-50" >วันเกิด (อาทิตย์ - เสาร์)</label>
-                            <select id="sdDay" class="form-control bg-dark text-white border-gold" style="height: auto;">
-                                <option value="1">วันอาทิตย์</option>
-                                <option value="2">วันจันทร์</option>
-                                <option value="3">วันอังคาร</option>
-                                <option value="4">วันพุธ</option>
-                                <option value="5">วันพฤหัสบดี</option>
-                                <option value="6">วันศุกร์</option>
-                                <option value="7">วันเสาร์</option>
-                            </select>
-                        </div>
-                        <div class="form-group text-left">
-                            <label class="text-gold-50" >เดือนเกิด (ไทย: เดือน 5 - เดือน 4)</label>
-                            <select id="sdMonth" class="form-control bg-dark text-white border-gold" style="height: auto;">
-                                <option value="5">เดือน 5 (เมษายน)</option>
-                                <option value="6">เดือน 6 (พฤษภาคม)</option>
-                                <option value="7">เดือน 7 (มิถุนายน)</option>
-                                <option value="8">เดือน 8 (กรกฎาคม)</option>
-                                <option value="9">เดือน 9 (สิงหาคม)</option>
-                                <option value="10">เดือน 10 (กันยายน)</option>
-                                <option value="11">เดือน 11 (ตุลาคม)</option>
-                                <option value="12">เดือน 12 (พฤศจิกายน)</option>
-                                <option value="1">เดือน 1 (ธันวาคม)</option>
-                                <option value="2">เดือน 2 (มกราคม)</option>
-                                <option value="3">เดือน 3 (กุมภาพันธ์)</option>
-                                <option value="4">เดือน 4 (มีนาคม)</option>
-                            </select>
-                        </div>
-                        <div class="form-group text-left">
-                            <label class="text-gold-50" >ปีนักษัตร</label>
-                            <select id="sdYear" class="form-control bg-dark text-white border-gold " style="height: auto;">
-                                <option value="1">ปีชวด</option>
-                                <option value="2">ปีฉลู</option>
-                                <option value="3">ปีขาล</option>
-                                <option value="4">ปีเถาะ</option>
-                                <option value="5">ปีมะโรง</option>
-                                <option value="6">ปีมะเส็ง</option>
-                                <option value="7">ปีมะเมีย</option>
-                                <option value="8">ปีมะแม</option>
-                                <option value="9">ปีวอก</option>
-                                <option value="10">ปีระกา</option>
-                                <option value="11">ปีจอ</option>
-                                <option value="12">ปีกุน</option>
-                            </select>
-                        </div>
-                        <div class="form-group text-left">
-                            <label class="text-gold-50">อายุปัจจุบัน (เพื่อพยากรณ์จรปีนี้)</label>
-                            <input type="number" id="sdAge" class="form-control bg-dark text-white border-gold" placeholder="เช่น 25">
-                        </div>
-                        <button class="btn btn-gold btn-block btn-lg mt-4" onclick="calculateSevenDigits()">✨ ตั้งดวงพยากรณ์</button>
-                        <div id="sevenDigitsResult" class="mt-4" style="display: none;">
-                            <div id="resultArea" class="p-3 bg-dark border border-gold rounded"> 
-                                <h4 class="text-gold text-center mb-3">ดวงชะตาของคุณ</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-white text-center" id="sevenDigitsTable">
-                                        </table>
-                                </div>
-                                <div id="sdInterpretation" class="alert alert-light mt-3 text-dark"></div>
-                            </div>
-                        </div>
-                        <button onclick="exportToImage()" class="btn btn-secondary btn-block mt-2">💾 บันทึกรูปภาพ</button>
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-2">
+                        <input type="text" id="firstName" class="form-control bg-dark text-white border-gold"
+                            placeholder="กรอกชื่อ">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <input type="text" id="lastName" class="form-control bg-dark text-white border-gold"
+                            placeholder="กรอกนามสกุล">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <select id="birthDaynumSelect" class="form-control bg-dark text-white border-gold">
+                            <option value="">-- เลือกวันเกิด (เพื่อเช็คกาลกิณี) --</option>
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ (กลางวัน)</option>
+                            <option value="7">วันพุธ (กลางคืน)</option>
+                            <option value="4">วันพฤหัสบดี</option>
+                            <option value="5">วันศุกร์</option>
+                            <option value="6">วันเสาร์</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <button class="btn btn-gold btn-block" onclick="analyzeName()">วิเคราะห์รหัสชีวิต</button>
                     </div>
                 </div>
+
+                <div id="nameResultArea" style="display: none;"></div>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+
+                <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+                </button>
             </div>
-
-            <div id="sevenDigitsResult" class="mt-4" style="display: none;">
-                <div class="table-responsive">
-                    <table class="table table-bordered text-white text-center" id="sevenDigitsTable">
-                        </table>
-                </div>
-                <div id="sdInterpretation" class="alert alert-light mt-3 text-dark">
-                    </div>
-            </div>
-
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
-                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
-            </button>
-
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-            
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="knowledgePage" class="main-section hidden">
-    <div class="card-body">
-        <h4 class="card-title text-center mb-4">📚 คลังความรู้มหาโหรา</h4>
-        
-        <input type="text" id="knowledgeSearchInput" class="form-control mb-3" placeholder="🔍 ค้นหาหัวข้อตำรา หรือเคล็ดวิชา..." onkeyup="searchKnowledge()">
-
-        <div class="d-flex flex-wrap justify-content-center mb-4" id="knowledgeCategoryFilter">
-            <button class="btn btn-sm btn-outline-gold m-1 active" onclick="filterKnowledge('all')">ทั้งหมด</button>
-            <button class="btn btn-sm btn-outline-gold m-1" onclick="filterKnowledge('ตำราโบราณ')">ตำราโบราณ</button>
-            <button class="btn btn-sm btn-outline-gold m-1" onclick="filterKnowledge('โหราศาสตร์')">โหราศาสตร์</button>
-            <button class="btn btn-sm btn-outline-gold m-1" onclick="filterKnowledge('วิถีสิริมงคล')">สิริมงคล</button>
-            <button class="btn btn-sm btn-outline-gold m-1" onclick="filterKnowledge('วิเคราะห์ลักษณะ')">ลักษณะบุคคล</button>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-hover text-center">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>หมวดหมู่</th>
-                        <th>หัวข้อตำรา</th>
-                        <th>ประเภท</th>
-                        <th>ระดับความรู้</th>
-                        <th>จัดการ</th>
-                    </tr>
-                </thead>
-                <tbody id="knowledgeBody">
-                    </tbody>
-            </table>
-        </div>
-        <div id="knowledgeCount" class="text-right small text-muted"></div>
-    </div>
-</section>
-
-<section id="articleViewPage" class="main-section hidden" style="display:none;">
-    <div class="card-body">
-        <div class="mb-4">
-            <button class="btn btn-outline-gold btn-sm" onclick="navigateTo('knowledgePage')">
-                <i class="fas fa-chevron-left"></i> ย้อนกลับไปคลังความรู้
-            </button>
-        </div>
-
-        <div id="fullContentArea" class="article-container"></div> 
-        
-        <div id="articleAction" class="text-center mt-5 pb-5"></div>
-    </div>
-</section>
-
-<section id="nameAnalysisPage" class="main-section hidden">
-    <div class="container py-4">
-        <div class="card bg-dark border-gold text-white p-3 text-center">
-            <h3 class="text-gold">🔮 วิเคราะห์เลขศาสตร์ ชื่อ-นามสกุล</h3>
-            <p class="small text-white-50">ถอดรหัสตัวเลขและตรวจสอบอักษรกาลกิณี</p>
-            
-            <div class="row mt-3">
-                <div class="col-md-4 mb-2">
-                    <input type="text" id="firstName" class="form-control bg-dark text-white border-gold" placeholder="กรอกชื่อ">
+    <section id="chatraPage" class="main-section" style="display: none;">
+        <div class="container mt-4">
+            <div class="card shadow-lg"
+                style="background: rgba(20, 20, 20, 0.95); border: 1px solid #d4af37; border-radius: 15px;">
+                <div class="card-header text-center py-4" style="border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h2 class="text-gold" style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
+                        <i class="fas fa-umbrella-beach mr-2"></i> วิชามหามงคล "ฉัตร 3 ชั้น"
+                    </h2>
+                    <p class="text-muted small mb-0">พยากรณ์เกณฑ์ชะตา บารมี และลาภผลรายปี</p>
                 </div>
-                <div class="col-md-4 mb-2">
-                    <input type="text" id="lastName" class="form-control bg-dark text-white border-gold" placeholder="กรอกนามสกุล">
-                </div>
-                <div class="col-md-4 mb-2">
-                    <select id="birthDaynumSelect" class="form-control bg-dark text-white border-gold">
-                        <option value="">-- เลือกวันเกิด (เพื่อเช็คกาลกิณี) --</option>
-                        <option value="0">วันอาทิตย์</option>
-                        <option value="1">วันจันทร์</option>
-                        <option value="2">วันอังคาร</option>
-                        <option value="3">วันพุธ (กลางวัน)</option>
-                        <option value="7">วันพุธ (กลางคืน)</option> 
-                        <option value="4">วันพฤหัสบดี</option>     
-                        <option value="5">วันศุกร์</option>         
-                        <option value="6">วันเสาร์</option>         
-                    </select>
-                </div>
-                <div class="col-md-12 mb-2">
-                    <button class="btn btn-gold btn-block" onclick="analyzeName()">วิเคราะห์รหัสชีวิต</button>
-                </div>
-            </div>
-
-            <div id="nameResultArea" style="display: none;"></div>
-
-            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="goBack()">
-                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
-            </button>
-        </div>
-    </div>
-</section>
-
-<section id="chatraPage" class="main-section" style="display: none;">
-    <div class="container mt-4">
-        <div class="card shadow-lg" style="background: rgba(20, 20, 20, 0.95); border: 1px solid #d4af37; border-radius: 15px;">
-            <div class="card-header text-center py-4" style="border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
-                <h2 class="text-gold" style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
-                    <i class="fas fa-umbrella-beach mr-2"></i> วิชามหามงคล "ฉัตร 3 ชั้น"
-                </h2>
-                <p class="text-muted small mb-0">พยากรณ์เกณฑ์ชะตา บารมี และลาภผลรายปี</p>
-            </div>
-            
-            <div class="card-body p-4">
-                <div class="row justify-content-center mb-5">
-                    <div class="col-md-6 col-lg-4 text-center">
-                        <label class="text-gold mb-2">ระบุอายุที่ต้องการตรวจ (ปีปัจจุบัน)</label>
-                            <input type="number" id="chatraAge" placeholder="กรอกอายุ (เช่น 25)" 
-                                onkeypress="if(event.key === 'Enter') { event.preventDefault(); calculateChatra(); }" class="btn btn-outline-gold px-5 py-2"/><br>
-                                <!-- ปุ่มคำนวณ (สำคัญมาก!) -->
-                        <button type="button"onclick="calculateChatra()"class="btn btn-gold mt-3""> คำนวณฉัตร 3 ชั้น</button>
-                    </div>
-                </div>
-            </div>
-
-                    <div id="chatraDisplay" style="display: none;">
-                        <div class="chatra-visual-area d-flex flex-column align-items-center mt-4">
-                            <div class="chatra-pinnacle"></div>
-
-                            <div class="chatra-tier tier-top" id="chatraTier3">
-                                <div class="tier-label">ชั้นที่ 3: บารมี/บริวาร</div>
-                                <div class="tier-value" id="resTier3">-</div>
-                            </div>
-
-                            <div class="chatra-tier tier-mid" id="chatraTier2">
-                                <div class="tier-label">ชั้นที่ 2: การงาน/การเงิน</div>
-                                <div class="tier-value" id="resTier2">-</div>
-                            </div>
-
-                            <div class="chatra-tier tier-base" id="chatraTier1">
-                                <div class="tier-label">ชั้นที่ 1: พื้นฐานดวงปีนี้</div>
-                                <div class="tier-value" id="resTier1">-</div>
-                            </div>
-                            
-                            <div class="chatra-pole"></div>
-                        </div>
-
-                        <div class="fortune-box mt-4 p-4 text-center rounded">
-                            <h4 class="text-gold mb-3"><i class="fas fa-scroll mr-2"></i> บันทึกมหาพยากรณ์</h4>
-                            <p id="chatraInterpretation" class="text-white lead mb-0"></p>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button class="btn btn-outline-gold px-5 py-2" onclick="downloadChatraImage()">
-                                <i class="fas fa-camera mr-2"></i> บันทึกภาพคำทำนาย
-                            </button>
-    </div></div></div></div></div>
-</section>
-
-<section id="lifeExtensionPage" class="main-section" style="display: none;">
-    <div class="container mt-4">
-        <div class="card shadow-lg" style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%); border: 1px solid #d4af37; border-radius: 20px;">
-            <div class="card-header text-center py-4 border-gold">
-                <h2 class="text-gold"><i class="fas fa-praying-hands mr-2"></i> วิชามหามงคล "ต่อชะตาชีวิต"</h2>
-                <p class="text-muted">เสริมสิริมงคล แก้เคล็ดดวงชะตา ตามตำรับสยามโหรามงคล</p>
-            </div>
-
-            <div class="card-body text-center p-5">
-                <div class="candle-container mb-5">
-                    <div class="flame"></div>
-                    <div class="candle"></div>
-                </div>
-
-                <div id="setupExtension">
-                    <h4 class="text-white mb-4">ระบุเดือนเกิดของท่านเพื่อเริ่มพิธี</h4>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <select id="birthMonth" class="form-control bg-dark text-white border-gold mb-4">
-                                <option value="">-- เลือกเดือนเกิด --</option>
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
+    
+                <div class="card-body p-4">
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-md-6 col-lg-4 text-center">
+                            <label class="text-gold mb-2">ระบุอายุที่ต้องการตรวจ (ปีปัจจุบัน)</label>
+                            <input type="number" id="chatraAge" placeholder="กรอกอายุ (เช่น 25)"
+                                onkeypress="if(event.key === 'Enter') { event.preventDefault(); calculateChatra(); }"
+                                class="btn btn-outline-gold px-5 py-2" /><br>
+    
+                            <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                            <select id="memberSelect"
+                                class="form-control bg-dark text-white border-gold member-selector-shared"
+                                onchange="autoFillMemberData(this.value)">
+                                <option value="">-- เลือกสมาชิก --</option>
                             </select>
-                            <button class="btn btn-gold btn-lg btn-block" onclick="startRitual()">
-                                <i class="fas fa-fire mr-2"></i> เริ่มพิธีต่อชะตา
-                            </button>
+    
+                            <!-- ปุ่มคำนวณ (สำคัญมาก!) -->
+                            <button type="button" onclick="calculateChatra()" class="btn btn-gold mt-3""> คำนวณฉัตร 3 ชั้น</button>
+                         </div>
+                    </div>
+                </div>    
+           
+
+                <div id="chatraDisplay" style="display: none;">
+                    <div class="chatra-visual-area d-flex flex-column align-items-center mt-4">
+                        <div class="chatra-pinnacle"></div>
+                
+                        <div class="chatra-tier tier-top" id="chatraTier3">
+                            <div class="tier-label">ชั้นที่ 3: บารมี/บริวาร</div>
+                            <div class="tier-value" id="resTier3">-</div>
+                        </div>
+                
+                        <div class="chatra-tier tier-mid" id="chatraTier2">
+                            <div class="tier-label">ชั้นที่ 2: การงาน/การเงิน</div>
+                            <div class="tier-value" id="resTier2">-</div>
+                        </div>
+                
+                        <div class="chatra-tier tier-base" id="chatraTier1">
+                            <div class="tier-label">ชั้นที่ 1: พื้นฐานดวงปีนี้</div>
+                            <div class="tier-value" id="resTier1">-</div>
+                        </div>
+                
+                        <div class="chatra-pole"></div>
+                    </div>
+                
+                    <div class="fortune-box mt-4 p-4 text-center rounded">
+                        <h4 class="text-gold mb-3"><i class="fas fa-scroll mr-2"></i> บันทึกมหาพยากรณ์</h4>
+                        <p id="chatraInterpretation" class="text-white lead mb-0"></p>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-gold px-5 py-2" onclick="downloadChatraImage()">
+                            <i class="fas fa-camera mr-2"></i> บันทึกภาพคำทำนาย
+                        </button>
+                    </div>
+                </div>                
+                <button class=" btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="lifeExtensionPage" class="main-section" style="display: none;">
+        <div class="container mt-4">
+            <div class="card shadow-lg"
+                style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%); border: 1px solid #d4af37; border-radius: 20px;">
+                <div class="card-header text-center py-4 border-gold">
+                    <h2 class="text-gold"><i class="fas fa-praying-hands mr-2"></i> วิชามหามงคล "ต่อชะตาชีวิต"</h2>
+                    <p class="text-muted">เสริมสิริมงคล แก้เคล็ดดวงชะตา ตามตำรับสยามโหรามงคล</p>
+                </div>
+                <div class="card-body text-center p-5">
+                    <div class="candle-container mb-5">
+                        <div class="flame"></div>
+                        <div class="candle"></div>
+                    </div>
+                    <div id="setupExtension">
+                        <h4 class="text-white mb-4">ระบุเดือนเกิดของท่านเพื่อเริ่มพิธี</h4>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <select id="birthMonth" class="form-control bg-dark text-white border-gold mb-4">
+                                    <option value="">-- เลือกเดือนเกิด --</option>
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนายน</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
+                                </select>
+                                <button class="btn btn-gold btn-lg btn-block" onclick="startRitual()">
+                                    <i class="fas fa-fire mr-2"></i> เริ่มพิธีต่อชะตา
+                                </button>
+                                <button class="btn btn-outline-secondary btn-block mt-4 border-0"
+                                    onclick="navigateTo('mainpage')">
+                                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                     <div id="ritualResult" style="display: none;" class="mt-4">
-                        <div class="ritual-box p-4 rounded" style="background: rgba(0, 0, 0, 0.6); border: 1px solid #d4af37; overflow: hidden; position: relative; min-height: 400px;">
-                            
+                        <div class="ritual-box p-4 rounded"
+                            style="background: rgba(0, 0, 0, 0.6); border: 1px solid #d4af37; overflow: hidden; position: relative; min-height: 400px;">
+
                             <div id="prayerScroll" class="prayer-text-container">
                                 <div class="prayer-content">
                                     <p>นะโม ตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ (3 จบ)</p>
@@ -1124,12 +1264,15 @@
                             </div>
 
                             <div id="finalAdvice" style="display: none; position: relative; z-index: 10;">
-                                <div id="captureRitualArea" class="p-4" style="background: rgba(0,0,0,0.4); border-radius: 15px;">
+                                <div id="captureRitualArea" class="p-4"
+                                    style="background: rgba(0,0,0,0.4); border-radius: 15px;">
                                     <h2 class="text-gold mb-4">✨ ผลพิธีต่อชะตาชีวิต ✨</h2>
-                                    
-                                    <div class="prayer-summary-box mb-4 p-3" style="border: 1px double #d4af37; background: rgba(212, 175, 55, 0.05);">
+
+                                    <div class="prayer-summary-box mb-4 p-3"
+                                        style="border: 1px double #d4af37; background: rgba(212, 175, 55, 0.05);">
                                         <small class="text-gold-50">บทสวดมงคลประจำชะตาของท่าน</small>
-                                        <p id="summaryPrayer" class="text-white mt-2 mb-0" style="font-size: 1.3rem; font-weight: bold;"></p>
+                                        <p id="summaryPrayer" class="text-white mt-2 mb-0"
+                                            style="font-size: 1.3rem; font-weight: bold;"></p>
                                     </div>
 
                                     <div class="row text-left mb-4">
@@ -1153,85 +1296,161 @@
                                 <button class="btn btn-outline-gold mt-4 px-5" onclick="downloadRitualImage()">
                                     <i class="fas fa-camera mr-2"></i> บันทึกภาพมงคลนี้
                                 </button>
+                                <button class="btn btn-outline-secondary btn-block mt-4 border-0"
+                                    onclick="navigateTo('mainpage')">
+                                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                                </button>
+                                <button onclick="goBack()" class="btn btn-secondary">
+                                    ย้อนกลับ
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
-<section id="mahathaksaPage" class="main-section" style="display: none;">
-    <div class="container mt-4 text-center">
-        <div class="card bg-dark border-gold p-4 shadow-lg">
-            <h2 class="text-gold mb-4"><i class="fas fa-dharmachakra mr-2"></i> มหาทักษาพยากรณ์</h2>
-            
-            <div class="row justify-content-center mb-4" style="display: none;">
-                <div class="col-md-6">
-                    <label class="text-white">เลือกวันเกิดของท่าน</label>
-                    <select id="birthDaySelecttaksa" class="form-control bg-black text-gold border-gold">
-                        <option value="0">วันอาทิตย์</option>
-                        <option value="1">วันจันทร์</option>
-                        <option value="2">วันอังคาร</option>
-                        <option value="3">วันพุธ (กลางวัน)</option>
-                        <option value="4">วันเสาร์</option> 
-                        <option value="5">วันพฤหัสบดี</option>
-                        <option value="6">วันพุธ (กลางคืน/ราหู)</option>
-                        <option value="7">วันศุกร์</option>
-                    </select>
+    <section id="mahathaksaPage" class="main-section" style="display: none;">
+        <div class="container mt-4 text-center">
+            <div class="card bg-dark border-gold p-4 shadow-lg">
+                <h2 class="text-gold mb-4"><i class="fas fa-dharmachakra mr-2"></i> มหาทักษาพยากรณ์</h2>    
+                <div class="row justify-content-center mb-4" style="display: none;">
+                    <div class="col-md-6">
+                        <label class="text-white">เลือกวันเกิดของท่าน</label>
+                        <select id="birthDaySelecttaksa" class="form-control bg-black text-gold border-gold">
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ (กลางวัน)</option>
+                            <option value="4">วันเสาร์</option>
+                            <option value="5">วันพฤหัสบดี</option>
+                            <option value="6">วันพุธ (กลางคืน/ราหู)</option>
+                            <option value="7">วันศุกร์</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center mb-3">
+                    <div class="form-group">
+                        <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                        <select id="memberSelect" class="form-control bg-dark text-white border-gold member-selector-shared"
+                            onchange="autoFillMemberData(this.value)">
+                            <option value="">-- เลือกสมาชิก --</option>
+                        </select>
+                    </div>
+                    <label class="text-white-50 small d-block">ระบุวันเดือนปีเกิดเพื่อคำนวณอายุย่าง
+                        (วัน/เดือน/ค.ศ.)</label>
+                    <input type="date" id="birthDate" class="form-control bg-black text-gold border-gold mx-auto"
+                        style="max-width: 250px;" onchange="calculateThaksa(false)">
+    
+                    <div id="displayAgeYang" class="mt-2 badge badge-warning p-2 px-3"
+                        style="font-size: 1.1rem; color: #000;">
+                        ยังไม่ได้ระบุวันเกิด
+                    </div>
+                </div>
+    
+                <div class="thaksa-wheel-container mb-4">
+                    <div id="thaksaDisplay" class="row">
+                    </div>
+                </div>
+    
+                <div id="thaksaResult" class="text-center mt-3 p-3 rounded"
+                    style="background: rgba(0,0,0,0.5); display: none;">
+                    <h4 class="text-gold border-bottom pb-2">คำทำนายภูมิพื้นดวง</h4>
+                    <div id="thaksaDetail" class="text-white"></div>
+                </div>
+    
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                    <button onclick="goBack()" class="btn btn-secondary">ย้อนกลับ</button>
                 </div>
             </div>
-            <div class="text-center mb-3">
-                <div class="form-group">
-                    <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
-                    <select id="memberSelect" class="form-control bg-dark text-white border-gold">
-                        <option value="">-- เลือกสมาชิก --</option>
-                    </select>
-                </div>
-                <label class="text-white-50 small d-block">ระบุวันเดือนปีเกิดเพื่อคำนวณอายุย่าง (วัน/เดือน/ค.ศ.)</label>
-                <input type="date" id="birthDate" class="form-control bg-black text-gold border-gold mx-auto" 
-                    style="max-width: 250px;" onchange="calculateThaksa(false)">
-                
-                <div id="displayAgeYang" class="mt-2 badge badge-warning p-2 px-3" style="font-size: 1.1rem; color: #000;">
-                    ยังไม่ได้ระบุวันเกิด
-                </div>
-            </div>         
+        </div>
+    </section>
 
-            <div class="thaksa-wheel-container mb-4">
-                <div id="thaksaDisplay" class="row">
+    <section id="ascendantPage" class="main-section" style="display: none;">
+    <div class="container mt-4">
+        <div class="card bg-dark border-gold text-white p-4 shadow-lg text-center">
+            <h2 class="text-gold mb-4"><i class="fas fa-star-and-crescent mr-2"></i> คำนวณลัคนาพยากรณ์</h2>
+            
+            <div class="form-group mb-3">
+                <label class="text-gold">เลือกสมาชิกจากประวัติ:</label>
+                <select class="form-control bg-black text-black border-gold member-selector-shared" 
+                        onchange="autoFillMemberData(this.value)">
+                    <option value="">-- เลือกสมาชิก --</option>
+                </select>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-5 mb-3">
+                    <label>วันเกิด (ค.ศ.)</label>
+                    <input type="date" id="ascBirthDate" class="form-control bg-black text-gold border-gold">
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label>เวลาเกิด (HH:mm)</label>
+                    <input type="time" id="ascBirthTime" class="form-control bg-black text-gold border-gold">
+                </div>
+            </div>
+
+            <button class="btn btn-gold btn-block mt-3" onclick="calculateAscendant()">
+                <i class="fas fa-magic"></i> คำนวณลัคนา
+            </button>
+
+            <div id="ascResult" class="mt-4 p-4 rounded" style="display: none; background: rgba(212, 175, 55, 0.1); border: 1px dashed #d4af37;">
+                <h3 id="ascSign" class="text-gold"></h3>
+                <p id="ascDescription" class="lead text-white"></p>
+                <hr style="border-top: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h5 class="text-gold mb-3"><i class="fas fa-th-large mr-2"></i> พื้นฐานดวงชะตา 12 ภพเรือน</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered text-white border-gold" style="background: rgba(0,0,0,0.3);">
+                            <thead class="text-gold">
+                                <tr>
+                                    <th>ภพเรือน</th>
+                                    <th>ราศีที่สถิต</th>
+                                </tr>
+                            </thead>
+                            <tbody id="houseTableBody">
+                                </tbody>
+                        </table>
+                        <div id="deepAnalysis" class="mt-4 text-left p-3 rounded" 
+                            style="background: rgba(255,255,255,0.05); border-left: 4px solid #d4af37; display: none;">
+                            <h5 class="text-gold mb-3"><i class="fas fa-eye mr-2"></i> เจาะลึกห้าขุมทรัพย์ชะตา</h5>
+                            <div id="analysisContent"></div> 
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-gold px-5 py-2" onclick="saveAscendantImage()">
+                            <i class="fas fa-camera mr-2"></i> บันทึกภาพดวงชะตา
+                        </button>
                     </div>
             </div>
 
-            <div id="thaksaResult" class="text-center mt-3 p-3 rounded" style="background: rgba(0,0,0,0.5); display: none;">
-                <h4 class="text-gold border-bottom pb-2">คำทำนายภูมิพื้นดวง</h4>
-                <div id="thaksaDetail" class="text-white"></div>
-            </div>
-
-            <div class="text-center mt-4">
-                <button onclick="goBack()" class="btn btn-secondary">ย้อนกลับ</button>
-            </div>
+            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
+            </button>
         </div>
     </div>
 </section>
 
-<section id="mainpage" class="main-section" style="display: none;">
-    <div class="container text-center py-5">
-        <h1 class="text-gold mb-4">ห้องพยากรณ์</h1>
-        <div class="row" id="menuGrid"></div>
-    </div>
-</section>
+    <section id="mainpage" class="main-section">
+        <div class="container text-center py-5">
+            <h1 class="text-gold mb-4">ห้องพยากรณ์</h1>
+            <div class="row" id="menuGrid"></div>
+        </div>
+    </section>
 
 
 
-<footer class="bg-dark text-white py-3 mt-5">
-    <div class="container text-center">
-        <p>สงวนลิขสิทธิ์ &copy; 2568 - <span id="yearTH"></span> เว็บไซต์ดูดวงสยามโหรามงคล</p>
-    </div>
-</footer>
+    <footer class="bg-dark text-white py-3 mt-5">
+        <div class="container text-center">
+            <p>สงวนลิขสิทธิ์ &copy; 2568 - <span id="yearTH"></span> เว็บไซต์ดูดวงสยามโหรามงคล</p>
+        </div>
+    </footer>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -1268,27 +1487,29 @@
     <script src="knowledge-data.js"></script>
     <script src="knowledge.js"></script>
     <script src="mainpage.js"></script>
+    <script src="ascendant.js"></script>
 
- 
+
+
 
 
 
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#birthdate").datepicker({
                 dateFormat: 'dd/mm/yy',
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "1940:2026",
-                dayNamesMin: ['อา','จ','อ','พ','พฤ','ศ','ส'],
-                monthNamesShort: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม']
+                dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+                monthNamesShort: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
             });
         });
     </script>
-    
-            <div id="shareImageTemplate" style="
+
+    <div id="shareImageTemplate" style="
                 width: 1080px; 
                 height: 1080px; 
                 background: #1a1a1a; 
@@ -1307,15 +1528,17 @@
                 top: -9999px;
                 overflow: hidden;
             ">
-                <div style="text-align: center; margin-bottom: 5px;">
-                    <div style="font-size: 50px; color: #d4af37; font-weight: bold; letter-spacing: 2px;">🔮 สยามโหรามงคล 🔮</div>
-                    <div style="font-size: 26px; color: #f0f0f0; opacity: 0.8; margin-top: 5px;">
-                        วิเคราะห์<span id="shareTypeName">หมายเลข</span>: <span id="inputNumDisplay" style="color: #d4af37; font-weight: bold;"></span>
-                    </div>
-                </div>
+        <div style="text-align: center; margin-bottom: 5px;">
+            <div style="font-size: 50px; color: #d4af37; font-weight: bold; letter-spacing: 2px;">🔮 สยามโหรามงคล 🔮
+            </div>
+            <div style="font-size: 26px; color: #f0f0f0; opacity: 0.8; margin-top: 5px;">
+                วิเคราะห์<span id="shareTypeName">หมายเลข</span>: <span id="inputNumDisplay"
+                    style="color: #d4af37; font-weight: bold;"></span>
+            </div>
+        </div>
 
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;">
-                    <div id="shareGrade" style="
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;">
+            <div id="shareGrade" style="
                         padding: 8px 45px; 
                         border-radius: 50px; 
                         font-size: 38px; 
@@ -1323,17 +1546,17 @@
                         margin-bottom: 10px;
                         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                     "></div>
-                    
-                    <div id="shareSumNum" style="
+
+            <div id="shareSumNum" style="
                     font-size: 280px; 
                     font-weight: bold; 
                     line-height: 1; 
                     margin: 40px 0; /* เพิ่ม Margin บน-ล่าง ให้เลขไม่เบียด */
                     text-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
                     "></div>
-                </div>
-                
-                <div style="
+        </div>
+
+        <div style="
                     background: rgba(255, 255, 255, 0.07);
                     padding: 35px 50px;
                     border-radius: 20px;
@@ -1346,7 +1569,7 @@
                     align-items: center;
                     margin-bottom: 20px;
                 ">
-                    <p style="
+            <p style="
                         font-size: 40px; /* ลดลงเล็กน้อยเพื่อความอ่านง่าย */
                         line-height: 1.5; 
                         color: #fff; 
@@ -1355,10 +1578,10 @@
                         word-break: break-word;
                         font-weight: 300;
                     ">
-                        " <span id="shareMeaning"></span> " 
-                    </p>
+                " <span id="shareMeaning"></span> "
+            </p>
 
-                    <div id="sharePairs" style="
+            <div id="sharePairs" style="
                         margin-top: 25px;
                         padding-top: 20px;
                         padding-bottom: 20px;
@@ -1371,13 +1594,14 @@
                         font-size: 30px;
                         font-weight: bold;
                     "></div>
-                </div>
-            </div>
-    
+        </div>
+    </div>
+
     <script>
-    const year = new Date().getFullYear() + 543;
-    document.getElementById("yearTH").innerText = year;
+        const year = new Date().getFullYear() + 543;
+        document.getElementById("yearTH").innerText = year;
     </script>
 
 </body>
+
 </html>
