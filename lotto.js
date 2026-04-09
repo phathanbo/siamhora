@@ -1,5 +1,5 @@
 "use strict";
-// 1. ข้อมูลตามตำราเลขศาสตร์ไทย
+
 const LOTTO_THEORY = {
     "อาทิตย์": { power: 6, friend: [1, 4], powerNum: 9 },
     "จันทร์": { power: 15, friend: [2, 5], powerNum: 2 },
@@ -10,86 +10,18 @@ const LOTTO_THEORY = {
     "เสาร์": { power: 10, friend: [7, 2], powerNum: 7 }
 };
 
-// ตารางเลขตามวันเกิด
-const dayNumbers = {
-    "อาทิตย์": [1, 6],
-    "จันทร์": [2, 5],
-    "อังคาร": [3, 8],
-    "พุธ": [4, 7],
-    "พฤหัสบดี": [5, 9],
-    "ศุกร์": [6, 3],
-    "เสาร์": [7, 4]
-};
-
-// เลขพื้นฐานวันเกิด
 const birthBase = {
-    "อาทิตย์": 1,
-    "จันทร์": 2,
-    "อังคาร": 3,
-    "พุธ": 4,
-    "พฤหัสบดี": 5,
-    "ศุกร์": 6,
-    "เสาร์": 7
+    "อาทิตย์": 1, "จันทร์": 2, "อังคาร": 3, "พุธ": 4, "พฤหัสบดี": 5, "ศุกร์": 6, "เสาร์": 7
 };
 
-
-
+// 1. ฟังก์ชันหาปฏิทินหวยออก (รวมเป็นอันเดียว)
 function getNextLottoDate() {
-
-    const today = new Date();
-
-    const first = new Date(today.getFullYear(), today.getMonth(), 1);
-    const sixteen = new Date(today.getFullYear(), today.getMonth(), 16);
-
-    let target;
-
-    if (today <= first) {
-        target = first;
-    } else if (today <= sixteen) {
-        target = sixteen;
-    } else {
-        target = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    }
-
-    const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-
-    return {
-        date: target,
-        dayName: days[target.getDay()],
-        fullDate: target.toLocaleDateString("th-TH")
-    };
-
-}
-
-
-// เปิดหน้าหวย
-function showLottoPage() {
-
-    if (typeof navigateTo === "function") {
-        navigateTo('lottoPage');
-    } else {
-        document.querySelectorAll('.main-section').forEach(s => s.classList.add('hidden'));
-        document.getElementById('lottoPage').classList.remove('hidden');
-    }
-
-    const resultDiv = document.getElementById('lottoResult');
-    if (resultDiv) resultDiv.innerHTML = "";
-
-    window.scrollTo(0, 0);
-}
-
-
-
-// 2. ฟังก์ชันหาปฏิทินหวยออกงวดหน้า (ต้องมีเพื่อให้ generateLuckyNumbers ทำงานได้)
-function getNextLottoDate() {
-
     const now = new Date();
     const day = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
 
     let target;
-
     if (day < 16) {
         target = new Date(year, month, 16);
     } else {
@@ -105,38 +37,55 @@ function getNextLottoDate() {
         year: target.getFullYear(),
         fullDate: `${target.getDate()} ${thaiMonths[target.getMonth()]} ${target.getFullYear() + 543}`,
         dayName: thaiDays[target.getDay()]
-    }
-
+    };
 }
 
-// คำนวณเลขเด่นงวด
 function calculateMainNumbers(birthDay) {
-
     const next = getNextLottoDate();
-    const base = birthBase[birthDay];
+    const base = birthBase[birthDay] || 1;
+    
+    // แปลงปี ค.ศ. เป็น พ.ศ. แล้วเอาเลขท้ายมาเป็นตัวคูณกำลังงวด
+    const thaiYearDigit = (next.year + 543) % 10; 
 
-    const main = (base + next.date + next.month) % 10;
-    const secondary = (main + next.month) % 10;
-    const forbidden = (main + secondary + 3) % 10;
+    // สูตรใหม่: (พื้นฐานวันเกิด + วันที่ออก + เดือนที่ออก + เลขท้ายปี พ.ศ.)
+    let main = (base + next.date + next.month + thaiYearDigit) % 10;
+    
+    // เลขรอง: ใช้เลขเด่นบวกเดือนและเลขท้ายปี
+    let secondary = (main + next.month + thaiYearDigit) % 10;
+    
+    // ถ้าเลขรองดันไปซ้ำกับเลขเด่น ให้ขยับหนี (+1)
+    if (secondary === main) {
+        secondary = (secondary + 1) % 10;
+    }
+
+    // เลขกัน: คำนวณเบื้องต้น
+    let forbidden = (main + secondary + 3) % 10;
+
+    // --- 🛡️ ระบบป้องกันเลขซ้ำกันเอง (Conflict Resolution) ---
+    // วนลูปเช็กจนกว่าเลขกันจะไม่ซ้ำกับเด่นและรอง
+    while (forbidden === main || forbidden === secondary) {
+        forbidden = (forbidden + 1) % 10;
+    }
 
     return {
         main,
         secondary,
         forbidden
-    }
-
+    };
 }
 
-
-// สุ่มเลข 2 ตัว (กันเลขซ้ำ + กันเลขกลับ)
-function generateTwoDigits(main, secondary, count = 6) {
-
+// (ฟังก์ชัน generateTwoDigits และ generateThreeDigits คงเดิมตามที่ประธานเขียน)
+// สุ่มเลข 2 ตัว (ห้ามซ้ำ, ห้ามมีเลขกัน)
+function generateTwoDigits(main, secondary, forbidden, count = 6) {
     const nums = [];
-
     while (nums.length < count) {
-
         const d1 = Math.random() < 0.5 ? main : secondary;
-        const d2 = Math.floor(Math.random() * 10);
+        let d2 = Math.floor(Math.random() * 10);
+
+        // 🛡️ ถ้าหลักที่ 2 ไปตรงกับเลขกัน ให้สุ่มใหม่จนกว่าจะไม่ตรง
+        while (d2 === forbidden) {
+            d2 = Math.floor(Math.random() * 10);
+        }
 
         const num = `${d1}${d2}`;
         const rev = `${d2}${d1}`;
@@ -144,117 +93,161 @@ function generateTwoDigits(main, secondary, count = 6) {
         if (!nums.includes(num) && !nums.includes(rev)) {
             nums.push(num);
         }
-
     }
-
     return nums;
-
 }
 
-
-// สุ่มเลข 3 ตัว
-function generateThreeDigits(main, secondary, count = 6) {
-
+// สุ่มเลข 3 ตัว (ห้ามซ้ำ, ห้ามมีเลขกันในทุกหลัก)
+function generateThreeDigits(main, secondary, forbidden, count = 6) {
     const nums = [];
-
     while (nums.length < count) {
-
         const d1 = Math.random() < 0.5 ? main : secondary;
-        const d2 = Math.floor(Math.random() * 10);
-        const d3 = Math.floor(Math.random() * 10);
+        let d2 = Math.floor(Math.random() * 10);
+        let d3 = Math.floor(Math.random() * 10);
+
+        // 🛡️ เช็กหลักที่ 2 และ 3 ถ้าตรงกับเลขกัน ให้สุ่มใหม่ทันที
+        while (d2 === forbidden) d2 = Math.floor(Math.random() * 10);
+        while (d3 === forbidden) d3 = Math.floor(Math.random() * 10);
 
         const num = `${d1}${d2}${d3}`;
 
         if (!nums.includes(num)) {
             nums.push(num);
         }
-
     }
-
     return nums;
-
 }
 
-
-
-// =============================
-// วิเคราะห์วันเกิดผู้ใช้
-// ต้องมี select id="birthDay"
-// =============================
-function analyzeBirthDay() {
-
-    const day = document.getElementById("birthDay");
-
-    if (!day) return "ไม่ได้ระบุวันเกิด";
-
-    const value = day.value;
-
-    if (!LOTTO_THEORY[value]) return "ไม่ได้ระบุวันเกิด";
-
-    const data = LOTTO_THEORY[value];
-
-    return `
-    คนเกิดวัน${value}
-    เลขมงคลของคุณคือ ${data.power} และ ${data.powerNum}
-    เลขมิตรคือ ${data.friend.join(",")}
-    `;
-}
-
-
-// 3. ฟังก์ชันหลักในการสร้างเลข
+// 2. ปรับปรุงการสร้างเลขและใส่ ID ให้ถูกต้อง
 function generateLuckyNumbers() {
-
-    const birthDay = document.getElementById("birthDay").value;
+    const birthDayEl = document.getElementById("birthDay");
+    if (!birthDayEl || !birthDayEl.value) {
+        return;
+    }
+    
+    const birthDay = birthDayEl.value;
     const next = getNextLottoDate();
     const calc = calculateMainNumbers(birthDay);
-    const twoDigits = generateTwoDigits(calc.main, calc.secondary, 6);
-    const threeDigits = generateThreeDigits(calc.main, calc.secondary, 6);
+    const twoDigits = generateTwoDigits(calc.main, calc.secondary, calc.forbidden, 6);
+    const threeDigits = generateThreeDigits(calc.main, calc.secondary, calc.forbidden, 6);
 
-
+    // เพิ่ม id="lottoCaptureArea" เพื่อให้โหลดภาพได้
     const html = `
-
-    <div class="card shadow mt-4 border-0">
-        <div class="card-body">
+    <div id="lottoCaptureArea" class="card shadow mt-4 border-0 p-3 bg-white">
+        <div class="card-body text-center">
             <h4 class="text-gold">🔮 วิเคราะห์งวด ${next.fullDate}</h4>
-            <p class="text-muted">งวดวัน${next.dayName}</p>
+            <p class="text-muted font-weight-bold">งวดวัน${next.dayName}</p>
             <hr>
-            <h5>⭐ เลขเด่น</h5>
-            <h2 class="text-danger">${calc.main}</h2>
-            <h5 class="mt-3">✨ เลขรอง</h5>
-            <h3>${calc.secondary}</h3>
-            <h5 class="mt-3">⚠ เลขกัน</h5>
-            <h3>${calc.forbidden}</h3>
+            <div class="row">
+                <div class="col-4"><h5>⭐ เด่น</h5><h2 class="text-danger">${calc.main}</h2></div>
+                <div class="col-4"><h5>✨ รอง</h5><h2>${calc.secondary}</h2></div>
+                <div class="col-4"><h5>⚠ กัน</h5><h2>${calc.forbidden}</h2></div>
+            </div>
             <hr>
             <h5>🎯 เลข 2 ตัว</h5>
-            <h3 class="text-primary">
-            ${twoDigits.join("  ")}
-            </h3>
+            <h3 class="text-primary">${twoDigits.join(" &nbsp; ")}</h3>
             <h5 class="mt-4">🎯 เลข 3 ตัว</h5>
-            <h3 class="text-success">
-            ${threeDigits.join("  ")}
-            </h3>
+            <h3 class="text-success">${threeDigits.join(" &nbsp; ")}</h3>
         </div>
     </div>
+            <button class="btn btn-gold" onclick="downloadLottoResult()">🔮 บันทึกเป็นรูปภาพ</button>
+
     `;
     document.getElementById("lottoResult").innerHTML = html;
 }
 
-
-// 4. ฟังก์ชันบันทึกภาพ (ต้องใช้ร่วมกับ html2canvas)
-function downloadLottoResult() {
-
-    const area = document.getElementById('lottoCaptureArea');
-
-    if (!area) {
-        alert("กรุณาคำนวณเลขก่อน");
+window.saveAscendantImage = function() {
+    const captureArea = document.getElementById('ascResult');
+    if (!captureArea || captureArea.style.display === 'none') {
+        alert("คำนวณก่อนเซฟครับประธาน!");
         return;
     }
 
-    html2canvas(area).then(canvas => {
+    // สั่งเซฟด้วยการ "จำลอง" ขนาดใหม่
+    html2canvas(captureArea, {
+        backgroundColor: '#0a0a0a',
+        scale: 2, // เพิ่มความชัด x2
+        logging: false,
+        onclone: (clonedDoc) => {
+            // --- 💡 ความลับอยู่ตรงนี้ครับประธาน ---
+            const clonedElement = clonedDoc.getElementById('ascResult');
+            
+            // บังคับขนาดในรูปเซฟให้เป็น 1080px (ขนาดมาตรฐาน Facebook/Instagram)
+            clonedElement.style.width = '1080px';
+            clonedElement.style.maxWidth = 'none'; 
+            clonedElement.style.padding = '40px'; // เพิ่มขอบให้รูปดูแพง
+            
+            // ปรับตัวหนังสือในรูปให้ใหญ่ขึ้นนิดนึงตอนเซฟ จะได้อ่านในเฟสง่าย
+            clonedElement.style.fontSize = '20px'; 
+            
+            // แอบเติมลายน้ำหรือเครดิตแอปในรูปเซฟ (โผล่เฉพาะในรูป)
+            const footer = clonedDoc.createElement('div');
+            footer.innerHTML = '<center><p style="color:#d4af37; margin-top:20px; font-size:18px;">✨ สยามโหรามงคล - พยากรณ์ดวงชะตาแม่นยำ ✨</p></center>';
+            clonedElement.appendChild(footer);
+        }
+    }).then(canvas => {
         const link = document.createElement('a');
-        link.download = "lotto-prediction.png";
-        link.href = canvas.toDataURL();
+        link.download = `ดวงชะตา_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        console.log("📸 เซฟรูปขนาด Facebook Standard เรียบร้อย!");
+    });
+};
+
+// 3. ฟังก์ชันบันทึกภาพ
+function downloadLottoResult() {
+    const area = document.getElementById('lottoCaptureArea');
+    if (!area) return alert("คำนวณเลขก่อนครับประธาน");
+
+    html2canvas(area, {
+        backgroundColor: null, // ปล่อยเป็นใสเพื่อให้ Background ที่เราตั้งใน clone ทำงาน
+        scale: 2,
+        onclone: (clonedDoc) => {
+            const el = clonedDoc.getElementById('lottoCaptureArea');
+            
+            // --- 🎨 แต่งองค์ทรงเครื่องให้ภาพเซฟ ---
+            el.style.width = '600px';
+            el.style.background = 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)'; // พื้นหลังกาแล็กซี่ทางช้างเผือก
+            el.style.border = '5px double #d4af37'; // ขอบทองสองชั้นแบบยันต์
+            el.style.borderRadius = '20px';
+            el.style.padding = '40px';
+            el.style.color = '#fff';
+            el.style.boxShadow = 'inset 0 0 50px rgba(212, 175, 55, 0.3)'; // แสงสีทองเรืองๆ ด้านใน
+
+            // ปรับแต่งหัวข้อ
+            const title = el.querySelector('h4');
+            if(title) {
+                title.style.fontSize = '32px';
+                title.style.textShadow = '2px 2px 4px #000';
+                title.style.color = '#ffd700';
+                title.innerHTML = `✨ ${title.innerText} ✨`;
+            }
+
+            // ปรับแต่งตัวเลขเด่น (ทำให้ดูเหมือนลูกบอลทองคำ)
+            const mainNum = el.querySelector('.text-danger');
+            if(mainNum) {
+                mainNum.style.fontSize = '80px';
+                mainNum.style.color = '#fff';
+                mainNum.style.textShadow = '0 0 20px #ff0000, 0 0 30px #ff0000';
+                mainNum.style.margin = '20px 0';
+            }
+
+            // เพิ่มเครดิตแบบหรูๆ
+            const footer = clonedDoc.createElement('div');
+            footer.style.marginTop = '30px';
+            footer.style.borderTop = '1px solid #d4af37';
+            footer.style.paddingTop = '15px';
+            footer.style.fontSize = '14px';
+            footer.style.color = '#d4af37';
+            footer.style.textAlign = 'center';
+            footer.style.letterSpacing = '2px';
+            footer.innerHTML = '⚜️ สยามโหรามงคล ⚜️';
+            el.appendChild(footer);
+        }
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `เลขมงคล_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL("image/png");
         link.click();
     });
-
 }

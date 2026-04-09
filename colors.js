@@ -22,33 +22,72 @@ function getThaiDayName(){
     return thaiDays[index];
 }
 
-function renderDailyColors(){
+function renderDailyColors() {
     const headerDiv = document.getElementById("dailyColorHeader");
-    if(!headerDiv) return;
+    if (!headerDiv) return;
+
     const dayName = getThaiDayName();
     const data = COLOR_MASTER[dayName];
-    if(!data){
+    if (!data) {
         console.error("COLOR_MASTER missing day:", dayName);
         return;
     }
+
+    const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+
+    // ฟังก์ชันย่อยสำหรับอัปเดตเฉพาะข้อความเวลา (เพื่อความลื่นไหล)
+    const updateTimeUI = () => {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('th-TH', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Bangkok' 
+        });
+        const timeSpan = document.getElementById("liveTimeClock");
+        if (timeSpan) timeSpan.innerText = timeStr;
+    };
+
+    const nowInTH = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Bangkok"}));
+    const currentDate = nowInTH.getDate();
+    const currentMonth = thaiMonths[nowInTH.getMonth()];
+    const currentYear = nowInTH.getFullYear() + 543;
+
     headerDiv.innerHTML = `
-    <div class="card border-0 shadow-sm mb-2"
-        style="background:linear-gradient(90deg,#1a1a1a,${data.bg});
-        color:white;border-radius:12px;border:1px solid rgba(255,255,255,0.1);">
+    <div class="card border-0 shadow-sm mb-2" 
+        style="background: linear-gradient(90deg, #1a1a1a, ${data.bg}); 
+               color: white; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
         <div class="card-body py-2 px-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <strong>สีมงคล</strong>วัน${dayName}
+                    <i class="fas fa-calendar-alt text-warning mr-2"></i>
+                    <strong>สีมงคล</strong> วัน${dayName}ที่ ${currentDate} ${currentMonth} ${currentYear} 
+                    | <i class="fas fa-clock ml-2 mr-1"></i> <span id="liveTimeClock">...</span> น.
                 </div>
-                <div class="text-end ">
-                    <strong>สีแห่งโชคลาภ: </strong><span style="color:${data.cWealth}">สี${data.wealth}</span> |
-                    <strong>สีแห่งอำนาจ: </strong><span style="color:${data.cPower}">สี${data.power}</span> |
-                    <strong>สีที่ต้องห้าม: </strong><span style="color:${data.cForbidden}">สี${data.forbidden}</span>
+                <div class="text-right">
+                    <span class="mr-3">
+                        <i class="fas fa-coins" style="color: #ffd700;"></i> 
+                        <strong>โชคลาภ:</strong> <span style="color:${data.cWealth}">สี${data.wealth}</span>
+                    </span>
+                    <span class="mr-3">
+                        <i class="fas fa-crown" style="color: #ff4500;"></i> 
+                        <strong>อำนาจ:</strong> <span style="color:${data.cPower}">สี${data.power}</span>
+                    </span>
+                    <span>
+                        <i class="fas fa-ban text-danger"></i> 
+                        <strong>กาลกิณี:</strong> <span style="color:${data.cForbidden}">สี${data.forbidden}</span>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
     `;
+
+    // เริ่มต้นตัวนับเวลา (เรียกครั้งเดียวข้างนอก หรือจัดการด้วย ID เพื่อไม่ให้เกิด Loop ซ้อน)
+    if (window.colorClockInterval) clearInterval(window.colorClockInterval);
+    updateTimeUI(); // เรียกทันทีครั้งแรก
+    window.colorClockInterval = setInterval(updateTimeUI, 1000);
 }
 
 function showWeeklyTable(){

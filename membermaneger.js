@@ -1,19 +1,19 @@
 "use strict";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { 
-    getFirestore, collection, addDoc, getDocs, 
-    query, where, orderBy, deleteDoc, doc, limit 
+import {
+    getFirestore, collection, addDoc, getDocs,
+    query, where, orderBy, deleteDoc, doc, limit
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // 2. การตั้งค่า Firebase (นำข้อมูลจาก Firebase Console ของคุณมาใส่ที่นี่)
 const firebaseConfig = {
-  apiKey: "AIzaSyCAXqUv97g4THeV_bKqVHGg7Ka0q3umvwA",
-  authDomain: "siamhora-c6b27.firebaseapp.com",
-  projectId: "siamhora-c6b27",
-  storageBucket: "siamhora-c6b27.firebasestorage.app",
-  messagingSenderId: "148386870420",
-  appId: "1:148386870420:web:fd6e6bf4a1bb5555a2b081",
-  measurementId: "G-DH8VVHWKQ5"
+    apiKey: "AIzaSyCAXqUv97g4THeV_bKqVHGg7Ka0q3umvwA",
+    authDomain: "siamhora-c6b27.firebaseapp.com",
+    projectId: "siamhora-c6b27",
+    storageBucket: "siamhora-c6b27.firebasestorage.app",
+    messagingSenderId: "148386870420",
+    appId: "1:148386870420:web:fd6e6bf4a1bb5555a2b081",
+    measurementId: "G-DH8VVHWKQ5"
 };
 
 // เริ่มต้น Firebase
@@ -34,15 +34,19 @@ async function saveToFirestore(userData) {
         if (cleanTime.includes('T')) cleanTime = cleanTime.split('T')[1].substring(0, 5);
         else cleanTime = cleanTime.substring(0, 5);
 
+        // ดึงค่าจากหน้าจอ
+        const lastName = document.getElementById('targetLastName').value;
+
         const payload = {
             memberId: userData.memberId,
             name: userData.name || currentUser || "ผู้มาเยือน",
+            lastName: lastName, // เพิ่มนามสกุลเข้าไปใน Object
             birthdate: userData.birthdate,
             birthtime: cleanTime,
             zodiac: userData.zodiac || "",
             element: userData.element || "ไม้",
             yam: userData.yam || "",
-            createdAt: new Date() // ใช้ Server Timestamp ของ JS
+            createdAt: new Date()
         };
 
         const docRef = await addDoc(membersCol, payload);
@@ -64,14 +68,14 @@ async function syncDataFromFirestore() {
         querySnapshot.forEach((doc) => {
             history.push({ id: doc.id, ...doc.data() });
         });
-        
+
         // เก็บลง LocalStorage ตามเดิม
         localStorage.setItem('horo_history', JSON.stringify(history));
-        
+
         // --- ส่วนที่เพิ่มใหม่: กระจายรายชื่อไปทุกหน้า ---
         updateAllMemberSelectors(history);
-        
-        if (typeof loadHistory === 'function') loadHistory(); 
+
+        if (typeof loadHistory === 'function') loadHistory();
         console.log("✅ ซิงค์และอัปเดตรายชื่อสำเร็จ");
     } catch (err) {
         console.error("❌ ซิงค์ล้มเหลว:", err);
@@ -83,21 +87,21 @@ function updateAllMemberSelectors(history) {
     // ดึง Select ทุกตัวที่มี id หรือ class ที่เรากำหนดไว้
     // แนะนำให้ใช้คลาส .member-selector-shared เพื่อความแม่นยำ
     const selectors = document.querySelectorAll('#memberSelect, .member-selector-shared');
-    
+
     selectors.forEach(select => {
         const currentVal = select.value; // เก็บค่าที่เลือกค้างไว้ก่อนหน้า (ถ้ามี)
         select.innerHTML = '<option value="">-- เลือกสมาชิก --</option>';
-        
+
         history.forEach(member => {
             const option = document.createElement('option');
             // สำคัญ: เราจะเก็บข้อมูลวันที่ไว้ใน value เพื่อให้ฟังก์ชันอื่นดึงไปใช้ง่ายๆ
-            option.value = member.birthdate || ""; 
+            option.value = member.birthdate || "";
             option.textContent = member.name;
             // ถ้ามีข้อมูลอายุ/วันที่ ให้เก็บไว้ใน data attribute เผื่อเรียกใช้
             option.setAttribute('data-name', member.name);
             select.appendChild(option);
         });
-        
+
         select.value = currentVal; // คืนค่าที่เลือกไว้
     });
 }
@@ -117,7 +121,7 @@ async function deleteMember(docId) {
     try {
         await deleteDoc(doc(db, "horo_history", docId));
         console.log("🗑️ ลบข้อมูลใน Cloud สำเร็จ:", docId);
-        
+
         // อัปเดต Local และ UI ทันที
         await syncDataFromFirestore();
     } catch (err) {
@@ -129,10 +133,10 @@ async function deleteMember(docId) {
 let isViewingHistory = false;
 
 // 3. แก้ไขจุดเริ่มต้นทำงาน (เรียก Sync เมื่อเปิดหน้าเว็บ)
-window.onload = async function() {
+window.onload = async function () {
     await syncDataFromFirestore(); // ✅ ใช้ชื่อให้ตรงกับฟังก์ชันที่ประกาศไว้ด้านล่าง
     if (typeof checkLoginStatus === 'function') checkLoginStatus();
-    if (typeof fillUserData === 'function') fillUserData(); 
+    if (typeof fillUserData === 'function') fillUserData();
 };
 
 // --- เพิ่มฟังก์ชันนี้เพื่อกรอกข้อมูลอัตโนมัติ ---
@@ -164,18 +168,18 @@ function logout() {
 function checkLoginStatus() {
     const userGreeting = document.getElementById('userGreeting');
     const authBtn = document.getElementById('authButtons');
-    
+
     // ตรวจสอบก่อนว่ามี Element เหล่านี้ใน HTML หรือไม่
     if (currentUser && userGreeting) {
         userGreeting.innerHTML = `✨ ยินดีต้อนรับคุณ <strong>${currentUser}</strong>`;
-        
+
         if (authBtn) {
             authBtn.innerHTML = `<button class="btn btn-outline-danger btn-sm" onclick="logout()">ออกจากระบบ</button>`;
         }
     }
 }
 
-function getYarmFromTime(timeStr){
+function getYarmFromTime(timeStr) {
 
     const [h, m] = timeStr.split(":").map(Number);
     const total = h * 60 + m;
@@ -193,7 +197,7 @@ function getYarmFromTime(timeStr){
 
     const day = new Date().getDay();
 
-    const starId = isDay 
+    const starId = isDay
         ? YARM_CHART.day[day][yarmIndex]
         : YARM_CHART.night[day][yarmIndex];
 
@@ -204,6 +208,7 @@ function getYarmFromTime(timeStr){
 async function calculateEsh() {
 
     const nameInput = document.getElementById('targetName').value.trim();
+    const lastNameInput = document.getElementById('targetLastName').value.trim();
     const birthdate = document.getElementById('birthdate').value;
     const birthtime = document.getElementById('birthtime').value;
 
@@ -238,6 +243,7 @@ async function calculateEsh() {
         const dataToSave = {
             memberId: mId,
             name: nameInput || currentUser || "ผู้มาเยือน",
+            lastName: lastNameInput, // เพิ่มนามสกุลเข้าไปใน Object
             birthdate: birthdate,
             birthtime: birthtime,
             zodiac: zodiacName,   // ⭐ บันทึกนักษัตรที่คำนวณแล้ว
@@ -279,18 +285,18 @@ async function calculateEsh() {
 // ฟังก์ชันแยกสำหรับบันทึกข้อมูล
 function saveToHistory(data) {
     let history = JSON.parse(localStorage.getItem('horo_history')) || [];
-    
+
     // ตรวจสอบว่ามี ID นี้อยู่แล้วหรือไม่ (เพื่อป้องกันการบันทึกซ้ำเวลา refresh)
     const exists = history.some(item => item.id === data.id);
-    
+
     if (!exists) {
         history.push(data);
-        localStorage.setItem('horo_history', JSON.stringify(history));        
+        localStorage.setItem('horo_history', JSON.stringify(history));
         // ส่งข้อมูลไป Google Sheet
         if (typeof saveMember === 'function') {
             saveMember(data);
         }
-    }    
+    }
     loadHistory(); // สั่งให้ตารางอัปเดตทันที
 }
 
@@ -299,7 +305,7 @@ function saveToHistory(data) {
 async function generateMemberId() {
     const now = new Date();
     const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
-    
+
     let maxSeq = 0;
     const querySnapshot = await getDocs(membersCol); // ดึงมาเช็ค ID ล่าสุด
     querySnapshot.forEach(doc => {
@@ -317,7 +323,7 @@ async function generateMemberId() {
 function renderTable(dataArray) {
     const historyBody = document.getElementById('historyBody');
     if (!historyBody) return;
-    
+
     historyBody.innerHTML = '';
     if (!dataArray || dataArray.length === 0) {
         historyBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
@@ -330,6 +336,7 @@ function renderTable(dataArray) {
             <tr> 
                 <td class="font-weight-bold text-info">${item.memberId || 'N/A'}</td>
                 <td>${item.name}</td>
+                <td>${item.lastName || '-'}</td>
                 <td>${item.birthdate}</td>
                 <td>${item.zodiac || '-'}</td>
                 <td>${item.yam || '-'}</td>
@@ -384,15 +391,15 @@ function selectMemberToView(name, birthdate) {
     // เพื่อให้ "กราฟชีวิต" และส่วนอื่นๆ ดึงไปใช้ต่อได้ทันที
     localStorage.setItem('userBirthdate', birthdate);
     if (typeof updateGraph === 'function') {
-        updateGraph(); 
+        updateGraph();
     }
 
     // 3. แจ้งเตือนให้ผู้ใช้ทราบ (Optional)
     console.log("เปลี่ยนข้อมูลเป็นของ: " + name + " (" + birthdate + ")");
-    
+
     // 4. พาผู้ใช้กลับไปหน้าหลัก หรือหน้าทำนายทันที
     // navigateTo('homePage'); // หรือหน้าอื่นๆ ที่คุณต้องการ
-    
+
     alert("โหลดข้อมูลของคุณ " + name + " เรียบร้อยแล้ว");
 }
 
@@ -401,7 +408,7 @@ function showElementManual() {
     document.querySelectorAll('.main-section').forEach(section => {
         section.classList.add('hidden');
     });
-    
+
     const manualPage = document.getElementById('elementManualPage');
     if (manualPage) {
         manualPage.classList.remove('hidden');
@@ -419,7 +426,7 @@ function showElementManual() {
     // 3. ส่วนสำคัญ: ตรวจสอบว่ามีการคำนวณดวงไว้หรือยัง (กัน Error)
     // เช็คว่าตัวแปรที่ใช้ใน element.js มีค่าไหม
     if (typeof elementData !== 'undefined' && elementData.name) {
-        
+
         // ฟังก์ชันช่วยดึงชื่อธาตุสั้นๆ เช่น "ธาตุไฟ (ไฟแรง)" -> "ไฟ"
         const cleanE = (name) => name ? name.replace("ธาตุ", "").split(" ")[0].split("(")[0].trim() : "";
 
@@ -438,7 +445,7 @@ function showElementManual() {
                     box.style.border = '2px solid #d4af37';
                     const label = box.querySelector('.user-label');
                     if (label) {
-                        label.innerHTML += (label.innerHTML ? ' / ' : '') + 
+                        label.innerHTML += (label.innerHTML ? ' / ' : '') +
                             `<span class="badge badge-primary" style="font-size:10px">${item.label}</span>`;
                     }
                 }
@@ -500,7 +507,7 @@ function showProfilePage(data) {
     const year = birthDateObj.getFullYear();
     const yam = getYarmFromTime(data.birthtime || "00:00");
 
-    
+
     // 2. เรียกข้อมูลธาตุจาก script.js
     const elementData = typeof window.getElementData === 'function'
         ? window.getElementData(data.birthdate)
@@ -527,9 +534,9 @@ function showProfilePage(data) {
     let cleanTime = data.birthtime || "--:--";
 
     if (cleanTime.includes('T')) {
-        cleanTime = cleanTime.split('T')[1].substring(0,5);
+        cleanTime = cleanTime.split('T')[1].substring(0, 5);
     } else {
-        cleanTime = cleanTime.substring(0,5);
+        cleanTime = cleanTime.substring(0, 5);
     }
 
     // 5. แสดงข้อมูล Header
@@ -539,11 +546,13 @@ function showProfilePage(data) {
     };
 
     setText('profName', data.name);
+    setText('profLastName', data.lastName || '');
     setText('profId', `ID: ${data.memberId || 'สมาชิกใหม่'}`);
     setText('profBirth', data.birthdate);
     setText('profTime', cleanTime + " น.");
     setText('profZodiac', data.zodiac || zElement.name || "ไม่ระบุ");
     setText('profYam', data.yam || "ไม่ระบุ");
+    setText('profullname', `${data.name} ${data.lastName || ''}`);
 
     // 6. แสดงผลคำทำนาย
     predictionArea.innerHTML = `
@@ -551,14 +560,11 @@ function showProfilePage(data) {
 
             <div class="text-center mb-4">
                 <h2 style="color:#b8860b">🔮 แผ่นดวงชะตา</h2>
-                <p style="color:#333; font-weight: bold; font-size: 25px;">คุณ ${data.name}</p>
+                <p style="color:#333; font-weight: bold; font-size: 25px;">คุณ ${data.name} ${data.lastName || ''}</p>
             </div>
-
             <hr style="border-top:2px double #d4af37">
-
             <div class="prediction-content">
-
-                <p><strong>วันเกิด:</strong> วัน${dayIdx !== undefined ? ` ${["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"][dayIdx]}` : ''} ที่ ${parseInt(data.birthdate.split('/')[0])} ${monthIdx !== undefined ? ` ${["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"][monthIdx]}` : ''} พ.ศ. ${year+543}    
+                <p><strong>วันเกิด:</strong> วัน${dayIdx !== undefined ? ` ${["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"][dayIdx]}` : ''} ที่ ${parseInt(data.birthdate.split('/')[0])} ${monthIdx !== undefined ? ` ${["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"][monthIdx]}` : ''} พ.ศ. ${year + 543}    
                <strong>นักษัตร:</strong> ปี${zElement.name} (${zElement.element}) 
                <p><strong>เวลาเกิด:</strong> ${cleanTime} น.   <strong>ยามเกิด:</strong> ${data.yam || "ไม่ระบุ"}</p>
                 
@@ -626,7 +632,7 @@ function showProfilePage(data) {
 
                 <div class="mb-3">
                     <strong>คำทำนายปีนักษัตร:</strong>
-                    ${typeof getZodiacPrediction === 'function'? getZodiacPrediction(["ชวด","ฉลู","ขาล","เถาะ","มะโรง","มะเส็ง","มะเมีย","มะแม","วอก","ระกา","จอ","กุน"].indexOf(zElement.name)): "-"}
+                    ${typeof getZodiacPrediction === 'function' ? getZodiacPrediction(["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"].indexOf(zElement.name)) : "-"}
                 </div>
 
             </div>
@@ -634,7 +640,7 @@ function showProfilePage(data) {
     `;
 }
 
-function getThaiZodiacYear(dateObj){
+function getThaiZodiacYear(dateObj) {
 
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
@@ -658,73 +664,73 @@ window.showProfilePage = showProfilePage;
 window.searchHistory = () => {
     const term = document.getElementById('searchInput').value.toLowerCase();
     const history = JSON.parse(localStorage.getItem('horo_history')) || [];
-    const filtered = history.filter(item => 
+    const filtered = history.filter(item =>
         item.name.toLowerCase().includes(term) || (item.memberId && item.memberId.includes(term))
     );
     renderTable(filtered);
 };
-    // expose auxiliary functions used by inline handlers or other scripts
-    window.login = login;
-    window.logout = logout; // original function includes confirmation
-    window.fillUserData = fillUserData;
-    window.checkLoginStatus = checkLoginStatus;
-    window.syncDataFromFirestore = syncDataFromFirestore;
-    window.generateMemberId = generateMemberId;
-    window.deleteMember = deleteMember;
-    
-    // --- element data helper functions (called from showProfilePage) ---
-    // These will be defined by element.js, relation.js etc. when they load
-    // Fallback: create placeholder exports if they don't exist
-    if (typeof window.getElementData !== 'function') {
-        window.getElementData = (birthdate) => {
-            // Tries to use getBirthElement from element.js if available
-            if (typeof getBirthElement === 'function') {
-                const dateObj = parseThaiDate(birthdate);
-                return getBirthElement(dateObj.getDay());
-            }
-            return { name: "ไม่ระบุ", color: "#ccc", desc: "ขาดข้อมูลการคำนวณ" };
-        };
-    }
-    
-    if (typeof window.getMonthElement !== 'function') {
-        window.getMonthElement = (monthIdx) => {
-            // Tries to use MONTH_ELEMENTS from element.js if available
-            if (typeof MONTH_ELEMENTS !== 'undefined') {
-                return MONTH_ELEMENTS[monthIdx] || { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
-            }
-            return { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
-        };
-    }
-    
-    if (typeof window.getZodiacElement !== 'function') {
-        window.getZodiacElement = (birthdate) => {
-            // Tries to use ZODIAC_ELEMENTS from element.js if available
-            if (typeof ZODIAC_ELEMENTS !== 'undefined') {
-                const dateObj = parseThaiDate(birthdate);
+// expose auxiliary functions used by inline handlers or other scripts
+window.login = login;
+window.logout = logout; // original function includes confirmation
+window.fillUserData = fillUserData;
+window.checkLoginStatus = checkLoginStatus;
+window.syncDataFromFirestore = syncDataFromFirestore;
+window.generateMemberId = generateMemberId;
+window.deleteMember = deleteMember;
+
+// --- element data helper functions (called from showProfilePage) ---
+// These will be defined by element.js, relation.js etc. when they load
+// Fallback: create placeholder exports if they don't exist
+if (typeof window.getElementData !== 'function') {
+    window.getElementData = (birthdate) => {
+        // Tries to use getBirthElement from element.js if available
+        if (typeof getBirthElement === 'function') {
+            const dateObj = parseThaiDate(birthdate);
+            return getBirthElement(dateObj.getDay());
+        }
+        return { name: "ไม่ระบุ", color: "#ccc", desc: "ขาดข้อมูลการคำนวณ" };
+    };
+}
+
+if (typeof window.getMonthElement !== 'function') {
+    window.getMonthElement = (monthIdx) => {
+        // Tries to use MONTH_ELEMENTS from element.js if available
+        if (typeof MONTH_ELEMENTS !== 'undefined') {
+            return MONTH_ELEMENTS[monthIdx] || { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
+        }
+        return { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
+    };
+}
+
+if (typeof window.getZodiacElement !== 'function') {
+    window.getZodiacElement = (birthdate) => {
+        // Tries to use ZODIAC_ELEMENTS from element.js if available
+        if (typeof ZODIAC_ELEMENTS !== 'undefined') {
+            const dateObj = parseThaiDate(birthdate);
 
             // ใช้ปีนักษัตรไทย
             const thaiYear = getThaiZodiacYear(dateObj);
 
             const zodiacIdx = Math.abs(thaiYear - 4) % 12;
-                return ZODIAC_ELEMENTS[zodiacIdx] || { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
-            }
-            return { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
-        };
-    }
-    
-    if (typeof window.getElementRelation !== 'function') {
-        window.getElementRelation = (element1, element2) => {
-            // Tries to use getElementRelation from relation.js if available
-            if (typeof getElementRelation === 'function') {
-                return getElementRelation(element1, element2);
-            }
-            return "ทั่วไป";
-        };
-    }
-    // end of exports
+            return ZODIAC_ELEMENTS[zodiacIdx] || { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
+        }
+        return { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
+    };
+}
 
-    // ฟังก์ชันนี้จะถูกเรียกเมื่อมีการเปลี่ยนรายชื่อสมาชิก
-window.autoFillMemberData = function(birthDate) {
+if (typeof window.getElementRelation !== 'function') {
+    window.getElementRelation = (element1, element2) => {
+        // Tries to use getElementRelation from relation.js if available
+        if (typeof getElementRelation === 'function') {
+            return getElementRelation(element1, element2);
+        }
+        return "ทั่วไป";
+    };
+}
+// end of exports
+
+// ฟังก์ชันนี้จะถูกเรียกเมื่อมีการเปลี่ยนรายชื่อสมาชิก
+window.autoFillMemberData = function (birthDate) {
     if (!birthDate) return;
 
     // 1. ค้นหาข้อมูลสมาชิกตัวเต็มจาก Array (เพื่อเอาชื่อ)
@@ -738,14 +744,14 @@ window.autoFillMemberData = function(birthDate) {
         if (dateStr.includes('/')) {
             const parts = dateStr.split('/');
             let year = parseInt(parts[2]);
-            if (year > 2400) year -= 543; 
+            if (year > 2400) year -= 543;
             return `${year}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
         }
         return dateStr.split('T')[0];
     }
 
     const formattedDate = formatToInputDate(birthDate);
-    
+
     // 3. ตรวจเช็คว่าตอนนี้อยู่หน้าไหน
     const isMahathaksaPage = document.getElementById('mahathaksaPage')?.style.display !== 'none';
     const isChatraPage = document.getElementById('chatraPage')?.style.display !== 'none';
@@ -766,7 +772,7 @@ window.autoFillMemberData = function(birthDate) {
 
         if (birthDaySelect && formattedDate) {
             // หาเลขวันในสัปดาห์ (0-6) เพื่อเลือกวันเกิดอัตโนมัติ
-            const dayOfWeek = new Date(formattedDate).getDay(); 
+            const dayOfWeek = new Date(formattedDate).getDay();
             // หมายเหตุ: ต้องระวังเรื่องวันพุธกลางคืน ถ้าในประวัติไม่ได้เก็บไว้ ระบบจะเลือกพุธกลางวัน (3) ให้ก่อนครับ
             birthDaySelect.value = dayOfWeek;
         }
@@ -794,13 +800,13 @@ window.autoFillMemberData = function(birthDate) {
     }
     const isAscendantPage = document.getElementById('ascendantPage')?.style.display !== 'none';
     if (isAscendantPage) {
-    const dateInput = document.getElementById('ascBirthDate');
-    const timeInput = document.getElementById('ascBirthTime');
-    
-    if (dateInput) dateInput.value = formattedDate;
-    if (timeInput && member.birthtime) {
-        // เติมเวลาเกิดจาก Firebase (สมมติเก็บในชื่อ birthtime)
-        timeInput.value = member.birthtime; 
+        const dateInput = document.getElementById('ascBirthDate');
+        const timeInput = document.getElementById('ascBirthTime');
+
+        if (dateInput) dateInput.value = formattedDate;
+        if (timeInput && member.birthtime) {
+            // เติมเวลาเกิดจาก Firebase (สมมติเก็บในชื่อ birthtime)
+            timeInput.value = member.birthtime;
+        }
     }
-}
 };

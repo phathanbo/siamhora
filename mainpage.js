@@ -14,6 +14,22 @@ const APP_MENU = [
     { id: 'dreamPage', title: 'ทำนายฝัน', icon: 'fa-moon', color: '#d4af37' },
     { id: 'nameAnalysisPage', title: 'วิเคราะห์ชื่อ', icon: 'fa-signature', color: '#d4af37' },
     { id: 'lottoPage', title: 'เลขเด็ด', icon: 'fa-dice', color: '#d4af37' },
+    { id: 'chatninePage', title: 'ฉัตร 9 ชั้น', icon: 'fa-tree', color: '#d4af37' },
+    { id: 'marriage-compatibility', title: 'เช็คดวงคู่', icon: 'fa-heart', color: '#d4af37' },
+    { id: 'element-compatibility', title: 'สมพงษ์อายุ ', icon: 'fa-user', color: '#d4af37' },
+    { id: 'day-friendship', title: 'มิตร-ศัตรูวันเกิด', icon: 'fa-handshake', color: '#d4af37' },
+    { id: 'patient-prognosis', title: 'ทำนายชะตาผู้ป่วย', icon: 'fa-procedures', color: '#d4af37' },
+    { id: 'soulmate-direction', title: 'ทิศเนื้อคู่', icon: 'fa-compass', color: '#d4af37' },
+    { id: 'birth-fortune', title: 'พยากรณ์วันเกิด', icon: 'fa-birthday-cake', color: '#d4af37' },
+    { id: 'auspicious-day', title: 'วันมงคลประจำเดือน', icon: 'fa-calendar-day', color: '#d4af37' },
+    { id: 'ubakong-yarm', title: 'ฤกษ์ดีประจำวัน', icon: 'fa-clock', color: '#d4af37' },
+    { id: 'travel-rites', title: 'ฤกษ์ยาตราและทิศผีหลวง', icon: 'fa-chart-bar', color: '#d4af37' },
+    { id: 'dailyTabooPage', title: 'ข้อห้ามประจำวัน', icon: 'fa-ban', color: '#d4af37' },
+    { id: 'exportdata', title: 'ส่งออกข้อมูล', icon: 'fa-file-export', color: '#d4af37' },
+    { id: 'package', title: 'ระดับสมาชิก', icon: 'fa-file-import', color: '#d4af37' },
+    { id: 'promchart-section', title: 'ผังโหราศาสตร์', icon: 'fa-chart-pie', color: '#d4af37' },
+    { id: 'zodiacdetailsection', title: 'ตำราพรหมชาติ', icon: 'fa-smile', color: '#d4af37' }
+
 ];
 
 const UserProfile = {
