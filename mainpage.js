@@ -28,7 +28,12 @@ const APP_MENU = [
     { id: 'exportdata', title: 'ส่งออกข้อมูล', icon: 'fa-file-export', color: '#d4af37' },
     { id: 'package', title: 'ระดับสมาชิก', icon: 'fa-file-import', color: '#d4af37' },
     { id: 'promchart-section', title: 'ผังโหราศาสตร์', icon: 'fa-chart-pie', color: '#d4af37' },
-    { id: 'zodiacdetailsection', title: 'ตำราพรหมชาติ', icon: 'fa-smile', color: '#d4af37' }
+    { id: 'zodiacdetailsection', title: 'ตำราพรหมชาติ', icon: 'fa-smile', color: '#d4af37' },
+    { id: 'daily-horoscope', title: 'ทำนายลักษณะผู้เกิดทั้ง 7 วัน (ตำราโบราณ)', icon: 'fa-calendar-alt', color: '#d4af37' },
+    { id: 'sompong-wealth', title: 'สมพงศ์มหาสมบัติ', icon: 'fa-coins', color: '#d4af37' },
+    { id: 'climate-section', title: 'เกณฑ์พิรุณศาสตร์และชะตาโลก', icon: 'fa-cloud-showers-heavy', color: '#d4af37' },
+    { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 9 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' }
+
 
 ];
 

@@ -1483,9 +1483,10 @@
                             <button onclick="downloadChatnineImage()" class="btn btn-outline-gold btn-sm">
                                 <i class="fas fa-download me-1"></i> บันทึกรูปภาพ
                             </button>
-                            <button onclick="showMainMenu()" class="btn btn-outline-secondary btn-sm">
-                                กลับหน้าหลัก
-                            </button>
+                            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                    <button onclick="goBack()" class="btn btn-secondary">ย้อนกลับ</button>
                         </div>
                     </div>
                 </div>
@@ -1543,6 +1544,10 @@
                 <div id="match-status-icon"></div>
                 <div id="match-text-content"></div>
             </div>
+            <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                    <button onclick="goBack()" class="btn btn-secondary">ย้อนกลับ</button>
         </div>
     </section>
 
@@ -2142,6 +2147,270 @@
 </section>
 
 
+<section id="daily-horoscope" class="main-section">
+    <div class="container">
+        <h2 class="text-center mb-4">ทำนายลักษณะตามวันเกิด</h2>        
+        <div class="day-selector d-flex justify-content-center flex-wrap gap-2 mb-4" style="gap: 10px;">
+            <button class="btn-day" onclick="showDayInfo('sunday'); showPlanet(1); showPlanetaryData(1); showBuddha(1); showdetaliday('sunday'); showThaksaday(1);" style="--day-color: #FF0000;">อา.</button>
+            <button class="btn-day" onclick="showDayInfo('monday'); showPlanet(2); showPlanetaryData(2); showBuddha(2); showdetaliday('monday'); showThaksaday(2);" style="--day-color: #FFD700;">จ.</button>
+            <button class="btn-day" onclick="showDayInfo('tuesday'); showPlanet(3); showPlanetaryData(3); showBuddha(3); showdetaliday('tuesday'); showThaksaday(3);" style="--day-color: #FFC0CB;">อ.</button>
+            <button class="btn-day" onclick="showDayInfo('wednesday'); showPlanet(4); showPlanetaryData(4); showBuddha(4); showdetaliday('wednesday'); showThaksaday(4);" style="--day-color: #008000;">พ.</button>
+            <button class="btn-day" onclick="showDayInfo('thursday'); showPlanet(5); showPlanetaryData(5); showBuddha(5); showdetaliday('thursday'); showThaksaday(5);" style="--day-color: #FFA500;">พฤ.</button>
+            <button class="btn-day" onclick="showDayInfo('friday'); showPlanet(6); showPlanetaryData(6); showBuddha(6); showdetaliday('friday'); showThaksaday(6);" style="--day-color: #87CEEB;">ศ.</button>
+            <button class="btn-day" onclick="showDayInfo('saturday'); showPlanet(7); showPlanetaryData(7); showBuddha(7); showdetaliday('saturday'); showThaksaday(7);" style="--day-color: #800080;">ส.</button>
+        </div>
+        <div id="prediction-card" class="prediction-card shadow-sm d-none">
+            <div class="card-header text-white" id="card-name-bg">
+                <h3 id="display-name" class="m-0"></h3>
+                <small id="display-meta"></small><br>
+                <small id="planetary-data-display" class="text"></small><br>
+                <small id="detailelement" class="text"></small><small id="buddhadisplay" class="text"></small><br>
+                <small id="detaildaybody" class="text"></small><br>
+                
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h5 class="text-primary"><i class="fas fa-user"></i> ลักษณะนิสัย</h5>
+                    <p id="display-character" class="text-muted"></p>
+                    <p id="detailday" class="text-muted"></p>
+                    <p id="detailemployment" class="text-muted"></p>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <h5 class="text-danger"><i class="fas fa-calendar-alt"></i> เกณฑ์อายุสำคัญ</h5>
+                    <ul id="display-milestones" class="list-unstyled"></ul>
+                </div>
+                <hr>
+                <div>
+                    <h5 class="text-success"><i class="fas fa-compass"></i> ทิศมงคลและการจัดบ้าน</h5>
+                    <div id="display-directions" class="row g-2 small"></div>
+                </div>
+                <hr>
+                <div id="planet-info-display" class="text"></div>
+                <hr>
+                <div id="thaksaday" class="text"></div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+        <button class="btn btn-outline-secondary btn-block mt-4 border-0" onclick="navigateTo('mainpage')">
+            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+        </button>
+        <button onclick="goBack()" class="btn btn-outline-secondary btn-block mt-4 border-0"><i class="fas fa-chevron-left"></i>ย้อนกลับ</button>
+        </div>
+    </div>
+</section>
+
+
+<section id="sompong-wealth" class="main-section" style="display: none;">
+    <div class="container wiki-article">
+        <h2 class="wiki-section-title" style="justify-self: center;">สมพงศ์มหาสมบัติ</h2>
+        <p class="wiki-text">
+            <b>สิทธิการิยะ</b> เกจิอาจารย์ท่านรจนาไว้สำหรับผู้ที่ประสงค์จะทราบว่า ดวงชะตาคู่ครองเมื่ออยู่ร่วมกันแล้ว 
+            จะตกอยู่ในเกณฑ์สมบัติประการใด ให้พิจารณาตามปีนักษัตรของทั้งสองฝ่ายดังนี้:
+        </p>
+
+        <div class="wiki-infobox mb-4 p-3" style="justify-content: center;"">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <label class="small fw-bold">ปีนักษัตรของคุณ:</label><br>
+                    <select id="userYear" class="form-select form-select-sm" onchange="calculateWealth()">
+                        <option value="">-- เลือกปี --</option>
+                        <option value="rat">ชวด</option>
+                        <option value="ox">ฉลู</option>
+                        <option value="tiger">ขาล</option>
+                        <option value="rabbit">เถาะ</option>
+                        <option value="dragon">มะโรง</option>
+                        <option value="snake">มะเส็ง</option>
+                        <option value="horse">มะเมีย</option>
+                        <option value="goat">มะแม</option>
+                        <option value="monkey">วอก</option>
+                        <option value="rooster">ระกา</option>
+                        <option value="dog">จอ</option>
+                        <option value="pig">กุน</option>
+                        </select>                       
+                            <div class="p-2 bg-light rounded">
+                                <small>คุณคือ:</small>
+                                <div id="user-race-display" class="fw-bold text-primary">-</div>
+                            </div>
+                            <div class="p-2 bg-light rounded">
+                                <small>ธาตุคุณ:</small> 
+                                <div id="uElement-display" class="fw-bold text-primary">-</div>                               
+                            </div>                        
+                </div>
+                <div class="col-md-5">
+                    <label class="small fw-bold ">ปีนักษัตรของคู่ครอง:</label><br>
+                    <select id="partnerYear" class="form-select form-select-sm" onchange="calculateWealth()">
+                        <option value="">-- เลือกปี --</option>
+                        <option value="rat">ชวด</option>
+                        <option value="ox">ฉลู</option>
+                        <option value="tiger">ขาล</option>
+                        <option value="rabbit">เถาะ</option>
+                        <option value="dragon">มะโรง</option>
+                        <option value="snake">มะเส็ง</option>
+                        <option value="horse">มะเมีย</option>
+                        <option value="goat">มะแม</option>
+                        <option value="monkey">วอก</option>
+                        <option value="rooster">ระกา</option>
+                        <option value="dog">จอ</option>
+                        <option value="pig">กุน</option>
+                        </select>                        
+                            <div class="p-2 bg-light rounded">
+                                <small>คู่ครองคือ:</small>
+                                <div id="partner-race-display" class="fw-bold text-danger">-</div>
+                            </div>
+                            <div class="p-2 bg-light rounded">
+                                <small>ธาตุคู่ครอง:</small> 
+                                <div id="pElement-display" class="fw-bold text-danger">-</div>
+                            </div>                       
+                </div>                
+            </div>
+                <div class="col-12 mt-3">
+                    <div id="marriage-result-box" class="p-3 border rounded bg-white mt-2 d-none">
+                        <div id="wealthResult" class="h5 text-primary fw-bold"></div>
+                        <h5 class="wiki-section-title mt-0" style="font-size: 1.1rem;">คำทำนายสมพงศ์คู่ครอง : <span id="marriage-text" class="wiki-text mb-0" style="font-size: 0.95rem;"></span></h5>                        
+                        <div> <b>ธาตุสมพงศ์ของคุณ</b> คือ :<span id="element-compatibility-text"></span></div>
+                        <br>                        
+                        <h5 class="wiki-section-title mt-0" style="font-size: 1.1rem; color: #27ae60;">
+                            <i class="fas fa-dragon"></i> ผลทำนายสมพงศ์นาคคู่
+                        </h5>
+                        <div id="naga-text" class="wiki-text mb-2"></div>
+                        <h5 class="wiki-section-title mt-3" style="font-size: 1.1rem; color: #2980b9;">
+                            <i class="fas fa-calculator"></i> เกณฑ์คำนวณเศษ (ความยั่งยืน)
+                        </h5>
+                        <div id="remainder-text" class="wiki-text mb-0 fw-bold text-primary"></div>
+                    
+                    </div>
+                </div>
+                 
+        </div>                        
+        <div class="wiki-ref mt-3">
+            <small class="text-muted">หมายเหตุ: คำทำนายนี้ใช้เกณฑ์สมพงศ์ปีนักษัตรตามตำราพรหมชาติโบราณ</small>
+        </div>
+    </div>
+</section>
+
+<section id="climate-section" class="main-section" style="display: none;">
+    <div class="container wiki-article">
+        <h2 class="wiki-section-title">เกณฑ์พิรุณศาสตร์และชะตาโลก</h2>
+        <p class="wiki-text">พยากรณ์ปริมาณน้ำฝน ความอุดมสมบูรณ์ของธัญญาหาร และเกณฑ์นาคให้น้ำประจำปี</p>
+
+        <div class="wiki-infobox mb-4 p-3 bg-light border">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="fw-bold">ระบุปี พ.ศ.:</label>
+                    <div class="input-group">
+                        <input type="number" id="beYearInput" class="form-control" value="2569" oninput="calculateClimate()">
+                        <span class="input-group-text" id="displayCSYear" style="font-size: 0.8rem; color: #28a745; font-weight: bold;">(ป้อนปี พ.ศ. เพื่อเริ่มคำนวณ)</span>
+                    </div>
+                </div>
+                <input type="hidden" id="zodiacInput">
+            </div>
+        </div>
+
+        <div id="climate-result-box" class="row d-none" ">
+            <div class="col-md-8">
+                <div class="wiki-card p-3 border rounded shadow-sm">
+                    <h5 class="border-bottom pb-2 text-primary"><i class="fas fa-seedling"></i> เกณฑ์ธัญญาหารและธาราธิคุณ</h5>
+                    <p id="res-crop-text" class="wiki-text"></p>
+                    <p id="res-thara-text" class="wiki-text"></p>
+                    <hr>
+                    <h5 class="text-info"><i class="fas fa-dragon"></i> เกณฑ์นาคให้น้ำ</h5>
+                    <p id="res-naga-text" class="wiki-text mb-0"></p>
+                </div>
+                <table class="rain-table mt-4" style="width: 100%; min-width: 200px; margin: 0 auto;">
+                    <tr class="bg-primary text-white text-center">
+                        <th colspan="2" style="font-size: 1rem; padding: 8px 4px;">ปริมาณน้ำฝน (ห่า)</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 50%; font-size: 0.85rem;text-align: center;">จักรวาล</th>
+                        <td id="rain-uni" style="width: 40%;"></td>
+                    </tr>
+                    <tr>
+                        <th style="font-size: 0.85rem;text-align: center;">หิมพานต์</th>
+                        <td id="rain-him"></td>
+                    </tr>
+                    <tr>
+                        <th style="font-size: 0.85rem;text-align: center;">มหาสมุทร</th>
+                        <td id="rain-ocean"></td>
+                    </tr>
+                    <tr>
+                        <th style="font-size: 0.85rem;text-align: center;">มนุษย์โลก</th>
+                        <td id="rain-human" class="fw-bold text-success"></td>
+                    </tr>
+                    <tr class="table-info"> 
+                        <th style="font-size: 0.85rem;text-align: center;">รวม</th>
+                        <td id="rain-total" class="fw-bold"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="horoscope-seven" class="mian-section" style="display:none;">
+        <div class="row justify-content-center">       
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-dark text-white p-3">
+                        <h4 class="mb-0"><i class="bi bi-pentagon-fill me-2"></i>ตารางพยากรณ์เลข ๗ ตัว</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">วันเกิด</label>
+                                <select id="input-day" class="form-select border-primary">
+                                    <option value="1">วันอาทิตย์</option><option value="2">วันจันทร์</option>
+                                    <option value="3">วันอังคาร</option><option value="4">วันพุธ</option>
+                                    <option value="5">วันพฤหัสบดี</option><option value="6">วันศุกร์</option>
+                                    <option value="7">วันเสาร์</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">เดือนเกิด </label>
+                                <select id="input-month" class="form-select border-primary">
+                                    <option value="1">เดือนอ้าย (1)</option><option value="2">เดือนยี่ (2)</option>
+                                    <option value="3">เดือนสาม (3)</option><option value="4">เดือนสี่ (4)</option>
+                                    <option value="5">เดือนห้า (5)</option><option value="6">เดือนหก (6)</option>
+                                    <option value="7">เดือนเจ็ด (7)</option><option value="8">เดือนแปด (8)</option>
+                                    <option value="9">เดือนเก้า (9)</option><option value="10">เดือนสิบ (10)</option>
+                                    <option value="11">เดือนสิบเอ็ด (11)</option><option value="12">เดือนสิบสอง (12)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">ปีนักษัตร</label>
+                                <select id="input-zodiac" class="form-select border-primary">
+                                    <option value="1">ปีชวด</option><option value="2">ปีฉลู</option>
+                                    <option value="3">ปีขาล</option><option value="4">ปีเถาะ</option>
+                                    <option value="5">ปีมะโรง</option><option value="6">ปีมะเส็ง</option>
+                                    <option value="7">ปีมะเมีย</option><option value="8">ปีมะแม</option>
+                                    <option value="9">ปีวอก</option><option value="10">ปีระกา</option>
+                                    <option value="11">ปีจอ</option><option value="12">ปีกุน</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 ">
+                                <label class="form-label fw-bold">อายุปัจจุบัน (ปี)</label>
+                                <input type="number" id="input-age" class="form-select border-primary" placeholder="เช่น 20" min="1"></input>
+                            </div>
+                            <div class="col-12 text-center mt-3">
+                                <button type="button" class="btn btn-primary px-5 shadow-sm" onclick="calculateHoroscope()">
+                                    <i class="bi bi-magic me-2"></i>คำนวณดวงชะตา
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="result-area" class="table-responsive">
+                            <div class="text-center text-muted py-5 border rounded">
+                                <p>กรุณากรอกข้อมูลเพื่อคำนวณดวงชะตา</p>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+</section>
+
+
 
 
 
@@ -2214,6 +2483,10 @@
     <script src="tiers.js"></script>
     <script src="promchart.js"></script>
     <script src="Fortune.js"></script>
+    <script src="dayBirthData.js"></script>
+    <script src="fortuneWealthData.js"></script>
+    <script src="Climate.js"></script>
+    <script src="horoscopeseven.js"></script>
 
 
 
@@ -2230,7 +2503,7 @@
                 dateFormat: 'dd/mm/yy',
                 changeMonth: true,
                 changeYear: true,
-                yearRange: "1940:2026",
+                yearRange: "1940:2140",
                 dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
                 monthNamesShort: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
             });
