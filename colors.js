@@ -59,7 +59,7 @@ function renderDailyColors() {
         style="background: linear-gradient(90deg, #1a1a1a, ${data.bg}); 
                color: white; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
         <div class="card-body py-2 px-3">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" onclick="navigateTo('weeklyColorSection') " style="cursor: pointer;">
                 <div>
                     <i class="fas fa-calendar-alt text-warning mr-2"></i>
                     <strong>สีมงคล</strong> วัน${dayName}ที่ ${currentDate} ${currentMonth} ${currentYear} 

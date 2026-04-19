@@ -4,16 +4,13 @@
 const APP_MENU = [
     { id: 'ascendantPage', title: 'คำนวณลัคนา', icon: 'fa-star-and-crescent', color: '#d4af37' },
     { id: 'auspiciousPage', title: 'ปฏิทินฤกษ์มงคล', icon: 'fa-calendar-check', color: '#d4af37' },
-    { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 9', icon: 'fa-layer-group', color: '#d4af37' },
     { id: 'taksaPage', title: 'ทักษา', icon: 'fa-chart-line', color: '#d4af37' },
-    { id: 'yarmPage', title: 'ยามอัฏฐกาล', icon: 'fa-clock', color: '#d4af37' },
-    { id: 'chatraPage', title: 'ฉัตร 3 ชั้น', icon: 'fa-tree', color: '#d4af37' },
-    { id: 'weeklyColorSection', title: 'สีมงคลประจำวัน', icon: 'fa-fill', color: '#d4af37' },
     { id: 'planetRelationPage', title: 'คู่มิตร-ศัตรู', icon: 'fa-user-friends', color: '#d4af37' },
     { id: 'numerologyPage', title: 'เบอร์มงคล', icon: 'fa-mobile-alt', color: '#d4af37' },
     { id: 'dreamPage', title: 'ทำนายฝัน', icon: 'fa-moon', color: '#d4af37' },
     { id: 'nameAnalysisPage', title: 'วิเคราะห์ชื่อ', icon: 'fa-signature', color: '#d4af37' },
     { id: 'lottoPage', title: 'เลขเด็ด', icon: 'fa-dice', color: '#d4af37' },
+    { id: 'chatraPage', title: 'ฉัตร 3 ชั้น', icon: 'fa-tree', color: '#d4af37' },
     { id: 'chatninePage', title: 'ฉัตร 9 ชั้น', icon: 'fa-tree', color: '#d4af37' },
     { id: 'marriage-compatibility', title: 'เช็คดวงคู่', icon: 'fa-heart', color: '#d4af37' },
     { id: 'element-compatibility', title: 'สมพงษ์อายุ ', icon: 'fa-user', color: '#d4af37' },
@@ -25,13 +22,13 @@ const APP_MENU = [
     { id: 'ubakong-yarm', title: 'ฤกษ์ดีประจำวัน', icon: 'fa-clock', color: '#d4af37' },
     { id: 'travel-rites', title: 'ฤกษ์ยาตราและทิศผีหลวง', icon: 'fa-chart-bar', color: '#d4af37' },
     { id: 'dailyTabooPage', title: 'ข้อห้ามประจำวัน', icon: 'fa-ban', color: '#d4af37' },
-    { id: 'exportdata', title: 'ส่งออกข้อมูล', icon: 'fa-file-export', color: '#d4af37' },
     { id: 'package', title: 'ระดับสมาชิก', icon: 'fa-file-import', color: '#d4af37' },
     { id: 'promchart-section', title: 'ผังโหราศาสตร์', icon: 'fa-chart-pie', color: '#d4af37' },
     { id: 'zodiacdetailsection', title: 'ตำราพรหมชาติ', icon: 'fa-smile', color: '#d4af37' },
     { id: 'daily-horoscope', title: 'ทำนายลักษณะผู้เกิดทั้ง 7 วัน (ตำราโบราณ)', icon: 'fa-calendar-alt', color: '#d4af37' },
     { id: 'sompong-wealth', title: 'สมพงศ์มหาสมบัติ', icon: 'fa-coins', color: '#d4af37' },
     { id: 'climate-section', title: 'เกณฑ์พิรุณศาสตร์และชะตาโลก', icon: 'fa-cloud-showers-heavy', color: '#d4af37' },
+    { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 9', icon: 'fa-layer-group', color: '#d4af37' },
     { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 9 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' }
 
 

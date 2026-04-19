@@ -290,7 +290,88 @@ const RELATION_PREDICTIONS = {
         "พยายะ": "ชะตาชีวิตมิค่อยราบรื่น มักมีโรคภัยไข้เจ็บเบียดเบียนเพราะบาปกรรมแต่ปางก่อนแล",
         "ทาสี": "สงบเสงี่ยมเจียมตน รู้จักพอดีในความเป็นอยู่ ชอบทำหน้าที่อาสาเจ้านายแล้วจะมีความดีความชอบแล",
         "ทาสา": "สงบเสงี่ยมเจียมตน รู้จักพอดีในความเป็นอยู่ ชอบทำหน้าที่อาสาเจ้านายแล้วจะมีความดีความชอบแล"
+    },
+    "หินะ": {
+        "ตนุ": "เป็นคนเอาแต่ใจ หัวรั้น ดื้อด้าน มีมานะแรงกล้า ชอบถือความคิดตนเป็นใหญ่ ไม่ชอบพึ่งพาหรือมักไม่ง้อผู้อื่นแล",
+        "กฎุมภะ": "เป็นคนสุรุ่ยสุร่าย รักษาทรัพย์ไว้มิคง เมื่อได้มาก็มักมีเหตุให้จ่ายออกไป ทรัพย์หามาได้ด้วยความยากลำบากแต่รักษาไว้ไม่ได้แล",
+        "สุหัชชะ": "มักมีเพื่อนฝูงชั้นต่ำที่พึ่งพาไม่ได้ นำแต่เรื่องทุกข์ร้อนและความเดือดร้อนใจมาให้อยู่เสมอแล",
+        "พันธุ": "มีญาติพี่น้องมากแต่พึ่งมิได้ มีแต่จะนำความเดือดร้อนมาสู่ตนและคอยเบียดเบียนอยู่เสมอแล",
+        "ปุตตะ": "มีบุตรธิดาอาภัพ หัวรั้น ไม่อยู่ในโอวาท หรือบุตรมักเจ็บไข้ทำให้ต้องเสียทรัพย์ในการรักษาอยู่เสมอจนอับจนแล",
+        "อริ": "มักมีศัตรูมากและเป็นคนมีชาติตระกูลต่ำ หยาบช้า กล้าแข็ง คอยคิดเบียดเบียนให้ลำบากเสมอแล",
+        "ปัตนิ": "จะได้คู่ครองโง่เขลาหาสติปัญญามิได้ นำพาให้ตกต่ำอาภัพ ทำตัวเป็นใหญ่ไม่อยู่ในโอวาท ได้คู่ครองที่ไม่สมใจตนแล",
+        "มรณะ": "ชะตาประเสริฐนัก มีวาสนาดี ทำการใดก็สำเร็จมีคนช่วยเหลือ ได้ของงดงามบริสุทธิ์ไร้ตำหนิ จิตใจสูงส่งไม่แพ้อำนาจฝ่ายต่ำ ชะตาดีนักแล",
+        "สุภะ": "หาความรุ่งเรืองในชีวิตได้ยาก กิจการหักโค่นลงกลางคัน เก็บของไว้มิได้มักมีอาเพศให้สูญสิ้น ข้าคนคอยเบียดเบียนไม่มีความสุขในชีวิตแล",
+        "กัมมะ": "จับจด เอาใจใส่แค่ตอนต้นแล้วละทิ้งในบั้นปลาย ใจคอไม่แน่นอน มีอุปสรรคมาก ชอบผจญภัยหรือทำสิ่งที่ผิดกฎหมายจนอาจมีคดีติดตัวแล",
+        "ลาภะ": "จะได้ลาภผลด้วยความยากลำบากยิ่ง หรือได้มาไม่เต็มเม็ดเต็มหน่วย มักมีคนมาแบ่งเอาลาภผลนั้นไปไม่สมบูรณ์แล",
+        "พยายะ": "มีโรคภัยไข้เจ็บประจำตัวรักษาไม่รู้จบสิ้น เพราะบาปกรรมติดมาแต่กำเนิดทำให้ต้องเสียทรัพย์ไปกับค่ารักษาจนอับจนแล",
+        "ทาสี": "มีข้าทาสคนใช้ที่หาความซื่อตรงมิได้ ต่อหน้าอย่างลับหลังอย่าง ทำคุณคนไม่ขึ้นแล",
+        "ทาสา": "มีข้าทาสคนใช้ที่หาความซื่อตรงมิได้ ต่อหน้าอย่างลับหลังอย่าง ทำคุณคนไม่ขึ้นแล"
+    },
+    "ธะนัง": {
+        "ตนุ": "โชคดีมีวาสนา บริบูรณ์ด้วยทรัพย์เงินทองมิรู้ยากจน มีข้าทาสบริวารและของดีงาม เป็นบุญเก่ามาเกื้อหนุนแล",
+        "กฎุมภะ": "โชคดีมิรู้ยากจนขัดสน ชะตาตกอยู่ในที่ขุนนางผู้ใหญ่ เป็นข้าเฝ้าคนสนิทของผู้มีบุญหนักศักดิ์ใหญ่ ที่อยู่อาศัยมั่นคงแล",
+        "สุหัชชะ": "มีมิตรสหายดีคอยช่วยเหลืออุปถัมภ์ให้ทำมาหากินสะดวก ได้ดีเพราะเพื่อนฝูง จะตั้งตัวได้มั่นคงเมื่อบั้นปลายชีวิตแล",
+        "พันธุ": "ตระกูลมีฐานะมั่นคงคอยช่วยเหลือ จะได้ดีและมีความสุขเพราะพงศ์พันธุ์คอยสนับสนุนจุนเจืออยู่เสมอแล",
+        "ปุตตะ": "มีบุตรธิดาเป็นคนมีบุญวาสนา จะได้พึ่งพาบุตรเพราะบุตรเป็นทรัพย์อันประเสริฐที่นำความสุขมาให้แก่พ่อแม่แล",
+        "อริ": "เดือดร้อนเรื่องเงินทองอยู่ร่ำไป ชีวิตระเหเร่ร่อนหาเช้ากินค่ำ ทำงานหนักแต่พอมีพอกินไปวันๆ ชีวิตลุ่มๆ ดอนๆ มิแน่นอนแล",
+        "ปัตนิ": "มีคู่ครองมัธยัสถ์รู้จักเก็บออม เป็นลูกผู้ดีมีตระกูล คู่ครองนำโภคทรัพย์และความสุขความเจริญมาให้ ชีวิตราบรื่นแล",
+        "มรณะ": "เก็บทรัพย์ไว้มิอยู่ หามาได้ก็มิได้ใช้ประโยชน์แก่ตน ซ้ำถูกผู้อื่นคิดคดโกงเอาไป มักเดือดร้อนลำบากเรื่องเงินทองเสมอแล",
+        "สุภะ": "ร่มเย็นเป็นสุขในชีวิต ประสงค์สิ่งใดได้สมปรารถนา มีโชคลาภเรื่องเงินทองเสมอ ไม่มีศัตรูกลั่นแกล้ง ฐานะอุดมสมบูรณ์แล",
+        "กัมมะ": "การงานอาชีพมั่นคงร่มเย็น โดยเฉพาะการค้าขายจะมีผลกำไรดีเยี่ยม จะมีความสุขมากเมื่อบั้นปลายชีวิตเพราะเลือกอาชีพถูกโฉลกแล",
+        "ลาภะ": "ได้รับโชคดีเรื่องเงินทองอย่างไม่นึกฝันเสมอ ศัตรูจะทำอะไรมิได้และสุดท้ายจะกลับมาขอขมาหรือขอเป็นมิตรด้วยแล",
+        "พยายะ": "อัตคัดขัดสนเรื่องเงินทอง ลงทุนค้าขายมักขาดทุนทุนหายกำไรสั้น ชีวิตไม่ค่อยราบรื่น เป็นเกณฑ์พอมีพอกินไปวันๆ เท่านั้นแล",
+        "ทาสี": "บริวารนำความสำเร็จมาให้ มีอำนาจเหนือผู้ใต้บังคับบัญชา มักได้รับเลือกเป็นหัวหน้าหรือประมุขในที่ประชุม ชะตาชีวิตดียิ่งแล",
+        "ทาสา": "บริวารนำความสำเร็จมาให้ มีอำนาจเหนือผู้ใต้บังคับบัญชา มักได้รับเลือกเป็นหัวหน้าหรือประมุขในที่ประชุม ชะตาชีวิตดียิ่งแล"
+    },
+    "ปิตา_มาตา": { // ใช้ Key ร่วมกันเพราะคำทำนายเหมือนกัน ต่างแค่ตัวบุคคล
+        "ตนุ": "อุปนิสัยและกิริยามารยาทเหมือนบิดา/มารดามาก เข้ากันได้ดีจนเป็นที่รักเอ็นดูเป็นพิเศษ แต่อาจทำให้พี่น้องคนอื่นอิจฉาแล",
+        "กฎุมภะ": "ตระกูลดั้งเดิมเป็นผู้ดีมีวาสนา บรรพบุรุษเคยได้รับเกียรติยศชื่อเสียงจากเจ้าบ้านผ่านเมือง เป็นที่ยกย่องนับถือสืบต่อกันมาแล",
+        "สุหัชชะ": "บิดามารดาเป็นคนมีเกียรติกว้างขวาง รู้จักคนมาก ทำให้ผู้นั้นพลอยมีเพื่อนฝูงมากและเข้ากับคนได้ทุกระดับชั้นแล",
+        "พันธุ": "บิดามารดามีเครือญาติร่วมสกุลมาก ญาติพี่น้องมีความสามัคคีพร้อมเพรียงกันเป็นอย่างดีแล",
+        "ปุตตะ": "มีพี่น้องร่วมท้องหลายคน นิสัยและรูปร่างคล้ายบิดา/มารดา เป็นที่รักใคร่ของบุพการีและญาติทั้งสองฝ่ายแล",
+        "อริ": "ชะตาไม่ลงรอยกับบิดามารดา เห็นกันมักเกลียดชังเหมือนศัตรู ท่านไม่ค่อยห่วงใย โตขึ้นมักต้องพลัดพรากจากกันแล",
+        "ปัตนิ": "จะได้คู่ครองที่เป็นญาติกัน หรือนิสัยคล้ายบิดามารดา มิฉะนั้นผู้ใหญ่จะจัดการหาคู่ที่มีอายุมากกว่ามาให้ โดยเรามิมีอิสระเลือกเองแล",
+        "มรณะ": "อาภัพพึ่งพาท่านได้แค่ตอนเด็ก โตมาต้องสร้างตัวด้วยตนเอง ถ้าตกปิตาบิดามักไปก่อน ถ้าตกมาตามารดามักไปก่อน มักเป็นกำพร้าแล",
+        "สุภะ": "บิดามารดาเป็นผู้ดีมีสกุล รูปร่างสวยงาม พูดจาสุภาพเรียบร้อย เข้าหาผู้ใหญ่เก่งและได้รับความเมตตาเสมอแล",
+        "กัมมะ": "บิดามารดาเป็นคนขยันหมั่นเพียร มีมานะสร้างตัวด้วยตนเองจนมีฐานะการเงินมั่นคง เป็นแบบอย่างที่ดีในการทำมาหากินแล",
+        "ลาภะ": "บิดามารดามีฐานะการเงินมั่นคงเป็นปึกแผ่น คอยสนับสนุนจุนเจือและแนะนำทางทำกินให้ลูกหลานตั้งตัวได้แล",
+        "พยายะ": "บิดามารดาขี้โรค มีโรคเวรกรรมเบียดเบียน รักษาไม่หายขาดทำให้ฐานะไม่มั่นคง หรือมีญาติพี่น้องเป็นอัมพาตแล",
+        "ทาสี": "บิดา/มารดาได้ใกล้ชิดเจ้านายชั้นสูง เป็นที่ไว้วางใจ ผู้นั้นจึงได้รับการอบรมกิริยามารยาทมาดีและเป็นที่พึ่งของพ่อแม่แล",
+        "ทาสา": "บิดา/มารดาได้ใกล้ชิดเจ้านายชั้นสูง เป็นที่ไว้วางใจ ผู้นั้นจึงได้รับการอบรมกิริยามารยาทมาดีและเป็นที่พึ่งของพ่อแม่แล"
+    },
+    "โภคา": {
+        "ตนุ": "มีวาสนาและฐานะมั่นคงเป็นปึกแผ่น มิรู้ยากจน มีหน้ามีตาและเป็นแบบอย่างดีในสังคมจนผู้คนยกย่องให้มีอำนาจเหนือตนแล",
+        "กฎุมภะ": "มีอำนาจวาสนาเป็นเจ้าคนนายคน ที่อยู่อาศัยอุดมสมบูรณ์ บริวารจงรักภักดีเพราะได้รับความเมตตาปรานีจากเจ้าชะตาอย่างดีแล",
+        "สุหัชชะ": "ดวงขึ้นอยู่กับการคบมิตรสหาย คบคนดีจะเจริญ คบคนเกเรจะตกต่ำตามเพื่อน พึงระวังเรื่องการเลือกสังคมให้มากแล",
+        "พันธุ": "ตระกูลทั้งฝ่ายพ่อแม่มีฐานะและตำแหน่งหน้าที่สูงในราชการ คอยอุ้มชูช่วยเหลือจนตั้งตัวได้มั่นคงไม่มีใครดูหมิ่นได้แล",
+        "ปุตตะ": "จะได้บุตรธิดาที่เป็น 'อภิชาตบุตร' นำโชคลาภความเจริญมาให้เสมอ ตั้งตัวได้เพราะบุตรเป็นโภคทรัพย์สำคัญยิ่งแล",
+        "อริ": "มีทรัพย์มักถูกฉ้อโกงหรือมีภัยพิบัติทำให้รักษาไว้ไม่ได้ ทรัพย์สินเป็นศัตรู มีสิ่งรักหวงแหนก็มักถูกคนมาเบียดเบียนเอาไปแล",
+        "ปัตนิ": "จะได้คู่ครองสกุลผู้ดีมีเกียรติ พร้อมด้วยเบญจกัลยาณี ช่วยสร้างเนื้อสร้างตัวจนฐานะเป็นปึกแผ่นและชีวิตมีความสุขยิ่งแล",
+        "มรณะ": "อาภัพไร้ทรัพย์ ต้องเหนื่อยยากเป็นประจำ ทำงานได้ผลไม่คุ้มแรงจนทอดอาลัยในชีวิต บั้นปลายอาจลำบากต้องอาศัยวัดนอนแล",
+        "สุภะ": "เป็นคนมัธยัสถ์รู้จักเก็บออม ประกอบอาชีพสุจริตจนประสบความสุขครบถ้วน บั้นปลายจะเป็นแบบอย่างที่ดีแก่อนุชนรุ่นหลังแล",
+        "กัมมะ": "ขยันขันแข็งเอาการเอางานเป็นอย่างดี โดยเฉพาะการค้าขายจะมีโชคลาภและกำไรดีเยี่ยมจนมีฐานะมั่นคงในที่สุดแล",
+        "ลาภะ": "มีบุญวาสนาสูงยิ่ง มิรู้จักความลำบาก ถูกโฉลกกับอาชีพนายหน้า ที่ดิน เหมือง ป่าไม้ หรือทำไร่ จะมีโชคลาภเสมอมิมีใครเทียบแล",
+        "พยายะ": "ข้าวของที่มีมักมีตำหนิหรือได้มาไม่เต็มเม็ดเต็มหน่วย มักถูกแบ่งปันหรือมีอุปสรรคทำให้รักษาทรัพย์ไว้ไม่ได้ตลอดไปแล",
+        "ทาสี": "อาภัพทำคุณคนไม่ขึ้น บริวารเข้าหาเพื่อหวังผลประโยชน์ เมื่อเจ้าชะตาตกต่ำจะพากันปลีกตัวหนีหายมิมีความจงรักภักดีจริงแล",
+        "ทาสา": "อาภัพทำคุณคนไม่ขึ้น บริวารเข้าหาเพื่อหวังผลประโยชน์ เมื่อเจ้าชะตาตกต่ำจะพากันปลีกตัวหนีหายมิมีความจงรักภักดีจริงแล"
+    },
+    "มัชฌิมา": {
+        "ตนุ": "ชะตาปานกลาง สงบเสงี่ยมเจียมตัว ไม่ฟุ่มเฟือยแต่ก็ไม่ตกอับ พอมีพอกินไปวันๆ รู้จักฐานะตนเอง ไม่ทะเยอทะยานเกินเหตุแล",
+        "กฎุมภะ": "ฐานะการเงินและการงานอยู่ในระดับกลาง ไม่สูงส่งไม่ต่ำต้อย แม้จะขยันอาบเหงื่อต่างน้ำก็ได้แค่พยุงครอบครัวมิให้เดือดร้อนแล",
+        "สุหัชชะ": "คบเพื่อนมักเสียเปรียบ เป็นเบี้ยล่างเขาเสมอ ช่วยเหลือใครไปเขาก็ไม่เห็นค่า คราวเราเดือดร้อนเพื่อนมักปัดความรับผิดชอบแล",
+        "พันธุ": "พึ่งญาติพี่น้องไม่ได้เลย เสมือนไม่มีญาติ เขาเห็นคนอื่นดีกว่าเรา พึ่งคนนอกยังจะดีกว่าพึ่งพงศ์พันธุ์ตนเองแล",
+        "ปุตตะ": "มีบุตรธิดาเป็น 'อนุชาตบุตร' คือเสมอตัวตามตระกูล ไม่สูงและไม่ต่ำกว่าบรรพบุรุษ พึ่งพาบุตรได้บ้างพอเป็นพิธีตามโลกวิสัยแล",
+        "อริ": "มีศัตรูบ้างแต่ให้โทษได้เพียงเล็กน้อยไม่ถึงขั้นสิ้นเนื้อประดาตัว ตัวเรามีดีพอที่จะแคล้วคลาด ภายหลังศัตรูจะกลับใจมาเป็นมิตรแล",
+        "ปัตนิ": "ได้คู่ครองชั้นกลาง สงบเสงี่ยมเจียมตัว มักน้อยถ่อมตน อารมณ์เยือกเย็น ได้รับการอบรมมาดี มุ่งมานะทำอะไรมักสำเร็จง่ายแล",
+        "มรณะ": "ร่างกายแข็งแรงดีมาก ไม่ค่อยมีโรคภัยเบียดเบียน เป็นคนเจ้าความคิด ทะนงในตัวตน และมีความทะเยอทะยานคืบหน้าอยู่เสมอแล",
+        "สุภะ": "ไม่เห่อเหิมไม่จองหอง ชอบพูดถ่อมตนเสมอ แม้มีเกียรติมีตำแหน่งก็ไม่ลืมตน เห็นอกเห็นใจผู้อื่นจนเป็นที่ยกย่องไว้วางใจแล",
+        "กัมมะ": "ไม่มีความอดทนต่ออุปสรรค ชอบหยิบโหย่ง ทำอะไรจริงจังแค่ตอนต้นแล้วเบื่อหน่ายทิ้งกลางคัน ชอบสร้างวิมานในอากาศ บั้นปลายยึดอะไรเป็นหลักมิได้แล",
+        "ลาภะ": "โชคลาภผลประโยชน์มักได้มาเพียงครึ่งๆ กลางๆ ไม่เต็มเม็ดเต็มหน่วย เป็นคนไม่พิถีพิถันกับชีวิต มักรอโชคชะตาจนบั้นปลายอาจยุ่งยากลำบากแล",
+        "พยายะ": "เจ็บไข้น้อยมากหรือเจ็บก็ไม่หนักหนา ทำให้มีแรงขยันทำมาหากินได้สะดวก รักอิสระ ไม่ชอบมีเจ้านายบังคับ เชื่อมั่นในตัวเองสูงแล",
+        "ทาสี": "ชีวิตกลับกลอกหาความแน่นอนมิได้ เดี๋ยวสุขเดี๋ยวทุกข์สลับกันไป ตำแหน่งหน้าที่การงานไม่ใหญ่โตนัก เป็นชีวิตที่โลดโผนและไม่เที่ยงแท้แล",
+        "ทาสา": "ชีวิตกลับกลอกหาความแน่นอนมิได้ เดี๋ยวสุขเดี๋ยวทุกข์สลับกันไป ตำแหน่งหน้าที่การงานไม่ใหญ่โตนัก เป็นชีวิตที่โลดโผนและไม่เที่ยงแท้แล"
     }
+
 };
 
 // เช็กกลุ่มดาว (บาปเคราะห์ vs ศุภเคราะห์) สำหรับ ปาก-ใจ-ที่นั่ง
@@ -306,6 +387,8 @@ const numberToday = {
     6: "ศุกร์",
     7: "เสาร์"
 };
+
+const YAM_SEQUENCE = [1, 6, 4, 2, 7, 5, 3];
 
 
 
@@ -367,14 +450,16 @@ function calculateHoroscope() {
     const day = parseInt(document.getElementById('input-day').value);
     const month = parseInt(document.getElementById('input-month').value);
     const zodiac = parseInt(document.getElementById('input-zodiac').value);
-    
-    // เช็ค ID ตรงนี้ครับว่าใน HTML ตั้งชื่อว่า 'input-age' หรือเปล่า
-    const ageInput = document.getElementById('input-age');
-    const age = ageInput ? parseInt(ageInput.value) : 1; 
 
-    // ต้องส่ง age เข้าไปด้วยใน renderTable
-    renderTable(day, month, zodiac, age); 
-    
+    const ageInput = document.getElementById('input-age');
+    const age = ageInput ? parseInt(ageInput.value) : 1;
+
+    // รับเวลาเกิด — ถ้าไม่กรอกใช้ค่า default เที่ยง
+    const timeInput = document.getElementById('input-birthtime');
+    const birthTimeStr = (timeInput && timeInput.value) ? timeInput.value : '12:00';
+
+    renderTable(day, month, zodiac, age, birthTimeStr);
+
     document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -427,33 +512,196 @@ function analyzeOverallFortune(base4Data) {
 
 
 function analyzeRelations(tableData) {
-    const attaNum = tableData[0].data[0]; // เลขในตำแหน่ง อัตตะ (ฐาน 1 หลัก 1)
+    const attaNum = tableData[0].data[0]; // เลขในตำแหน่ง อัตตะ
+    const hinaNum = tableData[0].data[1]; // เลขในตำแหน่ง หินะ
+    const thanangNum = tableData[0].data[2]; // เลขในตำแหน่ง ธะนัง
+    const pitaNum = tableData[0].data[3]; // เพิ่มตำแหน่งปิตา
+    const mataNum = tableData[0].data[4]; // เพิ่มตำแหน่งมาตา
+    const phokaNum = tableData[0].data[5]; // เพิ่มตำแหน่งโภคา
+    const matchimaNum = tableData[0].data[6]; // เพิ่มตำแหน่งมัชฌิมา
+
     let relationsFound = [];
 
-    // วนลูปเช็คทั้ง 3 ฐาน (21 ตำแหน่ง)
     tableData.forEach((row, rowIndex) => {
-        if (rowIndex < 3) { // เช็คเฉพาะฐาน 1, 2, 3
+        if (rowIndex < 3) { 
             row.data.forEach((num, colIndex) => {
                 const label = row.labels[colIndex];
-                // ถ้าเลขตรงกัน และไม่ใช่ตำแหน่งอัตตะตัวมันเอง
+
+                // 1. สัมพันธ์ อัตตะ
                 if (num === attaNum && label !== "อัตตะ") {
-                    if (RELATION_PREDICTIONS["อัตตะ"][label]) {
-                        relationsFound.push({
-                            label: label,
-                            text: RELATION_PREDICTIONS["อัตตะ"][label]
-                        });
+                    if (RELATION_PREDICTIONS["อัตตะ"]?.[label]) {
+                        relationsFound.push({ type: "อัตตะ", label: label, text: RELATION_PREDICTIONS["อัตตะ"][label] });
                     }
+                }
+                // 2. สัมพันธ์ หินะ
+                if (num === hinaNum && label !== "หินะ") {
+                    if (RELATION_PREDICTIONS["หินะ"]?.[label]) {
+                        relationsFound.push({ type: "หินะ", label: label, text: RELATION_PREDICTIONS["หินะ"][label] });
+                    }
+                }
+                // 3. สัมพันธ์ ธะนัง 
+                if (num === thanangNum && label !== "ธะนัง") {
+                    if (RELATION_PREDICTIONS["ธะนัง"]?.[label]) {
+                        relationsFound.push({ type: "ธะนัง", label: label, text: RELATION_PREDICTIONS["ธะนัง"][label] });
+                    }
+                }
+                // 4. สัมพันธ์ ปิตา
+                if (num === pitaNum && label !== "ปิตา") {
+                    if (RELATION_PREDICTIONS["ปิตา_มาตา"]?.[label]) {
+                        relationsFound.push({ type: "ปิตา", label: label, text: RELATION_PREDICTIONS["ปิตา_มาตา"][label] });
+                    }
+                }
+                // 5. สัมพันธ์ มาตา
+                if (num === mataNum && label !== "มาตา") {
+                    if (RELATION_PREDICTIONS["ปิตา_มาตา"]?.[label]) {
+                        relationsFound.push({ type: "มาตา", label: label, text: RELATION_PREDICTIONS["ปิตา_มาตา"][label] });
+                    }
+                }
+                // 6. สัมพันธ์ โภคา
+                if (num === phokaNum && label !== "โภคา") {
+                    if (RELATION_PREDICTIONS["โภคา"]?.[label]) {
+                        relationsFound.push({ type: "โภคา", label: label, text: RELATION_PREDICTIONS["โภคา"][label] });
+                    }
+                }
+                // 7. สัมพันธ์ มัชฌิมา
+                if (num === matchimaNum && label !== "มัชฌิมา") {
+                    if (RELATION_PREDICTIONS["มัชฌิมา"]?.[label]) {
+                        relationsFound.push({ type: "มัชฌิมา", label: label, text: RELATION_PREDICTIONS["มัชฌิมา"][label] });
+                    }   
                 }
             });
         }
     });
-
     return relationsFound;
 }
 
+function getYamAtthakan(dayOfWeek, timeStr, isNight = false) {
+    // dayOfWeek: 0 = อาทิตย์, 1 = จันทร์, ..., 6 = เสาร์
+    // timeStr: "HH:mm"
+    
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const totalMinutes = hours * 60 + minutes;
+    
+    let startMinutes = isNight ? 1080 : 360; // กลางคืนเริ่ม 18.00 (1080 นาที), กลางวันเริ่ม 06.00 (360 นาที)
+    
+    // คำนวณหาลำดับยาม (1-8)
+    let diff = totalMinutes - startMinutes;
+    if (isNight && diff < 0) diff += 1440; // กรณีข้ามเที่ยงคืน
+    
+    let yamIndex = Math.floor(diff / 90); // ยามละ 90 นาที (1.30 ชม.)
+    if (yamIndex >= 8) yamIndex = 7; // ยามสุดท้าย (ยาม 8)
+    
+    // หาเลขยามต้นของวันนั้นๆ
+    // ลำดับวันใน YAM_SEQUENCE: อาทิตย์(1), จันทร์(2), อังคาร(3), พุธ(4), พฤหัส(5), ศุกร์(6), เสาร์(7)
+    const dayStartNumbers = [1, 2, 3, 4, 5, 6, 7];
+    let startNum = dayStartNumbers[dayOfWeek];
+    
+    // เริ่มเวียนจาก startNum ไปตาม YAM_SEQUENCE
+    let currentIndex = YAM_SEQUENCE.indexOf(startNum);
+    let targetYamNum = YAM_SEQUENCE[(currentIndex + yamIndex) % 7];
+    
+    return {
+        yamOrder: yamIndex + 1,
+        yamNumber: targetYamNum,
+        yamName: getYamName(targetYamNum)
+    };
+}
+
+function getYamName(num) {
+    const names = {
+        1: "สุริชะ (อาทิตย์)",
+        2: "จันเทา (จันทร์)",
+        3: "ภุมมะ (อังคาร)",
+        4: "พุธะ (พุธ)",
+        5: "คุรุ (พฤหัสบดี)",
+        6: "ศุกระ (ศุกร์)",
+        7: "เสารี (เสาร์)"
+    };
+    return names[num];
+}
+
+// ลำดับการเวียนยามกลางคืนตามตำราที่ประธานให้มา
+const NIGHT_YAM_SEQUENCE = [1, 5, 2, 6, 3, 7, 4];
+
+function getNightYam(dayOfWeek, timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    let totalMin = hours * 60 + minutes;
+
+    // ปรับเวลาให้เริ่มที่ 18.00 น.
+    let diff = totalMin - (18 * 60);
+    if (diff < 0) diff += 1440; // กรณีหลังเที่ยงคืน
+
+    let yamIndex = Math.floor(diff / 90);
+    if (yamIndex >= 8) yamIndex = 7;
+
+    // หาตำแหน่งเริ่มต้นใน Sequence กลางคืน (อาทิตย์=1, จันทร์=2...)
+    let currentIndex = NIGHT_YAM_SEQUENCE.indexOf(dayOfWeek + 1);
+    let targetYamNum = NIGHT_YAM_SEQUENCE[(currentIndex + yamIndex) % 7];
+
+    return {
+        order: yamIndex + 1,
+        number: targetYamNum,
+        name: getYamName(targetYamNum)
+    };
+}
+
+// 1. ข้อมูลชื่อภพในแต่ละฐาน
+const baseNames = [
+    ["อัตตะ", "หินะ", "ธะนัง", "ปิตา", "มาตา", "โภคา", "มัชฌิมา"],
+    ["ตนุ", "กฎุมภะ", "สหัชชะ", "พันธุ", "ปุตตะ", "อริ", "ปัตนิ"],
+    ["มรณะ", "สุภะ", "กัมมะ", "ลาภะ", "พยายะ", "ทาสา", "ทาสี"]
+];
+
+// --- วิธีใช้งาน ---
+// สมมติผลคำนวณฐานเลข 7 ตัว
+const mockData = [
+    [1, 2, 3, 4, 5, 6, 7], // วัน
+    [4, 5, 6, 7, 1, 2, 3], // เดือน
+    [6, 7, 1, 2, 3, 4, 5]  // ปี
+];
 
 
-function renderTable(day, month, zodiac, age) {
+
+/**
+ * ฟังก์ชันสำหรับวาดตารางดวง
+ * @param {Array} data - อาเรย์ 2 มิติ [[ฐาน1], [ฐาน2], [ฐาน3]]
+ * @param {Number} lakhanaNum - เลขยามที่ได้จากฟังก์ชัน findYamNumber
+ */
+
+
+
+
+
+
+/**
+ * คำนวณยามอัฏฐกาลจากวันเกิดและเวลาเกิด
+ * @param {number} birthDayNum  - วันเกิด 1-7 (1=อาทิตย์, ตาม input-day)
+ * @param {string} birthTimeStr - เวลาเกิด "HH:mm"
+ * @returns {object} ข้อมูลยามที่เกิด
+ */
+function getCurrentYamInfo(birthDayNum, birthTimeStr) {
+    // แปลง input-day (1=อาทิตย์...7=เสาร์) → dayOfWeek (0=อาทิตย์...6=เสาร์)
+    const birthDow = birthDayNum - 1;
+
+    const [hours] = birthTimeStr.split(':').map(Number);
+    const isNight = hours >= 18 || hours < 6;
+
+    const yam = isNight
+        ? getNightYam(birthDow, birthTimeStr)
+        : getYamAtthakan(birthDow, birthTimeStr);
+
+    // normalize key names (getYamAtthakan vs getNightYam ใช้ชื่อ key ต่างกัน)
+    const yamNumber = yam.yamNumber ?? yam.number;
+    const yamOrder  = yam.yamOrder  ?? yam.order;
+    const yamName   = yam.yamName   ?? yam.name;
+
+    // ยามตรงกับดาวเกิดหรือไม่ (เลขวันเกิด === เลขยาม)
+    const isMatch = yamNumber === birthDayNum;
+
+    return { birthTimeStr, isNight, yamOrder, yamNumber, yamName, isMatch };
+}
+
+function renderTable(day, month, zodiac, age, birthTimeStr = '12:00') {
     const tableData = generate7NumbersFull(day, month, zodiac);
     const base4Data = tableData[3].data; 
     
@@ -664,28 +912,125 @@ function renderTable(day, month, zodiac, age) {
             <li class="list-group-item p-3">
                 <span class="badge bg-secondary me-2">${label3} (${num3})</span>
                 <span class="text-dark">${text3}</span>
-            </li>`;
-            
+            </li>`;            
     });
 
     html += `</ul></div></div>`;
 
-    const relations = analyzeRelations(tableData);
+const relations = analyzeRelations(tableData);
 
-if (relations.length > 0) {
-    html += `
-    <div class="card border-0 shadow-sm mt-4" style="background: #fff9f0;">
+// 2. กรองแยกกลุ่มเพื่อเตรียมแสดงผล
+const attaRelations = relations.filter(r => r.type === 'อัตตะ');
+const hinaRelations = relations.filter(r => r.type === 'หินะ');
+const thanangList = relations.filter(r => r.type === "ธะนัง");
+const pitaList = relations.filter(r => r.type === "ปิตา");
+const mataList = relations.filter(r => r.type === "มาตา");
+const phokaList = relations.filter(r => r.type === "โภคา");
+const matchimaList = relations.filter(r => r.type === "มัชฌิมา");
+
+if (attaRelations.length > 0) {
+    html += `    
         <div class="card-header bg-warning text-dark fw-bold">
-            <i class="bi bi-link-45deg me-2"></i>เกณฑ์เลขสัมพันธ์ (จุดเชื่อมโยงดวงชะตา)
-        </div>
+            <i class="bi bi-person-check-fill me-2"></i>เกณฑ์สัมพันธ์</div>
         <div class="card-body">
-            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[0]}</strong> ที่สัมพันธ์กับตำแหน่งอื่นๆ</p>
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[0]}</strong> ในตำแหน่ง <strong>อัตตะ</strong> ที่ไปสัมพันธ์กับส่วนอื่นๆ</p>
             <ul class="list-group list-group-flush bg-transparent">`;
             
-    relations.forEach(item => {
+    attaRelations.forEach(item => {
         html += `
-            <li class="list-group-item bg-transparent border-0 ps-0">
-                <i class="bi bi-check-circle-fill text-success me-2"></i>
+            <li class="list-group-item bg-transparent border-0 ps-0 py-2">
+                <i class="bi bi-plus-circle-fill text-primary me-2"></i>
+                <strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+            </li>`;
+    });
+
+    html += `</ul></div></div>`;
+}
+
+if (hinaRelations.length > 0) {
+    html += `
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[1]}</strong> ในตำแหน่ง <strong>หินะ</strong> ที่ไปสัมพันธ์กับส่วนอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;            
+    hinaRelations.forEach(item => {
+        html += `
+            <li class="list-group-item bg-transparent border-0 ps-0 py-2">
+                <i class="bi bi-dash-circle-fill text-danger me-2"></i>
+                <strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+            </li>`;
+    });
+
+    html += `</ul></div></div>`;
+}
+
+if (thanangList.length > 0) {
+    html += `    
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[2]}</strong> ในตำแหน่ง <strong>ธะนัง</strong> ที่สัมพันธ์กับจุดอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;            
+    thanangList.forEach(item => {
+        html += `
+            <li class="list-group-item bg-transparent border-0 ps-0 py-2">
+                <i class="bi bi-gem text-success me-2"></i>
+                <strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+            </li>`;
+    });
+
+    html += `</ul></div></div>`;
+}
+
+if (pitaList.length > 0) {
+    html += `    
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[3]}</strong> ในตำแหน่ง <strong>ปิตา</strong> ที่สัมพันธ์กับจุดอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;
+    pitaList.forEach(item => {
+        html += `<li class="list-group-item bg-transparent border-0 ps-0 py-2">
+            <i class="bi bi-shield-check text-primary me-2"></i><strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+        </li>`;
+    });
+    html += `</ul></div></div>`;
+}
+
+if (mataList.length > 0) {
+    html += `   
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[4]}</strong> ในตำแหน่ง <strong>มาตา</strong> ที่สัมพันธ์กับจุดอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;
+    mataList.forEach(item => {
+        html += `<li class="list-group-item bg-transparent border-0 ps-0 py-2">
+            <i class="bi bi-heart-fill text-danger me-2"></i><strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+        </li>`;
+    });
+    html += `</ul></div></div>`;
+}
+
+if (phokaList.length > 0) {
+    html += `    
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[5]}</strong> ในตำแหน่ง <strong>โภคา</strong> ที่สัมพันธ์กับส่วนอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;
+            
+    phokaList.forEach(item => {
+        html += `
+            <li class="list-group-item bg-transparent border-0 ps-0 py-2">
+                <i class="bi bi-trophy-fill text-warning me-2"></i>
+                <strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
+            </li>`;
+    });
+
+    html += `</ul></div></div>`;
+}
+
+if (matchimaList.length > 0) {
+    html += `    
+        <div class="card-body">
+            <p class="text">* วิเคราะห์จากเลข <strong>${tableData[0].data[6]}</strong> ในตำแหน่ง <strong>มัชฌิมา</strong> ที่สัมพันธ์กับส่วนอื่นๆ</p>
+            <ul class="list-group list-group-flush bg-transparent">`;            
+    matchimaList.forEach(item => {
+        html += `
+            <li class="list-group-item bg-transparent border-0 ps-0 py-2">
+                <i class="bi bi-dot text-secondary me-2"></i>
                 <strong>สัมพันธ์กับ ${item.label}:</strong> ${item.text}
             </li>`;
     });
@@ -695,5 +1040,31 @@ if (relations.length > 0) {
 
 
     document.getElementById('result-area').innerHTML = html;
-}
 
+    // ---- Section ยามอัฏฐกาล (แสดงท้ายสุดแยกต่างหาก) ----
+    const yamInfo = getCurrentYamInfo(day, birthTimeStr);
+    const yamPeriod = yamInfo.isNight ? 'กลางคืน 🌙' : 'กลางวัน ☀️';
+    const yamBadgeClass = yamInfo.isMatch ? 'bg-success' : 'bg-secondary';
+    const yamMatchText = yamInfo.isMatch
+        ? '✨ ยามเกิดตรงกับดาวเกิดของท่าน — เป็นมงคลยิ่ง'
+        : 'ยามเกิดไม่ตรงกับดาวเกิด';
+
+    const yamSection = document.createElement('div');
+    yamSection.className = 'card border-0 shadow-sm mt-4';
+    yamSection.innerHTML = `
+        <div class="card-header bg-dark text-white fw-bold">
+            <i class="bi bi-clock-history me-2"></i>ยามอัฏฐกาล ณ เวลาเกิด (${yamPeriod})
+        </div>
+        <div class="card-body d-flex align-items-center gap-4 flex-wrap">
+            <div class="text-center">
+                <div class="display-4 fw-bold text-warning">${yamInfo.yamNumber}</div>
+                <div class="small text-muted">เลขยาม</div>
+            </div>
+            <div>
+                <div class="fs-5 fw-bold">${yamInfo.yamName}</div>
+                <div class="small text-muted">ยามที่ ${yamInfo.yamOrder} • เวลาเกิด ${yamInfo.birthTimeStr} น.</div>
+                <span class="badge ${yamBadgeClass} mt-2">${yamMatchText}</span>
+            </div>
+        </div>`;
+    document.getElementById('result-area').appendChild(yamSection);
+}

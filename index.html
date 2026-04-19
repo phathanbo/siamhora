@@ -14,7 +14,7 @@
 <body>
     <header class="bg-dark text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1>🔮 สยามโหรามงคล</h1>
+            <h1 onclick="navigateTo('mainContent')" style="cursor: pointer;">🔮 สยามโหรามงคล</h1>
             <nav>
                 <ul class="nav">
                     <li class="nav-item d-flex align-items-center ml-3">
@@ -1152,11 +1152,11 @@
                                 <option value="">-- เลือกสมาชิก --</option>
                             </select>
                             <!-- ปุ่มคำนวณ (สำคัญมาก!) -->
-                            <button type="button" onclick="calculateChatra()" class="btn btn-gold mt-3""> คำนวณฉัตร 3 ชั้น</button>
+                            <button type="button" onclick="calculateChatra()" class="btn btn-gold mt-3"> คำนวณฉัตร 3 ชั้น</button>
                          </div>
                     </div>
                 </div>
-                <div id=" chatraDisplay" style="display: none;">
+                <div id="chatraDisplay" style="display: none;">
                                 <div class="chatra-visual-area d-flex flex-column align-items-center mt-4">
                                     <div class="chatra-pinnacle"></div>
                                     <div class="chatra-tier tier-top" id="chatraTier3">
@@ -1237,7 +1237,6 @@
                     <div id="ritualResult" style="display: none;" class="mt-4">
                         <div class="ritual-box p-4 rounded"
                             style="background: rgba(0, 0, 0, 0.6); border: 1px solid #d4af37; overflow: hidden; position: relative; min-height: 400px;">
-
                             <div id="prayerScroll" class="prayer-text-container">
                                 <div class="prayer-content">
                                     <p>นะโม ตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ (3 จบ)</p>
@@ -2350,7 +2349,8 @@
 </section>
 
 
-<section id="horoscope-seven" class="mian-section" style="display:none;">
+<section id="horoscope-seven" class="main-section" style="display:none;">
+    <div class="container"> 
         <div class="row justify-content-center">       
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-dark text-white p-3">
@@ -2389,6 +2389,13 @@
                                     <option value="11">ปีจอ</option><option value="12">ปีกุน</option>
                                 </select>
                             </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">
+                                    เวลาเกิด <span class="text-muted fw-normal">(สำหรับคำนวณยาม)</span>
+                                </label>
+                                <input type="time" id="input-birthtime" class="form-select border-primary">
+                                <small class="text-muted">ถ้าไม่ทราบ ระบบใช้ 12:00 น.</small>
+                            </div>
                             <div class="col-md-3 ">
                                 <label class="form-label fw-bold">อายุปัจจุบัน (ปี)</label>
                                 <input type="number" id="input-age" class="form-select border-primary" placeholder="เช่น 20" min="1"></input>
@@ -2400,7 +2407,7 @@
                             </div>
                         </div>
 
-                        <div id="result-area" class="table-responsive">
+                        <div id="result-area" class="container">
                             <div class="text-center text-muted py-5 border rounded">
                                 <p>กรุณากรอกข้อมูลเพื่อคำนวณดวงชะตา</p>
                             </div>
@@ -2408,6 +2415,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 </section>
 
 
@@ -2456,7 +2464,6 @@
     <script src="lifeGraph.js"></script>
     <script src="dreamInterpretation.js"></script>
     <script src="sevenDigits.js"></script>
-    <script src="ascendant.js"></script>
     <script src="AuspiciousDays.js"></script>
     <script src="script.js"></script>
     <script src="yarmPage.js"></script>
