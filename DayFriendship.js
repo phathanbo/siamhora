@@ -1,54 +1,108 @@
+"use strict";
+
+/* =========================
+   1. DATA (Static + Optimized)
+========================= */
+const DAY_RULE_MAP = (() => {
+    const rules = [
+        {
+            type: "good",
+            label: "วันเป็นมิตรใหญ่ (ดีมาก)",
+            desc: "คู่นี้ส่งเสริมกันดีมาก",
+            pairs: [["อาทิตย์", "พฤหัสบดี"], ["จันทร์", "พุธ"], ["ศุกร์", "อังคาร"], ["ราหู", "เสาร์"]]
+        },
+        {
+            type: "good",
+            label: "วันเป็นมิตรน้อย",
+            desc: "เป็นมิตรพอสมควร",
+            pairs: [["อาทิตย์", "เสาร์"], ["จันทร์", "อังคาร"], ["อังคาร", "ราหู"], ["พุธ", "เสาร์"]]
+        },
+        {
+            type: "bad",
+            label: "วันเป็นศัตรูใหญ่ (ไม่ดี)",
+            desc: "ขัดแย้งสูง",
+            pairs: [["อาทิตย์", "อังคาร"], ["จันทร์", "พฤหัสบดี"], ["พุธ", "ราหู"], ["ศุกร์", "เสาร์"]]
+        },
+        {
+            type: "bad",
+            label: "วันเป็นศัตรูน้อย",
+            desc: "มีปัญหาบ้าง",
+            pairs: [["อาทิตย์", "จันทร์"], ["อังคาร", "เสาร์"], ["พฤหัสบดี", "ราหู"], ["พุธ", "ศุกร์"]]
+        }
+    ];
+
+    const map = new Map();
+
+    rules.forEach(rule => {
+        rule.pairs.forEach(([a, b]) => {
+            const key1 = `${a}|${b}`;
+            const key2 = `${b}|${a}`;
+            map.set(key1, rule);
+            map.set(key2, rule);
+        });
+    });
+
+    return map;
+})();
+
+/* =========================
+   2. UTIL
+========================= */
+function normalize(value) {
+    return value ? value.trim() : "";
+}
+
+function safeSetHTML(el, html) {
+    if (el) el.innerHTML = html;
+}
+
+/* =========================
+   3. MAIN FUNCTION
+========================= */
 function calculateDayFriendship() {
-    const male = document.getElementById('maleDay').value;
-    const female = document.getElementById('femaleDay').value;
-    const display = document.getElementById('day-result-display');
-    const textContent = document.getElementById('day-match-text');
+    try {
+        const maleEl = document.getElementById("maleDay");
+        const femaleEl = document.getElementById("femaleDay");
+        const displayEl = document.getElementById("day-result-display");
+        const textEl = document.getElementById("day-match-text");
 
-    let resultText = "";
-    let statusClass = "neutral";
+        if (!maleEl || !femaleEl || !displayEl || !textEl) {
+            alert("ระบบไม่พร้อมใช้งาน (DOM error)");
+            console.error("❌ DOM missing");
+            return;
+        }
 
-    // Helper check function
-    const isDayPair = (d1, d2) => (male === d1 && female === d2) || (male === d2 && female === d1);
+        const male = normalize(maleEl.value);
+        const female = normalize(femaleEl.value);
 
-    // 1. ตรวจสอบมิตรใหญ่ (ดีมาก)
-    if (isDayPair("อาทิตย์", "พฤหัสบดี") || 
-        isDayPair("จันทร์", "พุธ") || 
-        isDayPair("ศุกร์", "อังคาร") || 
-        isDayPair("ราหู", "เสาร์")) {
-        resultText = "<strong>วันเป็นมิตรใหญ่ (ดีมาก):</strong> คู่นี้ส่งเสริมกันดีนัก มีความเกื้อกูลและเมตตาต่อกันสูง";
-        statusClass = "good";
-    }
-    // 2. ตรวจสอบมิตรน้อย
-    else if (isDayPair("อาทิตย์", "เสาร์") || 
-             isDayPair("จันทร์", "อังคาร") || 
-             isDayPair("อังคาร", "ราหู") || 
-             isDayPair("พุธ", "เสาร์")) {
-        resultText = "<strong>วันเป็นมิตรน้อย:</strong> คู่นี้เป็นมิตรต่อกัน อยู่ด้วยกันได้อย่างราบรื่นพอสมควร";
-        statusClass = "good";
-    }
-    // 3. ตรวจสอบศัตรูใหญ่ (ไม่ดี)
-    else if (isDayPair("อาทิตย์", "อังคาร") || 
-             isDayPair("จันทร์", "พฤหัสบดี") || 
-             isDayPair("พุธ", "ราหู") || 
-             isDayPair("ศุกร์", "เสาร์")) {
-        resultText = "<strong>วันเป็นศัตรูใหญ่ (ไม่ดี):</strong> ระวังความขัดแย้งรุนแรง มีทิฐิเข้าหากัน มักมีเรื่องร้อนใจ";
-        statusClass = "bad";
-    }
-    // 4. ตรวจสอบศัตรูน้อย
-    else if (isDayPair("อาทิตย์", "จันทร์") || 
-             isDayPair("อังคาร", "เสาร์") || 
-             isDayPair("พฤหัสบดี", "ราหู") || 
-             isDayPair("พุธ", "ศุกร์")) {
-        resultText = "<strong>วันเป็นศัตรูน้อย:</strong> มีเรื่องระหองระแหงกันบ้าง ไม่ค่อยลงรอยกันในบางเรื่อง";
-        statusClass = "bad";
-    }
-    else {
-        resultText = "<strong>วันเป็นกลาง:</strong> ไม่เป็นมิตรและไม่เป็นศัตรูต่อกันโดยตรง (อยู่ในเกณฑ์ปกติ)";
-        statusClass = "neutral";
-    }
+        if (!male || !female) {
+            displayEl.style.display = "none";
+            return;
+        }
 
-    // อัปเดต UI
-    display.style.display = "block";
-    display.className = "result-card " + statusClass;
-    textContent.innerHTML = resultText;
+        /* =========================
+           4. LOOKUP (O(1))
+        ========================= */
+        const key = `${male}|${female}`;
+        const result = DAY_RULE_MAP.get(key) || {
+            type: "neutral",
+            label: "วันเป็นกลาง",
+            desc: "อยู่ในเกณฑ์ปกติ"
+        };
+
+        /* =========================
+           5. UI UPDATE
+        ========================= */
+        displayEl.className = `result-card ${result.type}`;
+        displayEl.style.display = "block";
+
+        safeSetHTML(
+            textEl,
+            `<strong>${result.label}:</strong> ${result.desc}`
+        );
+
+    } catch (err) {
+        console.error("🔥 ERROR:", err);
+        alert("เกิดข้อผิดพลาด กรุณาลองใหม่");
+    }
 }

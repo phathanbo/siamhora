@@ -1,7 +1,7 @@
 "use strict";
 let globalRows = [];
 
-const starPower = ["", "อำนาจ/เด่นดัง", "เมตตา/อ่อนหวาน", "ขยัน/กล้าหาญ", "ปัญญา/เจรจา", "คุณธรรม/ผู้ใหญ่", "การเงิน/ความสุข", "อดทน/ภาระ"];
+const starPower = ["", "อำนาจ/เด่นดัง", "เมตตา/อ่อนหวาน", "ขยัน/กล้าหาญ", "ปัญญา/เจรจา", "คุณธรรม/ผู้ใหญ่", "การเงิน/ความสุข", "อดทน/ภาระ", "พลิกผัน/ลึกลับ"];
 const posNamesFull = [
     ["อัตตา", "หินะ", "ธนัง", "ปิตา", "มาตา", "โภคา", "มัชฌิมา"],
     ["ตะนุ", "กดุมพะ", "สหัชชะ", "พันธุ", "ปุตตะ", "อริ", "ปัตตนิ"],
@@ -303,8 +303,8 @@ const linkage = {
 
 
 const columnLabels = [
-    "ตัวเอง (อัตตา)", "โชคลาภ (หินะ)", "สังคม (ธนัง)", 
-    "ผู้ใหญ่ (ปิตา)", "บุตร/บริวาร (มาตา)", "อุปสรรค (โภคา)", "คู่ครอง (มัชฌิมา)"
+    "ตัวเอง (อัตตา)", "ความเสื่อม (หินะ)", "ทรัพย์สิน (ธนัง)", 
+    "ผู้ใหญ่ (ปิตา)", "มารดา (มาตา)", "บ้าน/รถ (โภคา)", "ทางสายกลาง (มัชฌิมา)"
 ];
 
 const houseMeanings = {
@@ -499,8 +499,8 @@ function getMahaBot(num, dayNum) {
 
 
 function getLifeSummary(rows) {
-    const dayNum = rows?.[0]?.[0];           // ป้องกัน error ถ้า rows ไม่ครบ
-    const base4   = rows?.[3]?.[0];
+    const dayNum = rows?.[0]?.[0];           // เลขวันเกิด (1-7) จากฐานวัน ตำแหน่งอัตตา
+    const base4   = rows?.[3]?.[0];          // กำลังรวมฐานที่ 4 (mod9, 1-9)
 
     // Guard clause ถ้าข้อมูลไม่พอ
     if (!dayNum || !base4) {
@@ -512,7 +512,8 @@ function getLifeSummary(rows) {
         `;
     }
 
-    const mb = getMahaBot(dayNum, dayNum);
+    // getMahaBot(base4, dayNum): คำนวณจากกำลังฐานสรุปเทียบกับเลขวันเกิด
+    const mb = getMahaBot(base4, dayNum);
 
     // Fallback ถ้าไม่เจอความหมาย
     const base4Meaning = sdMeanings?.base4?.[base4] 
@@ -539,7 +540,7 @@ function getYearlySummary(rows, age) {
     if (!age || age < 1 || !rows || rows.length < 3) return "";
     // 1. คำนวณหาดาวศรี และ ดาวกาลกิณี ตามหลักทักษาจร
     const dayNum = rows[0][0]; // เลขตัวแรกของฐานวัน
-    const thaksaOrder = [1, 2, 3, 4, 7, 5, 8, 6]; 
+    // ใช้ thaksaOrder จาก global (ไม่ประกาศซ้ำเพื่อหลีกเลี่ยง shadow)
     let startIdx = thaksaOrder.indexOf(dayNum);
     let currentPosIdx = (startIdx + (parseInt(age) - 1)) % 8;
     let sriStar = thaksaOrder[(currentPosIdx + 3) % 8];
@@ -771,21 +772,22 @@ function renderSDTable(rows, currentAge = null) {
 
 
 function analyzeStars(bases){
+    // bases คือ array ของ mod9 sum: [0]=อัตตา,[1]=หินะ,[2]=ธนัง,[3]=ปิตา,[4]=มาตา,[5]=โภคา,[6]=มัชฌิมา
     const goodStars = [];
     const badStars = [];
-    if(bases.sun >= 5) goodStars.push("อาทิตย์ (อำนาจ)");
+    if(bases[0] >= 5) goodStars.push("อาทิตย์ (อำนาจ)");
     else badStars.push("อาทิตย์ (อำนาจ)");
-    if(bases.moon >= 5) goodStars.push("จันทร์ (เมตตา)");
+    if(bases[1] >= 5) goodStars.push("จันทร์ (เมตตา)");
     else badStars.push("จันทร์ (เมตตา)");
-    if(bases.mars >= 5) goodStars.push("อังคาร (พลัง)");
+    if(bases[2] >= 5) goodStars.push("อังคาร (พลัง)");
     else badStars.push("อังคาร (พลัง)");
-    if(bases.mercury >= 5) goodStars.push("พุธ (สติปัญญา)");
+    if(bases[3] >= 5) goodStars.push("พุธ (สติปัญญา)");
     else badStars.push("พุธ (สติปัญญา)");
-    if(bases.jupiter >= 5) goodStars.push("พฤหัส (โชคลาภ)");
+    if(bases[4] >= 5) goodStars.push("พฤหัส (โชคลาภ)");
     else badStars.push("พฤหัส (โชคลาภ)");
-    if(bases.venus >= 5) goodStars.push("ศุกร์ (ทรัพย์)");
+    if(bases[5] >= 5) goodStars.push("ศุกร์ (ทรัพย์)");
     else badStars.push("ศุกร์ (ทรัพย์)");
-    if(bases.saturn >= 5) goodStars.push("เสาร์ (ความอดทน)");
+    if(bases[6] >= 5) goodStars.push("เสาร์ (ความอดทน)");
     else badStars.push("เสาร์ (ความอดทน)");
     return {
         goodStars,
@@ -795,11 +797,12 @@ function analyzeStars(bases){
 
 
 function getLuckyAgePeriods(bases){
+    // bases คือ array: [0]=อัตตา,[1]=หินะ,[2]=ธนัง,[3]=ปิตา,[4]=มาตา,[5]=โภคา,[6]=มัชฌิมา
     const periods = [];
-    if(bases.sun >= 6) periods.push("ช่วงอายุ 28-35 ดวงอำนาจเด่น");
-    if(bases.jupiter >= 6) periods.push("ช่วงอายุ 36-45 โชคลาภเปิด");
-    if(bases.venus >= 6) periods.push("ช่วงอายุ 32-40 การเงินดี");
-    if(bases.mercury >= 6) periods.push("ช่วงอายุ 25-33 ความสำเร็จด้านงาน");
+    if(bases[0] >= 6) periods.push("ช่วงอายุ 28-35 ดวงอำนาจเด่น");
+    if(bases[4] >= 6) periods.push("ช่วงอายุ 36-45 โชคลาภเปิด");
+    if(bases[5] >= 6) periods.push("ช่วงอายุ 32-40 การเงินดี");
+    if(bases[3] >= 6) periods.push("ช่วงอายุ 25-33 ความสำเร็จด้านงาน");
     if(periods.length === 0){
         periods.push("ดวงค่อย ๆ ดีขึ้นตามความพยายาม");
     }
@@ -808,14 +811,15 @@ function getLuckyAgePeriods(bases){
 
 
 function getLuckyNumbersFromBase(bases){
+    // bases คือ array: [0]=อัตตา,[1]=หินะ,[2]=ธนัง,[3]=ปิตา,[4]=มาตา,[5]=โภคา,[6]=มัชฌิมา
     const numbers = [];
-    if(bases.sun >= 5) numbers.push(1);
-    if(bases.moon >= 5) numbers.push(2);
-    if(bases.mars >= 5) numbers.push(3);
-    if(bases.mercury >= 5) numbers.push(4);
-    if(bases.jupiter >= 5) numbers.push(5);
-    if(bases.venus >= 5) numbers.push(6);
-    if(bases.saturn >= 5) numbers.push(7);
+    if(bases[0] >= 5) numbers.push(1);
+    if(bases[1] >= 5) numbers.push(2);
+    if(bases[2] >= 5) numbers.push(3);
+    if(bases[3] >= 5) numbers.push(4);
+    if(bases[4] >= 5) numbers.push(5);
+    if(bases[5] >= 5) numbers.push(6);
+    if(bases[6] >= 5) numbers.push(7);
     if(numbers.length === 0){
         numbers.push(Math.floor(Math.random()*9)+1);
     }
@@ -867,6 +871,11 @@ function calculateSevenDigits() {
     const monthlySummaryHtml = typeof getMonthlySummary === 'function' ? getMonthlySummary(age) : "";
     const insights          = typeof analyzeRelationships === 'function' ? analyzeRelationships(globalRows) : [];
     const lifeStages         = typeof analyzeLifeStages === 'function' ? analyzeLifeStages(globalRows) : [];
+
+    // เรียก renderSummary (มหาบท/บทสรุปดวงชะตา)
+    const dayNum = globalRows[0][0];
+    const mahaBot = getMahaBot(globalRows[3][0], dayNum);
+    renderSummary(globalRows[3], mahaBot.name);
 
     // 5. วาดตารางเลข 7 ตัว
     renderSDTable(globalRows, age);
@@ -1016,11 +1025,13 @@ function getThaksaTransit(birthDayNum, age) {
 }
 
 function renderSummary(row4, mahaBotResult) {
-    // ดึงจุดเด่นจากฐานที่ 4 (เช่น เลขที่มีกำลังสูงๆ)
+    // ดึงจุดเด่นจากฐานที่ 4 (row4 = mod9 sum, ∈ {1..9} เสมอ)
+    // key 10-21 ใน base4 ไม่มีทางถูกเรียกจากฐาน 4 จริง → ใช้ key 1-9 เท่านั้น
     const highlights = row4.map((num, idx) => {
-        if (num >= 14) return `<span class="badge badge-success">เสาที่ ${idx+1} เด่น: ${sdMeanings.base4[num].split(':')[0]}</span>`;
+        const meaning = sdMeanings.base4[num];
+        if (num >= 7) return `<span class="badge badge-success mr-1 mb-1">เสาที่ ${idx+1}: ${meaning ? meaning.split(':')[0] : 'กำลังดี'}</span>`;
         return "";
-    }).join(' ');
+    }).filter(Boolean).join(' ');
 
     const html = `
         <div class="summary-card mt-4 p-4" style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 15px; color: #fff;">
@@ -1037,7 +1048,8 @@ function renderSummary(row4, mahaBotResult) {
             </div>
         </div>
     `;
-    document.getElementById('summarySection').innerHTML = html;
+    const el = document.getElementById('summarySection');
+    if (el) el.innerHTML = html;
 }
 
 // ฟังก์ชันแสดงรายละเอียดเมื่อคลิก

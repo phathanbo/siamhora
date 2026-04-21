@@ -1,0 +1,41 @@
+<section id="travel" class="main-section">
+        <div class="compatibility-container">
+            <h2 class="section-title">ยามอุบากอง (ยันต์ยาตรา)</h2>
+            <p class="section-subtitle" id="current-date-display"></p>
+
+            <div class="selection-grid" style="margin-bottom: 20px;">
+                <div class="input-box">
+                    <label>ตรวจเช็กฤกษ์เดินทางวันอื่นๆ</label>
+                    <select id="ubakongDay" class="form-control" onchange="renderUbakongDay(); renderTravelRites()">
+                        <option value="0">วันอาทิตย์</option>
+                        <option value="1">วันจันทร์</option>
+                        <option value="2">วันอังคาร</option>
+                        <option value="3">วันพุธ</option>
+                        <option value="4">วันพฤหัสบดี</option>
+                        <option value="5">วันศุกร์</option>
+                        <option value="6">วันเสาร์</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ubakong-dashboard" id="ubakong-list">
+            </div>
+            <div class="legend-box" style="margin-top: 20px;">
+                <p><span style="color: #d4af37;">▶</span> คือช่วงเวลาปัจจุบัน | <span
+                        style="color: #28a745;">●●●●</span> ยามดีมาก | <span style="color: #dc3545;">✖</span>
+                    ยามห้ามเดินทาง</p>
+            </div>
+        </div>
+        <div class="compatibility-container">
+            <h2 class="section-title">ฤกษ์ยาตราและทิศผีหลวง</h2>
+            <p class="section-subtitle">ตรวจสอบทิศมงคลและข้อห้ามในการเดินทางรายชั่วโมง</p>
+            <div id="phi-luang-info" class="result-card" style="margin-bottom: 20px; border-left: 5px solid #ff4757;">
+                <h4 id="phi-luang-dir" style="color: #ff4757; margin-bottom: 5px;"></h4>
+                <p id="phi-luang-advice" style="font-size: 0.95em; line-height: 1.5;"></p>
+            </div>
+            <div class="ubakong-dashboard" id="travel-slots-list">
+            </div>
+        </div>        
+    </section>
+
+
+   

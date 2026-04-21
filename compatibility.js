@@ -1,5 +1,8 @@
 "use strict";
-// ข้อมูลนักษัตรไทยและธาตุ
+
+// =====================
+// DATA
+// =====================
 const ZODIAC_MASTER = {
     "ชวด":   { element: "น้ำ", animal: "หนู", friend: ["ฉลู", "มะโรง", "วอก"], enemy: ["มะเมีย"] },
     "ฉลู":   { element: "ดิน", animal: "วัว", friend: ["ชวด", "มะเส็ง", "ระกา"], enemy: ["มะแม"] },
@@ -15,22 +18,33 @@ const ZODIAC_MASTER = {
     "กุน":   { element: "น้ำ", animal: "หมู", friend: ["เถาะ", "มะแม", "ขาล"], enemy: ["มะเส็ง"] }
 };
 
-// ตรรกะความสัมพันธ์ของธาตุ
+// ธาตุสัมพันธ์ (แก้ให้ logic ชัดเจน)
 const ELEMENT_RELATION = {
-    "น้ำ": { support: "ดิน", block: "ไฟ", icon: "💧", color: "#007bff" },
-    "ดิน": { support: "ไฟ", block: "ลม", icon: "🪵", color: "#8B4513" },
-    "ไฟ":  { support: "ลม", block: "น้ำ", icon: "🔥", color: "#dc3545" },
-    "ลม":  { support: "น้ำ", block: "ดิน", icon: "🌪️", color: "#6c757d" }
+    "น้ำ": { support: "ลม", block: "ไฟ", icon: "💧" },
+    "ดิน": { support: "ไฟ", block: "ลม", icon: "🪨" },
+    "ไฟ":  { support: "ดิน", block: "น้ำ", icon: "🔥" },
+    "ลม":  { support: "น้ำ", block: "ดิน", icon: "🌪️" }
 };
 
-// 1. ฟังก์ชันคำนวณ (Logic)
+// =====================
+// CORE LOGIC
+// =====================
 function analyzeCompatibility(p1, p2) {
+
+    if (!ZODIAC_MASTER[p1] || !ZODIAC_MASTER[p2]) {
+        return {
+            error: true,
+            message: "กรุณาเลือกนักษัตรให้ครบก่อน"
+        };
+    }
+
     const person1 = ZODIAC_MASTER[p1];
     const person2 = ZODIAC_MASTER[p2];
 
-    let score = 70; 
+    let score = 70;
     let zodiacResult = "เป็นกลาง";
 
+    // --- Zodiac ---
     if (person1.friend.includes(p2)) {
         score = 95;
         zodiacResult = "คู่สร้างคู่สม (มงคลยิ่ง)";
@@ -39,73 +53,117 @@ function analyzeCompatibility(p1, p2) {
         zodiacResult = "คู่กัด/ศัตรู (ต้องระวัง)";
     }
 
-    const elementRel = ELEMENT_RELATION[person1.element];
+    // --- Element ---
     let elementResult = "ธาตุเป็นกลาง";
 
-    if (elementRel.support === person2.element || ELEMENT_RELATION[person2.element].support === person1.element) {
-        elementResult = "ธาตุหนุนนำ: ส่งเสริมทรัพย์สินและบารมี";
-        score = Math.min(score + 10, 100);
-    } else if (elementRel.block === person2.element || ELEMENT_RELATION[person2.element].block === person1.element) {
-        elementResult = "ธาตุพิฆาต: มักมีเรื่องร้อนใจหรือปากเสียง";
-        score = Math.max(score - 20, 20);
+    if (ELEMENT_RELATION[person1.element].support === person2.element) {
+        elementResult = "ธาตุหนุนนำ (ฝ่ายคุณหนุนเขา)";
+        score += 10;
+    } 
+    else if (ELEMENT_RELATION[person2.element].support === person1.element) {
+        elementResult = "ธาตุหนุนนำ (เขาหนุนคุณ)";
+        score += 10;
+    }
+    else if (ELEMENT_RELATION[person1.element].block === person2.element) {
+        elementResult = "ธาตุพิฆาต (คุณกดเขา)";
+        score -= 20;
+    } 
+    else if (ELEMENT_RELATION[person2.element].block === person1.element) {
+        elementResult = "ธาตุพิฆาต (เขากดคุณ)";
+        score -= 20;
     }
 
-    return { score, zodiacResult, elementResult, p1Element: person1.element, p2Element: person2.element };
+    // clamp score
+    score = Math.max(20, Math.min(100, score));
+
+    return {
+        score,
+        zodiacResult,
+        elementResult,
+        p1Element: person1.element,
+        p2Element: person2.element
+    };
 }
 
-// 2. ฟังก์ชันแสดงผล (UI Interface)
+// =====================
+// UI
+// =====================
 function processCompatibility() {
-    const myZodiac = document.getElementById('myZodiac').value;
-    const partnerZodiac = document.getElementById('partnerZodiac').value;
+
+    const myZodiac = document.getElementById('myZodiac')?.value;
+    const partnerZodiac = document.getElementById('partnerZodiac')?.value;
     const resultDiv = document.getElementById('compatResult');
+
+    if (!resultDiv) return;
 
     const result = analyzeCompatibility(myZodiac, partnerZodiac);
 
-    // ดึง Icon และสี
-    const icon1 = ELEMENT_RELATION[result.p1Element].icon;
-    const icon2 = ELEMENT_RELATION[result.p2Element].icon;
-    const colorScore = result.score >= 80 ? '#d4af37' : (result.score >= 50 ? '#28a745' : '#dc3545');
+    if (result.error) {
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `<div class="alert alert-warning text-center">${result.message}</div>`;
+        return;
+    }
+
+    const icon1 = ELEMENT_RELATION[result.p1Element]?.icon || "";
+    const icon2 = ELEMENT_RELATION[result.p2Element]?.icon || "";
+
+    const colorScore =
+        result.score >= 80 ? '#d4af37' :
+        result.score >= 50 ? '#28a745' :
+        '#dc3545';
 
     resultDiv.style.display = 'block';
     resultDiv.innerHTML = `
-        <div class="card border-gold animate__animated animate__fadeIn" style="background: rgba(0,0,0,0.03); border-radius: 15px;">
+        <div class="card border-gold animate__animated animate__fadeIn">
             <div class="card-body text-center">
-                <h5 class="text-muted mb-2">ระดับความสมพงษ์</h5>
-                <div style="font-size: 4rem; font-weight: bold; color: ${colorScore}; line-height: 1;">
+
+                <h5 class="text-muted">ระดับความสมพงษ์</h5>
+
+                <div style="font-size:4rem;color:${colorScore}">
                     ${result.score}%
                 </div>
-                
-                <h3 class="mt-3 mb-4" style="color: #333;">${result.zodiacResult}</h3>
-                
-                <div class="row align-items-center bg-white py-3 rounded-lg shadow-sm border mx-1">
+
+                <h3>${result.zodiacResult}</h3>
+
+                <div class="row mt-3">
                     <div class="col-5">
-                        <div class="small text-muted">คุณ (${myZodiac})</div>
-                        <div class="h5 mb-0">ธาตุ${result.p1Element} ${icon1}</div>
+                        <div>คุณ (${myZodiac})</div>
+                        <b>${result.p1Element} ${icon1}</b>
                     </div>
-                    <div class="col-2 h4 mb-0 text-gold">❤️</div>
+
+                    <div class="col-2">❤️</div>
+
                     <div class="col-5">
-                        <div class="small text-muted">คู่ของคุณ (${partnerZodiac})</div>
-                        <div class="h5 mb-0">ธาตุ${result.p2Element} ${icon2}</div>
+                        <div>คู่ (${partnerZodiac})</div>
+                        <b>${result.p2Element} ${icon2}</b>
                     </div>
                 </div>
 
-                <div class="mt-4 p-3 rounded" style="background: rgba(212, 175, 55, 0.1); border-left: 5px solid #d4af37;">
-                    <p class="mb-0 text-dark"><strong>บทวิเคราะห์ธาตุ:</strong> ${result.elementResult}</p>
+                <div class="mt-3">
+                    <strong>วิเคราะห์:</strong> ${result.elementResult}
                 </div>
+
             </div>
         </div>
     `;
 
-    // เลื่อนลงไปดูผลลัพธ์อัตโนมัติ
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    resultDiv.scrollIntoView?.({ behavior: 'smooth' });
 }
 
+// =====================
+// QUICK MODE
+// =====================
+let debounceTimer = null;
+
 function quickAnalyze() {
-    // 1. เปลี่ยนหน้าไปที่ compatibilityPage ก่อน
-    navigateTo('compatibilityPage');
-    
-    // 2. สั่งให้คำนวณผล (ถ้ามีข้อมูลใน Select อยู่แล้ว)
-    setTimeout(() => {
+
+    if (typeof navigateTo === "function") {
+        navigateTo('compatibilityPage');
+    }
+
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(() => {
         processCompatibility();
-    }, 300); // รอ animation เปลี่ยนหน้าแป๊บหนึ่ง
+    }, 300);
 }

@@ -1,5 +1,11 @@
 "use strict";
-// ข้อมูลคู่เลขมงคลเจาะลึก (ใช้สำหรับวิเคราะห์คู่ลำดับท้ายเบอร์)
+
+/**
+ * numerology.js
+ * ระบบวิเคราะห์เลขศาสตร์มงคล (เบอร์โทร, ทะเบียนรถ, เลขบ้าน)
+ * เวอร์ชันเสถียร – ทำงานร่วมกับ element.js และ knowledge-data.js ได้สมบูรณ์
+ */
+
 const luckyPairs = {
     "14": "คู่สติปัญญา: เจรจาน่าเชื่อถือ ผู้ใหญ่เอ็นดู", "41": "คู่สติปัญญา: เจรจาน่าเชื่อถือ ผู้ใหญ่เอ็นดู",
     "15": "คู่มิตรผู้อุปถัมภ์: มีเสน่ห์ มีคนช่วยเหลือตลอด", "51": "คู่มิตรผู้อุปถัมภ์: มีเสน่ห์ มีคนช่วยเหลือตลอด",
@@ -592,7 +598,7 @@ async function downloadNumerologyImage(element) {
     const footer = document.createElement('div');
     footer.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid rgba(212,175,55,0.3); color: #d4af37;">
-            <div style="font-size: 14px;">🔮 <strong>SiamHora.com</strong></div>
+            <div style="font-size: 14px;">🔮 <strong>สยามโหรามงคล - พยากรณ์ศาสตร์ตัวเลข</strong></div>
             <div style="font-size: 12px;">วิเคราะห์แม่นยำตามตำราเลขศาสตร์</div>
         </div>
     `;

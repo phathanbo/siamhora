@@ -1,72 +1,124 @@
+"use strict";
+
+/* =========================
+   1. UTIL
+========================= */
+function getInt(id) {
+    const el = document.getElementById(id);
+    if (!el) {
+        console.error(`❌ ไม่พบ element: ${id}`);
+        return null;
+    }
+    const val = parseInt(el.value);
+    return isNaN(val) ? null : val;
+}
+
+function safeSetText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = text;
+}
+
+/* =========================
+   2. VALIDATION
+========================= */
+function validateInput(day, month, year, be) {
+    if (!day || day < 1 || day > 31) return "วันไม่ถูกต้อง";
+    if (!month || month < 1 || month > 12) return "เดือนไม่ถูกต้อง";
+    if (!be || be < 2000) return "ปี พ.ศ. ไม่ถูกต้อง";
+    if (!year) return "ปี (เลขเสริม) ไม่ถูกต้อง";
+    return null;
+}
+
+/* =========================
+   3. CORE LOGIC
+========================= */
+function calculateMod7(value) {
+    return ((value % 7) + 7) % 7; // กันค่าติดลบ
+}
+
+/* =========================
+   4. MAIN FUNCTION
+========================= */
 function calculateBirthFortune() {
-    const day = parseInt(document.getElementById('fortuneDay').value);
-    const month = parseInt(document.getElementById('fortuneMonth').value);
-    const year = parseInt(document.getElementById('fortuneYear').value);
-    
-    // ดึงค่า พ.ศ. มาแปลงเป็น จ.ศ.
-    const beValue = parseInt(document.getElementById('fortuneBE').value);
-    const cs = beValue - 1181; // สูตรแปลง พ.ศ. เป็น จ.ศ.
-    
-    const display = document.getElementById('fortune-result-display');
-    
-    if (!month || isNaN(month) || isNaN(beValue)) {
-        alert("กรุณากรอกข้อมูลเดือนและ พ.ศ. ให้ครบถ้วน");
-        return;
-    }
+    try {
+        const day = getInt("fortuneDay");
+        const month = getInt("fortuneMonth");
+        const year = getInt("fortuneYear"); // เลขเสริม/เลขปี
+        const be = getInt("fortuneBE");
 
-    // --- แบบที่ ๑ และ ๒: (วัน + เดือน + ปี) * 3 / 7 ---
-    const sum12 = (day + month + year) * 3;
-    const remain12 = sum12 % 7;
-    
-    let res1 = "";
-    let res2 = "";
+        const error = validateInput(day, month, year, be);
+        if (error) {
+            alert("❗ " + error);
+            return;
+        }
 
-    // พยากรณ์แบบที่ ๑
-    const text1 = {
-        1: "อาชีพทางทำนาดี",
-        2: "อาชีพทางค้าขายดี",
-        3: "การอาชีพทางทหาร รับราชการของเจ้านายดี",
-        4: "ให้ทำเรือกสวน",
-        5: "เป็นนักบวช เป็นแพทย์ เป็นครู นักประพันธ์ หรือเป็นช่างดี",
-        6: "รับราชการเข้าเฝ้าเจ้านายดี",
-        0: "นิสัยใจคอไม่แน่นอน ทำงานเป็นพักๆ นานเข้าชักเบื่อหน่ายละทิ้งงาน"
-    };
-    res1 = `เศษ ${remain12} : ${text1[remain12]}`;
+        const display = document.getElementById("fortune-result-display");
+        if (!display) {
+            console.error("❌ ไม่พบ display");
+            return;
+        }
 
-    // พยากรณ์แบบที่ ๒
-    const text2 = {
-        1: "ดีทางราชการจะมียศศักดิ์ชื่อเสียง",
-        2: "เป็นพ่อบ้านแม่เรือนดี",
-        3: "ทำการอาสาเจ้านายดี",
-        4: "ทำเรือกสวนดี",
-        5: "เป็นครู เป็นหมอ หรือเป็นสมณะดี",
-        6: "ค้าขายดี (ทางบกดี แต่ทางเรือไม่ดี)",
-        0: "ทำได้ทุกอย่าง พอปานกลางแล"
-    };
-    res2 = `เศษ ${remain12} : ${text2[remain12]}`;
+        // แปลง พ.ศ. → จ.ศ.
+        const cs = be - 1181;
 
-    // --- แบบที่ ๓ (ใช้ค่า cs ที่คำนวณได้จาก พ.ศ.) ---
-    let res3 = "";
-    if (cs > 0) {
-        // สูตรตามตำรา: (((จ.ศ. * 40) + ปี + เดือน) * 3 + วัน) / 7
-        const step3 = (((cs * 40) + year + month) * 3) + day;
-        const remain3 = step3 % 7;
-        
-        const text3 = {
-            1: "โชคคนตัดฟืน ทำแต่พออยู่พอกิน มักได้รับความเหนื่อยยากมาก",
-            2: "ทำเรือกสวนไร่นาค้าขายดี",
-            3: "ทำราชการมียศศักดิ์ชื่อเสียง",
-            4: "เป็นพ่อค้าดีนักจะร่ำรวยเป็นเศรษฐี",
-            5: "เป็นสมณะชีพราหมณ์ หรือแพทย์ดี",
-            6: "เป็นคนมีวาสนาดีจะทำสิ่งใดก็ปรากฏ มักจะได้เป็นหัวหน้าเขาทุกอย่าง",
-            0: "เป็นคนใจคอห้าวหาญ ดีทางอาสาผู้คน"
+        /* =========================
+           แบบที่ 1 และ 2
+        ========================= */
+        const sum12 = (day + month + year) * 3;
+        const remain12 = calculateMod7(sum12);
+
+        const text1 = {
+            0: "นิสัยใจคอไม่แน่นอน ทำงานเป็นพักๆ",
+            1: "อาชีพทางทำนาดี",
+            2: "ค้าขายดี",
+            3: "ทหาร/ราชการดี",
+            4: "ทำสวนไร่นาดี",
+            5: "ครู หมอ นักบวชดี",
+            6: "เข้าเฝ้าเจ้านายดี"
         };
-        res3 = `(จ.ศ. ${cs}) เศษ ${remain3} : ${text3[remain3]}`;
-    }
 
-    // แสดงผล
-    document.getElementById('fortune-res-1').innerText = `เศษ ${remain12} : ${text1[remain12]}`;
-    document.getElementById('fortune-res-2').innerText = `เศษ ${remain12} : ${text2[remain12]}`;
-    document.getElementById('fortune-res-3').innerText = res3;
-    display.style.display = "block";
+        const text2 = {
+            0: "ทำได้ทุกอย่าง ปานกลาง",
+            1: "ราชการมียศศักดิ์",
+            2: "พ่อบ้านแม่เรือนดี",
+            3: "อาสาเจ้านายดี",
+            4: "เกษตรดี",
+            5: "ครู/หมอดี",
+            6: "ค้าขายดี"
+        };
+
+        /* =========================
+           แบบที่ 3
+        ========================= */
+        let res3 = "ไม่สามารถคำนวณได้";
+        if (cs > 0) {
+            const step3 = (((cs * 40) + year + month) * 3) + day;
+            const remain3 = calculateMod7(step3);
+
+            const text3 = {
+                0: "ใจกล้า นักสู้",
+                1: "เหนื่อยมาก แต่พออยู่ได้",
+                2: "เกษตร/ค้าขายดี",
+                3: "ราชการเด่น",
+                4: "พ่อค้ารวย",
+                5: "นักบวช/หมอดี",
+                6: "มีวาสนา เป็นผู้นำ"
+            };
+
+            res3 = `(จ.ศ. ${cs}) เศษ ${remain3} : ${text3[remain3] || "-"}`;
+        }
+
+        /* =========================
+           OUTPUT
+        ========================= */
+        safeSetText("fortune-res-1", `เศษ ${remain12} : ${text1[remain12] || "-"}`);
+        safeSetText("fortune-res-2", `เศษ ${remain12} : ${text2[remain12] || "-"}`);
+        safeSetText("fortune-res-3", res3);
+
+        display.style.display = "block";
+
+    } catch (err) {
+        console.error("🔥 ERROR:", err);
+        alert("ระบบเกิดข้อผิดพลาด กรุณาลองใหม่");
+    }
 }

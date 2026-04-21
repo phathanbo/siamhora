@@ -133,6 +133,20 @@ function showTaksaPage() {
     resetTaksa();
 }
 
+function resetTaksa() {
+    const inputEl = document.getElementById('taksaInput');
+    const resultEl = document.getElementById('taksaResult');
+    if (inputEl) inputEl.style.display = 'block';
+    if (resultEl) {
+        resultEl.style.display = 'none';
+        resultEl.innerHTML = '';
+    }
+    const ageInput = document.getElementById('userAge');
+    if (ageInput) ageInput.value = '';
+    const daySelect = document.getElementById('birthDaySelect');
+    if (daySelect) daySelect.selectedIndex = 0;
+}
+
 function getPhumiMeaning(type) {
     const meanings = {
         boriwan: "บริวาร: ส่งผลถึงคนรอบข้าง ครอบครัว บุตร บริวาร และผู้ใต้บังคับบัญชา",
@@ -307,12 +321,13 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
             return `<div class="p-3 text-center text-white-50">-- ไม่สามารถสร้างคำทำนายรายปีได้ --</div>`;
         }
 
-        const boriwanStar = TAKSA_MASTER[taksa.บริวาร.id];
-        const sriStar = sriName === "ไม่ทราบ" ? "ไม่ทราบ" : TAKSA_MASTER[taksa.ศรี.id].name;
-        const kalaStar = kalaName === "ไม่ทราบ" ? "ไม่ทราบ" : TAKSA_MASTER[taksa.กาลกิณี.id].name;
-        const detStar = detName === "ไม่ทราบ" ? "ไม่ทราบ" : TAKSA_MASTER[taksa.เดช.id].name;
+        const boriwanStar = TAKSA_MASTER[taksa["บริวาร"]?.id] || { name: "ไม่ทราบ", color: "#fff" };
+        const sriStar = TAKSA_MASTER[taksa["ศรี"]?.id]?.name || "ไม่ทราบ";
+        const kalaStar = TAKSA_MASTER[taksa["กาลกิณี"]?.id]?.name || "ไม่ทราบ";
+        const detStar = TAKSA_MASTER[taksa["เดช"]?.id]?.name || "ไม่ทราบ";
 
-        const ageText = age ? `อายุย่าง ${age} ปี` : "ในช่วงวัยปัจจุบัน";
+        const ageNum = parseInt(age) || 0;
+        const ageText = ageNum > 0 ? `อายุย่าง ${ageNum} ปี` : "ในช่วงวัยปัจจุบัน";
         const genderAdj = gender === 'female' ? "สาว" : "หนุ่ม";
         const tone = gender === 'female' ? "อ่อนโยนแต่เฉียบคม" : "มั่นคงและเด็ดขาด";
 
@@ -349,7 +364,7 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
             <br><br>โดยรวมแล้ว ปีนี้เป็นปีที่${tone}และมีโอกาสเติบโตสูงมาก 
             หากหมั่นทำบุญ ดูแลสุขภาพ และรักษาความสัมพันธ์กับคนรอบตัวให้ดี 
             สิ่งดี ๆ ที่หวังไว้หลายอย่างมีแนวโน้มจะสมหวังเกินคาดแน่นอน
-            ${age >= 40 ? "วัยนี้คือช่วงเก็บเกี่ยวผลบุญที่เคยทำมา" : age >= 25 ? "วัยนี้คือช่วงสร้างฐานะและบารมีให้แข็งแกร่ง" : "วัยนี้คือช่วงวางรากฐานชีวิตที่ดีที่สุด"}
+            ${ageNum >= 40 ? "วัยนี้คือช่วงเก็บเกี่ยวผลบุญที่เคยทำมา" : ageNum >= 25 ? "วัยนี้คือช่วงสร้างฐานะและบารมีให้แข็งแกร่ง" : "วัยนี้คือช่วงวางรากฐานชีวิตที่ดีที่สุด"}
             ขอให้${gender === 'female' ? "สาวน้อย" : "หนุ่มใหญ่"}คนนี้ผ่านปีนี้ไปอย่างรุ่งโรจน์นะคะ/ครับ
         `;
 
@@ -357,7 +372,7 @@ function generateYearSummary(taksa, age = null, gender = 'male') {
             <div id="yearSummarySection" class="card bg-gradient-taksa border-gold mt-4 mb-4 shadow-lg">
                 <div class="card-header text-center py-3" style="background: rgba(212, 175, 55, 0.2);">
                     <h4 class="mb-0 text-gold">บทสรุปดวงชะตาปี ${new Date().getFullYear() + 543}</h4>
-                    <small class="text-white-50">${age ? 'อายุย่าง ' + age + ' ปี' : ''}</small>
+                    <small class="text-white-50">${ageNum > 0 ? 'อายุย่าง ' + ageNum + ' ปี' : ''}</small>
                 </div>
                 <div class="card-body p-4 text-white" style="line-height: 1.8; font-size: 1.05rem;">
                     <p class="mb-3">${paragraph1.trim()}</p>
@@ -411,6 +426,7 @@ function renderTaksaResult(taksa) {
     html += `</div></div>`; // ปิด Part 2
 
     // --- ส่วนที่ 2: ทิศมงคลและคำสรุป (ใส่ ID: taksaDetails เพื่อแคปภาพสรุปดวง) ---
+    // --- ส่วนที่ 2: ทิศมงคล + สรุปดวงปี (รวมเป็น div เดียวสำหรับแคปภาพ) ---
     html += `<div id="taksaDetails" class="p-3 rounded" style="background: rgba(26, 26, 46, 0.8);">`;
 
     if (taksa.sri && taksa.kalakini) {
@@ -434,15 +450,12 @@ function renderTaksaResult(taksa) {
         `;
     }
 
-    // ... โค้ดส่วนบนของฟังก์ชัน ...
-
     // --- ก้อนที่ 3: สรุปดวงปี ---
-    const age = document.getElementById('userAge')?.value;
+    const age = parseInt(document.getElementById('userAge')?.value) || null;
     const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
 
-    html += `<div id="taksaDetails">`; // เริ่มก้อนที่จะแคปภาพ
     html += generateYearSummary(taksa, age, gender);
-    html += `</div>`; // จบก้อนที่จะแคปภาพ (ปุ่มต้องอยู่นอก div นี้)
+    html += `</div>`; // ปิด taksaDetails (ปุ่มอยู่นอก div นี้ จะไม่ติดในภาพ)
 
     // --- กลุ่มปุ่มกด (อยู่นอก taksaDetails แล้ว จะไม่ติดในภาพแน่นอน) ---
     html += `
@@ -549,7 +562,7 @@ function calculateAndShowTaksa() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังผูกดวง...';
 
     // ลำดับดาวเวียนขวา (ตามเข็มนาฬิกา) - มาตรฐานส่วนใหญ่
-    const starOrder = [0, 1, 2, 3, 7, 5, 6, 4]; // อาทิตย์ → จันทร์ → อังคาร → พุธ → เสาร์ → พฤหัส → ราหู → ศุกร์
+    const starOrder = [0, 1, 2, 3, 7, 5, 6, 4]; // อาทิตย์(0) → จันทร์(1) → อังคาร(2) → พุธ(3) → เสาร์(7) → พฤหัส(5) → ราหู(6) → ศุกร์(4)
 
     // จำนวนก้าว = อายุย่าง - 1
     const steps = (age - 1) % 8;
@@ -560,16 +573,12 @@ function calculateAndShowTaksa() {
 
     const geoOrder = ["บริวาร", "อายุ", "เดช", "ศรี", "มูละ", "อุตสาหะ", "มนตรี", "กาลกิณี"];
 
+    // สร้างลำดับดาว 8 ตัวที่ข้ามอาทิตย์ออก (ราหูใช้แทน)
+    const usableOrder = starOrder.filter(id => id !== 0); // [1,2,3,7,5,6,4] — 7 ดาว (ไม่มีอาทิตย์)
+    // เวียนกำหนดดาวให้ครบ 8 ภูมิ โดยเริ่มจาก boriwanPos ใน usableOrder
     for (let i = 0; i < 8; i++) {
-        let pos = (boriwanPos + i) % 8;
-        let starId = starOrder[pos];
-
-        // ข้ามตาอาทิตย์ (id 0) แบบง่าย ๆ - ถ้าตกอาทิตย์ ให้ขยับไป 1 ช่อง
-        if (starId === 0) {
-            pos = (pos + 1) % 8;
-            starId = starOrder[pos];
-        }
-
+        const starIdx = (boriwanPos + i) % usableOrder.length;
+        const starId = usableOrder[starIdx];
         taksa[geoOrder[i]] = { id: starId };
     }
 

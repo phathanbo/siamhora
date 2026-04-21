@@ -3,41 +3,13 @@
 // ==========================================
 
 const TABOO_DATA = {
-    0: { 
-        day: "อาทิตย์", 
-        good: ["สระผม (อายุยืน)", "ตัดผม (อายุยืน)", "นุ่งผ้าใหม่ (ชนะศัตรู)", "อาบน้ำเพ็ญ/ทำบุญ"], 
-        bad: ["ตัดเล็บ (จะมีศัตรู)", "ห้ามขึ้นบ้านใหม่ (ร้อนรุ่มเหมือนไฟ)", "ห้ามทำการมงคลเกี่ยวกับน้ำ", "ห้ามเผาศพ (ซ้ำซ้อน)"] 
-    },
-    1: { 
-        day: "จันทร์", 
-        good: ["สระผม (มีลาภ)", "ตัดผม (จะมีลาภ)", "นุ่งผ้าใหม่ (คนรักเมตตามาก)", "ตัดเล็บ (มีลาภใหญ่)", "ซื้อของเข้าบ้าน/เริ่มงานใหม่"], 
-        bad: ["ห้ามทำของหาย (จะไม่ได้คืน)", "ห้ามเดินทางไกลทางน้ำ", "ห้ามโกนจุก"] 
-    },
-    2: { 
-        day: "อังคาร", 
-        good: ["สระผม (ชนะศัตรู)", "โกนหนวดเครา (แก้เคล็ด)", "เหมาะกับงานช่าง/อาวุธ"], 
-        bad: ["ตัดผม (ศัตรูจะทำร้าย/ให้โทษ)", "นุ่งผ้าใหม่ (มีทุกข์มาก)", "ตัดเล็บ (ทรัพย์จะหาย)", "ห้ามแต่งงาน/หมั้นหมาย", "ห้ามขึ้นบ้านใหม่ (โจรชุก)"] 
-    },
-    3: { 
-        day: "พุธ", 
-        good: ["นุ่งผ้าใหม่ (มีสุขมาก)", "ตัดเล็บ (เจริญสวัสดี)", "เปิดร้านค้าใหม่/เจรจาธุรกิจ"], 
-        bad: ["สระผม (จะเกิดถ้อยร้อยความ)", "ตัดผม (พุธหัวกุด - จะเกิดทะเลาะวิวาท)", "ห้ามแต่งงาน", "ห้ามทุบรื้ออาคาร/ขุดดิน"] 
-    },
-    4: { 
-        day: "พฤหัสบดี", 
-        good: ["สระผม (เทวดารักษา)", "ตัดผม (เทวดารักษา)", "นุ่งผ้าใหม่ (เป็นสวัสดีมาก)", "ไหว้ครู/เริ่มเรียนวิชา/รับตำแหน่ง"], 
-        bad: ["ตัดเล็บ (จะมีทุกข์)", "ห้ามย้ายเตียงนอน", "ห้ามเดินทางไกล"] 
-    },
-    5: { 
-        day: "ศุกร์", 
-        good: ["สระผม (อยู่สุขเย็นใจ)", "ตัดผม (จะมีลาภ)", "นุ่งผ้าใหม่ (มีทรัพย์มาก)", "ตัดเล็บ (มีโภคทรัพย์)", "แต่งงาน/หมั้นหมาย"], 
-        bad: ["ห้ามขึ้นบ้านใหม่ (ทุกข์ใจ)", "ห้ามทำบุญขึ้นบ้านใหม่", "ห้ามซื้อเสื้อผ้าสีดำ"] 
-    },
-    6: { 
-        day: "เสาร์", 
-        good: ["สระผม (สิ่งที่คิดไว้จะสำเร็จ)", "ตัดผม (การที่คิดไว้จะสำเร็จ)", "เหมาะกับงานเกษตร/ที่ดิน", "ทำพิธีแก้บน/ไสยศาสตร์"], 
-        bad: ["นุ่งผ้าใหม่ (โศกเศร้า)", "ตัดเล็บ (จะเจ็บป่วย)", "ห้ามทำการมงคลส่วนใหญ่"] 
-    }
+    0: { day: "อาทิตย์", good: ["สระผม (อายุยืน)", "ตัดผม (อายุยืน)", "นุ่งผ้าใหม่ (ชนะศัตรู)"], bad: ["ตัดเล็บ (จะมีศัตรู)", "ห้ามขึ้นบ้านใหม่"] },
+    1: { day: "จันทร์", good: ["สระผม (มีลาภ)", "ตัดผม (จะมีลาภ)", "ตัดเล็บ (มีลาภใหญ่)"], bad: ["ห้ามทำของหาย", "ห้ามเดินทางไกลทางน้ำ"] },
+    2: { day: "อังคาร", good: ["สระผม (ชนะศัตรู)", "โกนหนวดเครา"], bad: ["ตัดผม (ศัตรูจะทำร้าย)", "นุ่งผ้าใหม่", "ตัดเล็บ"] },
+    3: { day: "พุธ", good: ["นุ่งผ้าใหม่ (มีสุขมาก)", "ตัดเล็บ"], bad: ["สระผม", "ตัดผม (พุธหัวกุด)"] },
+    4: { day: "พฤหัสบดี", good: ["สระผม", "ตัดผม", "นุ่งผ้าใหม่"], bad: ["ตัดเล็บ (จะมีทุกข์)"] },
+    5: { day: "ศุกร์", good: ["สระผม", "ตัดผม", "นุ่งผ้าใหม่", "ตัดเล็บ"], bad: ["ห้ามขึ้นบ้านใหม่"] },
+    6: { day: "เสาร์", good: ["สระผม", "ตัดผม"], bad: ["นุ่งผ้าใหม่", "ตัดเล็บ"] }
 };
 
 const DIRECTION_DATA = {
@@ -79,20 +51,21 @@ function updateDailyTaboo(dayIndex) {
 
     if (dayTitle) dayTitle.innerText = "วัน" + data.day;
     
+    // ใช้ Inline Style สำหรับสีเขียว/แดง เพื่อความชัวร์
     if (goodList) {
         goodList.innerHTML = data.good.map(item => 
-            `<li class="list-item-custom"><i class="fas fa-check-circle text-success mr-2"></i>${item}</li>`
+            `<li style="list-style:none; color:#5cb85c;"><i class="fas fa-check-circle mr-2"></i> ${item}</li>`
         ).join('');
     }
 
     if (badList) {
         badList.innerHTML = data.bad.map(item => 
-            `<li class="list-item-custom"><i class="fas fa-times-circle text-danger mr-2"></i>${item}</li>`
+            `<li style="list-style:none; color:#d9534f;"><i class="fas fa-times-circle mr-2"></i> ${item}</li>`
         ).join('');
     }
 
-    updateDirectionDisplay(dayIndex);
-    updateZodiacLuckDisplay(dayIndex);
+    if (typeof updateDirectionDisplay === 'function') updateDirectionDisplay(dayIndex);
+    if (typeof updateZodiacLuckDisplay === 'function') updateZodiacLuckDisplay(dayIndex);
 }
 
 function updateDirectionDisplay(dayIndex) {
@@ -177,13 +150,25 @@ async function downloadTabooImage() {
 
 // ฟังก์ชันเมื่อผู้ใช้เปลี่ยนวันใน Dropdown
 function changeTabooDay() {
-    const selectedDay = document.getElementById('tabooDaySelect').value;
-    updateDailyTaboo(parseInt(selectedDay));
-    
-    // ปรับปรุงการแสดงผลวันที่ (Optional: ถ้าอยากให้รู้ว่าเป็นคำทำนายของวันไหน)
-    const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-    console.log("เปลี่ยนมุมมองเป็นวัน: " + days[selectedDay]);
+    const select = document.getElementById('tabooDaySelect');
+    if (select) updateDailyTaboo(parseInt(select.value));
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const now = new Date();
+    const dayIndex = now.getDay();
+
+    const tabooSelect = document.getElementById('tabooDaySelect');
+    if (tabooSelect) tabooSelect.value = dayIndex;
+
+    const dateDisplay = document.getElementById('current-date-display');
+    if (dateDisplay) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateDisplay.innerText = "วันนี้: " + now.toLocaleDateString('th-TH', options);
+    }
+
+    updateDailyTaboo(dayIndex);
+});
 
 // ปรับปรุงฟังก์ชันเดิมให้รองรับการเปลี่ยนข้อมูล
 function updateDailyTaboo(dayIndex) {
@@ -199,13 +184,13 @@ function updateDailyTaboo(dayIndex) {
     
     if (goodList) {
         goodList.innerHTML = data.good.map(item => 
-            `<li class="list-item-custom"><i class="fas fa-check-circle text-success mr-2"></i>${item}</li>`
+            `<div class="list-item-custom"><i class="fas fa-check-circle text-success mr-2"></i>${item}</div>`
         ).join('');
     }
 
     if (badList) {
         badList.innerHTML = data.bad.map(item => 
-            `<li class="list-item-custom"><i class="fas fa-times-circle text-danger mr-2"></i>${item}</li>`
+            `<div class="list-item-custom"><i class="fas fa-times-circle text-danger mr-2"></i>${item}</div>`
         ).join('');
     }
 

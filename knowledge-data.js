@@ -1,4 +1,11 @@
-// knowledge-data.js
+"use strict";
+
+/**
+ * knowledge-data.js
+ * ข้อมูลบทความความรู้โหราศาสตร์ไทย / วิถีสิริมงคล / พรหมชาติ
+ * เวอร์ชันเสถียร – พร้อมใช้งานในระบบเว็บแอป (ES Module + CommonJS + Global)
+ */
+
 const KNOWLEDGE_ARTICLES = {
     "promchat": {
         id: "K001",
@@ -63,145 +70,145 @@ const KNOWLEDGE_ARTICLES = {
         type: "การเลือกเวลา",
         level: "กลาง",
         content: `
-                <div class="article-rich-content">
-                    <section class="mb-4">
-                        <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-clock mr-2"></i>ยามอัฏฐกาล: เคล็ดวิชาช่วงชิงจังหวะสวรรค์</h5>
-                        <p>ยามอัฏฐกาล คือวิชาที่ว่าด้วยการแบ่งเวลาใน 1 วันออกเป็น 16 ส่วน (กลางวัน 8 ยาม / กลางคืน 8 ยาม) ยามละ 90 นาที เพื่อหาว่าในแต่ละช่วงเวลานั้น ดาวเคราะห์ดวงใดทำหน้าที่เป็น "เจ้าเวหา" คอยควบคุมโชคลาภและอุปสรรคของผู้กระทำการ</p>
-                    </section>
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-clock mr-2"></i>ยามอัฏฐกาล: เคล็ดวิชาช่วงชิงจังหวะสวรรค์</h5>
+                    <p>ยามอัฏฐกาล คือวิชาที่ว่าด้วยการแบ่งเวลาใน 1 วันออกเป็น 16 ส่วน (กลางวัน 8 ยาม / กลางคืน 8 ยาม) ยามละ 90 นาที เพื่อหาว่าในแต่ละช่วงเวลานั้น ดาวเคราะห์ดวงใดทำหน้าที่เป็น "เจ้าเวหา" คอยควบคุมโชคลาภและอุปสรรคของผู้กระทำการ</p>
+                </section>
 
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● ยามมงคล (ศุภเคราะห์) - ช่วงเวลาแห่งโอกาส</h6>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
-                                    <b class="text-info">ยามพระจันทร์ (๒):</b>
-                                    <p class="small text-white-50 mt-1">ยามแห่งเสน่ห์และการอุปถัมภ์ เหมาะสำหรับการเข้าหาผู้ใหญ่ ขอความเมตตา หรือเจรจาในเรื่องที่ต้องใช้ความนุ่มนวล</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
-                                    <b class="text-info">ยามพระพุธ (๔):</b>
-                                    <p class="small text-white-50 mt-1">ยามแห่งปัญญาและการสื่อสาร เหมาะสำหรับการค้าขาย ทำสัญญา ส่งข้อความสำคัญ หรือการเริ่มเรียนรู้สิ่งใหม่</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100 shadow-sm">
-                                    <b class="text-gold">ยามพระพฤหัสบดี (๕):</b>
-                                    <p class="small text-white-50 mt-1">ยามแห่งความสำเร็จและมงคลสูงสุด เหมาะสำหรับการประกอบพิธีการสำคัญ การทำบุญ หรือการวางแผนกลยุทธ์ที่ต้องการความยั่งยืน</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
-                                    <b class="text-info">ยามพระศุกร์ (๖):</b>
-                                    <p class="small text-white-50 mt-1">ยามแห่งโชคลาภและความรื่นรมย์ เหมาะสำหรับการเปิดร้านใหม่ เริ่มงานศิลปะ หรือการออกเดทและความรัก</p>
-                                </div>
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● ยามมงคล (ศุภเคราะห์) - ช่วงเวลาแห่งโอกาส</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
+                                <b class="text-info">ยามพระจันทร์ (๒):</b>
+                                <p class="small text-white-50 mt-1">ยามแห่งเสน่ห์และการอุปถัมภ์ เหมาะสำหรับการเข้าหาผู้ใหญ่ ขอความเมตตา หรือเจรจาในเรื่องที่ต้องใช้ความนุ่มนวล</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4">
-                        <h6 class="text-danger mb-3"><i class="fas fa-exclamation-circle mr-2"></i>ยามต้องห้าม (บาปเคราะห์) - ช่วงเวลาที่ควรสงบนิ่ง</h6>
-                        <div class="p-3 bg-black-25 rounded border-left-danger">
-                            <p class="small text-white-50 mb-0"><b>ยามอาทิตย์ (๑), อังคาร (๓), เสาร์ (๗), และราหู (๘):</b> เป็นช่วงเวลาที่ดาวฝ่ายร้ายให้โทษ มักเกิดอาการใจร้อน ขัดแย้ง หรือมีอุปสรรคไม่คาดฝัน หากหลีกเลี่ยงไม่ได้ โบราณให้แก้เคล็ดด้วยการมีสติและไม่ใจร้อนตามพลังดาว</p>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
+                                <b class="text-info">ยามพระพุธ (๔):</b>
+                                <p class="small text-white-50 mt-1">ยามแห่งปัญญาและการสื่อสาร เหมาะสำหรับการค้าขาย ทำสัญญา ส่งข้อความสำคัญ หรือการเริ่มเรียนรู้สิ่งใหม่</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● เคล็ดลับการเลือกยามตามเป้าหมาย (ตำราพิชัยสงคราม)</h6>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-dark text-white-50 border-gold">
-                                <thead>
-                                    <tr class="text-gold">
-                                        <th>เป้าหมาย</th>
-                                        <th>ยามที่แนะนำ</th>
-                                        <th>ผลลัพธ์ที่หวังผล</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>เดินทางไกล</td><td><b>ยามธงชัย</b></td><td>ปลอดภัย ถึงจุดหมายโดยสวัสดิภาพ</td></tr>
-                                    <tr><td>เจรจาหนี้สิน/ขอลาภ</td><td><b>ยามลาภะ</b></td><td>มีโอกาสได้ทรัพย์ หรือได้รับการผ่อนปรน</td></tr>
-                                    <tr><td>แข่งขัน/เข้าหาผู้มีอำนาจ</td><td><b>ยามอธิบดี</b></td><td>ได้รับการยอมรับ ชนะเหนือคู่แข่ง</td></tr>
-                                    <tr><td>แก้ปัญหา/หนีอุปสรรค</td><td><b>ยามปลอด</b></td><td>ศัตรูมองไม่เห็น อุปสรรคคลี่คลาย</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100 shadow-sm">
+                                <b class="text-gold">ยามพระพฤหัสบดี (๕):</b>
+                                <p class="small text-white-50 mt-1">ยามแห่งความสำเร็จและมงคลสูงสุด เหมาะสำหรับการประกอบพิธีการสำคัญ การทำบุญ หรือการวางแผนกลยุทธ์ที่ต้องการความยั่งยืน</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <div class="alert alert-gold bg-dark border-gold mt-4 shadow">
-                        <h6 class="mb-1 small font-weight-bold"><i class="fas fa-history mr-2"></i>ความสำคัญของ "เวลาตกฟาก"</h6>
-                        <p class="small mb-0">การคำนวณยามอัฏฐกาลที่แม่นยำที่สุด จะต้องอ้างอิงจาก "เวลาพระอาทิตย์ขึ้นจริง" ของในแต่ละวันและแต่ละพื้นที่ (Local Time) ซึ่งระบบของ **สยามโหรามงคล** ได้คำนวณสิ่งนี้ไว้ให้คุณเรียบร้อยแล้ว</p>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-info h-100 shadow-sm">
+                                <b class="text-info">ยามพระศุกร์ (๖):</b>
+                                <p class="small text-white-50 mt-1">ยามแห่งโชคลาภและความรื่นรมย์ เหมาะสำหรับการเปิดร้านใหม่ เริ่มงานศิลปะ หรือการออกเดทและความรัก</p>
+                            </div>
+                        </div>
                     </div>
+                </section>
+
+                <section class="mb-4">
+                    <h6 class="text-danger mb-3"><i class="fas fa-exclamation-circle mr-2"></i>ยามต้องห้าม (บาปเคราะห์) - ช่วงเวลาที่ควรสงบนิ่ง</h6>
+                    <div class="p-3 bg-black-25 rounded border-left-danger">
+                        <p class="small text-white-50 mb-0"><b>ยามอาทิตย์ (๑), อังคาร (๓), เสาร์ (๗), และราหู (๘):</b> เป็นช่วงเวลาที่ดาวฝ่ายร้ายให้โทษ มักเกิดอาการใจร้อน ขัดแย้ง หรือมีอุปสรรคไม่คาดฝัน หากหลีกเลี่ยงไม่ได้ โบราณให้แก้เคล็ดด้วยการมีสติและไม่ใจร้อนตามพลังดาว</p>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● เคล็ดลับการเลือกยามตามเป้าหมาย (ตำราพิชัยสงคราม)</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark text-white-50 border-gold">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>เป้าหมาย</th>
+                                    <th>ยามที่แนะนำ</th>
+                                    <th>ผลลัพธ์ที่หวังผล</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เดินทางไกล</td><td><b>ยามธงชัย</b></td><td>ปลอดภัย ถึงจุดหมายโดยสวัสดิภาพ</td></tr>
+                                <tr><td>เจรจาหนี้สิน/ขอลาภ</td><td><b>ยามลาภะ</b></td><td>มีโอกาสได้ทรัพย์ หรือได้รับการผ่อนปรน</td></tr>
+                                <tr><td>แข่งขัน/เข้าหาผู้มีอำนาจ</td><td><b>ยามอธิบดี</b></td><td>ได้รับการยอมรับ ชนะเหนือคู่แข่ง</td></tr>
+                                <tr><td>แก้ปัญหา/หนีอุปสรรค</td><td><b>ยามปลอด</b></td><td>ศัตรูมองไม่เห็น อุปสรรคคลี่คลาย</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="alert alert-gold bg-dark border-gold mt-4 shadow">
+                    <h6 class="mb-1 small font-weight-bold"><i class="fas fa-history mr-2"></i>ความสำคัญของ "เวลาตกฟาก"</h6>
+                    <p class="small mb-0">การคำนวณยามอัฏฐกาลที่แม่นยำที่สุด จะต้องอ้างอิงจาก "เวลาพระอาทิตย์ขึ้นจริง" ของในแต่ละวันและแต่ละพื้นที่ (Local Time) ซึ่งระบบของ **สยามโหรามงคล** ได้คำนวณสิ่งนี้ไว้ให้คุณเรียบร้อยแล้ว</p>
                 </div>
-            `,
+            </div>
+        `,
         link: "yarmPage",
         badge: "badge-info"
     },
     "kamalok": {
-    id: "K003",
-    category: "กาลโยค",
-    title: "🌟 หลักกาลโยคและสีมงคล",
-    type: "วิถีสิริมงคล",
-    level: "ทั่วไป",
-    content: `
-        <div class="article-rich-content">
-            <section class="mb-4">
-                <h5 class="text-gold"><i class="fas fa-calendar-alt mr-2"></i>กาลโยค: เคล็ดวิชาจัดระเบียบวัน</h5>
-                <p>กาลโยค คือ การกำหนดตำแหน่งความดี-ความร้ายของ "วัน" ในรอบปี โดยคำนวณตามศักราชจุลศักราช (จ.ศ.) เพื่อหาว่าในปีนั้นๆ วันใดส่งเสริม (วันดี) และวันใดขัดขวาง (วันร้าย)</p>
-            </section>
+        id: "K003",
+        category: "กาลโยค",
+        title: "🌟 หลักกาลโยคและสีมงคล",
+        type: "วิถีสิริมงคล",
+        level: "ทั่วไป",
+        content: `
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold"><i class="fas fa-calendar-alt mr-2"></i>กาลโยค: เคล็ดวิชาจัดระเบียบวัน</h5>
+                    <p>กาลโยค คือ การกำหนดตำแหน่งความดี-ความร้ายของ "วัน" ในรอบปี โดยคำนวณตามศักราชจุลศักราช (จ.ศ.) เพื่อหาว่าในปีนั้นๆ วันใดส่งเสริม (วันดี) และวันใดขัดขวาง (วันร้าย)</p>
+                </section>
 
-            <section class="mb-4 p-3 bg-black-25 rounded border-left-gold">
-                <h6 class="text-gold-light">● ความหมายของตำแหน่งกาลโยค</h6>
-                <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <p><b class="text-gold">วันธงชัย:</b> ความสำเร็จ ชัยชนะ เหมาะแก่การขึ้นบ้านใหม่ แต่งงาน หรือเปิดธุรกิจ</p>
+                <section class="mb-4 p-3 bg-black-25 rounded border-left-gold">
+                    <h6 class="text-gold-light">● ความหมายของตำแหน่งกาลโยค</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <p><b class="text-gold">วันธงชัย:</b> ความสำเร็จ ชัยชนะ เหมาะแก่การขึ้นบ้านใหม่ แต่งงาน หรือเปิดธุรกิจ</p>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <p><b class="text-gold">วันอธิบดี:</b> ความยิ่งใหญ่ อำนาจ การปกครอง เหมาะแก่การเลื่อนตำแหน่ง หรือขอความช่วยเหลือจากผู้ใหญ่</p>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <p><b class="text-danger">วันอุบาทว์:</b> อุปสรรค ความไม่ราบรื่น ไม่ควรเริ่มงานสำคัญหรือเดินทางไกล</p>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <p><b class="text-danger">วันโลกาวินาศ:</b> ความสูญเสีย ความวุ่นวาย เป็นตำแหน่งที่ร้ายที่สุด ควรหลีกเลี่ยงงานมงคลทุกชนิด</p>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <p><b class="text-gold">วันอธิบดี:</b> ความยิ่งใหญ่ อำนาจ การปกครอง เหมาะแก่การเลื่อนตำแหน่ง หรือขอความช่วยเหลือจากผู้ใหญ่</p>
+                </section>
+
+                <section class="mb-4">
+                    <h5 class="text-gold"><i class="fas fa-tshirt mr-2"></i>เคล็ดสีเสื้อมงคลตามวัน</h5>
+                    <p>การเลือกใช้สีเสื้อผ้าให้ถูกโฉลกกับวัน (ทักษา) เป็นวิธีกระตุ้นพลังงานบวกแบบง่ายที่สุดในแต่ละวัน:</p>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm table-dark text-white-50">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>วัน</th>
+                                    <th>สีเสริมดวง (เดช/ศรี)</th>
+                                    <th>สีต้องห้าม (กาลกิณี)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>อาทิตย์</td><td class="text-info">แดง / ชมพู</td><td class="text-danger">น้ำเงิน / ฟ้า</td></tr>
+                                <tr><td>จันทร์</td><td class="text-info">ขาว / เหลือง / เขียว</td><td class="text-danger">แดง</td></tr>
+                                <tr><td>อังคาร</td><td class="text-info">ชมพู / ม่วง</td><td class="text-danger">ขาว / เหลือง</td></tr>
+                                <tr><td>พุธ (กลางวัน)</td><td class="text-info">เขียว / ส้ม</td><td class="text-danger">ชมพู</td></tr>
+                                <tr><td>พฤหัสบดี</td><td class="text-info">ส้ม / แดง</td><td class="text-danger">ม่วง / ดำ</td></tr>
+                                <tr><td>ศุกร์</td><td class="text-info">ฟ้า / น้ำเงิน / ชมพู</td><td class="text-danger">เทา / ควันบุหรี่</td></tr>
+                                <tr><td>เสาร์</td><td class="text-info">ม่วง / ดำ / แดง</td><td class="text-danger">เขียว</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <p><b class="text-danger">วันอุบาทว์:</b> อุปสรรค ความไม่ราบรื่น ไม่ควรเริ่มงานสำคัญหรือเดินทางไกล</p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <p><b class="text-danger">วันโลกาวินาศ:</b> ความสูญเสีย ความวุ่นวาย เป็นตำแหน่งที่ร้ายที่สุด ควรหลีกเลี่ยงงานมงคลทุกชนิด</p>
-                    </div>
+                </section>
+
+                <div class="alert alert-gold bg-dark border-gold mt-4">
+                    <h6 class="mb-1"><i class="fas fa-lightbulb mr-2"></i>ข้อควรรู้เพิ่มเติม</h6>
+                    <small>ตำแหน่งกาลโยคจะมีการเปลี่ยนใหม่ทุกวันที่ 16 เมษายน ของทุกปี (หลังวันเถลิงศก) การใช้กาลโยคควบคู่กับสีมงคลจะช่วยให้การวางแผนงานในแต่ละวันของคุณมีประสิทธิภาพสูงสุด</small>
                 </div>
-            </section>
-
-            <section class="mb-4">
-                <h5 class="text-gold"><i class="fas fa-tshirt mr-2"></i>เคล็ดสีเสื้อมงคลตามวัน</h5>
-                <p>การเลือกใช้สีเสื้อผ้าให้ถูกโฉลกกับวัน (ทักษา) เป็นวิธีกระตุ้นพลังงานบวกแบบง่ายที่สุดในแต่ละวัน:</p>
-                <div class="table-responsive mt-3">
-                    <table class="table table-sm table-dark text-white-50">
-                        <thead>
-                            <tr class="text-gold">
-                                <th>วัน</th>
-                                <th>สีเสริมดวง (เดช/ศรี)</th>
-                                <th>สีต้องห้าม (กาลกิณี)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>อาทิตย์</td><td class="text-info">แดง / ชมพู</td><td class="text-danger">น้ำเงิน / ฟ้า</td></tr>
-                            <tr><td>จันทร์</td><td class="text-info">ขาว / เหลือง / เขียว</td><td class="text-danger">แดง</td></tr>
-                            <tr><td>อังคาร</td><td class="text-info">ชมพู / ม่วง</td><td class="text-danger">ขาว / เหลือง</td></tr>
-                            <tr><td>พุธ (กลางวัน)</td><td class="text-info">เขียว / ส้ม</td><td class="text-danger">ชมพู</td></tr>
-                            <tr><td>พฤหัสบดี</td><td class="text-info">ส้ม / แดง</td><td class="text-danger">ม่วง / ดำ</td></tr>
-                            <tr><td>ศุกร์</td><td class="text-info">ฟ้า / น้ำเงิน / ชมพู</td><td class="text-danger">เทา / ควันบุหรี่</td></tr>
-                            <tr><td>เสาร์</td><td class="text-info">ม่วง / ดำ / แดง</td><td class="text-danger">เขียว</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <div class="alert alert-gold bg-dark border-gold mt-4">
-                <h6 class="mb-1"><i class="fas fa-lightbulb mr-2"></i>ข้อควรรู้เพิ่มเติม</h6>
-                <small>ตำแหน่งกาลโยคจะมีการเปลี่ยนใหม่ทุกวันที่ 16 เมษายน ของทุกปี (หลังวันเถลิงศก) การใช้กาลโยคควบคู่กับสีมงคลจะช่วยให้การวางแผนงานในแต่ละวันของคุณมีประสิทธิภาพสูงสุด</small>
             </div>
-        </div>
-    `,
-    link: "auspiciousPage",
-    badge: "badge-success"
-},
-"numbers": {
+        `,
+        link: "auspiciousPage",
+        badge: "badge-success"
+    },
+    "numbers": {
         id: "K004",
         category: "เลขศาสตร์",
         title: "🔢 พลังตัวเลขและเบอร์มงคลพื้นฐาน",
@@ -234,10 +241,9 @@ const KNOWLEDGE_ARTICLES = {
                 </div>
             </div>
         `,
-        link: "mainContent", // หรือหน้าพยากรณ์ตัวเลขถ้าประธานมี
+        link: "mainContent",
         badge: "badge-primary"
     },
-
     "zodiac": {
         id: "K005",
         category: "ตำราโบราณ",
@@ -286,96 +292,95 @@ const KNOWLEDGE_ARTICLES = {
         type: "วิเคราะห์พื้นดวง",
         level: "ทั่วไป",
         content: `
-                <div class="article-rich-content">
-                    <section class="mb-4">
-                        <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-dharmachakra mr-2"></i>วิชาทักษา: หัวใจแห่งการพยากรณ์ไทย</h5>
-                        <p>วิชาทักษาปกรณ์ (หรือทักษาคู่ธาตุ) คือวิชาพื้นฐานที่สำคัญที่สุดในโหราศาสตร์ไทย เป็นการจัดระเบียบดาวเคราะห์ทั้ง 8 ดวง (รวมราหู) ลงในทิศทั้ง 8 ทิศ เพื่อกำหนด "คุณภาพ" ของดาวในช่วงเวลานั้นๆ ไม่ว่าจะเป็นการตั้งชื่อ การเลือกสีมงคล หรือการวิเคราะห์ดวงจร</p>
-                    </section>
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-dharmachakra mr-2"></i>วิชาทักษา: หัวใจแห่งการพยากรณ์ไทย</h5>
+                    <p>วิชาทักษาปกรณ์ (หรือทักษาคู่ธาตุ) คือวิชาพื้นฐานที่สำคัญที่สุดในโหราศาสตร์ไทย เป็นการจัดระเบียบดาวเคราะห์ทั้ง 8 ดวง (รวมราหู) ลงในทิศทั้ง 8 ทิศ เพื่อกำหนด "คุณภาพ" ของดาวในช่วงเวลานั้นๆ ไม่ว่าจะเป็นการตั้งชื่อ การเลือกสีมงคล หรือการวิเคราะห์ดวงจร</p>
+                </section>
 
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● ความหมายของภูมิทั้ง 8 (จุดรับพลัง)</h6>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">1. บริวาร:</b>
-                                    <p class="small text-white-50">หมายถึง คนในปกครอง บุตร ภรรยา สามี เพื่อนฝูง และความสัมพันธ์กับคนรอบข้าง หากดาวบริวารเสีย มักจะมีปัญหาเรื่องคนใกล้ชิด</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">2. อายุ:</b>
-                                    <p class="small text-white-50">หมายถึง วิถีการดำเนินชีวิต สุขภาพพลานามัย และความราบรื่นในการใช้ชีวิต หากดาวอายุเด่น จะส่งผลให้สุขภาพแข็งแรง มีอายุยืนยาว</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">3. เดช:</b>
-                                    <p class="small text-white-50">หมายถึง อำนาจ บารมี เกียรติยศ ชื่อเสียง และการได้รับความยำเกรง เหมาะสำหรับผู้ที่ทำงานข้าราชการหรือผู้บริหาร</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-gold">4. ศรี:</b>
-                                    <p class="small text-white-50">หมายถึง โชคลาภ เสน่ห์ ความเป็นสิริมงคล และความสุขใจ เป็นตำแหน่งที่คนมักใช้ตั้งชื่อหรือเลือกสีรถเป็นอันดับแรก</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">5. มูละ:</b>
-                                    <p class="small text-white-50">หมายถึง มรดก ทรัพย์สินกินใช้ไม่หมด ความมั่นคงในระยะยาว เช่น ที่ดิน บ้านเรือน และเงินเก็บ</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">6. อุตสาหะ:</b>
-                                    <p class="small text-white-50">หมายถึง ความขยันหมั่นเพียร ความพยายามในการสร้างตัว และความสำเร็จที่ได้มาจากการลงแรง</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-gold h-100">
-                                    <b class="text-info">7. มนตรี:</b>
-                                    <p class="small text-white-50">หมายถึง การได้รับการอุปถัมภ์ค้ำชูจากผู้ใหญ่ หรือบุคคลที่มีอำนาจเหนือกว่า คอยชี้แนะและสนับสนุน</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-left-danger h-100">
-                                    <b class="text-danger">8. กาลกิณี:</b>
-                                    <p class="small text-white-50">คือความอัปมงคล อุปสรรค ความติดขัด และสิ่งที่คอยขัดขวางความสำเร็จ เป็นตำแหน่งที่ต้อง "เลี่ยง" ในทุกพิธีกรรม</p>
-                                </div>
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● ความหมายของภูมิทั้ง 8 (จุดรับพลัง)</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">1. บริวาร:</b>
+                                <p class="small text-white-50">หมายถึง คนในปกครอง บุตร ภรรยา สามี เพื่อนฝูง และความสัมพันธ์กับคนรอบข้าง หากดาวบริวารเสีย มักจะมีปัญหาเรื่องคนใกล้ชิด</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4">
-                        <h5 class="text-gold"><i class="fas fa-key mr-2"></i>เคล็ดลับการนำไปใช้งานจริง</h5>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-sm table-dark text-white-50">
-                                <thead>
-                                    <tr class="text-gold">
-                                        <th>เป้าหมาย</th>
-                                        <th>ภูมิที่ต้องใช้</th>
-                                        <th>การนำไปใช้</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>หาแฟน/ความรัก</td><td><b>ศรี</b></td><td>ใช้สีเสื้อที่เป็นศรีของวันเกิด หรือตั้งชื่อให้มีอักษรศรี</td></tr>
-                                    <tr><td>สอบเข้า/สมัครงาน</td><td><b>เดช / มนตรี</b></td><td>เน้นสีเสื้อที่เป็นเดชเพื่อความยำเกรง และมนตรีเพื่อความเมตตา</td></tr>
-                                    <tr><td>ทำธุรกิจอสังหาฯ</td><td><b>มูละ</b></td><td>เน้นอักษรมูละในชื่อบริษัท หรือเลือกวันฤกษ์ดีที่เป็นมูละ</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">2. อายุ:</b>
+                                <p class="small text-white-50">หมายถึง วิถีการดำเนินชีวิต สุขภาพพลานามัย และความราบรื่นในการใช้ชีวิต หากดาวอายุเด่น จะส่งผลให้สุขภาพแข็งแรง มีอายุยืนยาว</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <div class="alert alert-gold bg-dark border-gold mt-4">
-                        <h6 class="mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>ข้อควรระวังสำคัญ</h6>
-                        <p class="small mb-0">ในแต่ละช่วงอายุ "ดาวเสวยอายุ" จะเปลี่ยนไป ทำให้ตำแหน่งทักษาเปลี่ยนตาม (ทักษาจร) ดังนั้นสิ่งที่เคยดีในปีที่แล้ว ปีนี้อาจกลายเป็นกาลกิณีก็ได้ ควรหมั่นเช็คดวงด้วยเครื่องมือทักษาเป็นประจำ</p>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">3. เดช:</b>
+                                <p class="small text-white-50">หมายถึง อำนาจ บารมี เกียรติยศ ชื่อเสียง และการได้รับความยำเกรง เหมาะสำหรับผู้ที่ทำงานข้าราชการหรือผู้บริหาร</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-gold">4. ศรี:</b>
+                                <p class="small text-white-50">หมายถึง โชคลาภ เสน่ห์ ความเป็นสิริมงคล และความสุขใจ เป็นตำแหน่งที่คนมักใช้ตั้งชื่อหรือเลือกสีรถเป็นอันดับแรก</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">5. มูละ:</b>
+                                <p class="small text-white-50">หมายถึง มรดก ทรัพย์สินกินใช้ไม่หมด ความมั่นคงในระยะยาว เช่น ที่ดิน บ้านเรือน และเงินเก็บ</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">6. อุตสาหะ:</b>
+                                <p class="small text-white-50">หมายถึง ความขยันหมั่นเพียร ความพยายามในการสร้างตัว และความสำเร็จที่ได้มาจากการลงแรง</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-gold h-100">
+                                <b class="text-info">7. มนตรี:</b>
+                                <p class="small text-white-50">หมายถึง การได้รับการอุปถัมภ์ค้ำชูจากผู้ใหญ่ หรือบุคคลที่มีอำนาจเหนือกว่า คอยชี้แนะและสนับสนุน</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-left-danger h-100">
+                                <b class="text-danger">8. กาลกิณี:</b>
+                                <p class="small text-white-50">คือความอัปมงคล อุปสรรค ความติดขัด และสิ่งที่คอยขัดขวางความสำเร็จ เป็นตำแหน่งที่ต้อง "เลี่ยง" ในทุกพิธีกรรม</p>
+                            </div>
+                        </div>
                     </div>
+                </section>
+
+                <section class="mb-4">
+                    <h5 class="text-gold"><i class="fas fa-key mr-2"></i>เคล็ดลับการนำไปใช้งานจริง</h5>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm table-dark text-white-50">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>เป้าหมาย</th>
+                                    <th>ภูมิที่ต้องใช้</th>
+                                    <th>การนำไปใช้</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>หาแฟน/ความรัก</td><td><b>ศรี</b></td><td>ใช้สีเสื้อที่เป็นศรีของวันเกิด หรือตั้งชื่อให้มีอักษรศรี</td></tr>
+                                <tr><td>สอบเข้า/สมัครงาน</td><td><b>เดช / มนตรี</b></td><td>เน้นสีเสื้อที่เป็นเดชเพื่อความยำเกรง และมนตรีเพื่อความเมตตา</td></tr>
+                                <tr><td>ทำธุรกิจอสังหาฯ</td><td><b>มูละ</b></td><td>เน้นอักษรมูละในชื่อบริษัท หรือเลือกวันฤกษ์ดีที่เป็นมูละ</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="alert alert-gold bg-dark border-gold mt-4">
+                    <h6 class="mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>ข้อควรระวังสำคัญ</h6>
+                    <p class="small mb-0">ในแต่ละช่วงอายุ "ดาวเสวยอายุ" จะเปลี่ยนไป ทำให้ตำแหน่งทักษาเปลี่ยนตาม (ทักษาจร) ดังนั้นสิ่งที่เคยดีในปีที่แล้ว ปีนี้อาจกลายเป็นกาลกิณีก็ได้ ควรหมั่นเช็คดวงด้วยเครื่องมือทักษาเป็นประจำ</p>
                 </div>
-            `,
+            </div>
+        `,
         link: "taksaPage",
         badge: "badge-info"
     },
-
     "planet_nature": {
         id: "K007",
         category: "โหราศาสตร์",
@@ -413,8 +418,8 @@ const KNOWLEDGE_ARTICLES = {
 
                 <section class="mt-4">
                     <h6 class="text-gold-light">● คู่มิตร-คู่ศัตรูที่ควรรู้</h6>
-                    <p class="small"><b>คู่มิตร:</b> (1-5), (2-4), (3-6), (7-8) -> ส่งเสริมกันดีนักแล</p>
-                    <p class="small"><b>คู่ศัตรู:</b> (1-3), (2-5), (4-8), (6-7) -> มักขัดแย้งหรือเกิดอุปสรรค</p>
+                    <p class="small"><b>คู่มิตร:</b> (1-5), (2-4), (3-6), (7-8) → ส่งเสริมกันดีนักแล</p>
+                    <p class="small"><b>คู่ศัตรู:</b> (1-3), (2-5), (4-8), (6-7) → มักขัดแย้งหรือเกิดอุปสรรค</p>
                 </section>
             </div>
         `,
@@ -428,78 +433,77 @@ const KNOWLEDGE_ARTICLES = {
         type: "วิเคราะห์ชะตาชีวิต",
         level: "ขั้นสูง",
         content: `
-                <div class="article-rich-content">
-                    <section class="mb-4">
-                        <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-th mr-2"></i>คัมภีร์เลข 7 ตัว 4 ฐาน: ศาสตร์แห่งการพยากรณ์ไทย</h5>
-                        <p>วิชาเลข 7 ตัว 4 ฐาน คือการนำตัวเลข วัน เดือน และปีนักษัตร มาตั้งเป็นตาราง 3 แถว และรวมกำลังธาตุเป็นฐานที่ 4 เพื่อวิเคราะห์เส้นทางชีวิตตั้งแต่วันเกิดจนถึงวันตาย โดยแบ่งโครงสร้างสำคัญดังนี้:</p>
-                    </section>
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-th mr-2"></i>คัมภีร์เลข 7 ตัว 4 ฐาน: ศาสตร์แห่งการพยากรณ์ไทย</h5>
+                    <p>วิชาเลข 7 ตัว 4 ฐาน คือการนำตัวเลข วัน เดือน และปีนักษัตร มาตั้งเป็นตาราง 3 แถว และรวมกำลังธาตุเป็นฐานที่ 4 เพื่อวิเคราะห์เส้นทางชีวิตตั้งแต่วันเกิดจนถึงวันตาย โดยแบ่งโครงสร้างสำคัญดังนี้:</p>
+                </section>
 
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● โครงสร้าง 3 แถวหลัก (วิถีชีวิต)</h6>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">แถวที่ 1: แถววัน (อัตตา)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงตัวตน นิสัยใจคอ สุขภาพ และเรื่องส่วนตัว เป็นพื้นฐานของจิตใจและความนึกคิดของเจ้าชะตา</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">แถวที่ 2: แถวเดือน (หิรัญ)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงทรัพย์สิน การทำมาหากิน โชคลาภ และความมั่นคงทางการเงิน รวมถึงช่องทางการได้มาซึ่งรายได้</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">แถวที่ 3: แถวปี (สิทธิ)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงความสำเร็จ มิตรบริวาร สังคมรอบข้าง และผลลัพธ์สุดท้ายของความพยายามในแต่ละเรื่อง</p>
-                                </div>
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● โครงสร้าง 3 แถวหลัก (วิถีชีวิต)</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">แถวที่ 1: แถววัน (อัตตา)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงตัวตน นิสัยใจคอ สุขภาพ และเรื่องส่วนตัว เป็นพื้นฐานของจิตใจและความนึกคิดของเจ้าชะตา</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4 p-3 rounded" style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);">
-                        <h6 class="text-gold"><i class="fas fa-star mr-2"></i>ฐานที่ 4: ฐานพยากรณ์ (หัวใจสำคัญ)</h6>
-                        <p class="small">ฐานที่ 4 เกิดจากผลรวมของเลขใน 3 แถวบนรวมกัน เป็นฐานที่ใช้ตัดสินว่าเรื่องนั้นๆ จะส่งผล "ดี" หรือ "ร้าย" มากน้อยเพียงใด เช่น:</p>
-                        <ul class="small text-white-50">
-                            <li><b class="text-info">ฐานกำลังพระเคราะห์ (เช่น ๙, ๑๐, ๑๒...):</b> บ่งบอกถึงความเข้มแข็งของดวงดาวที่จะส่งผลต่อชีวิต</li>
-                            <li><b class="text-gold">ฐานจักรพรรดิ / มหาอุจ:</b> บ่งบอกถึงความยิ่งใหญ่ ความสำเร็จแบบก้าวกระโดด</li>
-                            <li><b class="text-danger">ฐานโสฬสมงคล:</b> เป็นฐานมงคลยิ่งใหญ่ที่คอยเกื้อหนุนแม้ในช่วงที่ดวงตก</li>
-                        </ul>
-                    </section>
-
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● ความหมายของภพสำคัญในตาราง</h6>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-dark text-white-50 border-gold">
-                                <thead>
-                                    <tr class="text-gold">
-                                        <th>ชื่อภพ</th>
-                                        <th>ความหมายในการทำนาย</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>อัตตา</td><td>ตัวเอง นิสัย ความคิด</td></tr>
-                                    <tr><td>มรณะ</td><td>การพลัดพราก การสิ้นสุด หรือทางไกล</td></tr>
-                                    <tr><td>โภคา</td><td>ที่อยู่อาศัย รถ อสังหาริมทรัพย์</td></tr>
-                                    <tr><td>ปัตนิ</td><td>คู่ครอง หุ้นส่วน หรือฝ่ายตรงข้าม</td></tr>
-                                    <tr><td>กัมมะ</td><td>งาน หน้าที่ ความรับผิดชอบ</td></tr>
-                                    <tr><td>ลาภะ</td><td>โชคลาภ สิ่งที่ได้มาโดยไม่คาดฝัน</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">แถวที่ 2: แถวเดือน (หิรัญ)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงทรัพย์สิน การทำมาหากิน โชคลาภ และความมั่นคงทางการเงิน รวมถึงช่องทางการได้มาซึ่งรายได้</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <div class="p-3 bg-dark border-gold rounded text-center shadow">
-                        <h6 class="text-gold mb-2">"เลข 7 ตัว บอกกรรมเก่า... แต่ฐานที่ 4 บอกทางแก้"</h6>
-                        <p class="small mb-0 text-white-50">การอ่านเลข 7 ตัวที่แม่นยำ ต้องดูความสัมพันธ์ของภพ (เรื่องราว) และดาว (ตัวเลข) ควบคู่ไปกับฐานรองรับเสมอ</p>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">แถวที่ 3: แถวปี (สิทธิ)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงความสำเร็จ มิตรบริวาร สังคมรอบข้าง และผลลัพธ์สุดท้ายของความพยายามในแต่ละเรื่อง</p>
+                            </div>
+                        </div>
                     </div>
+                </section>
+
+                <section class="mb-4 p-3 rounded" style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);">
+                    <h6 class="text-gold"><i class="fas fa-star mr-2"></i>ฐานที่ 4: ฐานพยากรณ์ (หัวใจสำคัญ)</h6>
+                    <p class="small">ฐานที่ 4 เกิดจากผลรวมของเลขใน 3 แถวบนรวมกัน เป็นฐานที่ใช้ตัดสินว่าเรื่องนั้นๆ จะส่งผล "ดี" หรือ "ร้าย" มากน้อยเพียงใด เช่น:</p>
+                    <ul class="small text-white-50">
+                        <li><b class="text-info">ฐานกำลังพระเคราะห์ (เช่น ๙, ๑๐, ๑๒...):</b> บ่งบอกถึงความเข้มแข็งของดวงดาวที่จะส่งผลต่อชีวิต</li>
+                        <li><b class="text-gold">ฐานจักรพรรดิ / มหาอุจ:</b> บ่งบอกถึงความยิ่งใหญ่ ความสำเร็จแบบก้าวกระโดด</li>
+                        <li><b class="text-danger">ฐานโสฬสมงคล:</b> เป็นฐานมงคลยิ่งใหญ่ที่คอยเกื้อหนุนแม้ในช่วงที่ดวงตก</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● ความหมายของภพสำคัญในตาราง</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark text-white-50 border-gold">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>ชื่อภพ</th>
+                                    <th>ความหมายในการทำนาย</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>อัตตา</td><td>ตัวเอง นิสัย ความคิด</td></tr>
+                                <tr><td>มรณะ</td><td>การพลัดพราก การสิ้นสุด หรือทางไกล</td></tr>
+                                <tr><td>โภคา</td><td>ที่อยู่อาศัย รถ อสังหาริมทรัพย์</td></tr>
+                                <tr><td>ปัตนิ</td><td>คู่ครอง หุ้นส่วน หรือฝ่ายตรงข้าม</td></tr>
+                                <tr><td>กัมมะ</td><td>งาน หน้าที่ ความรับผิดชอบ</td></tr>
+                                <tr><td>ลาภะ</td><td>โชคลาภ สิ่งที่ได้มาโดยไม่คาดฝัน</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="p-3 bg-dark border-gold rounded text-center shadow">
+                    <h6 class="text-gold mb-2">"เลข 7 ตัว บอกกรรมเก่า... แต่ฐานที่ 4 บอกทางแก้"</h6>
+                    <p class="small mb-0 text-white-50">การอ่านเลข 7 ตัวที่แม่นยำ ต้องดูความสัมพันธ์ของภพ (เรื่องราว) และดาว (ตัวเลข) ควบคู่ไปกับฐานรองรับเสมอ</p>
                 </div>
-            `,
+            </div>
+        `,
         link: "sevenDigitsPage",
         badge: "badge-danger"
     },
-
     "compatibility_guide": {
         id: "K009",
         category: "ตำราโบราณ",
@@ -507,65 +511,65 @@ const KNOWLEDGE_ARTICLES = {
         type: "วิเคราะห์ความสัมพันธ์",
         level: "ทั่วไป",
         content: `
-                <div class="article-rich-content">
-                    <section class="mb-4">
-                        <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-heart mr-2"></i>วิชาสมพงษ์: ศาสตร์แห่งการเลือกคู่ครอง</h5>
-                        <p>การดูสมพงษ์ในตำราไทยโบราณ ไม่ใช่เพียงแค่การดูว่า "รักกันไหม" แต่เป็นการวิเคราะห์ว่าเมื่ออยู่กินกันแล้ว พลังงานของทั้งคู่จะ "ส่งเสริม" หรือ "หักล้าง" กันอย่างไร โดยมีเกณฑ์พิจารณาดังนี้:</p>
-                    </section>
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-heart mr-2"></i>วิชาสมพงษ์: ศาสตร์แห่งการเลือกคู่ครอง</h5>
+                    <p>การดูสมพงษ์ในตำราไทยโบราณ ไม่ใช่เพียงแค่การดูว่า "รักกันไหม" แต่เป็นการวิเคราะห์ว่าเมื่ออยู่กินกันแล้ว พลังงานของทั้งคู่จะ "ส่งเสริม" หรือ "หักล้าง" กันอย่างไร โดยมีเกณฑ์พิจารณาดังนี้:</p>
+                </section>
 
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● 3 เกณฑ์หลักในการพยากรณ์คู่ครอง</h6>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
-                                    <b class="text-gold">1. ปีนักษัตร (สมพงษ์ธาตุ)</b>
-                                    <p class="small text-white-50 mt-2">ดูว่าธาตุประจำปีเกิดเข้ากันได้หรือไม่ เช่น คนเกิดปีธาตุน้ำ อยู่กับปีธาตุไม้จะช่วยส่งเสริมให้เจริญรุ่งเรือง</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
-                                    <b class="text-gold">2. วันเกิด (คู่มิตร/ศัตรู)</b>
-                                    <p class="small text-white-50 mt-2">พิจารณาจากกำลังวัน เช่น วันอาทิตย์เป็นคู่มิตรกับวันพฤหัสบดี จะส่งผลให้ครองรักกันยืนยาว</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
-                                    <b class="text-gold">3. ตำรานาคสมพงษ์</b>
-                                    <p class="small text-white-50 mt-2">พิจารณาตำแหน่ง "หัว-ตัว-หาง" ของนาค หากตกตำแหน่งเดียวกันมักจะขัดแย้งกันบ่อย</p>
-                                </div>
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● 3 เกณฑ์หลักในการพยากรณ์คู่ครอง</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
+                                <b class="text-gold">1. ปีนักษัตร (สมพงษ์ธาตุ)</b>
+                                <p class="small text-white-50 mt-2">ดูว่าธาตุประจำปีเกิดเข้ากันได้หรือไม่ เช่น คนเกิดปีธาตุน้ำ อยู่กับปีธาตุไม้จะช่วยส่งเสริมให้เจริญรุ่งเรือง</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● ตารางคู่มิตร-คู่ศัตรู (หัวใจการครองเรือน)</h6>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-dark text-white-50 border-gold">
-                                <thead>
-                                    <tr class="text-gold">
-                                        <th>ประเภท</th>
-                                        <th>คู่ที่ส่งผลดี</th>
-                                        <th>คำทำนาย</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td class="text-info">คู่มิตรใหญ่</td><td>อาทิตย์-พฤหัส, จันทร์-พุธ</td><td>ส่งเสริมลาภยศ เกื้อหนุนกันทุกด้าน</td></tr>
-                                    <tr><td class="text-info">คู่ธาตุ</td><td>อาทิตย์-เสาร์, จันทร์-พฤหัส</td><td>สร้างฐานะร่วมกันได้มั่นคง ร่ำรวยเร็ว</td></tr>
-                                    <tr><td class="text-info">คู่สมพล</td><td>อาทิตย์-ศุกร์, จันทร์-เสาร์</td><td>ช่วยแก้ปัญหาให้กันได้ดี เป็นคู่คิดที่ดี</td></tr>
-                                    <tr><td class="text-danger">คู่ศัตรู</td><td>อาทิตย์-อังคาร, จันทร์-พฤหัส</td><td>ระวังการขัดแย้ง อารมณ์ร้อนใส่กัน</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
+                                <b class="text-gold">2. วันเกิด (คู่มิตร/ศัตรู)</b>
+                                <p class="small text-white-50 mt-2">พิจารณาจากกำลังวัน เช่น วันอาทิตย์เป็นคู่มิตรกับวันพฤหัสบดี จะส่งผลให้ครองรักกันยืนยาว</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <div class="alert alert-gold bg-dark border-gold mt-4">
-                        <h6 class="mb-1 small font-weight-bold"><i class="fas fa-lightbulb mr-2"></i>ทางแก้สำหรับคู่ที่ไม่สมพงษ์</h6>
-                        <p class="small mb-0">หากตรวจสอบแล้วตกเกณฑ์ไม่ดี ไม่ได้แปลว่าต้องเลิกกัน แต่ให้ใช้วิธี "แก้เคล็ด" ด้วยการแยกเตียงนอน (ชั่วคราว) หรือการทำบุญร่วมกันด้วยของที่เป็นคู่ เช่น หลอดไฟคู่ หรือแจกันคู่ เพื่อเป็นการเสริมดวงชะตาคู่ให้แน่นแฟ้นยิ่งขึ้น</p>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100 text-center">
+                                <b class="text-gold">3. ตำรานาคสมพงษ์</b>
+                                <p class="small text-white-50 mt-2">พิจารณาตำแหน่ง "หัว-ตัว-หาง" ของนาค หากตกตำแหน่งเดียวกันมักจะขัดแย้งกันบ่อย</p>
+                            </div>
+                        </div>
                     </div>
+                </section>
+
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● ตารางคู่มิตร-คู่ศัตรู (หัวใจการครองเรือน)</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark text-white-50 border-gold">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>ประเภท</th>
+                                    <th>คู่ที่ส่งผลดี</th>
+                                    <th>คำทำนาย</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-info">คู่มิตรใหญ่</td><td>อาทิตย์-พฤหัส, จันทร์-พุธ</td><td>ส่งเสริมลาภยศ เกื้อหนุนกันทุกด้าน</td></tr>
+                                <tr><td class="text-info">คู่ธาตุ</td><td>อาทิตย์-เสาร์, จันทร์-พฤหัส</td><td>สร้างฐานะร่วมกันได้มั่นคง ร่ำรวยเร็ว</td></tr>
+                                <tr><td class="text-info">คู่สมพล</td><td>อาทิตย์-ศุกร์, จันทร์-เสาร์</td><td>ช่วยแก้ปัญหาให้กันได้ดี เป็นคู่คิดที่ดี</td></tr>
+                                <tr><td class="text-danger">คู่ศัตรู</td><td>อาทิตย์-อังคาร, จันทร์-พฤหัส</td><td>ระวังการขัดแย้ง อารมณ์ร้อนใส่กัน</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="alert alert-gold bg-dark border-gold mt-4">
+                    <h6 class="mb-1 small font-weight-bold"><i class="fas fa-lightbulb mr-2"></i>ทางแก้สำหรับคู่ที่ไม่สมพงษ์</h6>
+                    <p class="small mb-0">หากตรวจสอบแล้วตกเกณฑ์ไม่ดี ไม่ได้แปลว่าต้องเลิกกัน แต่ให้ใช้วิธี "แก้เคล็ด" ด้วยการแยกเตียงนอน (ชั่วคราว) หรือการทำบุญร่วมกันด้วยของที่เป็นคู่ เช่น หลอดไฟคู่ หรือแจกันคู่ เพื่อเป็นการเสริมดวงชะตาคู่ให้แน่นแฟ้นยิ่งขึ้น</p>
                 </div>
-            `,
+            </div>
+        `,
         link: "compatibilityPage",
-        badge: "badge-pink" // หรือ badge-danger ตามที่คุณชอบ
+        badge: "badge-pink"
     },
     "planet_meanings": {
         id: "K010",
@@ -609,7 +613,6 @@ const KNOWLEDGE_ARTICLES = {
         link: "planetRelationPage",
         badge: "badge-info"
     },
-
     "naming_tips": {
         id: "K011",
         category: "วิถีสิริมงคล",
@@ -620,7 +623,7 @@ const KNOWLEDGE_ARTICLES = {
             <div class="article-rich-content">
                 <section class="mb-4">
                     <h5 class="text-gold"><i class="fas fa-pen-nib mr-2"></i>อักขระมงคลและกาลกิณี</h5>
-                    <p>การตั้งชื่อตามหลักทักษาปกรณ์ จะเน้นการเลือกอักขระที่เป็น "ศรี" หรือ "เดช" นำหน้า และที่สำคัญที่สุดคือต้อง **"ไม่มีอักขระกาลกิณี"** อยู่ในชื่อเด็ดขาด</p>
+                    <p>การตั้งชื่อตามหลักทักษาปกรณ์ จะเน้นการเลือกอักขระที่เป็น "ศรี" หรือ "เดช" นำหน้า และที่สำคัญที่สุดคือต้อง <b>"ไม่มีอักขระกาลกิณี"</b> อยู่ในชื่อเด็ดขาด</p>
                 </section>
 
                 <div class="table-responsive">
@@ -650,7 +653,6 @@ const KNOWLEDGE_ARTICLES = {
         link: "taksaPage",
         badge: "badge-success"
     },
-
     "fengshui_basic": {
         id: "K012",
         category: "ฮวงจุ้ย",
@@ -724,7 +726,6 @@ const KNOWLEDGE_ARTICLES = {
         link: "mainContent",
         badge: "badge-warning"
     },
-
     "physiognomy": {
         id: "K014",
         category: "นรลักษณ์ศาสตร์",
@@ -732,77 +733,76 @@ const KNOWLEDGE_ARTICLES = {
         type: "วิเคราะห์ลักษณะ",
         level: "กลาง",
         content: `
-                <div class="article-rich-content">
-                    <section class="mb-4">
-                        <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-user-tie mr-2"></i>นรลักษณ์ศาสตร์: การอ่านลิขิตฟ้าจากใบหน้า</h5>
-                        <p>โหงวเฮ้ง หรือ นรลักษณ์ศาสตร์ คือศาสตร์แห่งการพิจารณาลักษณะทางกายภาพเพื่อบ่งบอกนิสัยใจคอ สติปัญญา และวาสนาบารมี โดยโบราณท่านแบ่งการพิจารณาออกเป็น 3 ส่วนหลักที่เรียกว่า "3 วัง" ดังนี้:</p>
-                    </section>
+            <div class="article-rich-content">
+                <section class="mb-4">
+                    <h5 class="text-gold border-bottom-gold pb-2"><i class="fas fa-user-tie mr-2"></i>นรลักษณ์ศาสตร์: การอ่านลิขิตฟ้าจากใบหน้า</h5>
+                    <p>โหงวเฮ้ง หรือ นรลักษณ์ศาสตร์ คือศาสตร์แห่งการพิจารณาลักษณะทางกายภาพเพื่อบ่งบอกนิสัยใจคอ สติปัญญา และวาสนาบารมี โดยโบราณท่านแบ่งการพิจารณาออกเป็น 3 ส่วนหลักที่เรียกว่า "3 วัง" ดังนี้:</p>
+                </section>
 
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● 3 ช่วงวัยบนใบหน้า (ไตรภาค)</h6>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">1. ส่วนบน (หน้าผาก-คิ้ว)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงช่วงชีวิตวัยเด็กถึงวัยหนุ่มสาว สติปัญญา และการอุปถัมภ์จากพ่อแม่พี่น้อง</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">2. ส่วนกลาง (คิ้ว-ปลายจมูก)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงช่วงชีวิตวัยกลางคน ความกระตือรือร้น การสร้างฐานะ และชีวิตคู่</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="p-3 bg-black-25 rounded border-top-gold h-100">
-                                    <b class="text-gold">3. ส่วนล่าง (ใต้จมูก-คาง)</b>
-                                    <p class="small text-white-50 mt-2">บ่งบอกถึงชีวิตวัยปลาย ความสงบสุข บริวาร และทรัพย์สมบัติที่สะสมมา</p>
-                                </div>
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● 3 ช่วงวัยบนใบหน้า (ไตรภาค)</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">1. ส่วนบน (หน้าผาก-คิ้ว)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงช่วงชีวิตวัยเด็กถึงวัยหนุ่มสาว สติปัญญา และการอุปถัมภ์จากพ่อแม่พี่น้อง</p>
                             </div>
                         </div>
-                    </section>
-
-                    <section class="mb-4 p-3 rounded" style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);">
-                        <h6 class="text-gold"><i class="fas fa-mountain mr-2"></i>5 ขุนเขาแห่งใบหน้า (ตำแหน่งรับทรัพย์)</h6>
-                        <ul class="list-unstyled small text-white-50">
-                            <li class="mb-2"><b class="text-info">หน้าผาก:</b> ต้องอิ่มเต็ม ไม่บุบช้ำ หมายถึง บารมีสูง ได้รับโอกาสดีๆ ในชีวิต</li>
-                            <li class="mb-2"><b class="text-info">จมูก:</b> เปรียบเสมือน "คลังสมบัติ" ต้องมีเนื้อ ปีกจมูกกว้าง บ่งบอกถึงการเก็บเงินอยู่</li>
-                            <li class="mb-2"><b class="text-info">โหนกแก้ม (ซ้าย-ขวา):</b> ต้องสมดุลและรับกับจมูก บ่งบอกถึงอำนาจและการสนับสนุนจากบริวาร</li>
-                            <li class="mb-2"><b class="text-info">คาง:</b> ต้องกลมมนหรือเป็นรูปไข่ที่มั่นคง บ่งบอกถึงที่อยู่อาศัยและการมีบริวารที่ดีในยามแก่</li>
-                        </ul> 
-                    </section>
-
-                    <section class="mb-4">
-                        <h6 class="text-gold-light mb-3">● วิเคราะห์ลักษณะ "จุดเด่น-จุดด้อย"</h6>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-dark text-white-50 border-gold">
-                                <thead>
-                                    <tr class="text-gold">
-                                        <th>อวัยวะ</th>
-                                        <th>ลักษณะมงคล</th>
-                                        <th>อิทธิพล</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>หู</td><td>ติ่งหนาและยาว</td><td>สุขภาพแข็งแรง อายุยืน มีบุญวาสนา</td></tr>
-                                    <tr><td>ดวงตา</td><td>แววตาสดใส มีพลัง</td><td>มีความคิดเฉียบแหลม มักประสบความสำเร็จเร็ว</td></tr>
-                                    <tr><td>ปาก</td><td>ขอบปากชัด มุมปากยก</td><td>พูดจามีเสน่ห์ เจรจาค้าขายร่ำรวย (ลาภปาก)</td></tr>
-                                    <tr><td>คิ้ว</td><td>เรียงตัวสวย คลุมยาวถึงหางตา</td><td>มีชื่อเสียง มิตรสหายดี จิตใจมั่นคง</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">2. ส่วนกลาง (คิ้ว-ปลายจมูก)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงช่วงชีวิตวัยกลางคน ความกระตือรือร้น การสร้างฐานะ และชีวิตคู่</p>
+                            </div>
                         </div>
-                    </section>
-
-                    <div class="alert alert-gold bg-dark border-gold mt-4 shadow">
-                        <h6 class="mb-1 small font-weight-bold"><i class="fas fa-eye mr-2"></i>เคล็ดลับซินแส: "จิตเป็นนาย กายเป็นบ่าว"</h6>
-                        <p class="small mb-0">แม้ลักษณะภายนอกจะบอกวาสนา แต่การรักษาจิตใจให้ผ่องใสและการหมั่นทำความดี จะช่วย "ปรับโหงวเฮ้ง" ให้เปลี่ยนจากร้ายกลายเป็นดีได้ในที่สุด</p>
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 bg-black-25 rounded border-top-gold h-100">
+                                <b class="text-gold">3. ส่วนล่าง (ใต้จมูก-คาง)</b>
+                                <p class="small text-white-50 mt-2">บ่งบอกถึงชีวิตวัยปลาย ความสงบสุข บริวาร และทรัพย์สมบัติที่สะสมมา</p>
+                            </div>
+                        </div>
                     </div>
+                </section>
+
+                <section class="mb-4 p-3 rounded" style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);">
+                    <h6 class="text-gold"><i class="fas fa-mountain mr-2"></i>5 ขุนเขาแห่งใบหน้า (ตำแหน่งรับทรัพย์)</h6>
+                    <ul class="list-unstyled small text-white-50">
+                        <li class="mb-2"><b class="text-info">หน้าผาก:</b> ต้องอิ่มเต็ม ไม่บุบช้ำ หมายถึง บารมีสูง ได้รับโอกาสดีๆ ในชีวิต</li>
+                        <li class="mb-2"><b class="text-info">จมูก:</b> เปรียบเสมือน "คลังสมบัติ" ต้องมีเนื้อ ปีกจมูกกว้าง บ่งบอกถึงการเก็บเงินอยู่</li>
+                        <li class="mb-2"><b class="text-info">โหนกแก้ม (ซ้าย-ขวา):</b> ต้องสมดุลและรับกับจมูก บ่งบอกถึงอำนาจและการสนับสนุนจากบริวาร</li>
+                        <li class="mb-2"><b class="text-info">คาง:</b> ต้องกลมมนหรือเป็นรูปไข่ที่มั่นคง บ่งบอกถึงที่อยู่อาศัยและการมีบริวารที่ดีในยามแก่</li>
+                    </ul> 
+                </section>
+
+                <section class="mb-4">
+                    <h6 class="text-gold-light mb-3">● วิเคราะห์ลักษณะ "จุดเด่น-จุดด้อย"</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark text-white-50 border-gold">
+                            <thead>
+                                <tr class="text-gold">
+                                    <th>อวัยวะ</th>
+                                    <th>ลักษณะมงคล</th>
+                                    <th>อิทธิพล</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>หู</td><td>ติ่งหนาและยาว</td><td>สุขภาพแข็งแรง อายุยืน มีบุญวาสนา</td></tr>
+                                <tr><td>ดวงตา</td><td>แววตาสดใส มีพลัง</td><td>มีความคิดเฉียบแหลม มักประสบความสำเร็จเร็ว</td></tr>
+                                <tr><td>ปาก</td><td>ขอบปากชัด มุมปากยก</td><td>พูดจามีเสน่ห์ เจรจาค้าขายร่ำรวย (ลาภปาก)</td></tr>
+                                <tr><td>คิ้ว</td><td>เรียงตัวสวย คลุมยาวถึงหางตา</td><td>มีชื่อเสียง มิตรสหายดี จิตใจมั่นคง</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="alert alert-gold bg-dark border-gold mt-4 shadow">
+                    <h6 class="mb-1 small font-weight-bold"><i class="fas fa-eye mr-2"></i>เคล็ดลับซินแส: "จิตเป็นนาย กายเป็นบ่าว"</h6>
+                    <p class="small mb-0">แม้ลักษณะภายนอกจะบอกวาสนา แต่การรักษาจิตใจให้ผ่องใสและการหมั่นทำความดี จะช่วย "ปรับโหงวเฮ้ง" ให้เปลี่ยนจากร้ายกลายเป็นดีได้ในที่สุด</p>
                 </div>
-            `,
+            </div>
+        `,
         link: "mainContent",
         badge: "badge-primary"
     },
-
     "moles_predict": {
         id: "K015",
         category: "ตำราโบราณ",
@@ -879,7 +879,6 @@ const KNOWLEDGE_ARTICLES = {
         link: "mainContent",
         badge: "badge-dark"
     },
-
     "remedy_spirit": {
         id: "K017",
         category: "วิถีสิริมงคล",
@@ -977,6 +976,89 @@ const KNOWLEDGE_ARTICLES = {
         `,
         link: "auspiciousPage",
         badge: "badge-warning"
+    }
+};
+
+/**
+ * ฟังก์ชันช่วยเหลือ (Helper) เพื่อความเสถียรสูงสุด
+ */
+const KnowledgeAPI = {
+    KNOWLEDGE_ARTICLES,
+
+    /**
+     * ดึงบทความตาม key
+     * @param {string} key - ชื่อ key ของบทความ (เช่น "promchat")
+     * @returns {object|null} ข้อมูลบทความ หรือ null ถ้าไม่พบ
+     */
+    getArticle(key) {
+        if (typeof key !== "string" || !key) return null;
+        return KNOWLEDGE_ARTICLES[key] || null;
     },
 
+    /**
+     * ดึงบทความตาม id
+     * @param {string} id - เช่น "K001"
+     * @returns {object|null}
+     */
+    getArticleById(id) {
+        if (typeof id !== "string" || !id) return null;
+        return Object.values(KNOWLEDGE_ARTICLES).find(article => article.id === id) || null;
+    },
+
+    /**
+     * ดึงบทความทั้งหมดในหมวดหมู่
+     * @param {string} category 
+     * @returns {object[]}
+     */
+    getArticlesByCategory(category) {
+        if (typeof category !== "string" || !category) return [];
+        return Object.values(KNOWLEDGE_ARTICLES).filter(a => a.category === category);
+    },
+
+    /**
+     * ค้นหาบทความตามคำค้น (title + content)
+     * @param {string} term 
+     * @returns {object[]}
+     */
+    searchArticles(term) {
+        if (typeof term !== "string" || !term.trim()) return Object.values(KNOWLEDGE_ARTICLES);
+        const lowerTerm = term.toLowerCase();
+        return Object.values(KNOWLEDGE_ARTICLES).filter(article =>
+            article.title.toLowerCase().includes(lowerTerm) ||
+            article.content.toLowerCase().includes(lowerTerm)
+        );
+    },
+
+    /**
+     * รายชื่อหมวดหมู่ทั้งหมด (ไม่ซ้ำ)
+     * @returns {string[]}
+     */
+    getAllCategories() {
+        const cats = new Set(Object.values(KNOWLEDGE_ARTICLES).map(a => a.category));
+        return Array.from(cats);
+    },
+
+    /**
+     * จำนวนบทความทั้งหมด
+     */
+    totalArticles: Object.keys(KNOWLEDGE_ARTICLES).length,
+
+    /**
+     * รายการ key ทั้งหมด
+     */
+    getAllKeys() {
+        return Object.keys(KNOWLEDGE_ARTICLES);
+    }
 };
+
+// ============================================================
+// Export สำหรับใช้งานทุกแบบ (ES Module / CommonJS / Global)
+// ============================================================
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = KnowledgeAPI;
+} else if (typeof window !== "undefined") {
+    window.KnowledgeAPI = KnowledgeAPI;
+    // เปิดให้เรียกใช้งานโดยตรงได้ทันที
+    window.KNOWLEDGE_ARTICLES = KNOWLEDGE_ARTICLES;
+}
+

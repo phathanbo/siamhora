@@ -11,6 +11,26 @@ const LIFE_GRAPH_LABELS = [
     "ศัตรู", "คู่ครอง", "โรคภัย", "ความสุข", "การงาน", "ลาภยศ"
 ];
 
+function parseBirthdate(input) {
+    if (!input || input === "undefined") return null;
+
+    try {
+        if (input.includes('/')) {
+            const [d, m, yRaw] = input.split('/');
+            let y = parseInt(yRaw);
+            if (y > 2400) y -= 543;
+
+            input = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+        }
+
+        const date = new Date(input);
+        return isNaN(date.getTime()) ? null : date;
+
+    } catch {
+        return null;
+    }
+}
+
 function calculateFortuneScore(points) {
     const maxTotal = 7 * 12; // คะแนนเต็ม
     const total = points.reduce((a, b) => a + b, 0);
@@ -91,58 +111,36 @@ function renderMonthlyFortune(points){
 
 
 function calculateLifeGraph() {
-    let birthInput = document.getElementById('birthdate').value || localStorage.getItem('userBirthdate');
 
-    if (!birthInput || birthInput === "undefined") {
-        // ถ้าไม่มีข้อมูลจริงๆ ให้ลองดึงจากหน้า Profile (กรณีดูจากประวัติ)
-        const profBirth = document.getElementById('profBirth')?.innerText;
-        if (profBirth) birthInput = profBirth;
+    let input =
+        document.getElementById('birthdate')?.value ||
+        localStorage.getItem('userBirthdate') ||
+        document.getElementById('profBirth')?.innerText;
+
+    const birthDate = parseBirthdate(input);
+
+    if (!birthDate) {
+        alert("🔮 กรุณากรอกวันเกิดให้ถูกต้อง");
+        return;
     }
 
-    if (birthInput && birthInput !== "undefined") {
-        const birthDate = new Date(birthInput);
-        if (isNaN(birthDate.getTime())) {
-            alert("🔮 รูปแบบวันที่ไม่ถูกต้อง กรุณากรอกใหม่ครับ");
-            return;
-        }
-    
-        if (birthInput) {
-        // --- ส่วนแปลงวันที่ให้รองรับหลายรูปแบบ ---
-        let finalDate = birthInput;
-        if (birthInput.includes('/')) {
-            const parts = birthInput.split('/');
-            let y = parseInt(parts[2]);
-            if (y > 2400) y -= 543;
-            finalDate = `${y}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-        }
+    // save normalized
+    localStorage.setItem('userBirthdate', birthDate.toISOString().split('T')[0]);
 
-        const birthDate = new Date(finalDate);
-        if (isNaN(birthDate.getTime())) {
-            console.error("รูปแบบวันที่ผิดพลาด:", birthInput);
-            return;
-        }
-        localStorage.setItem('userBirthdate', finalDate);
-        }
+    const d = birthDate.getDay() + 1;
+    const m = birthDate.getMonth() + 1;
+    const y = (birthDate.getFullYear() % 12) + 1;
 
+    const points = Array.from({ length: 12 }, (_, i) => {
+        let val = (d + m + y + i) % 7;
+        return val === 0 ? 7 : val;
+    });
 
-        // สูตรคำนวณกราฟชีวิต
-        const d = (birthDate.getDay() + 1);
-        const m = (birthDate.getMonth() + 1);
-        const y = (birthDate.getFullYear() % 12) + 1;
+    renderLifeGraph(points);
+    renderLifeGraphTable(points);
 
-        let points = [];
-        for (let i = 0; i < 12; i++) {
-            let val = (d + m + y + i) % 7;
-            if (val === 0) val = 7;
-            points.push(val);
-        }
-
-        renderLifeGraph(points);
-        renderLifeGraphTable(points);
-        if(typeof navigateTo === "function") navigateTo('lifeGraphPage');
-    } else {
-        alert("🔮 ไม่พบข้อมูลวันเกิด กรุณากรอกข้อมูลก่อนครับ");
-        if(typeof navigateTo === "function") navigateTo('mainContent');
+    if (typeof navigateTo === "function") {
+        navigateTo('lifeGraphPage');
     }
 }
 
@@ -287,22 +285,29 @@ function calculateTransit(birthInput) {
 }
 
 function renderLifeGraph(points) {
-    const ctx = document.getElementById('lifeGraphCanvas').getContext('2d');
-    
-    // หากมีกราฟเก่าให้ลบออกก่อน (ต้องใช้ Chart.js)
-    if (window.myLifeChart) window.myLifeChart.destroy();
+
+    const canvas = document.getElementById('lifeGraphCanvas');
+    if (!canvas || typeof Chart === "undefined") {
+        console.warn("Chart not available");
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+
+    if (window.myLifeChart) {
+        window.myLifeChart.destroy();
+    }
 
     window.myLifeChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: LIFE_GRAPH_LABELS,
             datasets: [{
-                label: 'ระดับดวงชะตา (1-7)',
+                label: 'ดวงชะตา',
                 data: points,
                 borderColor: '#d4af37',
-                backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                backgroundColor: 'rgba(212,175,55,0.2)',
                 borderWidth: 3,
-                pointRadius: 5,
                 fill: true,
                 tension: 0.3
             }]
@@ -310,8 +315,9 @@ function renderLifeGraph(points) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
             scales: {
-                y: { min: 1, max: 7, ticks: { stepSize: 1 } }
+                y: { min: 1, max: 7 }
             }
         }
     });
@@ -333,21 +339,12 @@ function renderLifeGraphTable(points) {
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     const luckyNumbers = getLuckyNumbers(birthInput);
     const isLottoTime = (day >= 14 && day <= 16) || (day >= lastDayOfMonth - 2) || (day === 1);
-    
-    // คำนวณอายุย่าง (ปีไทยนับปีที่กำลังดำเนินอยู่)
-    let ageFull = today.getFullYear() - birthDate.getFullYear();
-    if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
-        ageFull--;
-    }
-    const ageStep = ageFull + 1; 
 
-    // หาช่องดวงจร (เริ่ม 0 = วาสนา)
-    const yearlySlot = (ageStep - 1) % 12; // รายปี
-
-    let monthDiff = (today.getMonth() - birthDate.getMonth() + 12) % 12;
-    const monthlySlot = (yearlySlot + monthDiff) % 12; // รายเดือน
-
-    const dailySlot = (monthlySlot + (today.getDate() - 1)) % 12; // รายวัน
+    const transit = calculateTransit(birthInput);
+    const yearlySlot = transit.yearly.slot;
+    const monthlySlot = transit.monthly.slot;
+    const dailySlot = transit.daily.slot;
+    const ageStep = transit.ageStep;
 
     // --- 2. เตรียมข้อมูล UI ---
     const icons = {
@@ -528,6 +525,11 @@ async function downloadLifeGraphImage(element) {
     }
 
     // สร้าง Header และ Footer สำหรับแบรนด์ในรูปภาพ
+    if (typeof html2canvas === "undefined") {
+        alert("ระบบสร้างภาพยังไม่พร้อมใช้งาน");
+        return;
+    }
+
     const brandingHeader = document.createElement('div');
     brandingHeader.innerHTML = `
         <div style="text-align: center; margin-bottom: 20px; color: #d4af37;">

@@ -1,92 +1,120 @@
 "use strict";
-// --- ฟังก์ชันหลักสำหรับเปิดหน้าและคำนวณ ---
+
+/**
+ * เปิดหน้าไฮไลท์ประจำวันและเตรียมข้อมูล
+ */
 function showDailyHighlightPage() {
-    // 1. ตั้งค่าวันที่ใน Input ให้เป็นวันนี้ (ป้องกันค่าว่าง)
-    const today = new Date().toISOString().split('T')[0];
+    // 1. ตั้งค่าวันที่ใน Input (ใช้เวลาท้องถิ่นแทน ISO เพื่อความแม่นยำของวันที่)
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    
     const picker = document.getElementById('highlightDatePicker');
-    if (picker) picker.value = today;
+    if (picker) {
+        picker.value = `${year}-${month}-${day}`;
+    }
     
-    // 2. เปลี่ยนหน้าไปที่หน้าแผนที่ฤกษ์
-    navigateTo('dailyHighlightPage');
+    // 2. เปลี่ยนหน้า
+    if (typeof window.navigateTo === "function") {
+        window.navigateTo('dailyHighlightPage');
+    }
     
-    // 3. สั่งวาดข้อมูลลงตารางทันที
+    // 3. วาดตาราง
     generateDailyMap();
 }
 
+/**
+ * สร้างตารางยามมงคลประจำวัน
+ */
 function generateDailyMap() {
-    const dateVal = document.getElementById('highlightDatePicker').value;
-    if (!dateVal) return;
-
-    const targetDate = new Date(dateVal);
-    const dayOfWeek = targetDate.getDay(); // 0 = อาทิตย์, 1 = จันทร์...
-    
-    // แสดงวันที่ภาษาไทยบนหัวข้อ
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('mapDateTitle').innerText = targetDate.toLocaleDateString('th-TH', options);
-
+    const picker = document.getElementById('highlightDatePicker');
     const dayContainer = document.getElementById('dayYarmList');
     const nightContainer = document.getElementById('nightYarmList');
+    const titleEl = document.getElementById('mapDateTitle');
+
+    if (!picker || !picker.value || !dayContainer || !nightContainer) return;
+
+    // ตรวจสอบว่ามีข้อมูลยามจากไฟล์อื่นโหลดมาหรือยัง
+    if (!window.YARM_CHART || !window.YARM_INFO) {
+        console.error("DailyHighlight: YARM_CHART or YARM_INFO is missing.");
+        return;
+    }
+
+    const targetDate = new Date(picker.value);
+    let dayOfWeek = targetDate.getDay(); 
     
+    // แสดงวันที่ภาษาไทย
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    if (titleEl) {
+        titleEl.innerText = targetDate.toLocaleDateString('th-TH', options);
+    }
+
     dayContainer.innerHTML = '';
     nightContainer.innerHTML = '';
 
     const timeLabels = [
         "06:00 - 07:30", "07:30 - 09:00", "09:00 - 10:30", "10:30 - 12:00",
-        "12:00 - 13:30", "13:30 - 15:00", "15:00 - 16:30", "16:30 - 18:00", // กลางวัน
+        "12:00 - 13:30", "13:30 - 15:00", "15:00 - 16:30", "16:30 - 18:00",
         "18:00 - 19:30", "19:30 - 21:00", "21:00 - 22:30", "22:30 - 00:00",
-        "00:00 - 01:30", "01:30 - 03:00", "03:00 - 04:30", "04:30 - 06:00"  // กลางคืน
+        "00:00 - 01:30", "01:30 - 03:00", "03:00 - 04:30", "04:30 - 06:00"
     ];
 
     // วาดกลางวัน 8 ยาม
     for (let i = 0; i < 8; i++) {
-        const starId = YARM_CHART.day[dayOfWeek][i];
+        const starId = window.YARM_CHART.day[dayOfWeek][i];
         dayContainer.appendChild(renderYarmRow(timeLabels[i], starId));
     }
 
-    // วาดกลางคืน 8 ยาม
+    // วาดกลางคืน 8 ยาม 
+    // หมายเหตุ: ตามหลักโหราศาสตร์ ตารางกลางคืนจะอิงตามวันปัจจุบันที่เลือก
     for (let i = 0; i < 8; i++) {
-        const starId = YARM_CHART.night[dayOfWeek][i];
+        const starId = window.YARM_CHART.night[dayOfWeek][i];
         nightContainer.appendChild(renderYarmRow(timeLabels[i + 8], starId));
     }
 }
 
-// --- ฟังก์ชันสำหรับสร้างแถวข้อมูล (เวอร์ชันปรับปรุงคะแนนดาว) ---
+/**
+ * สร้างแถวข้อมูล HTML ของแต่ละยาม
+ */
 function renderYarmRow(timeRange, starId) {
-    const info = YARM_INFO[starId];
-    const color = getStarColor(starId);
+    const info = window.YARM_INFO[starId];
+    // เรียกใช้ getStarColor จาก yarmPage.js (ตรวจสอบความพร้อม)
+    const color = typeof window.getStarColor === "function" ? window.getStarColor(starId) : "#ffd700";
     
-    // ปรับ Logic การให้คะแนนดาวตามความหมายใน yarmPage.js
-    let count = 4; // ค่าเริ่มต้น
-    
-    // กลุ่มมงคลสูง (อาทิตย์, จันทร์, พฤหัสบดี, ศุกร์)
-    if ([0, 1, 5, 6].includes(starId)) {
-        count = 5;
-    } 
-    // กลุ่มที่ต้องระวังเป็นพิเศษ (เสาร์, ราหู)
-    else if ([4, 7].includes(starId)) {
-        count = 3;
-    }
-    // กลุ่มยามพุธ (3) และ อังคาร (2) จะได้ 4 ดาวตามค่าเริ่มต้น
+    // Logic การให้คะแนนดาว
+    let count = 4;
+    if ([0, 1, 5, 6].includes(starId)) count = 5; // กลุ่มมงคลสูง
+    else if ([4, 7].includes(starId)) count = 3;  // กลุ่มควรระวัง
 
-    let stars = "";
-    for(let i=0; i<count; i++) stars += "⭐";
+    const stars = "⭐".repeat(count);
 
     const div = document.createElement('div');
     div.className = "yarm-row-mobile animate__animated animate__fadeIn";
-    div.style.borderLeftColor = color;
+    div.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-left: 5px solid ${color};
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 4px;
+        gap: 10px;
+    `;
     
     div.innerHTML = `
-        <div style="flex: 1.2;">
-            <div style="color: #aaa; font-size: 14px; margin-bottom: 2px;">
+        <div style="flex: 1; min-width: 120px;">
+            <div style="color: #aaa; font-size: 0.85rem; margin-bottom: 2px;">
                 <i class="far fa-clock"></i> ${timeRange}
             </div>
-            <div style="color: ${color}; font-size: 18px; font-weight: bold;">
+            <div style="color: ${color}; font-size: 1.1rem; font-weight: bold;">
                 ${info.name}
             </div>
-            <div style="font-size: 10px;">${stars}</div>
+            <div style="font-size: 0.7rem; letter-spacing: 2px;">${stars}</div>
         </div>
         <div style="flex: 2; text-align: right;">
-            <div style="color: #fff; font-size: 15px; font-weight: 500; line-height: 1.2;">
+            <div style="color: #eee; font-size: 0.9rem; font-weight: 500; line-height: 1.3;">
                 ${info.good}
             </div>
         </div>
@@ -94,75 +122,78 @@ function renderYarmRow(timeRange, starId) {
     return div;
 }
 
-
-
-// --- ฟังก์ชันเซฟรูปภาพ (เพิ่มพารามิเตอร์ event เพื่อความถูกต้อง) ---
+/**
+ * ดาวน์โหลดรูปภาพแผนที่ฤกษ์ประจำวัน
+ */
 async function downloadDailyMap(element) {
+    // ตรวจสอบว่ามี Library html2canvas หรือไม่
+    if (typeof html2canvas === "undefined") {
+        alert("ระบบไม่พบ Library สำหรับสร้างภาพ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต");
+        return;
+    }
+
     const area = document.getElementById('dailyMapCapture');
     if (!area) return;
 
-    let btn = element instanceof HTMLElement ? element : document.querySelector('.download-btn');
-    const originalText = btn ? btn.innerHTML : "";
+    const btn = element instanceof HTMLElement ? element : document.querySelector('.download-btn');
+    const originalContent = btn ? btn.innerHTML : "";
 
     if (btn) {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังดีไซน์ภาพสำหรับ Facebook...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังเตรียมภาพ...';
         btn.disabled = true;
     }
 
-    // 1. สร้าง Footer Element ชั่วคราว
+    // สร้าง Footer สำหรับใส่ในภาพ
     const footer = document.createElement('div');
     footer.id = 'temp-footer';
+    footer.style.cssText = `
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        color: #d4af37;
+    `;
     footer.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(212,175,55,0.3); color: #d4af37;">
-            <div style="font-size: 14px;">🔮 <strong>สยามโหรามงคล</strong> | เว็บดูดวงและฤกษ์มงคล</div>
-            <div style="font-size: 12px; opacity: 0.8;">Generated by นายพิรุฬห์ บุญเพ็ชร์</div>
-        </div>
+        <div style="font-size: 14px;">🔮 <strong>สยามโหรามงคล</strong></div>
+        <div style="font-size: 11px; opacity: 0.7;">ลิขสิทธิ์ข้อมูลตามตำราทักษาพยากรณ์</div>
     `;
 
     try {
-        // 2. ปรับแต่งพื้นที่ก่อนแคป
         const originalStyle = area.style.cssText;
-        area.style.width = "500px"; 
-        area.style.padding = "30px"; // เพิ่มพื้นที่ขอบให้ดูแพง
-        area.style.background = "#1a1a1a";
         
-        // ใส่ Footer เข้าไปใน Area ที่จะแคป
+        // ปรับแต่ง Area ให้เหมาะสมกับการเป็นรูปภาพ (Fixed Width)
+        area.style.width = "500px";
+        area.style.padding = "25px";
+        area.style.background = "#121212"; // พื้นหลังเข้มเพื่อให้ตัวหนังสือชัดเจน
         area.appendChild(footer);
 
-        const options = {
-            backgroundColor: '#1a1a1a',
-            scale: 2.2, 
+        const canvas = await html2canvas(area, {
+            backgroundColor: '#121212',
+            scale: 2, // เพิ่มความชัด
             useCORS: true,
-            allowTaint: false,
-            scrollY: -window.scrollY,
-            windowWidth: 500
-        };
-
-        const canvas = await html2canvas(area, options);
+            logging: false,
+            width: 500
+        });
         
-        // 3. คืนค่าเดิมทันทีหลังจากแคปเสร็จ
+        // คืนค่า
         area.removeChild(footer);
         area.style.cssText = originalStyle;
 
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            const dateTitle = document.getElementById('mapDateTitle')?.innerText || 'Daily';
-            
-            link.download = `ฤกษ์มงคล_Facebook_${dateTitle.replace(/\s+/g, '_')}.png`;
-            link.href = url;
-            link.click();
-            
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-        }, 'image/png', 0.9);
+        // ดาวน์โหลด
+        const dateTitle = document.getElementById('mapDateTitle')?.innerText || 'Daily';
+        const link = document.createElement('a');
+        link.download = `ฤกษ์มงคล_${dateTitle.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
 
     } catch (e) {
         console.error("Capture Error:", e);
-        alert("ขออภัย! ระบบสร้างภาพขัดข้อง: " + e.message);
+        alert("ไม่สามารถสร้างรูปภาพได้: " + e.message);
     } finally {
         if (btn) {
-            btn.innerHTML = originalText;
+            btn.innerHTML = originalContent;
             btn.disabled = false;
         }
     }

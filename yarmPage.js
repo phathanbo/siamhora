@@ -1,6 +1,9 @@
 "use strict";
 
-// ตารางการเดินยามอัฏฐกาล (0 = อาทิตย์, 1 = จันทร์, ..., 6 = เสาร์)
+/**
+ * ตารางการเดินยามอัฏฐกาล (0 = อาทิตย์, 1 = จันทร์, ..., 6 = เสาร์)
+ * 7 = ยามราหู (ยามกลางคืนหรือยามที่ 8 ในบางตำรา)
+ */
 window.YARM_CHART = {
     day: [
         [0, 6, 4, 2, 7, 5, 3, 0], // อาทิตย์
@@ -33,34 +36,41 @@ const YARM_INFO = {
     7: { name: "ยามราหู", trait: "พลิกแพลง กลลวง", good: "งานกลางคืน, งานเสี่ยงโชค", bad: "การเดินทางไกล, สัญญาสำคัญ" }
 };
 
-const STAR_NAMES = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "เสาร์", "พฤหัสบดี", "ศุกร์", "ราหู"];
-
+/**
+ * คำนวณยามจาก Input
+ */
 function calculateYarm() {
     const daySelect = document.getElementById('yarmDaySelect');
     const timeInput = document.getElementById('yarmTimeInput');
+    const resDiv = document.getElementById('yarmResult');
     
-    if (!timeInput.value) { alert("กรุณาระบุเวลาครับ"); return; }
+    if (!timeInput || !timeInput.value) { 
+        alert("กรุณาระบุเวลาครับ"); 
+        return; 
+    }
     
     const day = parseInt(daySelect.value);
     const [hours, mins] = timeInput.value.split(':').map(Number);
     const totalMins = hours * 60 + mins;
     
+    // คำนวณหาตำแหน่งยาม (ยามละ 90 นาที)
     let yarmIndex = 0;
     let isDay = true;
     let startMins = 0;
 
-    if (totalMins >= 360 && totalMins < 1080) { // กลางวัน 06.00 - 18.00
+    if (totalMins >= 360 && totalMins < 1080) { // กลางวัน 06:00 - 17:59
         yarmIndex = Math.floor((totalMins - 360) / 90);
         isDay = true;
         startMins = 360 + (yarmIndex * 90);
-    } else { // กลางคืน 18.00 - 06.00
+    } else { // กลางคืน 18:00 - 05:59
         isDay = false;
         let nightMins = totalMins < 360 ? totalMins + 1440 : totalMins;
         yarmIndex = Math.floor((nightMins - 1080) / 90);
+        // ตรวจสอบ Index ไม่ให้เกินขอบเขต (ยามที่ 8 คือ index 7)
+        yarmIndex = Math.min(yarmIndex, 7);
         startMins = 1080 + (yarmIndex * 90);
     }
 
-    // คำนวณเวลาเริ่มและสิ้นสุดออกมาเป็น Format HH:mm
     const formatTime = (total) => {
         let h = Math.floor((total % 1440) / 60);
         let m = total % 60;
@@ -68,109 +78,133 @@ function calculateYarm() {
     };
 
     const timeRangeStr = `${formatTime(startMins)} - ${formatTime(startMins + 90)}`;
-    const starId = isDay ? YARM_CHART.day[day][yarmIndex] : YARM_CHART.night[day][yarmIndex];
+    const starId = isDay ? window.YARM_CHART.day[day][yarmIndex] : window.YARM_CHART.night[day][yarmIndex];
     const info = YARM_INFO[starId];
     const starColor = getStarColor(starId);
 
-    const resDiv = document.getElementById('yarmResult');
-    resDiv.style.display = 'block';
-    
-    resDiv.innerHTML = `
-        <div class="p-4 bg-dark-soft rounded animate__animated animate__fadeInUp" style="border-left: 5px solid ${starColor}; background: rgba(255,255,255,0.02);">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <h4 class="mb-1" style="color: ${starColor}">✨ ${info.name} (${isDay ? 'กลางวัน' : 'กลางคืน'})</h4>
-                    <p class="text-gold font-weight-bold mb-3">🕒 ช่วงเวลา: ${timeRangeStr} น.</p>
+    if (resDiv) {
+        resDiv.style.display = 'block';
+        resDiv.innerHTML = `
+            <div class="p-4 bg-dark-soft rounded animate__animated animate__fadeInUp" style="border-left: 5px solid ${starColor}; background: rgba(255,255,255,0.02);">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <div>
+                        <h4 class="mb-1" style="color: ${starColor}">✨ ${info.name} (${isDay ? 'กลางวัน' : 'กลางคืน'})</h4>
+                        <p class="text-gold font-weight-bold mb-3">🕒 ช่วงเวลา: ${timeRangeStr} น.</p>
+                    </div>
+                    <span class="badge badge-outline mb-2" style="border: 1px solid ${starColor}; color: ${starColor}">ยามที่ ${yarmIndex + 1}</span>
                 </div>
-                <span class="badge badge-outline" style="border: 1px solid ${starColor}; color: ${starColor}">ยามที่ ${yarmIndex + 1}</span>
-            </div>
-            
-            <div class="mb-3">
-                <b class="text-white-50">จริตยาม:</b> <span class="text-white">${info.trait}</span>
-            </div>
-            <hr style="border-top: 1px solid rgba(255,255,255,0.1)">
-            <div class="row text-center mt-3">
-                <div class="col-6">
-                    <div class="p-2 border border-success rounded bg-dark" style="height: 100%;">
-                        <small class="text-success d-block mb-1 font-weight-bold">✅ เหมาะสำหรับ</small>
-                        <span class="small text-white-50">${info.good}</span>
+                
+                <div class="mb-3">
+                    <b class="text-white-50">จริตยาม:</b> <span class="text-white">${info.trait}</span>
+                </div>
+                <hr style="border-top: 1px solid rgba(255,255,255,0.1)">
+                <div class="row text-center g-2 mt-3">
+                    <div class="col-6">
+                        <div class="p-2 border border-success rounded bg-dark h-100">
+                            <small class="text-success d-block mb-1 font-weight-bold">✅ เหมาะสำหรับ</small>
+                            <span class="small text-white-50">${info.good}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border border-danger rounded bg-dark h-100">
+                            <small class="text-danger d-block mb-1 font-weight-bold">⚠️ ควรระวัง</small>
+                            <span class="small text-white-50">${info.bad}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="p-2 border border-danger rounded bg-dark" style="height: 100%;">
-                        <small class="text-danger d-block mb-1 font-weight-bold">⚠️ ควรระวัง</small>
-                        <span class="small text-white-50">${info.bad}</span>
-                    </div>
-                </div>
             </div>
-        </div>
-    `;
+        `;
+    }
 }
 
 function getStarColor(starId) {
     const colors = ["#e63946", "#ffb703", "#ff85a1", "#2a9d8f", "#7209b7", "#f4a261", "#a2d2ff", "#ffffff"];
-    return colors[starId];
+    return colors[starId] || "#ffffff";
 }
 
-// อัปเดตยามปัจจุบันอัตโนมัติ
-// ปรับปรุงฟังก์ชันเดิมให้ครอบคลุมการแสดงผลบน Navbar
+/**
+ * อัปเดตยามปัจจุบัน (รองรับการข้ามวันตามหลักโหราศาสตร์)
+ */
 function updateCurrentYarm() {
     const now = new Date();
-    const day = now.getDay(); 
+    let day = now.getDay(); 
     const h = now.getHours();
     const m = now.getMinutes();
     const total = h * 60 + m;
 
+    // ตามหลักยามอัฏฐกาล: ถ้ายังไม่ 06:00 น. ให้ถือว่าเป็นวันเก่า (เช่น ตี 2 วันจันทร์ คือ กลางคืนวันอาทิตย์)
+    if (total < 360) {
+        day = day === 0 ? 6 : day - 1;
+    }
+
     let yarmIndex, isDay;
     if (total >= 360 && total < 1080) {
-        yarmIndex = Math.floor((total - 360) / 90); isDay = true;
+        yarmIndex = Math.floor((total - 360) / 90); 
+        isDay = true;
     } else {
         let nTotal = total < 360 ? total + 1440 : total;
-        yarmIndex = Math.floor((nTotal - 1080) / 90); isDay = false;
+        yarmIndex = Math.floor((nTotal - 1080) / 90); 
+        isDay = false;
     }
+    
+    yarmIndex = Math.min(yarmIndex, 7);
 
-    const starId = isDay ? YARM_CHART.day[day][yarmIndex] : YARM_CHART.night[day][yarmIndex];
-    const yarmName = YARM_INFO[starId].name;
+    const starId = isDay ? window.YARM_CHART.day[day][yarmIndex] : window.YARM_CHART.night[day][yarmIndex];
+    const info = YARM_INFO[starId];
 
-    // ส่งชื่อยามไป Navbar
+    // อัปเดต Navbar
     const navYarm = document.getElementById('navYarmName');
-    if (navYarm) navYarm.innerText = yarmName;
+    if (navYarm) navYarm.innerText = info.name;
 
-    // อัปเดตวงกลม "ยามปัจจุบัน" ในหน้า Page (ถ้าเปิดอยู่)
+    // อัปเดต UI ในหน้า Page
     const yarmNowName = document.getElementById('yarmNowName');
     if (yarmNowName) {
-        yarmNowName.innerText = yarmName;
+        yarmNowName.innerText = info.name;
         yarmNowName.style.color = getStarColor(starId);
-        document.getElementById('yarmNowTime').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} น.`;
+    }
+    
+    const yarmNowTime = document.getElementById('yarmNowTime');
+    if (yarmNowTime) {
+        yarmNowTime.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} น.`;
     }
 }
 
+/**
+ * ฟังก์ชันทางลัด: นำทางไปหน้ายามและคำนวณเวลาปัจจุบันทันที
+ */
 function quickPredictYarm() {
-    navigateTo('yarmPage');
+    if (typeof window.navigateTo === "function") {
+        window.navigateTo('yarmPage');
+    }
 
     const now = new Date();
-    const day = now.getDay(); 
     const h = now.getHours().toString().padStart(2, '0');
     const m = now.getMinutes().toString().padStart(2, '0');
-    const currentTimeStr = `${h}:${m}`;
-
-    // บังคับเปลี่ยนค่าใน Form
-    const daySelect = document.getElementById('yarmDaySelect');
-    const timeInput = document.getElementById('yarmTimeInput');
-
-    if (daySelect && timeInput) {
-        daySelect.value = day; 
-        timeInput.value = currentTimeStr;
-        // เรียกคำนวณทันที
-        calculateYarm();
-    }
-
+    
+    // หน่วงเวลาเล็กน้อยเพื่อให้ DOM ของหน้า yarmPage โหลดเสร็จก่อน
     setTimeout(() => {
-        document.getElementById('yarmResult')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 400);
+        const daySelect = document.getElementById('yarmDaySelect');
+        const timeInput = document.getElementById('yarmTimeInput');
+
+        if (daySelect && timeInput) {
+            // เช็คการข้ามวัน
+            let day = now.getDay();
+            if ((now.getHours() * 60 + now.getMinutes()) < 360) {
+                day = day === 0 ? 6 : day - 1;
+            }
+            
+            daySelect.value = day; 
+            timeInput.value = `${h}:${m}`;
+            calculateYarm();
+            
+            document.getElementById('yarmResult')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 300);
 }
 
+// เริ่มต้นระบบ
 document.addEventListener('DOMContentLoaded', () => {
     updateCurrentYarm();
-    setInterval(updateCurrentYarm, 60000); // อัปเดตทุก 10 วินาที
+    // อัปเดตทุก 1 นาที (60000 ms)
+    setInterval(updateCurrentYarm, 60000);
 });

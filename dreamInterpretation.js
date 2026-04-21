@@ -14,7 +14,7 @@ const dreamDatabase = {
   "น้ำท่วม": {"m": "น้ำท่วมบ้านหรือตัวเองมักหมายถึงการโยกย้ายที่อยู่หรือเดินทางไกล อาจมีข่าวการย้ายงานหรือย้ายบ้าน", "n": "07 70 37 73"},
   "น้ำใส": {"m": "น้ำใสเป็นมงคลมาก หมายถึงโชคลาภไหลมาเทมา การงานการเงินราบรื่น จะมีข่าวดีหรือได้รับการช่วยเหลือ", "n": "02 20 52 25"},
   "น้ำขุ่น": {"m": "น้ำขุ่นบ่งบอกถึงอุปสรรคและความวุ่นวาย อาจมีปัญหาในครอบครัว การงาน หรือความสัมพันธ์", "n": "02 20 82 28"},
-  "ทะเลาะ": {"m": "ทะเลาะกับใครสักคนหมายถึงการโยกย้ายงานหรือเปลี่ยนแปลงในทางไม่ดี อาจมีปัญหาขัดแย้งกับคนใกล้ชิด", "n": "79 76 719"},
+  "ทะเลาะ": {"m": "ทะเลาะกับใครสักคนหมายถึงการโยกย้ายงานหรือเปลี่ยนแปลงในทางไม่ดี อาจมีปัญหาขัดแย้งกับคนใกล้ชิด", "n": "79 76 71 97"},
   "แมว": {"m": "เห็นแมวมักเกี่ยวข้องกับผู้หญิงหรือเรื่องเจ้าชู้ อาจมีคนมาจีบหรือมีเรื่องผู้หญิงเข้ามาเกี่ยวข้อง", "n": "04 40 14 41"},
   "หมา": {"m": "เห็นหมาหมายถึงเพื่อนหรือคนใกล้ชิดอาจทรยศหรือหักหลัง ควรระวังคนที่คบหา", "n": "11 44 74"},
   "ไก่": {"m": "เห็นไก่เป็นสัญญาณโชคลาภเล็กน้อยหรือข่าวดี อาจได้เงินเล็ก ๆ น้อย ๆ หรือมีคนนำข่าวดีมา", "n": "01 10 51 15"},
@@ -284,6 +284,11 @@ function interpretDream() {
     const meaningEl = document.getElementById('dreamMeaning');
     const numbersEl = document.getElementById('dreamNumbers');
 
+    if (!resultDiv || !meaningEl || !numbersEl) {
+        console.error("⚠️ interpretDream: ไม่พบ Element ที่จำเป็น (dreamResult / dreamMeaning / dreamNumbers)");
+        return;
+    }
+
     if (!keyword) {
         alert("🔍 กรุณาพิมพ์หรือเลือกสิ่งที่ฝันเห็นก่อนนะครับ");
         return;
@@ -309,7 +314,7 @@ function interpretDream() {
         // อัปเดตช่อง input ให้ตรงกับคำที่เจอในฐานข้อมูล (เพื่อความชัดเจน)
         input.value = matchedKey;
         
-        meaningEl.innerHTML = `<strong>ฝันเห็น ${matchedKey}:</strong> ${found.m}`;
+        meaningEl.innerHTML = `<strong>ฝันเห็น ${matchedKey}</strong> <br> ${found.m}`;
         numbersEl.innerHTML = found.n 
             ? `🔢 เลขเด็ด: <span class="text-danger h3" style="font-weight: bold;">${found.n}</span>` 
             : "❌ ไม่มีเลขเด็ดสำหรับคำนี้";
@@ -346,21 +351,24 @@ async function downloadDreamImage(element) {
     // สร้าง Footer สำหรับแบรนด์
     const footer = document.createElement('div');
     footer.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(212,175,55,0.3); color: #d4af37;">
-            <div style="font-size: 16px;">🔮 <strong>สยามโหรามงคล</strong></div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(212,175,55,0.3); color: #d4af37;">            
             <div style="font-size: 12px; opacity: 0.8;">เลขเด็ดแม่นๆ จากตำราทำนายฝัน</div>
         </div>
     `;
 
+    // เก็บ style เดิมและ flag ว่า append footer ไปแล้วหรือยัง
+    const originalStyle = area.style.cssText;
+    let footerAppended = false;
+
     try {
-        const originalStyle = area.style.cssText;
         // ปรับแต่งให้ภาพออกมาเป็นจัตุรัสสวยๆ
         area.style.width = "500px";
         area.style.padding = "40px";
         area.style.background = "#1a1a1a";
         area.style.borderRadius = "0px"; // ถ่ายรูปแล้วขอบเหลี่ยมจะดูเต็มกว่า
-        
+
         area.appendChild(footer);
+        footerAppended = true;
 
         const options = {
             backgroundColor: '#6b6868',
@@ -372,27 +380,32 @@ async function downloadDreamImage(element) {
         };
 
         const canvas = await html2canvas(area, options);
-        
-        area.removeChild(footer);
-        area.style.cssText = originalStyle;
 
-        canvas.toBlob((blob) => {
-            if (!blob) return;
+        // แปลง toBlob เป็น Promise เพื่อให้ await ได้ถูกต้อง
+        // (ป้องกัน finally รันก่อน download เสร็จ)
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.9));
+
+        if (blob) {
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             const dreamWord = document.querySelector('#dreamResult strong')?.innerText || 'ทำนายฝัน';
-            
+
             link.download = `เลขเด็ด_${dreamWord.replace(/[:\s]+/g, '_')}.png`;
             link.href = url;
             link.click();
-            
+
             setTimeout(() => URL.revokeObjectURL(url), 100);
-        }, 'image/png', 0.9);
+        }
 
     } catch (e) {
         console.error("Dream Share Error:", e);
         alert("ไม่สามารถสร้างภาพได้: " + e.message);
     } finally {
+        // คืนค่าเดิมเสมอ ไม่ว่าจะสำเร็จหรือ error
+        if (footerAppended && area.contains(footer)) {
+            area.removeChild(footer);
+        }
+        area.style.cssText = originalStyle;
         if (btn) {
             btn.innerHTML = originalText;
             btn.disabled = false;

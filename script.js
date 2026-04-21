@@ -372,19 +372,11 @@ function getYamPrediction(yamIndex, period) {
 }
 
 function goBack() {
-    // 1. ใช้ฟังก์ชันกลางที่เราสร้างไว้ เพื่อสลับหน้าและบันทึกลง localStorage ทันที
-    // โดยส่ง ID ของหน้าหลักที่คุณต้องการ ('mainContent')
-    navigateTo('mainContent'); 
-
-    // 2. จัดการสถานะพิเศษอื่นๆ (คงไว้จากของเดิม)
-    isViewingHistory = false;     
+    navigateTo('mainContent');
 }
 
 function goBackend() {
-    // ซ่อนหน้าปัจจุบัน
-    document.getElementById('auspiciousPage').classList.add('hidden');
-    document.getElementById('profilePage').classList.add('hidden');
-    document.getElementById('mainContent').classList.remove('hidden');
+    navigateTo('mainContent');
 }
 
 // --- ฟังก์ชันบันทึกรูปภาพ ---
@@ -408,11 +400,14 @@ function downloadImage() {
 
 function downloadImageFromProfile() {
     const area = document.getElementById('captureArea');
+    if (!area) return;
+    const nameEl = document.getElementById('profName');
+    const name = nameEl ? nameEl.innerText : 'profile';
     html2canvas(area, { backgroundColor: "#fdf6e3", scale: 2 }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = `Profile${document.getElementById('profName').innerText}.png`;
-    link.href = canvas.toDataURL();
-    link.click();
+        const link = document.createElement('a');
+        link.download = `Profile${name}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
     });
 }
 
@@ -519,11 +514,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // อัปเดตแถบสีมงคล
     if (typeof updateHeaderLuckyBar === 'function') updateHeaderLuckyBar();
+
+    // โหลดธีมเก่า (ต้องทำหลัง DOM พร้อม)
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+        const icon = document.getElementById('themeIcon');
+        if (icon) icon.classList.replace('fa-moon', 'fa-sun');
+    }
 });
 
 // ฟังก์ชันเสริมสำหรับเรียกใช้ทั่วไป
 function saveBirthdateToStorage() {
-    const birthdate = document.getElementById('birthdate').value;
+    const field = document.getElementById('birthdate');
+    if (!field) return;
+    const birthdate = field.value;
     if (birthdate) {
         localStorage.setItem('userBirthdate', birthdate);
     }
@@ -542,17 +546,13 @@ function toggleTheme() {
     }    
     localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');}
 
-// โหลดธีมเก่า
-if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light-mode');
-    document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
-}
+// โหลดธีมเก่า — ทำใน DOMContentLoaded เพื่อให้ element พร้อมก่อน
 
 // เพิ่มไว้ท้ายไฟล์ script.js เพื่อให้ไฟล์อื่นๆ (Module) เรียกใช้ได้
 window.getDayPrediction = getDayPrediction;
 window.getMonthPrediction = getMonthPrediction;
 window.getZodiacPrediction = getZodiacPrediction;
-window.getYarmPrediction = getYarmPrediction;
+window.getYarmPrediction = getYamPrediction;
 window.getDayName = getDayName;
 // เพิ่มฟังก์ชันอื่นๆ ที่คุณต้องการให้ไฟล์อื่นเรียกใช้ได้ลงไปในลักษณะนี้
 
@@ -579,10 +579,7 @@ async function captureCustomArea(element, fileName) {
     link.click();
 }
 
-window.onload = function() {
-    const savedPage = localStorage.getItem('currentPage') || 'mainContent';
-    navigateTo(savedPage);
-};
+
 
 // --- ส่วนดักจับปุ่มย้อนกลับของ Browser ---
 window.onpopstate = function(event) {
@@ -596,7 +593,7 @@ window.onpopstate = function(event) {
 
     // 3. ถ้าสุดท้ายแล้วไม่มีจริงๆ (หน้าแรกสุด) ค่อยไป mainpage
     if (!pageId || pageId === "") {
-        pageId = 'mainpage';
+        pageId = 'mainContent';
     }
 
     console.log("Navigation Change to:", pageId);

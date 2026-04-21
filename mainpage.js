@@ -1,6 +1,5 @@
 "use strict";
 
-// เพิ่ม 'ascendantPage' และ 'auspiciousPage' เข้าไปในรายการ
 const APP_MENU = [
     { id: 'ascendantPage', title: 'คำนวณลัคนา', icon: 'fa-star-and-crescent', color: '#d4af37' },
     { id: 'auspiciousPage', title: 'ปฏิทินฤกษ์มงคล', icon: 'fa-calendar-check', color: '#d4af37' },
@@ -20,7 +19,6 @@ const APP_MENU = [
     { id: 'birth-fortune', title: 'พยากรณ์วันเกิด', icon: 'fa-birthday-cake', color: '#d4af37' },
     { id: 'auspicious-day', title: 'วันมงคลประจำเดือน', icon: 'fa-calendar-day', color: '#d4af37' },
     { id: 'ubakong-yarm', title: 'ฤกษ์ดีประจำวัน', icon: 'fa-clock', color: '#d4af37' },
-    { id: 'travel-rites', title: 'ฤกษ์ยาตราและทิศผีหลวง', icon: 'fa-chart-bar', color: '#d4af37' },
     { id: 'dailyTabooPage', title: 'ข้อห้ามประจำวัน', icon: 'fa-ban', color: '#d4af37' },
     { id: 'package', title: 'ระดับสมาชิก', icon: 'fa-file-import', color: '#d4af37' },
     { id: 'promchart-section', title: 'ผังโหราศาสตร์', icon: 'fa-chart-pie', color: '#d4af37' },
@@ -29,9 +27,8 @@ const APP_MENU = [
     { id: 'sompong-wealth', title: 'สมพงศ์มหาสมบัติ', icon: 'fa-coins', color: '#d4af37' },
     { id: 'climate-section', title: 'เกณฑ์พิรุณศาสตร์และชะตาโลก', icon: 'fa-cloud-showers-heavy', color: '#d4af37' },
     { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 9', icon: 'fa-layer-group', color: '#d4af37' },
-    { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 9 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' }
-
-
+    { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 9 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' },
+    { id: 'compatibilityPage', title: 'เช็คดวงคู่', icon: 'fa-heart', color: '#d4af37' },
 ];
 
 const UserProfile = {

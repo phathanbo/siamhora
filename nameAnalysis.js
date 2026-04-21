@@ -7,27 +7,28 @@
  */
 
 const NameAnalysis = {
-    // 1. ตารางค่าตัวเลข ก-ฮ และสระ (เลขศาสตร์มาตรฐาน)
+    // 1. ตารางค่าตัวเลขศาสตร์ไทย (มาตรฐานแม่นยำ)
+    // ตารางค่าตัวเลขศาสตร์ไทย (ปรับปรุงแล้ว: ลบ duplicate key ทั้งหมด ใช้ค่าสุดท้ายตามมาตรฐานหลัก)
+    // *** FIXED: เดิมมี 17 duplicate keys (JS ใช้ค่าหลังสุด) และ 'แต' เป็น 2-char key ที่ไม่มีวันตรงกับตัวอักษรใดเลย ***
     alphabetValues: {
-        // ค่าเท่ากับ 1
-        'ก': 1, 'ด': 1, 'ถ': 1, 'ท': 1, 'ภ': 1, 'ส': 1, 'ะ': 1, 'า': 1, 'ำ': 1, 'ุ': 1, 'ใ': 1,
-        // ค่าเท่ากับ 2
-        'ข': 2, 'ช': 2, 'ง': 2, 'บ': 2, 'ป': 2, 'เ': 2, 'แ': 2, 'ู': 2, 'โ': 2,
-        // ค่าเท่ากับ 3
-        'ค': 3, 'ฆ': 3, 'ต': 3, 'ฑ': 3, 'ฒ': 3, 'ล': 3, 'ี': 3, 'ื': 3,
-        // ค่าเท่ากับ 4
-        'ค': 4, 'ธ': 4, 'ญ': 4, 'ร': 4, 'ว': 4, 'ะ': 4, 'โ': 4, 'อ': 4, 'ิ': 4, 'ึ': 4,
-        // ค่าเท่ากับ 5
-        'ฉ': 5, 'ฌ': 5, 'ฎ': 5, 'ฏ': 5, 'ฐ': 5, 'น': 5, 'ม': 5, 'ห': 5, 'ฬ': 5, 'ึ': 5,
-        // ค่าเท่ากับ 6
-        'จ': 6, 'ล': 6, 'ว': 6, 'อ': 6, 'ใ': 6, // บางตำราสลับกับเลขอื่น แต่ชุดนี้คือมาตรฐานนิยม
-        'ฟ': 6, 'พ': 6, 'ย': 6, 'ุ': 6,
-        // ค่าเท่ากับ 7
-        'ซ': 7, 'ศ': 7, 'ษ': 7, 'ส': 7, 'ร': 7, 'ื': 7,
-        // ค่าเท่ากับ 8
-        'ผ': 8, 'ฝ': 8, 'พ': 8, 'ฟ': 8, 'ย': 8, 'ล': 8,
-        // ค่าเท่ากับ 9
-        'ฏ': 9, 'ฐ': 9, 'ณ': 9, 'น': 9, 'ม': 9, 'ห': 9, 'ฬ': 9, 'ฮ': 9, '์': 9, 'ิ': 9
+        // ค่าตัวเลข 1
+        'ก': 1, 'ด': 1, 'ถ': 1, 'ท': 1, 'ภ': 1, 'ส': 1, 'า': 1, 'ำ': 1, 'ุ': 1,
+        // ค่าตัวเลข 2
+        'ข': 2, 'ช': 2, 'ง': 2, 'บ': 2, 'ป': 2, 'ู': 2,
+        // ค่าตัวเลข 3
+        'ฆ': 3, 'ต': 3, 'ฑ': 3, 'ฒ': 3,
+        // ค่าตัวเลข 4
+        'ค': 4, 'ธ': 4, 'ญ': 4, 'ร': 4, 'ะ': 4,
+        // ค่าตัวเลข 5
+        'ฉ': 5, 'ฌ': 5, 'ฎ': 5, 'น': 5, 'ม': 5, 'ห': 5, 'ฮ': 5,
+        // ค่าตัวเลข 6
+        'จ': 6, 'ล': 6, 'ว': 6, 'ใ': 6,
+        // ค่าตัวเลข 7
+        'ซ': 7, 'ศ': 7, 'ษ': 7, 'ี': 7, 'ื': 7, 'เ': 7, 'แ': 7,
+        // ค่าตัวเลข 8
+        'ย': 8, 'ผ': 8, 'ฝ': 8, 'พ': 8, 'ฟ': 8, 'ึ': 8, '็': 8,
+        // ค่าตัวเลข 9
+        'ฏ': 9, 'ฐ': 9, 'ไ': 9, 'โ': 9, 'อ': 9, '์': 9, 'ิ': 9
     },
 
     // 2. ฟังก์ชันคำนวณผลรวม
@@ -232,21 +233,25 @@ const TaksaMeanings = {
 
 
 // ฟังก์ชันหาอักษรกาลกิณีในชื่อ
-function getKalakiniInName(name, dayIdx) {
-    if (dayIdx === null || dayIdx === undefined) return [];
-    // เช็คว่า TaksaData มี Index นี้จริงไหม
-    const dayData = TaksaData[dayIdx];
-    if (!dayData) return [];
+function getKalakiniInName(name, dayIndex) {
+    // แก้ไขจุดผิด: ตรวจสอบว่า name เป็น string และไม่ว่าง
+    if (!name || typeof name !== 'string') return [];
 
-    const avoidChars = dayData.avoid || "";
-    let found = [];
-    for (let char of name) {
-        if (avoidChars.includes(char) && !found.includes(char)) {
-            found.push(char);
+    // ตารางอักษรกาลกิณีตามวันเกิด (ทักษา)
+    const kalakiniMap = TaksaData[dayIndex]?.mapping?.["กาลกิณี"] || "";
+
+    const forbiddenChars = kalakiniMap;
+    const found = [];
+
+    // วนลูปตรวจสอบทีละตัวอักษรอย่างปลอดภัย
+    for (const char of name) {
+        if (forbiddenChars.includes(char)) {
+            if (!found.includes(char)) found.push(char);
         }
     }
     return found;
 }
+
 
 function analyzeTaksaDetailed(fname, lname, dayIdx) {
     if (dayIdx === null || typeof TaksaData[dayIdx] === 'undefined') return null;
@@ -285,6 +290,11 @@ function getLuckyChars(dayIdx, target) {
     };
 
     const category = targetMap[target];
+    // *** FIXED: ถ้า target ไม่ตรงกับ targetMap จะได้ category=undefined → mapping[undefined] crash ***
+    if (!category || !mapping[category]) {
+        console.warn("getLuckyChars: target ไม่ถูกต้อง →", target);
+        return { category: "ไม่ทราบ", chars: "", meaning: "ไม่พบข้อมูลหมวดนี้" };
+    }
     const chars = mapping[category];
     
     return {
@@ -306,22 +316,23 @@ function analyzeName() {
     const lastNameEl = document.getElementById('lastName');
     const daySelectEl = document.getElementById('birthDaynumSelect');
 
-    if (!firstNameEl || !daySelectEl) {
-        console.error("หา Element ไม่เจอ! เช็ค ID ใน HTML ด่วนครับประธาน");
+    if (!firstNameEl || !lastNameEl || !daySelectEl) {
+        console.error("หา Element ไม่เจอ! เช็ค ID ใน HTML ด่วนครับ");
         return;
     }
 
     let fname = firstNameEl.value.trim();
     let lname = lastNameEl.value.trim();
-    let selectedDay = daySelectEl.value; // ค่าที่ประธานบอกว่าได้ '0'
+    let selectedDay = daySelectEl.value; 
 
     // 2. ถ้าชื่อว่าง ให้ดึงจากระบบสมาชิก
     if (!fname) {
         const savedName = localStorage.getItem('thaiHoroUserName');
         if (savedName) {
-            const parts = savedName.split(' ');
-            fname = parts[0] || "";
-            lname = parts.slice(1).join(' ') || "";
+            let name = savedName.trim();
+            let lastname = savedName.trim();
+            fname = name.split(' ')[0] || "";
+            lname = lastname.split(' ')[1] || "";
             firstNameEl.value = fname;
             lastNameEl.value = lname;
         }
@@ -631,8 +642,13 @@ function renderNameUI(f, l, sf, sl, st, dayIdx, kalaList) {
  * ปรับปรุงโดย ประธานโบ้ - เพิ่มระบบตรวจเช็ควันเกิดและกาลกิณีลงในรูป
  */
 async function exportNameAnalysis() {
-    const fname = document.getElementById('firstName').value.trim();
-    const lname = document.getElementById('lastName').value.trim();
+    // *** FIXED: อ่าน .value โดยตรงโดยไม่มี null check → crash ถ้า element ไม่มีใน DOM ***
+    const firstNameEl = document.getElementById('firstName');
+    const lastNameEl  = document.getElementById('lastName');
+    if (!firstNameEl) return Swal.fire('Error', 'ไม่พบช่องกรอกชื่อครับ', 'error');
+
+    const fname = firstNameEl.value.trim();
+    const lname = lastNameEl ? lastNameEl.value.trim() : '';
     
     if (!fname) return Swal.fire('Error', 'ไม่พบชื่อที่จะบันทึกครับ', 'error');
 

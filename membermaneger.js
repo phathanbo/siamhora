@@ -96,7 +96,7 @@ function updateAllMemberSelectors(history) {
             const option = document.createElement('option');
             // สำคัญ: เราจะเก็บข้อมูลวันที่ไว้ใน value เพื่อให้ฟังก์ชันอื่นดึงไปใช้ง่ายๆ
             option.value = member.birthdate || "";
-            option.textContent = member.name;
+            option.textContent = `${member.memberId ? `${member.memberId} - ` : ''}${member.name}${member.lastName ? ` ${member.lastName}` : ''}`;
             // ถ้ามีข้อมูลอายุ/วันที่ ให้เก็บไว้ใน data attribute เผื่อเรียกใช้
             option.setAttribute('data-name', member.name);
             select.appendChild(option);
@@ -492,6 +492,20 @@ function parseThaiDate(dateStr) {
     return new Date(year, month, day);
 }
 
+function getThaiZodiacYear(dateObj) {
+
+    let year = dateObj.getFullYear();
+    let month = dateObj.getMonth() + 1;
+    let day = dateObj.getDate();
+
+    // ถ้าเกิดก่อนสงกรานต์ (13 เม.ย.) ให้นับเป็นปีนักษัตรก่อนหน้า
+    if (month < 4 || (month === 4 && day < 13)) {
+        year -= 1;
+    }
+
+    return year;
+}
+
 // 3. ปรับฟังก์ชันแสดงโปรไฟล์ให้ดึงข้อมูลมาแสดงครบถ้วน
 function showProfilePage(data) {
     if (!data || !data.birthdate) return;
@@ -506,9 +520,10 @@ function showProfilePage(data) {
     const monthIdx = birthDateObj.getMonth();
     const year = birthDateObj.getFullYear();
     const yam = getYarmFromTime(data.birthtime || "00:00");
+   
 
 
-    // 2. เรียกข้อมูลธาตุจาก script.js
+       // 2. เรียกข้อมูลธาตุจาก script.js
     const elementData = typeof window.getElementData === 'function'
         ? window.getElementData(data.birthdate)
         : { name: "ไม่ระบุ", color: "#ccc", desc: "ขาดข้อมูลการคำนวณ" };
@@ -518,7 +533,7 @@ function showProfilePage(data) {
         : { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
 
     const zElement = typeof window.getZodiacElement === 'function'
-        ? window.getZodiacElement(data.birthdate)
+        ? window.getZodiacElement(year+7)
         : { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
 
     // 3. วิเคราะห์ความสัมพันธ์ธาตุ
@@ -573,25 +588,23 @@ function showProfilePage(data) {
                 <!-- ธาตุวันเกิด -->
                 <div class="mb-3 p-3 rounded" style="background:${elementData.color}15;border:1px solid ${elementData.color}">
                     <strong style="color:${elementData.color}">
-                        🧬 ธาตุประจำวันเกิด: ${elementData.name}
+                        🧬 ธาตุประจำวันเกิด: ${elementData.name} ${elementData.level || ""} <span style="font-weight: normal;">เป็นคน ${elementData.desc}</span>
                     </strong>
-                    <p class="small mb-0 mt-1">${elementData.desc}</p>
                 </div>
 
                 <!-- ธาตุเดือน -->
                 <div class="mb-3 p-3 rounded" style="background:${mElement.color}15;border:1px solid ${mElement.color}">
                     <strong style="color:${mElement.color}">
-                        📅 ธาตุเดือนเกิด: ${mElement.name} (กำลัง: ${mElement.strength})
-                    </strong>
-                    <p class="small mb-0 mt-1">${mElement.desc}</p>
+                        📅 ธาตุเดือนเกิด: ${mElement.name} ${mElement.level || ""} (กำลัง: ${mElement.strength}) <span style="font-weight: normal;">เป็นคน ${mElement.desc}</span>
+                    </strong>                    
                 </div>
 
                 <!-- ธาตุนักษัตร -->
                 <div class="mb-3 p-3 rounded" style="background:${zElement.color}15;border:1px solid ${zElement.color}">
                     <strong style="color:${zElement.color}">
-                        🐉 ธาตุปีนักษัตร: ${zElement.name} (${zElement.element})
+                        🐉 ธาตุปีนักษัตร: ${zElement.name} (${zElement.element}) <span style="font-weight: normal;">เป็นคน ${zElement.desc}</span><br>
+                        <b>🚀 งานที่เหมาะกับดวงปี${zElement.name}</b> <span style="font-weight: normal;">เหมาะกับอาชีพ : ${zElement.job || "ไม่ระบุ"}</span>
                     </strong>
-                    <p class="small mb-0 mt-1">${zElement.desc}</p>
                 </div>
 
                 <!-- วิเคราะห์ธาตุ -->
@@ -599,22 +612,11 @@ function showProfilePage(data) {
                     <h5 class="text-center" style="color:#b8860b">⚖️ วิเคราะห์สมพงษ์ธาตุ</h5>
 
                     <div class="small p-2 bg-light rounded mb-2">
-                        <strong>วันเกิด + เดือนเกิด:</strong> ${relDayMonth}
+                        <strong>วันเกิด ${elementData.name} + เดือนเกิด ${mElement.name}:</strong> ${relDayMonth}
                     </div>
 
                     <div class="small p-2 bg-light rounded">
-                        <strong>วันเกิด + ปีนักษัตร:</strong> ${relDayYear}
-                    </div>
-                </div>
-
-                <!-- งาน -->
-                <div class="mt-4 p-3 rounded shadow-sm" style="background:#fff;border:1px solid #d4af37">
-                    <h5 class="text-center" style="color:#b8860b">🚀 งานที่เหมาะกับดวง</h5>
-
-                    <p class="small"><b>จากธาตุปีเกิด (${zElement.name})</b></p>
-
-                    <div class="p-2 bg-light rounded small text-primary">
-                        ${zElement.job || "ไม่ระบุ"}
+                        <strong>วันเกิด${elementData.name} + ปีนักษัตร ${zElement.element}:</strong> ${relDayYear}
                     </div>
                 </div>
 
@@ -640,19 +642,7 @@ function showProfilePage(data) {
     `;
 }
 
-function getThaiZodiacYear(dateObj) {
 
-    let year = dateObj.getFullYear();
-    let month = dateObj.getMonth() + 1;
-    let day = dateObj.getDate();
-
-    // ถ้าเกิดก่อนสงกรานต์ (13 เม.ย.) ให้นับเป็นปีนักษัตรก่อนหน้า
-    if (month < 4 || (month === 4 && day < 13)) {
-        year -= 1;
-    }
-
-    return year;
-}
 
 // เพิ่มไว้ท้ายไฟล์ membermaneger.js เพื่อแก้ Error: calculateEsh is not defined
 window.navigateTo = navigateTo;
@@ -712,7 +702,7 @@ if (typeof window.getZodiacElement !== 'function') {
             const thaiYear = getThaiZodiacYear(dateObj);
 
             const zodiacIdx = Math.abs(thaiYear - 4) % 12;
-            return ZODIAC_ELEMENTS[zodiacIdx] || { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
+            return ZODIAC_ELEMENTS[zodiacIdx] || { name: "-", color: "#ccc", element: "-", desc: "-", job: "-" };
         }
         return { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
     };
@@ -766,8 +756,11 @@ window.autoFillMemberData = function (birthDate) {
         if (firstNameInput && member.name) {
             // หั่นชื่อกับนามสกุล (ถ้าเก็บรวมกันด้วยช่องว่าง)
             const nameParts = member.name.trim().split(/\s+/);
-            firstNameInput.value = nameParts[0] || "";
-            if (lastNameInput) lastNameInput.value = nameParts[1] || "";
+            const lastNameParts = member.lastName ? member.lastName.trim().split(/\s+/) : [];
+            if (lastNameParts.length > 0) {
+                firstNameInput.value = nameParts[0] || "";
+                if (lastNameInput) lastNameInput.value = lastNameParts[0] || "";
+            }
         }
 
         if (birthDaySelect && formattedDate) {
@@ -777,7 +770,6 @@ window.autoFillMemberData = function (birthDate) {
             birthDaySelect.value = dayOfWeek;
         }
 
-        console.log("🔮 หยอดชื่อ-นามสกุล เรียบร้อย");
     }
 
     // --- ส่วนของหน้า มหาทักษา (เหมือนเดิม) ---

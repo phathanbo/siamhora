@@ -156,7 +156,7 @@ const travelData = {
 };
 
 function renderTravelRites() {
-    const day = document.getElementById('travelDay').value;
+    const day = document.getElementById('ubakongDay').value;
     const data = travelData[day];
     const container = document.getElementById('travel-slots-list');
     
@@ -198,6 +198,6 @@ function renderTravelRites() {
 // เรียกใช้งานเมื่อโหลดหน้า
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().getDay();
-    document.getElementById('travelDay').value = today;
+    document.getElementById('ubakongDay').value = today;
     renderTravelRites();
 });
