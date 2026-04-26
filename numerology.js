@@ -336,6 +336,72 @@ function analyzeNumber() {
     inputField.blur();
 }
 
+function Numbertable(){
+    const container = document.getElementById("numberlogypage")
+    if(!container) return;
+
+    const html = `
+    <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
+                <h2 class="text-gold mb-1">🔮 วิเคราะห์เลขศาสตร์มงคล</h2>
+                <p class="text-white-50 mb-0 small">ทำนายพลังตัวเลขที่ส่งผลต่อชีวิตคุณ</p>
+            </div>
+            <div class="card-body bg-light">
+                <div class="btn-group btn-group-toggle w-100 mb-4 shadow-sm" data-toggle="buttons">
+                    <label class="btn btn-outline-gold active flex-fill">
+                        <input type="radio" name="numType" value="phone" checked onchange="updateNumUI('phone')"> 📱
+                        เบอร์มือถือ
+                    </label>
+                    <label class="btn btn-outline-gold flex-fill">
+                        <input type="radio" name="numType" value="car" onchange="updateNumUI('car')"> 🚗 ทะเบียนรถ
+                    </label>
+                    <label class="btn btn-outline-gold flex-fill">
+                        <input type="radio" name="numType" value="home" onchange="updateNumUI('home')"> 🏠 เลขที่บ้าน
+                    </label>
+                </div>
+                <div class="form-group text-center">
+                    <label for="phoneNumber" class="font-weight-bold text-dark" id="inputLabel">กรอกหมายเลข:</label>
+                    <input type="text" class="form-control form-control-lg border-gold text-center shadow-inner"
+                        id="phoneNumber" placeholder="08XXXXXXXX" oninput="validateInput(this)"
+                        style="font-size: 1.5rem; letter-spacing: 2px; border-radius: 15px;">
+                    <small class="text-muted mt-2 d-block"
+                        id="inputHelp">*ระบบจะลบช่องว่างและอักษรพิเศษออกให้อัตโนมัติ</small>
+                </div>
+                <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold" id="btnAnalyze"
+                    onclick="analyzeNumber()">
+                    ✨ วิเคราะห์เบอร์มือถือ
+                </button>
+                <div id="numerologyResult" class="mt-4"></div>
+                <div id="numResult" class="mt-4 p-4 rounded-lg"
+                    style="display:none; background: #222; border: 1px solid #444;">
+                    <div id="numScoreDisplay"></div>
+                    <div id="numMeaningDisplay"></div>
+                        <button class="btn btn-gold btn-lg px-5 share-num-btn" onclick="downloadNumerologyImage(this)">
+                            <i class="fas fa-certificate mr-2"></i> เซฟใบพยากรณ์แชร์ลง Facebook
+                        </button>
+                    
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                        <i class="fas fa-home"></i> กลับหน้าหลัก
+                    </button>
+                </div>
+            </div>
+        </div>>
+    `;
+    container.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    Numbertable();
+});
+
 
 function updateShareTemplate(sum, meaning, analysis, pairsHTML) {
     // ป้องกันกรณีส่งค่ามาไม่ครบ
@@ -391,7 +457,6 @@ function updateShareTemplate(sum, meaning, analysis, pairsHTML) {
         }
     }
 }
-
 
 // ฟังก์ชันสำหรับสร้างและดาวน์โหลดรูปภาพ
 function generateShareImage(platform) {

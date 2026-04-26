@@ -347,6 +347,137 @@ const starTheme = {
 };
 
 
+function showseven(){
+    const contianer = document.getElementById("sevenPage");
+    if(!contianer) return;
+    contianer.classList.remove("hidden");
+
+    const html = `
+    <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold text-center py-4">
+                <h2 class="text-gold mb-1">🔢 เลข 7 ตัว 4 ฐาน</h2>
+                <span class="text-white-50 mb-0">พยากรณ์ดวงชะตาพื้นฐานและเหตุการณ์จรตามตำราพรหมชาติ</span>
+            </div>
+            <div class=".compatibility-container">
+                <div id="sevenDigitsInput" class="text-center py-4">
+                    <i class="fas fa- dice-d6 fa-4x text-gold mb-4"></i>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">วันเกิด (อาทิตย์ - เสาร์)</label>
+                                <select id="sdDay" class="form-control bg-dark text-white border-gold"
+                                    style="height: auto;">
+                                    <option value="1">วันอาทิตย์</option>
+                                    <option value="2">วันจันทร์</option>
+                                    <option value="3">วันอังคาร</option>
+                                    <option value="4">วันพุธ</option>
+                                    <option value="5">วันพฤหัสบดี</option>
+                                    <option value="6">วันศุกร์</option>
+                                    <option value="7">วันเสาร์</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">เดือนเกิด (ไทย: เดือน 5 - เดือน 4)</label>
+                                <select id="sdMonth" class="form-control bg-dark text-white border-gold"
+                                    style="height: auto;">
+                                    <option value="5">เดือน 5 (เมษายน)</option>
+                                    <option value="6">เดือน 6 (พฤษภาคม)</option>
+                                    <option value="7">เดือน 7 (มิถุนายน)</option>
+                                    <option value="8">เดือน 8 (กรกฎาคม)</option>
+                                    <option value="9">เดือน 9 (สิงหาคม)</option>
+                                    <option value="10">เดือน 10 (กันยายน)</option>
+                                    <option value="11">เดือน 11 (ตุลาคม)</option>
+                                    <option value="12">เดือน 12 (พฤศจิกายน)</option>
+                                    <option value="1">เดือน 1 (ธันวาคม)</option>
+                                    <option value="2">เดือน 2 (มกราคม)</option>
+                                    <option value="3">เดือน 3 (กุมภาพันธ์)</option>
+                                    <option value="4">เดือน 4 (มีนาคม)</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">ปีนักษัตร</label>
+                                <select id="sdYear" class="form-control bg-dark text-white border-gold "
+                                    style="height: auto;">
+                                    <option value="1">ปีชวด</option>
+                                    <option value="2">ปีฉลู</option>
+                                    <option value="3">ปีขาล</option>
+                                    <option value="4">ปีเถาะ</option>
+                                    <option value="5">ปีมะโรง</option>
+                                    <option value="6">ปีมะเส็ง</option>
+                                    <option value="7">ปีมะเมีย</option>
+                                    <option value="8">ปีมะแม</option>
+                                    <option value="9">ปีวอก</option>
+                                    <option value="10">ปีระกา</option>
+                                    <option value="11">ปีจอ</option>
+                                    <option value="12">ปีกุน</option>
+                                </select>
+                            </div>
+                            <div class="form-group text-left">
+                                <label class="text-gold-50">อายุปัจจุบัน (เพื่อพยากรณ์จรปีนี้)</label>
+                                <input type="number" id="sdAge" class="form-control bg-dark text-white border-gold"
+                                    placeholder="เช่น 25">
+                            </div>
+                            <button class="btn btn-gold btn-block btn-lg mt-4" onclick="calculateSevenDigits()">✨
+                                ตั้งดวงพยากรณ์</button>
+                        </div>
+
+                            <div id="sevenDigitsResult" class="container" style="display: none;">
+                                <div id="resultArea" class="container">
+                                    <h4 class="text-gold text-center mb-3">ดวงชะตาของคุณ</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-white text-center"
+                                            id="sevenDigitsTable">
+                                        </table>
+                                    </div>
+                                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark"></div>
+                                </div>
+
+                                <div class="row mt-4">
+                                <button onclick="exportToImage()" class="btn btn-secondary btn-block mt-2">💾
+                                    บันทึกรูปภาพ</button>
+                                </div>
+                            </div>
+                            
+                    </div>
+                </div>
+            </div>
+                <div id="sevenDigitsResult" class="mt-4" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-white text-center" id="sevenDigitsTable">
+                        </table>
+                    </div>
+                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark">
+                    </div>
+                </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+        </div>    
+    `;
+    contianer.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () =>{
+    showseven();
+});
+
+
+
+
+
+
+
+
+
 function getTransitPrediction(age, birthDayNum) {
     // คำนวณตำแหน่งภพที่ดวงตกในปีนี้ (อิงจากฐานเลข 7 ตัว)
     const transitPos = (birthDayNum + age - 1) % 7;

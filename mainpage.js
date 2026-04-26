@@ -4,6 +4,7 @@ const APP_MENU = [
     { id: 'ascendantPage', title: 'คำนวณลัคนา', icon: 'fa-star-and-crescent', color: '#d4af37' },
     { id: 'auspiciousPage', title: 'ปฏิทินฤกษ์มงคล', icon: 'fa-calendar-check', color: '#d4af37' },
     { id: 'taksaPage', title: 'ทักษา', icon: 'fa-chart-line', color: '#d4af37' },
+    { id: 'elementManualPage', title: 'ธาตุประจำวันเกิด', icon: 'fa-fire-alt', color: '#d4af37' },
     { id: 'planetRelationPage', title: 'คู่มิตร-ศัตรู', icon: 'fa-user-friends', color: '#d4af37' },
     { id: 'numerologyPage', title: 'เบอร์มงคล', icon: 'fa-mobile-alt', color: '#d4af37' },
     { id: 'dreamPage', title: 'ทำนายฝัน', icon: 'fa-moon', color: '#d4af37' },
@@ -26,9 +27,13 @@ const APP_MENU = [
     { id: 'daily-horoscope', title: 'ทำนายลักษณะผู้เกิดทั้ง 7 วัน (ตำราโบราณ)', icon: 'fa-calendar-alt', color: '#d4af37' },
     { id: 'sompong-wealth', title: 'สมพงศ์มหาสมบัติ', icon: 'fa-coins', color: '#d4af37' },
     { id: 'climate-section', title: 'เกณฑ์พิรุณศาสตร์และชะตาโลก', icon: 'fa-cloud-showers-heavy', color: '#d4af37' },
-    { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 9', icon: 'fa-layer-group', color: '#d4af37' },
-    { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 9 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' },
+    { id: 'sevenDigitsPage', title: 'เลข 7 ตัว ฐาน 4', icon: 'fa-layer-group', color: '#d4af37' },
+    { id: 'horoscope-seven', title: 'เลข 7 ตัว ฐาน 4 (ตำราโบราณ)', icon: 'fa-layer-group', color: '#d4af37' },
     { id: 'compatibilityPage', title: 'เช็คดวงคู่', icon: 'fa-heart', color: '#d4af37' },
+    { id: 'kaliyokepage', title: 'คำนวณกาลโยค', icon: 'fa-skull-crossbones', color: '#d4af37' },
+    { id: 'reuxpage', title: 'คำนวณฤกษ์อายุ', icon: 'fa-tree', color: '#d4af37' },
+    { id: 'dailyHighlightPage' ,title: 'แผนที่ฤกษ์มงคลรายวัน', icon: 'fa-calendar-alt', color: '#d4af37' },
+
 ];
 
 const UserProfile = {

@@ -136,25 +136,74 @@ function generateLuckyNumbers() {
     <div id="lottoCaptureArea" class="card shadow mt-4 border-0 p-3 bg-white">
         <div class="card-body text-center">
             <h4 class="text-gold">🔮 วิเคราะห์งวด ${next.fullDate}</h4>
-            <p class="text-muted font-weight-bold">งวดวัน${next.dayName}</p>
+            <span style="color: #d4af37;">งวดวัน${next.dayName}</span>
             <hr>
             <div class="row">
-                <div class="col-4"><h5>⭐ เด่น</h5><h2 class="text-danger">${calc.main}</h2></div>
-                <div class="col-4"><h5>✨ รอง</h5><h2>${calc.secondary}</h2></div>
-                <div class="col-4"><h5>⚠ กัน</h5><h2>${calc.forbidden}</h2></div>
+                <div class="col-4 text-gold"><h5>⭐ เด่น</h5><h2 class="text-success">${calc.main}</h2></div>
+                <div class="col-4 text-gold"><h5>✨ รอง</h5><h2>${calc.secondary}</h2></div>
+                <div class="col-4 text-danger"><h5>⚠ กัน</h5><h2>${calc.forbidden}</h2></div>
             </div>
             <hr>
-            <h5>🎯 เลข 2 ตัว</h5>
+            <h5 class="mt-4 text-gold">🎯 เลข 2 ตัว</h5>
             <h3 class="text-primary">${twoDigits.join(" &nbsp; ")}</h3>
-            <h5 class="mt-4">🎯 เลข 3 ตัว</h5>
+            <h5 class="mt-4 text-gold">🎯 เลข 3 ตัว</h5>
             <h3 class="text-success">${threeDigits.join(" &nbsp; ")}</h3>
         </div>
-    </div>
+    </div><br>
             <button class="btn btn-gold" onclick="downloadLottoResult()">🔮 บันทึกเป็นรูปภาพ</button>
 
     `;
     document.getElementById("lottoResult").innerHTML = html;
 }
+
+function showlotto(){
+    const contioner = document.getElementById("lottoResultpage")
+
+    const html = `
+    <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4">
+                <h2 class="text-gold mb-1">🎰 หอคำนวณเลขมงคล</h2>
+                <span class="text-white-50 mb-0 small">สุ่มเลขนำโชคอ้างอิงตามกำลังวันและฐานดวงเกิด</span>
+            </div>
+            <div class="card-body bg-light text-center">
+                <div class="py-5" id="beforeGenerate">
+                    <i class="fas fa-dice-d20 fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
+                    <h3 style="font-style: normal ; font-weight: normal; color: #000;">พร้อมเสี่ยงทายเลขมงคลหรือยัง?</h3>
+                    <span class="text-muted">ระบบจะนำวันเกิดของคุณมาคำนวณหาตัวเลขที่สมพงษ์ที่สุดในงวดนี้</span>
+                    <div class="mt-4 mb-3">
+                        <select id="birthDay" class="form-control text-center" onclick="generateLuckyNumbers()" value="เลือกวันเกิด">
+                            <option>อาทิตย์</option>
+                            <option>จันทร์</option>
+                            <option>อังคาร</option>
+                            <option>พุธ</option>
+                            <option>พฤหัสบดี</option>
+                            <option>ศุกร์</option>
+                            <option>เสาร์</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="lottoResult" class="mt-2"></div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        </div> 
+    `;
+    contioner.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showlotto();
+});
 
 window.saveAscendantImage = function() {
     const captureArea = document.getElementById('ascResult');

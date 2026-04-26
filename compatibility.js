@@ -116,39 +116,120 @@ function processCompatibility() {
     resultDiv.innerHTML = `
         <div class="card border-gold animate__animated animate__fadeIn">
             <div class="card-body text-center">
-
                 <h5 class="text-muted">ระดับความสมพงษ์</h5>
-
                 <div style="font-size:4rem;color:${colorScore}">
                     ${result.score}%
                 </div>
-
-                <h3>${result.zodiacResult}</h3>
-
-                <div class="row mt-3">
-                    <div class="col-5">
-                        <div>คุณ (${myZodiac})</div>
-                        <b>${result.p1Element} ${icon1}</b>
-                    </div>
-
-                    <div class="col-2">❤️</div>
-
-                    <div class="col-5">
-                        <div>คู่ (${partnerZodiac})</div>
-                        <b>${result.p2Element} ${icon2}</b>
-                    </div>
-                </div>
-
-                <div class="mt-3">
-                    <strong>วิเคราะห์:</strong> ${result.elementResult}
-                </div>
-
-            </div>
+                <h3 class="text-gold">${result.zodiacResult} <strong class="text-gold"> ${result.elementResult}</strong></h3>
+                       
+                <table class="table text-center fs-6">
+                    <thead>
+                        <tr>
+                            <th>ดวงชะตาของคุณ</th>
+                            <th></th>
+                            <th>ดวงชะตาคู่ครอง</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                ปี${myZodiac}<br>
+                                <b>ธาตุ${result.p1Element} ${icon1}</b>
+                            </td>
+                            <td class="align-middle" style="font-size: 2rem;">❤️</td>
+                            <td>
+                                ปี${partnerZodiac}<br>
+                                <b>ธาตุ${result.p2Element} ${icon2}</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
         </div>
     `;
 
     resultDiv.scrollIntoView?.({ behavior: 'smooth' });
 }
+
+function compatitable() {
+    const container =document.getElementById('compatipage');
+    if (!container) return;
+
+    const html = `
+    <div class="card shadow-lg border-gold overflow-hidden">
+            <div class="card-header bg-dark text-white text-center py-4 border-bottom-gold">
+                <h2 class="text-gold mb-1">🔮 วิเคราะห์ดวงสมพงษ์</h2>
+                <span class="text-gold mb-1">ตรวจเช็คคู่ครองและพันธมิตร ตามตำราพรหมชาติไทย</span>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-5">
+                        <div class="form-group text-center">
+                            <label class="font-weight-bold text-dark">นักษัตรของคุณ:</label>
+                            <select id="myZodiac" onchange="processCompatibility()" class="form-control form-control-lg border-gold shadow-inner"
+                                style="border-radius: 15px; color: #ffcf56; text-align: center;">
+                                <option value="ชวด">ปีชวด (หนู)</option>
+                                <option value="ฉลู">ปีฉลู (วัว)</option>
+                                <option value="ขาล">ปีขาล (เสือ)</option>
+                                <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
+                                <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
+                                <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
+                                <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
+                                <option value="มะแม">ปีมะแม (แพะ)</option>
+                                <option value="วอก">ปีวอก (ลิง)</option>
+                                <option value="ระกา">ปีระกา (ไก่)</option>
+                                <option value="จอ">ปีจอ (หมา)</option>
+                                <option value="กุน">ปีกุน (หมู)</option>
+                            </select>
+                        </div>
+                    </div>
+                        <div style="font-size: 3rem; line-height: 100px;">❤️</div>
+                    <div class="col-md-5">
+                        <div class="form-group text-center">
+                            <label class="font-weight-bold text-dark">นักษัตรของคู่:</label>
+                            <select id="partnerZodiac" onchange="processCompatibility()" class="form-control form-control-lg border-gold shadow-inner"
+                                style="border-radius: 15px; color: #b8860b; text-align: center;">
+                                <option value="ชวด">ปีชวด (หนู)</option>
+                                <option value="ฉลู">ปีฉลู (วัว)</option>
+                                <option value="ขาล">ปีขาล (เสือ)</option>
+                                <option value="เถาะ">ปีเถาะ (กระต่าย)</option>
+                                <option value="มะโรง">ปีมะโรง (งูใหญ่)</option>
+                                <option value="มะเส็ง">ปีมะเส็ง (งูเล็ก)</option>
+                                <option value="มะเมีย">ปีมะเมีย (ม้า)</option>
+                                <option value="มะแม">ปีมะแม (แพะ)</option>
+                                <option value="วอก">ปีวอก (ลิง)</option>
+                                <option value="ระกา">ปีระกา (ไก่)</option>
+                                <option value="จอ">ปีจอ (หมา)</option>
+                                <option value="กุน">ปีกุน (หมู)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-gold btn-block btn-lg shadow mt-4 py-3 font-weight-bold"
+                    onclick="processCompatibility()">✨ วิเคราะห์ดวงสมพงษ์
+                </button>
+                <div id="compatResult" class="mt-4"></div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    `;
+    container.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    compatitable();
+});
 
 // =====================
 // QUICK MODE
@@ -167,3 +248,16 @@ function quickAnalyze() {
         processCompatibility();
     }, 300);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inputEl = document.getElementById('compatipage');
+
+    if (!inputEl) return;
+
+    processCompatibility();
+
+    inputEl.addEventListener('input', debouncedDisplay);
+    inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') processCompatibility();
+    });
+});

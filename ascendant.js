@@ -44,9 +44,41 @@ function calculateAscendant() {
     // ราศีหนึ่งใช้เวลาประมาณ 120 นาที (2 ชม.)
     let zodiacIndex = Math.floor(adjustedMinutes / 120);
     zodiacIndex = Math.min(Math.max(zodiacIndex, 0), 11); // คุมให้อยู่ใน 0-11
+    generateHouseTable(zodiacIndex); // <--- เพิ่มบรรทัดนี้
 
     const result = ZODIAC_DATA[zodiacIndex];
     displayAscendantResult(result);
+}
+
+/**
+ * ฟังก์ชันสร้างตารางภพเรือน 12 ภพ
+ * @param {number} startZodiacIndex - ดัชนีราศีที่เป็นลัคนา (0-11)
+ */
+function generateHouseTable(startZodiacIndex) {
+    const tableBody = document.getElementById('houseTableBody');
+    if (!tableBody) return;
+
+    const houseNames = [
+        "ตนุ (ตัวตน)", "กดุมพะ (การเงิน)", "สหัชชะ (สังคม)", 
+        "พันธุ (ครอบครัว)", "ปุตตะ (บุตร/บริวาร)", "อริ (อุปสรรค)", 
+        "ปัตนิ (คู่ครอง)", "มรณะ (ความสูญเสีย)", "ศุภะ (ความสุข/ความสำเร็จ)", 
+        "กัมมะ (การงาน)", "ลาภะ (โชคลาภ)", "วินาศ (ความลับ/เบื้องหลัง)"
+    ];
+
+    let html = '';
+    for (let i = 0; i < 12; i++) {
+        // คำนวณราศีที่เวียนไปตามภพเรือน
+        const currentZodiacIndex = (startZodiacIndex + i) % 12;
+        const zodiac = ZODIAC_DATA[currentZodiacIndex];
+
+        html += `
+            <tr>
+                <td class="text-gold">${houseNames[i]}</td>
+                <td>${zodiac.icon} ราศี${zodiac.name}</td>
+            </tr>
+        `;
+    }
+    tableBody.innerHTML = html;
 }
 
 /**

@@ -36,25 +36,30 @@ function getEffectiveAstroYear(date) {
 function calculateKalaYok(date) {
     const year = getEffectiveAstroYear(date);
     const cs = year - 1181; // แปลงเป็น จ.ศ.
+    
 
-    // สูตรการหาลิขิต (Base) ของกาลโยค
-    // ใช้ (cs * 5 + 1) % 7 หรือตามตำราที่คุณอ้างอิง
-    // ต้องมั่นใจว่าผลลัพธ์ไม่ติดลบ
-    let base = (cs * 5) % 7;
-    if (base < 0) base += 7;
-
-    // คำนวณตำแหน่งวัน (0=อาทิตย์, 1=จันทร์, ..., 6=เสาร์)
-    // หมายเหตุ: สูตรนี้ต้องปรับตามตำราหลวงที่ใช้ (ตัวเลขบวกด้านล่างอาจเปลี่ยนตามสูตร)
-    return {
-        thongChai: (base + 1) % 7,
-        athibadi: (base + 0) % 7,
-        ubart: (base + 2) % 7,
-        lokawinat: (base + 4) % 7,
-        mahaSiddhi: (base + 3) % 7,
-        rachaChok: (base + 5) % 7,
-        chaiChok: (base + 6) % 7
+    const getRem = (num, divisor) => {
+        let rem = num % divisor;
+        return rem < 0 ? rem + divisor : rem;
     };
+
+    const thongchaiBase = (cs * 10) + 3;
+    const athibadiBase = (cs % 498);
+    const ubatBase = (cs * 10) + 2;
+    const lokawinasBase = cs + 1120;  
+    
+
+  
+    return {
+        thongChai: getRem(thongchaiBase - 1, 7),
+        athibadi: getRem(athibadiBase - 1, 7),
+        ubart: getRem(ubatBase - 1, 7),
+        lokawinat: getRem(lokawinasBase - 1, 7)
+    }
+   
+
 }
+
 
 /* ======================================================
    ดาวจร 7 ดาว
@@ -213,12 +218,71 @@ function changeMonth(offset) {
 
 /* ... (ฟังก์ชัน convertToChulaSakarat, getEffectiveAstroYear, calculateKalaYok เหมือนเดิม) ... */
 
+function Calenderbody() {
+    const body = document.getElementById("calendarBodypage");
+    if (!body) return;  
+
+    const html = `<div class="card shadow-lg border-gold">
+            <div class="card-header bg-dark text-gold text-center py-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(-1)">◀
+                        เดือนก่อนหน้า</button>
+                    <div>
+                        <h2 class="mb-0">📅 ปฏิทินฤกษ์มงคล เดือน<span id="currentMonthYear"></span></h2><br>
+                        <span class="box" onclick="goToToday()" style="cursor: pointer;">📍 กลับวันนี้</span>
+                    </div>
+                    <button class="btn btn-outline-gold btn-sm text-white" onclick="changeMonth(1)">เดือนถัดไป
+                        ▶</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered calendar-table mb-0">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-danger">อาทิตย์</th>
+                            <th>จันทร์</th>
+                            <th>อังคาร</th>
+                            <th>พุธ</th>
+                            <th>พฤหัสบดี</th>
+                            <th>ศุกร์</th>
+                            <th>เสาร์</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row mt-4">
+            <div class="col-6">
+                <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                    <i class="fas fa-home"></i> กลับหน้าหลัก
+                </button>
+            </div>
+        </div> 
+        </div>`;
+
+    body.innerHTML = html;
+    renderAuspiciousCalendar();
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    Calenderbody();
+});
+
 function renderAuspiciousCalendar() {
     const body = document.getElementById("calendarBody");
     const title = document.getElementById("currentMonthYear");
     if (!body || !title) return;
 
-    body.innerHTML = "";
+    body.innerHTML = ""; // เคลียร์ก่อนวาดใหม่
+
     const month = viewDate.getMonth();
     const year = viewDate.getFullYear();
     const thaiYear = year + 543;
@@ -280,6 +344,7 @@ function renderAuspiciousCalendar() {
 
                 html += `<div style="font-size:10px; margin-top:4px; color:#666;">${planet.name}</div>`;
                 html += `<div style="font-size:10px; color:#888;">บน:${ruek.top} | ล่าง:${ruek.bottom}</div>`;
+                html += `<div style="position:absolute; bottom:5px; left:5px; right:5px; font-size:8px; color:#aaa;">คลิกดูรายละเอียด</div>`;
 
                 cell.innerHTML = html;
                 dateCounter++;
@@ -297,6 +362,7 @@ function renderAuspiciousCalendar() {
 function goToToday() {
     viewDate = new Date(); // รีเซ็ต viewDate เป็นวันที่ปัจจุบัน
     renderAuspiciousCalendar(); // วาดปฏิทินใหม่
+    window.scrollTo({ behavior: 'smooth' }); // เลื่อนขึ้นบนสุดของหน้า
 }
 
 /* ======================================================

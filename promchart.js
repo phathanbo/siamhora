@@ -17,7 +17,7 @@ const promchartData = [
 
 const coordinates = [
     {x: 200, y: 50}, {x: 275, y: 70}, {x: 330, y: 130}, {x: 350, y: 205},
-    {x: 330, y: 280}, {x: 275, y: 340}, {x: 200, y: 365}, {x: 125, y: 340},
+    {x: 330, y: 280}, {x: 275, y: 340}, {x: 200, y: 355}, {x: 125, y: 340},
     {x: 70, y: 280}, {x: 50, y: 205}, {x: 70, y: 130}, {x: 125, y: 70}
 ];
 
@@ -51,24 +51,33 @@ function updateHighlight(index) {
     const needle = document.getElementById('wheel-needle');
     const target = posCoords[index];
 
+    if (!target) return;
+
     // 1. ย้ายวงกลมไฮไลท์
-    circle.setAttribute('cx', target.x);
-    circle.setAttribute('cy', target.y);
-    circle.style.display = 'block';
+    if (circle) {
+        circle.setAttribute('cx', target.x);
+        circle.setAttribute('cy', target.y);
+        circle.style.display = 'block';
+    }
 
     // 2. หมุนเข็มชี้
-    needle.style.display = 'block';
-    needle.style.transformOrigin = "200px 200px";
-    needle.style.transform = `rotate(${target.angle}deg)`;
-    needle.style.transition = "transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    if (needle) {
+        needle.style.display = 'block';
+        needle.style.transformOrigin = "200px 200px";
+        needle.style.transform = `rotate(${target.angle}deg)`;
+        needle.style.transition = "transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    }
 
     // 3. เปลี่ยนสีกลุ่มที่ถูกเลือก
-    for(let i=0; i<12; i++) {
-        document.getElementById(`pos-${i}`).style.opacity = "0.3";
+    for (let i = 0; i < 12; i++) {
+        const el = document.getElementById(`pos-${i}`);
+        if (el) el.style.opacity = "0.3";
     }
     const activeGroup = document.getElementById(`pos-${index}`);
-    activeGroup.style.opacity = "1";
-    activeGroup.style.transition = "0.5s";
+    if (activeGroup) {
+        activeGroup.style.opacity = "1";
+        activeGroup.style.transition = "0.5s";
+    }
 }
 
 const canvasIcons = [
@@ -104,7 +113,7 @@ const canvasIcons = [
     },
     { 
         name: "ฉัตรทอง", 
-        path: "M-25 0 Q0 -35 25 0 L0 0 Z M-2 0 V40 H2 V0 Z", 
+        path: "M-30 -5 Q0 -40 30 -5 L0 -5 Z M-20 -5 Q0 -30 20 -5 L0 -5 Z M-10 -5 Q0 -20 10 -5 L0 -5 Z M-2 -5 V40 H2 V-5 Z", 
         color: "#f1c40f" 
     },
     { 
@@ -129,15 +138,17 @@ const canvasIcons = [
     },
     { 
         name: "นาคราช", 
-        path: "M-40 20 Q0 -30 40 20 T80 20", 
+        path: "M-35 15 Q-15 -30 0 0 Q15 30 35 -15", 
         color: "#16a085" 
     }
 ];
 
 function shareToFacebook() {
-    const age = document.getElementById('userAgeprom').value;
+    const age = parseInt(document.getElementById('userAgeprom').value);
     const gender = document.getElementById('userGender').value;
     const genderText = (gender === 'male') ? "ชาย" : "หญิง";
+
+    if (!age || age < 1) return alert("กรุณาระบุอายุก่อนแชร์");
     
     // คำนวณตำแหน่งอีกครั้งเพื่อดึงข้อมูล
     let position = (gender === 'male') ? (age - 1) % 12 : (12 - ((age - 1) % 12)) % 12;
@@ -147,7 +158,7 @@ function shareToFacebook() {
     generateShareImage(fortune, age, genderText, () => {
         // เมื่อสร้างภาพเสร็จแล้ว ให้ทำการแชร์
         const canvas = document.getElementById('shareCanvas');
-        const imageDataUrl = canvas.toDataURL('image/png');
+        if (!canvas) return;
 
         // Note: Facebook ไม่อนุญาตให้ส่งไฟล์ภาพโดยตรงผ่าน URL
         // วิธีที่ดีที่สุดคือการอัปโหลดภาพไปที่ Server ของคุณก่อน แล้วส่ง URL ของภาพไปแทน
@@ -162,6 +173,7 @@ function shareToFacebook() {
 
 function generateShareImage(fortune, age, gender, callback) {
     const canvas = document.getElementById('shareCanvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
     // 1. วาดพื้นหลัง
@@ -170,13 +182,13 @@ function generateShareImage(fortune, age, gender, callback) {
 
     // 2. วาดหัวข้อ
     ctx.fillStyle = '#6c5ce7';
-    ctx.font = 'bold 60px Sarabun';
+    ctx.font = "bold 60px 'Sarabun', 'Noto Sans Thai', sans-serif";
     ctx.textAlign = 'center';
     ctx.fillText('ผลทำนายดวงชะตาตามตำราพรหมชาติ', 600, 100);
 
     // 3. วาดข้อมูลผู้ใช้
     ctx.fillStyle = '#2d3436';
-    ctx.font = '40px Sarabun';
+    ctx.font = "40px 'Sarabun', 'Noto Sans Thai', sans-serif";
     ctx.fillText(`เพศ: ${gender} | อายุ: ${age} ปี`, 600, 180);
 
     // 4. วาดวงล้อพรหมชาติ Simplified (เป็นกราฟิกประกอบ)
@@ -187,13 +199,13 @@ function generateShareImage(fortune, age, gender, callback) {
 
     // 6. วาดรายละเอียดคำทำนาย
     ctx.fillStyle = '#2d3436';
-    ctx.font = '36px Sarabun';
+    ctx.font = "36px 'Sarabun', 'Noto Sans Thai', sans-serif";
     ctx.textAlign = 'left';
     wrapText(ctx, fortune.detail, 200, 850, 800, 50);
 
     // 7. วาดลายน้ำ/URL เว็บไซต์
     ctx.fillStyle = '#b2bec3';
-    ctx.font = '30px Sarabun';
+    ctx.font = "30px 'Sarabun', 'Noto Sans Thai', sans-serif";
     ctx.textAlign = 'center';
     ctx.fillText('สยามโหรามงคล', 600, 1150);
 
@@ -217,18 +229,20 @@ function drawActiveIcon(ctx, fortune) {
 
     ctx.save();
     ctx.translate(600, 450); // ย้ายไปจุดกึ่งกลางพื้นที่กราฟิกบน Canvas
-    
+    ctx.scale(3, 3);         // ขยาย icon ให้ใหญ่พอสำหรับ canvas 1200px
+
     // วาดเงาให้ไอคอนดูเด่น
     ctx.shadowColor = "rgba(0,0,0,0.2)";
     ctx.shadowBlur = 15;
 
     const p = new Path2D(icon.path);
     
-    // ถ้าเป็นนาคราช ให้วาดแบบเส้น (Stroke)
-    if (fortune.name === "นาคราช") {
+    // นาคราชและคนต้องข้อคา วาดแบบเส้น (Stroke)
+    if (fortune.name === "นาคราช" || fortune.name === "คนต้องข้อคา") {
         ctx.strokeStyle = icon.color;
-        ctx.lineWidth = 10;
+        ctx.lineWidth = 4;
         ctx.lineCap = "round";
+        ctx.lineJoin = "round";
         ctx.stroke(p);
     } else {
         ctx.fillStyle = icon.color;
@@ -239,36 +253,56 @@ function drawActiveIcon(ctx, fortune) {
 
     // วาดชื่อราศีใต้ไอคอน
     ctx.fillStyle = '#6c5ce7';
-    ctx.font = 'bold 85px Sarabun';
+    ctx.font = "bold 85px 'Sarabun', 'Noto Sans Thai', sans-serif";
     ctx.textAlign = 'center';
     ctx.fillText(fortune.name, 600, 600);
 }
 
-// ฟังก์ชันสำหรับตัดคำข้อความยาวๆ ให้ขึ้นบรรทัดใหม่
+// ฟังก์ชันสำหรับตัดข้อความให้ขึ้นบรรทัดใหม่
+// รองรับทั้งภาษาไทย (ไม่มี space) และภาษาอังกฤษ (มี space)
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    // ลอง split ด้วย space ก่อน
     const words = text.split(' ');
-    let line = '';
 
-    for(let n = 0; n < words.length; n++) {
-        let testLine = line + words[n] + ' ';
-        let metrics = ctx.measureText(testLine);
-        let testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-            ctx.fillText(line, x, y);
-            line = words[n] + ' ';
-            y += lineHeight;
+    if (words.length > 1) {
+        // มี space: ตัดคำแบบปกติ (สำหรับข้อความที่มีช่องว่าง)
+        let line = '';
+        for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+            if (testWidth > maxWidth && n > 0) {
+                ctx.fillText(line.trim(), x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
         }
-        else {
-            line = testLine;
+        ctx.fillText(line.trim(), x, y);
+    } else {
+        // ไม่มี space (ภาษาไทยล้วน): ตัดทีละตัวอักษรตามความกว้าง
+        let line = '';
+        for (let i = 0; i < text.length; i++) {
+            const testLine = line + text[i];
+            const testWidth = ctx.measureText(testLine).width;
+            if (testWidth > maxWidth && line.length > 0) {
+                ctx.fillText(line, x, y);
+                line = text[i];
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
         }
+        if (line) ctx.fillText(line, x, y);
     }
-    ctx.fillText(line, x, y);
 }
 
 function downloadHoroscopeImage() {
-    const age = document.getElementById('userAgeprom').value;
+    const age = parseInt(document.getElementById('userAgeprom').value);
     const gender = document.getElementById('userGender').value;
     const genderText = (gender === 'male') ? "ชาย" : "หญิง";
+
+    if (!age || age < 1) return alert("กรุณาระบุอายุก่อนดาวน์โหลด");
     
     let position = (gender === 'male') ? (age - 1) % 12 : (12 - ((age - 1) % 12)) % 12;
     const fortune = promchartData[position];
@@ -276,6 +310,7 @@ function downloadHoroscopeImage() {
     // เรียกใช้ฟังก์ชันวาดภาพเดิมที่เราสร้างไว้ (generateShareImage)
     generateShareImage(fortune, age, genderText, () => {
         const canvas = document.getElementById('shareCanvas');
+        if (!canvas) return;
         
         // แปลง Canvas เป็น Data URL
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");

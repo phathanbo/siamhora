@@ -109,6 +109,82 @@ function updateZodiacLuckDisplay(dayIndex) {
     if (badEl) badEl.innerText = bad.join(', ') || "-";
 }
 
+
+function showdailytaboo(){
+    const contianer = document.getElementById('showdailytaboopage')
+    if (!contianer) return;
+    
+    const html = `
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📜 ข้อห้ามรายวัน</h2>
+                <div class="selection-grid" style="margin-bottom: 20px; display: flex; justify-content: center;">
+                    <div class="input-box" style="width: 100%; max-width: 400px; text-align: center;">
+                        <label style="display: block; margin-bottom: 8px; color: #f0f0f0;">เลือกวันเพื่อดูคำทำนาย</label>
+                        <select id="tabooDaySelect" class="form-control"
+                            style="text-align: center; text-align-last: center;" onchange="changeTabooDay()">
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ</option>
+                            <option value="4">วันพฤหัสบดี</option>
+                            <option value="5">วันศุกร์</option>
+                            <option value="6">วันเสาร์</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="tabooCaptureArea" class="p-4 rounded text-center" style="background: #1a1a1a; border: 2px solid #d4af37;">               
+                            <h3 id="tabooDayTitle" class="text-gold mb-0">วัน...</h3>
+                            <div class="text-white-50 small mb-4">สยามโหรามงคล • พรหมชาติ & กาลโยค</div>
+                            <h6 class="text-gold text-center mb-3"><i class="fas fa-calendar-alt"></i>
+                                เคล็ดลับมงคลรายวัน</h6>
+                            <div class="row text-left">
+                                <div class="col-6 border-right"
+                                    style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
+                                    <div class="text-center mb-2"><span class="badge badge-success">✅
+                                            สิ่งที่ควรทำ</span></div>
+                                    <ul id="goodList" class="mb-0 pl-3 small text-white"
+                                        style="text-align: center;"></ul>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center mb-2"><span class="badge badge-danger">🚫
+                                            สิ่งที่ควรเลี่ยง</span></div>
+                                    <ul id="badList" class="mb-0 pl-3 small text-white"
+                                        style="text-align: center;"></ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="directionContainer" class="col-12 mb-3"></div>
+                            <h6 class="text-gold text-center mb-3"><i class="fas fa-star"></i> ดวงตามปีนักษัตร</h6>
+                            <div class="row text-center">
+                                <div class="col-6 border-right"
+                                    style="border-right-color: rgba(212, 175, 55, 0.2) !important;">
+                                    <span class="badge badge-success mb-2">🚀 ปีที่มงคลยิ่ง</span>
+                                    <div id="zodiacGreat" class="small text-white font-weight-bold"></div>
+                                </div>
+                                <div class="col-6">
+                                    <span class="badge badge-danger mb-2">⚠️ ปีที่ควรระวัง</span>
+                                    <div id="zodiacBad" class="small text-white font-weight-bold"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+                </div>                
+    `;
+    contianer.innerHTML = html;
+}
+
+
 // ==========================================
 // 3. เริ่มทำงานตอนโหลดหน้า (Initialization)
 // ==========================================
@@ -130,8 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // รันยามอุบากอง (ถ้ามีฟังก์ชันนี้อยู่ในไฟล์เดียวกัน)
     if (typeof renderUbakongDay === 'function') {
         renderUbakongDay();
+        showdailytaboo();
     }
 });
+
+
+
+
 
 // ฟังก์ชันสำหรับ Capture รูปภาพ
 async function downloadTabooImage() {

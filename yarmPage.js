@@ -25,7 +25,7 @@ window.YARM_CHART = {
     ]
 };
 
-const YARM_INFO = {
+window.YARM_INFO = {
     0: { name: "ยามอาทิตย์", trait: "ร้อนแรง มีอำนาจ", good: "เข้าหาผู้ใหญ่, เริ่มงานใหญ่", bad: "การเจรจาความลับ, ใจร้อนเกินเหตุ" },
     1: { name: "ยามจันทร์", trait: "อ่อนโยน เมตตา", good: "งานบริการ, ติดต่อเพศตรงข้าม", bad: "งานที่ต้องใช้ความเด็ดขาด" },
     2: { name: "ยามอังคาร", trait: "บุกเบิก ขยัน", good: "การแข่งขัน, ทวงหนี้, ออกกำลังกาย", bad: "การทะเลาะวิวาท, ผ่าตัด" },
@@ -202,8 +202,85 @@ function quickPredictYarm() {
     }, 300);
 }
 
+
+function showyarm(){
+    const contianer = document.getElementById('showyarmpage')
+    if (!contianer) return;
+    
+    const html = `
+    <div class="card-header bg-dark border-gold py-4">
+                <h2 class="text-gold mb-1">🕰️ ยามอัฏฐกาลพยากรณ์</h2>
+                <span class="text-white-50 mb-0">เลือกเวลาเพื่อดูฤกษ์ยามมงคลตามตำราพรหมชาติ</span>
+            <div class="card-body">
+                <div id="currentTimeYarm"
+                    class="mb-4 p-3 rounded-circle border-gold mx-auto animate__animated animate__pulse animate__infinite"
+                    style="width: 200px; height: 200px; display: flex; flex-direction: column; justify-content: center; background: rgba(212, 175, 55, 0.05);">
+                    <h6 class="text-gold mb-0 small">ยามปัจจุบัน</h6>
+                    <h3 id="yarmNowName" class="mb-0">...</h3>
+                    <small id="yarmNowTime" class="text-white-50">...</small>
+                </div>
+                <div class="form-row justify-content-center mb-4">
+                    <div class="col-md-4">
+                        <label class="text-white-50">เลือกวัน</label>
+                        <select id="yarmDaySelect" onchange="calculateYarm()"
+                            class="form-control bg-dark text-white border-gold" style="height: auto;">
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ</option>
+                            <option value="4">วันพฤหัสบดี</option>
+                            <option value="5">วันศุกร์</option>
+                            <option value="6">วันเสาร์</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="text-white-50">ระบุเวลา</label>
+                        <input type="time" id="yarmTimeInput" onchange="calculateYarm()"
+                            class="form-control bg-dark text-white border-gold" style="height: auto;">
+                    </div>
+                </div>
+                <button class="btn btn-gold btn-lg px-5 mb-4 shadow" onclick="calculateYarm()">🔍 ดูคำทำนายยาม</button>
+
+                <div id="yarmResult" class="text-left animate__animated animate__fadeIn" style="display: none;">
+                    <div class="p-4 bg-dark-soft rounded border-gold">
+                        <h4 id="resYarmTitle" class="text-gold mb-3"></h4>
+                        <div id="resYarmDetail" class="text-white"></div>
+                        <hr class="border-gold opacity-25">
+                        <div class="row text-center mt-3">
+                            <div class="col-6 border-right">
+                                <small class="text-success d-block">เหมาะสำหรับ</small>
+                                <span id="yarmGood"></span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-danger d-block">ควรระวัง</small>
+                                <span id="yarmBad"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+        </div>    
+    `;
+    contianer.innerHTML = html;
+
+}
+
+
 // เริ่มต้นระบบ
 document.addEventListener('DOMContentLoaded', () => {
+    showyarm();
     updateCurrentYarm();
     // อัปเดตทุก 1 นาที (60000 ms)
     setInterval(updateCurrentYarm, 60000);

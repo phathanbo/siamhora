@@ -34,11 +34,7 @@ body {
     line-height: 1.6;
 }
 
-/* ป้องกันข้อความล้นในมือถือ */
-.card-body {
-    padding: 20px;
-    word-wrap: break-word;
-}
+
 
 /* Tooltip */
 [title] {
@@ -713,8 +709,6 @@ tfoot .sticky-col { background-color: inherit; }
 /* tooltip ชื่อภพ */
 .table-sm div.small { font-size: 0.75rem; margin-bottom: 2px; }
 
-/* คอลัมน์แรก */
-.table td:first-child { min-width: 90px !important; font-size: 0.75rem; }
 
 /* sd-cell */
 .sd-cell:hover {
@@ -1294,10 +1288,12 @@ body.light-mode .card,
 body.light-mode .weekly-card,
 body.light-mode #dailyMapCapture,
 body.light-mode .card-body {
-    background: #fffdf7 !important;
+    background: #0084ffd8 !important;
     border: 2px solid var(--gold) !important;
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15) !important;
     color: #3c2f2f !important;
+    padding: 20px;
+    word-wrap: break-word;
 }
 
 body.light-mode .book-page {
@@ -1474,4 +1470,205 @@ body.light-mode .card { border-radius: 16px; }
         box-shadow: none;
         background: transparent;
     }
+}
+
+.kaliyoke-header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+
+    .input-group input {
+        padding: 10px 15px;
+        font-size: 1.1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        width: 140px;
+    }
+
+    .btn-calc {
+        padding: 10px 25px;
+        background: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-calc:hover {
+        background: #34495e;
+        transform: translateY(-2px);
+    }
+
+    .result-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+        background: #fdfdfd;
+        border: 1px solid #eee;
+        transition: transform 0.2s;
+    }
+
+    .card:hover { transform: scale(1.02); }
+
+    .card h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.3rem;
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #ccc;
+    }
+
+    .card p {
+        margin: 10px 0;
+        font-size: 0.95rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .label { font-weight: bold; color: #555; }
+
+    /* Color States */
+    .thongchai { border-top: 6px solid #27ae60; background-color: #f0fff4; }
+    .athibadi { border-top: 6px solid #f1c40f; background-color: #fffdf0; }
+    .ubat { border-top: 6px solid #e67e22; background-color: #fff9f0; }
+    .lokawinas { border-top: 6px solid #e74c3c; background-color: #fff5f5; }
+
+    :root {
+    --gold:     #C9A84C;
+    --gold-lt:  #F0D080;
+    --deep:     #1A1008;
+    --surface:  #231A0D;
+    --card:     #2C2010;
+    --border:   #4A380A;
+    --text:     #EDE0C4;
+    --muted:    #9A8860;
+    --accent:   #E8471A;
+    --green:    #3BA87A;
+    --blue:     #4A90D9;
+    --radius:   12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.18) 0%, transparent 70%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234A380A' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+ 
+
+  /* ====== LIVE CLOCK ====== */
+  .clock-bar {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+    padding: 1.2rem 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-size: .9rem;
+  }
+  .clock-bar span { color: var(--muted); }
+  .clock-bar strong { color: var(--gold-lt); font-weight: 600; }
+
+  /* ====== MAIN LAYOUT ====== */
+  .main-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    display: grid;
+    gap: 2rem;
+  }
+
+
+/* =========================================
+   SEARCH & REUX
+   ========================================= */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.search-bar button {
+    background: var(--gold);
+    border: none;
+    padding: 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reux-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+
+/* =========================================
+   MISC (Buttons & Pills)
+   ========================================= */
+.kk-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.kk-btn {
+    background: #333;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.kk-btn.active {
+    background: var(--gold);
+    color: #000;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--gold);
+    text-shadow: 0 0 5px rgba(201, 168, 76, 0.5);
+}
+
+.box{
+    background: #fff;
+    border: 1px solid #eee;     
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 2px;
+
 }

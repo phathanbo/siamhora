@@ -35,16 +35,18 @@ function createCard(data) {
             <b class="text-gold">วัน${data.day}</b>
         </div>
         <div class="card-body p-2 small">
-            ${createItem("success", "มิตร", data.friend, "เกื้อกูลกัน เป็นที่ปรึกษาที่ดี")}
-            ${createItem("danger", "ศัตรู", data.enemy, "ความเห็นไม่ตรงกัน มักมีปากเสียง")}
-            ${createItem("primary", "สมพล", data.power, "ช่วยกันสร้างฐานะ มีพลังอำนาจ")}
-            ${createItem("warning text-dark", "ธาตุ", data.element, "เสริมความมั่นคง เป็นปึกแผ่น")}
+            ${createItem("success", "มิตร", `<span style="color: #28a745;">${data.friend}</span>`, "เกื้อกูลกัน เป็นที่ปรึกษาที่ดี")}
+            ${createItem("danger", "ศัตรู", `<span style="color: #dc3545;">${data.enemy}</span>`, "ความเห็นไม่ตรงกัน มักมีปากเสียง")}
+            ${createItem("primary", "สมพล", `<span style="color: #007bff;">${data.power}</span>`, "ช่วยกันสร้างฐานะ มีพลังอำนาจ")}
+            ${createItem("warning text-dark", "ธาตุ", `<span style="color: #ffc107;">${data.element}</span>`, "เสริมความมั่นคง เป็นปึกแผ่น")}
         </div>
     `;
 
     col.appendChild(card);
     return col;
 }
+
+
 
 function createItem(color, label, value, desc) {
     return `
@@ -55,6 +57,8 @@ function createItem(color, label, value, desc) {
         </div>
     `;
 }
+
+
 
 /* =========================
    4. RENDER ENGINE
@@ -83,6 +87,42 @@ function renderRelationTable() {
     container.dataset.rendered = "true";
 }
 
+
+function renderTablerelation() {
+    const container = document.getElementById("relationTableBodypage");
+    if (!container) return;
+
+    const html = `
+    <div class="card shadow-lg border-gold">
+            <div class="card-header bg-white text-gold text-center py-4">
+                <h2 class="mb-0 ">🌟 ตำราดาวคู่มิตร - คู่ศัตรู</h2>
+                <br>
+                <span>สรุปความสัมพันธ์ของคนเกิดทั้ง 7 วัน</span>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row" id="relationTableBody">
+                </div>
+                <hr>
+                <div class="alert alert-warning small py-2">
+                    <b>หมายเหตุ:</b> ใช้สำหรับพิจารณาการหาหุ้นส่วน คู่ครอง หรือบุคคลที่จะขอความช่วยเหลือ
+                </div> 
+           <div class="row mt-4">
+            <div class="col-6">
+                <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                </button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                    <i class="fas fa-home"></i> กลับหน้าหลัก
+                </button>
+            </div>
+        </div>   
+    `;
+    container.innerHTML = html;
+    renderRelationTable();
+}
+
 /* =========================
    5. PAGE CONTROL
 ========================= */
@@ -92,13 +132,11 @@ function showPlanetRelationPage() {
     } else {
         console.warn("⚠️ navigateTo not found");
     }
-
-    renderRelationTable();
+    renderTablerelation();
 }
 
-/* =========================
-   6. INIT (โหลดครั้งเดียว)
-========================= */
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    renderRelationTable();
+    renderTablerelation();
 });

@@ -5,15 +5,13 @@ if (typeof isViewingHistory === 'undefined') {
     var isViewingHistory = false;
 }
 
-
 const LIFE_GRAPH_LABELS = [
-    "วาสนา", "ทรัพย์", "เพื่อน", "ญาติ", "บุตร", "บริวาร", 
+    "วาสนา", "ทรัพย์", "เพื่อน", "ญาติ", "บุตร", "บริวาร",
     "ศัตรู", "คู่ครอง", "โรคภัย", "ความสุข", "การงาน", "ลาภยศ"
 ];
 
 function parseBirthdate(input) {
     if (!input || input === "undefined") return null;
-
     try {
         if (input.includes('/')) {
             const [d, m, yRaw] = input.split('/');
@@ -22,10 +20,8 @@ function parseBirthdate(input) {
 
             input = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
         }
-
         const date = new Date(input);
         return isNaN(date.getTime()) ? null : date;
-
     } catch {
         return null;
     }
@@ -37,40 +33,35 @@ function calculateFortuneScore(points) {
     return Math.round((total / maxTotal) * 100);
 }
 
-function getFortuneLevel(score){
-    if(score >= 80) return "ดวงแข็งมาก มีวาสนาและโอกาสสูง";
-    if(score >= 65) return "ดวงดี มีความก้าวหน้าในชีวิต";
-    if(score >= 50) return "ดวงปานกลาง ชีวิตขึ้นอยู่กับความพยายาม";
-    if(score >= 35) return "ดวงอ่อน ต้องพยายามมากกว่าคนอื่น";
+function getFortuneLevel(score) {
+    if (score >= 80) return "ดวงแข็งมาก มีวาสนาและโอกาสสูง";
+    if (score >= 65) return "ดวงดี มีความก้าวหน้าในชีวิต";
+    if (score >= 50) return "ดวงปานกลาง ชีวิตขึ้นอยู่กับความพยายาม";
+    if (score >= 35) return "ดวงอ่อน ต้องพยายามมากกว่าคนอื่น";
     return "ดวงตก มีอุปสรรค ควรเสริมบุญบารมี";
 }
 
 
-function getMonthlyFortune(points){
-
+function getMonthlyFortune(points) {
     const months = [
-        "มกราคม","กุมภาพันธ์","มีนาคม","เมษายน",
-        "พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม",
-        "กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
     ];
-
     const startMonth = new Date().getMonth();
-
     let result = [];
-
-    for(let i=0;i<12;i++){
-
+    for (let i = 0; i < 12; i++) {
         const score = points[(i + startMonth) % 12];
 
         let text = "";
 
-        if(score >= 6){
+        if (score >= 6) {
             text = "🌟 ดวงดี มีโอกาสสำเร็จ การเงินดี";
         }
-        else if(score >= 4){
+        else if (score >= 4) {
             text = "⚖️ ดวงปานกลาง ต้องใช้ความพยายาม";
         }
-        else{
+        else {
             text = "⚠️ ดวงอ่อน ระวังอุปสรรคและรายจ่าย";
         }
 
@@ -85,7 +76,7 @@ function getMonthlyFortune(points){
 }
 
 
-function renderMonthlyFortune(points){
+function renderMonthlyFortune(points) {
 
     const data = getMonthlyFortune(points);
 
@@ -93,7 +84,7 @@ function renderMonthlyFortune(points){
     <div class="mt-4 p-3 border-gold bg-dark shadow rounded" style="border:1px solid #d4af37;">
         <h4 class="text-gold mb-3 border-bottom pb-2">📅 ดวงชะตา 12 เดือน</h4>
     `;
-    data.forEach(m=>{
+    data.forEach(m => {
         html += `
         <div class="mb-2 border-bottom border-secondary pb-1 text-white small">
             <b>${m.month}</b> (${m.score}) : ${m.text}
@@ -111,7 +102,6 @@ function renderMonthlyFortune(points){
 
 
 function calculateLifeGraph() {
-
     let input =
         document.getElementById('birthdate')?.value ||
         localStorage.getItem('userBirthdate') ||
@@ -146,65 +136,65 @@ function calculateLifeGraph() {
 
 function getLifeGraphAdvice(label, score) {
     const adviceMap = {
-        "วาสนา": score >= 5 ? 
-            "ดวงชะตาแข็งแกร่ง มีบารมีเก่าหนุนนำ ทำอะไรก็มักมีคนเกรงใจและได้รับโอกาสดีๆ เสมอ" : 
-            (score <= 2 ? "วาสนาอาภัพในวัยต้น ต้องสร้างทุกอย่างด้วยน้ำพักน้ำแรงตนเอง เหนื่อยก่อนแล้วจะสบายภายหลัง" : 
-            "ดวงปานกลาง มีชีวิตราบรื่นตามอัตภาพ หมั่นทำบุญเสริมบารมีจะช่วยให้รุ่งเรืองยิ่งขึ้น"),
+        "วาสนา": score >= 5 ?
+            "ดวงชะตาแข็งแกร่ง มีบารมีเก่าหนุนนำ ทำอะไรก็มักมีคนเกรงใจและได้รับโอกาสดีๆ เสมอ" :
+            (score <= 2 ? "วาสนาอาภัพในวัยต้น ต้องสร้างทุกอย่างด้วยน้ำพักน้ำแรงตนเอง เหนื่อยก่อนแล้วจะสบายภายหลัง" :
+                "ดวงปานกลาง มีชีวิตราบรื่นตามอัตภาพ หมั่นทำบุญเสริมบารมีจะช่วยให้รุ่งเรืองยิ่งขึ้น"),
 
-        "ทรัพย์": score >= 5 ? 
-            "การเงินโดดเด่นมั่งคั่ง มีทรัพย์สินพูนทวี หยิบจับอะไรก็เป็นเงินเป็นทอง มีโชคด้านการลงทุน" : 
-            (score <= 2 ? "การเงินฝืดเคืองหรือมีรายจ่ายสูง ระวังการใช้จ่ายเกินตัว ควรวางแผนออมเงินอย่างเคร่งครัด" : 
-            "ฐานะปานกลาง มีกินมีใช้ไม่ขาดมือแต่ไม่ถึงกับร่ำรวยโลดโผน ต้องบริหารเงินให้รอบคอบ"),
+        "ทรัพย์": score >= 5 ?
+            "การเงินโดดเด่นมั่งคั่ง มีทรัพย์สินพูนทวี หยิบจับอะไรก็เป็นเงินเป็นทอง มีโชคด้านการลงทุน" :
+            (score <= 2 ? "การเงินฝืดเคืองหรือมีรายจ่ายสูง ระวังการใช้จ่ายเกินตัว ควรวางแผนออมเงินอย่างเคร่งครัด" :
+                "ฐานะปานกลาง มีกินมีใช้ไม่ขาดมือแต่ไม่ถึงกับร่ำรวยโลดโผน ต้องบริหารเงินให้รอบคอบ"),
 
-        "เพื่อน": score >= 5 ? 
-            "มีกัลยาณมิตรดี เพื่อนฝูงคอยซัพพอร์ตและนำพาสิ่งดีๆ มาให้เสมอ สังคมกว้างขวาง" : 
-            (score <= 2 ? "เพื่อนน้อยหรือพึ่งพาไม่ค่อยได้ ระวังจะเดือดร้อนหรือเสียทรัพย์เพราะคนรอบข้าง" : 
-            "มีเพื่อนมากหน้าหลายตา ให้เลือกคบคนที่ชักชวนไปในทางที่เจริญจะส่งเสริมดวง"),
+        "เพื่อน": score >= 5 ?
+            "มีกัลยาณมิตรดี เพื่อนฝูงคอยซัพพอร์ตและนำพาสิ่งดีๆ มาให้เสมอ สังคมกว้างขวาง" :
+            (score <= 2 ? "เพื่อนน้อยหรือพึ่งพาไม่ค่อยได้ ระวังจะเดือดร้อนหรือเสียทรัพย์เพราะคนรอบข้าง" :
+                "มีเพื่อนมากหน้าหลายตา ให้เลือกคบคนที่ชักชวนไปในทางที่เจริญจะส่งเสริมดวง"),
 
-        "ญาติ": score >= 5 ? 
-            "ญาติพี่น้องรักใคร่กลมเกลียว เป็นที่พึ่งพาอาศัยได้และคอยช่วยเหลือในยามคับขัน" : 
-            (score <= 2 ? "ต้องพึ่งพาตนเองเป็นหลัก ญาติพี่น้องอาจนำเรื่องร้อนใจมาให้ หรืออยู่ห่างกันจะดีกว่า" : 
-            "ความสัมพันธ์กับญาติอยู่ในเกณฑ์ปกติ มีการช่วยเหลือเกื้อกูลกันตามสมควร"),
+        "ญาติ": score >= 5 ?
+            "ญาติพี่น้องรักใคร่กลมเกลียว เป็นที่พึ่งพาอาศัยได้และคอยช่วยเหลือในยามคับขัน" :
+            (score <= 2 ? "ต้องพึ่งพาตนเองเป็นหลัก ญาติพี่น้องอาจนำเรื่องร้อนใจมาให้ หรืออยู่ห่างกันจะดีกว่า" :
+                "ความสัมพันธ์กับญาติอยู่ในเกณฑ์ปกติ มีการช่วยเหลือเกื้อกูลกันตามสมควร"),
 
-        "บุตร": score >= 5 ? 
-            "มีบุตรบริวารที่ดี เป็นอภิชาตบุตร หรือการเริ่มต้นโปรเจกต์ใหม่ๆ มักจะประสบความสำเร็จง่าย" : 
-            (score <= 2 ? "บุตรหรือบริวารอาจนำเรื่องปวดหัวมาให้ หรือมีบุตรยาก ต้องใช้ความอดทนในการอบรมสั่งสอน" : 
-            "บุตรอยู่ในโอวาทปานกลาง มีเรื่องให้ต้องดูแลเอาใจใส่ตามวัย"),
+        "บุตร": score >= 5 ?
+            "มีบุตรบริวารที่ดี เป็นอภิชาตบุตร หรือการเริ่มต้นโปรเจกต์ใหม่ๆ มักจะประสบความสำเร็จง่าย" :
+            (score <= 2 ? "บุตรหรือบริวารอาจนำเรื่องปวดหัวมาให้ หรือมีบุตรยาก ต้องใช้ความอดทนในการอบรมสั่งสอน" :
+                "บุตรอยู่ในโอวาทปานกลาง มีเรื่องให้ต้องดูแลเอาใจใส่ตามวัย"),
 
-        "บริวาร": score >= 5 ? 
-            "มีบารมีปกครองคน ลูกน้องซื่อสัตย์และทำงานถวายหัว มักได้รับความร่วมมือที่ดีจากผู้ใต้บังคับบัญชา" : 
-            (score <= 2 ? "บริวารมักสร้างปัญหาหรืออยู่ไม่ทน ระวังถูกเอาเปรียบหรือคดโกงจากคนใกล้ชิด" : 
-            "การปกครองคนต้องใช้ทั้งเมตตาและเดชจึงจะคุมบริวารอยู่"),
+        "บริวาร": score >= 5 ?
+            "มีบารมีปกครองคน ลูกน้องซื่อสัตย์และทำงานถวายหัว มักได้รับความร่วมมือที่ดีจากผู้ใต้บังคับบัญชา" :
+            (score <= 2 ? "บริวารมักสร้างปัญหาหรืออยู่ไม่ทน ระวังถูกเอาเปรียบหรือคดโกงจากคนใกล้ชิด" :
+                "การปกครองคนต้องใช้ทั้งเมตตาและเดชจึงจะคุมบริวารอยู่"),
 
-        "ศัตรู": score >= 5 ? 
-            "**ระวัง!** ศัตรูมีกำลังแรง มีคนจ้องขัดขวางหรืออิจฉา ควรทำตัวให้เด่นน้อยที่สุดเพื่อลดแรงปะทะ" : 
-            (score <= 2 ? "ศัตรูพ่ายแพ้ภัยตนเอง ชีวิตสงบสุข ไร้คนขัดขวางหรืออุปสรรคขวากหนามที่รุนแรง" : 
-            "มีคนไม่สมหวังดีบ้างเป็นธรรมดา อย่าเก็บมาใส่ใจ ให้มุ่งมั่นทำหน้าที่ของตนเอง"),
+        "ศัตรู": score >= 5 ?
+            "**ระวัง!** ศัตรูมีกำลังแรง มีคนจ้องขัดขวางหรืออิจฉา ควรทำตัวให้เด่นน้อยที่สุดเพื่อลดแรงปะทะ" :
+            (score <= 2 ? "ศัตรูพ่ายแพ้ภัยตนเอง ชีวิตสงบสุข ไร้คนขัดขวางหรืออุปสรรคขวากหนามที่รุนแรง" :
+                "มีคนไม่สมหวังดีบ้างเป็นธรรมดา อย่าเก็บมาใส่ใจ ให้มุ่งมั่นทำหน้าที่ของตนเอง"),
 
-        "คู่ครอง": score >= 5 ? 
-            "คู่ครองดี ส่งเสริมดวงชะตา เป็นคู่คิดคู่ยากที่ช่วยกันสร้างฐานะจนมั่นคง" : 
-            (score <= 2 ? "ความรักมีอุปสรรค หรือคู่ครองมักมีความเห็นขัดแย้งกัน ควรใช้เหตุผลมากกว่าอารมณ์" : 
-            "ชีวิตคู่ปานกลาง มีสุขมีทุกข์ปนกันไป ต้องหมั่นเติมความเข้าใจให้กันเสมอ"),
+        "คู่ครอง": score >= 5 ?
+            "คู่ครองดี ส่งเสริมดวงชะตา เป็นคู่คิดคู่ยากที่ช่วยกันสร้างฐานะจนมั่นคง" :
+            (score <= 2 ? "ความรักมีอุปสรรค หรือคู่ครองมักมีความเห็นขัดแย้งกัน ควรใช้เหตุผลมากกว่าอารมณ์" :
+                "ชีวิตคู่ปานกลาง มีสุขมีทุกข์ปนกันไป ต้องหมั่นเติมความเข้าใจให้กันเสมอ"),
 
-        "โรคภัย": score >= 5 ? 
-            "**ควรระวัง!** มีเกณฑ์เจ็บป่วยบ่อยหรือมีโรคเรื้อรังรบกวน ควรตรวจสุขภาพสม่ำเสมอและไม่ประมาท" : 
-            (score <= 2 ? "ร่างกายแข็งแรงดี มีภูมิต้านทานสูง หากเจ็บป่วยก็จะหายได้อย่างรวดเร็ว" : 
-            "สุขภาพปานกลาง ระวังโรคเล็กๆ น้อยๆ จากการพักผ่อนไม่พอหรือความเครียดสะสม"),
+        "โรคภัย": score >= 5 ?
+            "**ควรระวัง!** มีเกณฑ์เจ็บป่วยบ่อยหรือมีโรคเรื้อรังรบกวน ควรตรวจสุขภาพสม่ำเสมอและไม่ประมาท" :
+            (score <= 2 ? "ร่างกายแข็งแรงดี มีภูมิต้านทานสูง หากเจ็บป่วยก็จะหายได้อย่างรวดเร็ว" :
+                "สุขภาพปานกลาง ระวังโรคเล็กๆ น้อยๆ จากการพักผ่อนไม่พอหรือความเครียดสะสม"),
 
-        "ความสุข": score >= 5 ? 
-            "ชีวิตมีความสุขสมบูรณ์ สุขภาพจิตดี ครอบครัวอบอุ่นและมีความมั่นคงในจิตใจสูง" : 
-            (score <= 2 ? "มีความเครียดง่าย หรือในบ้านมีเรื่องให้ร้อนใจบ่อย ควรหาเวลาพักผ่อนและเข้าหาธรรมะ" : 
-            "ความสุขหาได้ตามอัตภาพ มีเรื่องให้ลุ้นบ้างเป็นระยะ แต่โดยรวมยังถือว่ามีความสุขดี"),
+        "ความสุข": score >= 5 ?
+            "ชีวิตมีความสุขสมบูรณ์ สุขภาพจิตดี ครอบครัวอบอุ่นและมีความมั่นคงในจิตใจสูง" :
+            (score <= 2 ? "มีความเครียดง่าย หรือในบ้านมีเรื่องให้ร้อนใจบ่อย ควรหาเวลาพักผ่อนและเข้าหาธรรมะ" :
+                "ความสุขหาได้ตามอัตภาพ มีเรื่องให้ลุ้นบ้างเป็นระยะ แต่โดยรวมยังถือว่ามีความสุขดี"),
 
-        "การงาน": score >= 5 ? 
-            "การงานรุ่งโรจน์ ประสบความสำเร็จโดดเด่น มีตำแหน่งหน้าที่สูงและเป็นที่ยอมรับ" : 
-            (score <= 2 ? "งานมีอุปสรรคมาก หรือต้องเปลี่ยนงานบ่อย ต้องใช้ความเพียรและอดทนมากกว่าคนอื่น" : 
-            "การงานมั่นคงปานกลาง มีความก้าวหน้าตามลำดับความขยันและความรับผิดชอบ"),
+        "การงาน": score >= 5 ?
+            "การงานรุ่งโรจน์ ประสบความสำเร็จโดดเด่น มีตำแหน่งหน้าที่สูงและเป็นที่ยอมรับ" :
+            (score <= 2 ? "งานมีอุปสรรคมาก หรือต้องเปลี่ยนงานบ่อย ต้องใช้ความเพียรและอดทนมากกว่าคนอื่น" :
+                "การงานมั่นคงปานกลาง มีความก้าวหน้าตามลำดับความขยันและความรับผิดชอบ"),
 
-        "ลาภยศ": score >= 5 ? 
-            "มีวาสนาทางชื่อเสียง มีโชคลาภลอยหรือได้รับเกียรติยศจากสังคมอย่างไม่คาดฝัน" : 
-            (score <= 2 ? "โชคลาภมีน้อย ต้องสร้างด้วยน้ำพักน้ำแรง อย่าหวังทางลัดหรือการเสี่ยงโชค" : 
-            "มีโชคบ้างเป็นครั้งคราว ได้รับความเคารพตามตำแหน่งหน้าที่และคุณงามความดี")
+        "ลาภยศ": score >= 5 ?
+            "มีวาสนาทางชื่อเสียง มีโชคลาภลอยหรือได้รับเกียรติยศจากสังคมอย่างไม่คาดฝัน" :
+            (score <= 2 ? "โชคลาภมีน้อย ต้องสร้างด้วยน้ำพักน้ำแรง อย่าหวังทางลัดหรือการเสี่ยงโชค" :
+                "มีโชคบ้างเป็นครั้งคราว ได้รับความเคารพตามตำแหน่งหน้าที่และคุณงามความดี")
     };
     return adviceMap[label] || "ชีวิตดำเนินไปตามครรลอง หมั่นมีสติและทำความดีจะช่วยเสริมดวงชะตา";
 }
@@ -212,7 +202,7 @@ function getLifeGraphAdvice(label, score) {
 
 function getTransitAdvice(type, label, score) {
     const isBadSide = (label === "ศัตรู" || label === "โรคภัย");
-    
+
     // คำแนะนำตามระดับคะแนน
     const levelAdvice = {
         high: score >= 5 ? "พลังเต็มเปี่ยม" : (score <= 2 ? "พลังอ่อนแรง" : "พลังปานกลาง"),
@@ -242,8 +232,8 @@ function getLuckyNumbers(birthInput) {
     const s = today.getDate() + today.getMonth() + birth;
     const n = (val) => (Math.abs(val) % 10).toString();
     return {
-        twoDigits: [n(s)+n(s*2), n(s+3)+n(s*7), n(s+5)+n(s+birth), n(s*4)+n(s-2)],
-        threeDigits: [n(s)+n(s+2)+n(s+4), n(s*3)+n(s+1)+n(s*2), n(s+birth)+n(s)+n(s-1), n(s*5)+n(s+6)+n(s*2)]
+        twoDigits: [n(s) + n(s * 2), n(s + 3) + n(s * 7), n(s + 5) + n(s + birth), n(s * 4) + n(s - 2)],
+        threeDigits: [n(s) + n(s + 2) + n(s + 4), n(s * 3) + n(s + 1) + n(s * 2), n(s + birth) + n(s) + n(s - 1), n(s * 5) + n(s + 6) + n(s * 2)]
     };
 }
 
@@ -252,7 +242,7 @@ function getLuckyNumbers(birthInput) {
 function calculateTransit(birthInput) {
     const birthDate = new Date(birthInput);
     const today = new Date();
-    
+
     // คำนวณอายุเต็ม และ อายุย่าง
     let ageFull = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
@@ -285,7 +275,6 @@ function calculateTransit(birthInput) {
 }
 
 function renderLifeGraph(points) {
-
     const canvas = document.getElementById('lifeGraphCanvas');
     if (!canvas || typeof Chart === "undefined") {
         console.warn("Chart not available");
@@ -327,7 +316,7 @@ function renderLifeGraphTable(points) {
     const resultDiv = document.getElementById('lifeGraphResult');
     const birthInput = document.getElementById('birthdate').value || localStorage.getItem('userBirthdate');
     const monthlyFortuneHtml = renderMonthlyFortune(points);
-    
+
     if (!birthInput) return;
     // บันทึกลง LocalStorage ทันทีที่คำนวณ
     localStorage.setItem('userBirthdate', birthInput);
@@ -348,9 +337,9 @@ function renderLifeGraphTable(points) {
 
     // --- 2. เตรียมข้อมูล UI ---
     const icons = {
-        "วาสนา": "fa-crown", "ทรัพย์": "fa-coins", "เพื่อน": "fa-users", 
-        "ญาติ": "fa-home", "บุตร": "fa-child", "บริวาร": "fa-user-friends", 
-        "ศัตรู": "fa-shield-alt", "คู่ครอง": "fa-heart", "โรคภัย": "fa-medkit", 
+        "วาสนา": "fa-crown", "ทรัพย์": "fa-coins", "เพื่อน": "fa-users",
+        "ญาติ": "fa-home", "บุตร": "fa-child", "บริวาร": "fa-user-friends",
+        "ศัตรู": "fa-shield-alt", "คู่ครอง": "fa-heart", "โรคภัย": "fa-medkit",
         "ความสุข": "fa-smile", "การงาน": "fa-briefcase", "ลาภยศ": "fa-trophy"
     };
 
@@ -392,7 +381,7 @@ function renderLifeGraphTable(points) {
 
     // --- 3. สร้าง HTML ส่วนสรุปและอายุปัจจุบัน ---
     // --- ส่วนหัวสรุปและอายุปัจจุบัน พร้อมคำทำนายจรรายปี/เดือน/วัน ---
-let html = `
+    let html = `
     <div class="col-12 mb-4">
             <div class="p-3 rounded shadow-sm" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(0,0,0,0.8)); border: 2px solid #d4af37;">
                 ${luckySection}
@@ -452,10 +441,10 @@ let html = `
     // --- 4. วนลูปสร้างการ์ดพร้อมไฮไลต์ดวงจร ---
     points.forEach((p, i) => {
         let label = LIFE_GRAPH_LABELS[i];
-        let colorClass = (label === "ศัตรู" || label === "โรคภัย") 
+        let colorClass = (label === "ศัตรู" || label === "โรคภัย")
             ? (p >= 5 ? 'danger' : (p <= 2 ? 'success' : 'warning'))
             : (p >= 5 ? 'success' : (p <= 2 ? 'danger' : 'warning'));
-        
+
         let advice = getLifeGraphAdvice(label, p);
         let progressWidth = (p / 7) * 100;
         let icon = icons[label] || "fa-star";
@@ -492,25 +481,70 @@ let html = `
             </div>
         `;
     });
-    
+
     html += '</div>';
     resultDiv.innerHTML = html;
 
     document.addEventListener('DOMContentLoaded', () => {
-    const savedDate = localStorage.getItem('userBirthdate');
-    if (savedDate) {
-        const input = document.getElementById('birthdate');
-        if(input) {
-            input.value = savedDate;
-            setTimeout(() => calculateLifeGraph(), 500); // ดีเลย์นิดนึงเพื่อให้หน้าโหลดเสร็จ
+        const savedDate = localStorage.getItem('userBirthdate');
+        if (savedDate) {
+            const input = document.getElementById('birthdate');
+            if (input) {
+                input.value = savedDate;
+                setTimeout(() => calculateLifeGraph(), 500); // ดีเลย์นิดนึงเพื่อให้หน้าโหลดเสร็จ
+            }
         }
-    }
-});
+    });
 }
 
 
+function showlifeGraph() {
+    const contianer = document.getElementById('showlifeGraphPage');
+    if (!contianer) return;
+
+    const html = `
+            <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📈 กราฟชีวิตพยากรณ์</h2>
+                <span class="text-white-50">วิเคราะห์ดวงชะตา 12 ด้านตามหลักเลขศาสตร์โบราณ</span>
+            </div>
+            <div class="card-body">
+                <div class="p-3 rounded bg-white mb-4" style="height: 300px; position: relative; width: 100%; margin: 0 auto;">
+                    <canvas id="lifeGraphCanvas" style="position:relative"></canvas>
+                </div>
+                <div id="lifeGraphResult" class="row">
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-gold btn-lg share-graph-btn" onclick="downloadLifeGraphImage(this)">
+                        <i class="fas fa-chart-line mr-2"></i> เซฟรูปกราฟชีวิตแชร์ลง Facebook
+                    </button><b></b>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    contianer.innerHTML = html;
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showlifeGraph();
+});
+
+
 async function downloadLifeGraphImage(element) {
-    const area = document.getElementById('lifeGraphResult'); 
+    const area = document.getElementById('lifeGraphResult');
     if (!area || area.innerHTML === "") {
         alert("กรุณาคำนวณกราฟชีวิตก่อนทำการเซฟภาพครับ");
         return;
@@ -547,20 +581,20 @@ async function downloadLifeGraphImage(element) {
 
     try {
         const originalStyle = area.style.cssText;
-        
+
         // ปรับแต่ง Area ให้เหมาะกับการโพสต์ Facebook
-        area.style.width = "550px"; 
+        area.style.width = "550px";
         area.style.padding = "30px";
         area.style.background = "#1a1a1a";
         area.style.color = "#ffffff";
-        
+
         // แทรก Header และ Footer
         area.insertBefore(brandingHeader, area.firstChild);
         area.appendChild(footer);
 
         const options = {
             backgroundColor: '#1a1a1a',
-            scale: 2, 
+            scale: 2,
             useCORS: true,
             allowTaint: false,
             scrollY: -window.scrollY,
@@ -568,7 +602,7 @@ async function downloadLifeGraphImage(element) {
         };
 
         const canvas = await html2canvas(area, options);
-        
+
         // ลบ Header/Footer ออกจากหน้าเว็บปกติ และคืนค่า Style
         area.removeChild(brandingHeader);
         area.removeChild(footer);

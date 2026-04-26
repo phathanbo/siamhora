@@ -212,6 +212,59 @@ const dreamDatabase = {
   "โทรศัพท์หน้าจอแตก": {"m": "การสื่อสารจะผิดพลาดหรือมีความเข้าใจผิดกับคนรอบข้าง ให้ระวังเรื่องการใช้คำพูดหรือข้อความ", "n": "02 22 24 42"}  
 };
 
+
+function showdream(){
+    const contianer = document.getElementById('dreampage');
+    if (contianer) {
+        contianer.style.display = 'block';
+    }   
+
+    const html = `
+    <div class="text-center mb-4">
+            <h2 class="text-gold">🔮 ทำนายฝัน + เลขเด็ด</h2>
+            <p class="text-muted">พิมพ์สิ่งที่ฝันเห็น (เช่น งู, ฟันหลุด, ทอง) แล้วกดค้นหา</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="input-group mb-4">
+                    <input type="text" id="dreamKeyword" class="form-control form-control-lg"
+                        placeholder="ฝันเห็นอะไร... เช่น งู ฟันหลุด ทอง" autocomplete="off" list="dreamSuggestions">
+                    <datalist id="dreamSuggestions"></datalist>                    
+                </div>
+                <div id="dreamResult" class="card border-gold shadow-sm p-4" style="min-height: 200px; display: none;">
+                    <h1 style="font-size: 16px; text-align: center;">🔮 <strong>สยามโหรามงคล</strong></h1>
+                    <div id="dreamMeaning" style="justify-content: center; text-align: center;"></div>
+                    <div id="dreamNumbers" class="font-weight-bold text-gold h5"></div>
+                </div>
+                <div class="text-center mt-4 no-capture">
+                    <button class="btn btn-outline-gold share-dream-btn" onclick="downloadDreamImage(this)">
+                        <i class="fas fa-share-alt mr-2"></i> เซฟรูปเลขเด็ดแชร์ลง Facebook
+                    </button>
+                </div>
+                <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    `;
+
+    contianer.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showdream();
+});
+
+
 // --- 1. ส่วนจัดการ Suggestions และ Event Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('dreamKeyword');
@@ -332,6 +385,8 @@ function interpretDream() {
     }
 }
 
+
+
 async function downloadDreamImage(element) {
     // พื้นที่ที่แสดงผลทำนายฝัน (ใน HTML ของคุณคือส่วนที่มีผลลัพธ์)
     const area = document.getElementById('dreamResult'); 
@@ -412,3 +467,5 @@ async function downloadDreamImage(element) {
         }
     }
 }
+
+

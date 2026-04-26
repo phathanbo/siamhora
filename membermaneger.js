@@ -334,7 +334,7 @@ function renderTable(dataArray) {
         // ใช้ item.id (Cloud ID) แทน Date.now()
         const row = `
             <tr> 
-                <td class="font-weight-bold text-info">${item.memberId || 'N/A'}</td>
+                <td>${item.memberId || 'N/A'}</td>
                 <td>${item.name}</td>
                 <td>${item.lastName || '-'}</td>
                 <td>${item.birthdate}</td>
@@ -572,8 +572,7 @@ function showProfilePage(data) {
     // 6. แสดงผลคำทำนาย
     predictionArea.innerHTML = `
         <div id="captureArea" class="p-4" style="background:#fdfaf0;border:1px solid #d4af37">
-
-            <div class="text-center mb-4">
+            <div class="text-center">
                 <h2 style="color:#b8860b">🔮 แผ่นดวงชะตา</h2>
                 <p style="color:#333; font-weight: bold; font-size: 25px;">คุณ ${data.name} ${data.lastName || ''}</p>
             </div>
@@ -619,24 +618,19 @@ function showProfilePage(data) {
                         <strong>วันเกิด${elementData.name} + ปีนักษัตร ${zElement.element}:</strong> ${relDayYear}
                     </div>
                 </div>
-
                 <hr style="border-top:1px dashed #d4af37">
-
                 <div class="mb-3">
                     <strong>คำทำนายวันเกิด:</strong>
                     ${typeof getDayPrediction === 'function' ? getDayPrediction(dayIdx) : "-"}
                 </div>
-
                 <div class="mb-3">
                     <strong>คำทำนายเดือนเกิด:</strong>
                     ${typeof getMonthPrediction === 'function' ? getMonthPrediction(monthIdx) : "-"}
                 </div>
-
                 <div class="mb-3">
                     <strong>คำทำนายปีนักษัตร:</strong>
                     ${typeof getZodiacPrediction === 'function' ? getZodiacPrediction(["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"].indexOf(zElement.name)) : "-"}
                 </div>
-
             </div>
         </div>
     `;

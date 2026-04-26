@@ -55,7 +55,7 @@ function renderDailyColors() {
     const currentYear = nowInTH.getFullYear() + 543;
 
     headerDiv.innerHTML = `
-    <div class="card border-0 shadow-sm mb-2" 
+    <div class="reux-card" 
         style="background: linear-gradient(90deg, #1a1a1a, ${data.bg}); 
                color: white; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
         <div class="card-body py-2 px-3">
@@ -123,7 +123,63 @@ function showWeeklyTable(){
     tableWrapper.style.display = "block";
 }
 
+function colorTable(){
+    const container =document.getElementById('colorpage');
+    if (!container) return; 
+    const html = `
+            <div class="card-header bg-dark text-white text-center py-4">
+            <i class="fas fa-palette fa-5x text-gold mb-4 animate__animated animate__infinite animate__pulse"></i>
+            <h2 class="text-gold mb-1">✨ หอพยากรณ์สีมงคล</h2>
+            <h3>ตรวจสอบตารางสีประจำสัปดาห์</h3>
+            <p class="text-white-50 mb-0 small">วางแผนเสริมดวงชะตา เลือกสีเสื้อผ้าและทิศมงคลให้เฮงตลอดทั้งอาทิตย์</p>
+            <p class="text-muted">ให้พลังแห่งสีสรรค์ช่วยส่งเสริมความสำเร็จในทุกการเจรจาของคุณ</p>
+            <div class="mt-4 animate__animated animate__fadeIn" style="text-align: center;">
+                <span class="badge badge-outline-gold p-2 " style="white-space: normal;">
+                    <i class="fas fa-info-circle mr-1"></i> เคล็ดลับ: หากต้องไปเจรจางานสำคัญ ให้เน้นสีในช่อง "บารมี"
+                    เป็นหลัก
+                </span>
+            </div>
+        </div>
+        <div id="weeklyTableWrapper" class="mt-2" style="display: none;">
+            <div class="weekly-card animate__animated animate__fadeInUp">
+                <div class="table-responsive">
+                    <table class="table table-borderless text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-gold-light">วัน</th>
+                                <th class="text-gold-light">โชคลาภ (เงิน)</th>
+                                <th class="text-gold-light">บารมี (งาน)</th>
+                                <th class="text-gold-light">กาลกิณี (ห้าม)</th>
+                                <th class="text-gold-light">ทิศมงคล</th>
+                            </tr>
+                        </thead>
+                        <tbody id="weeklyTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+        </div>
+        </div>
+    `;
+    container.innerHTML = html;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderDailyColors();
+    colorTable();
     showWeeklyTable();
 });

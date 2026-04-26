@@ -41,9 +41,12 @@ function generateDailyMap() {
         return;
     }
 
-    const targetDate = new Date(picker.value);
-    let dayOfWeek = targetDate.getDay(); 
-    
+    // [BUG FIX #1] new Date("YYYY-MM-DD") แปลงเป็น UTC ทำให้วันเลื่อนใน timezone GMT+7
+    // แก้ไข: แยก token แล้วสร้าง Date ด้วย local time โดยตรง
+    const [y, m, d] = picker.value.split('-').map(Number);
+    const targetDate = new Date(y, m - 1, d);
+    const dayOfWeek = targetDate.getDay();
+
     // แสดงวันที่ภาษาไทย
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     if (titleEl) {
@@ -78,7 +81,17 @@ function generateDailyMap() {
  * สร้างแถวข้อมูล HTML ของแต่ละยาม
  */
 function renderYarmRow(timeRange, starId) {
+    // [BUG FIX #4] Guard กรณี starId ไม่มีใน YARM_INFO เพื่อป้องกัน crash
     const info = window.YARM_INFO[starId];
+    if (!info) {
+        console.warn(`renderYarmRow: ไม่พบข้อมูลสำหรับ starId="${starId}"`);
+        const div = document.createElement('div');
+        div.className = "yarm-row-mobile";
+        div.style.cssText = "padding: 12px; margin-bottom: 8px; color: #888;";
+        div.textContent = `${timeRange} — ไม่พบข้อมูล (starId: ${starId})`;
+        return div;
+    }
+
     // เรียกใช้ getStarColor จาก yarmPage.js (ตรวจสอบความพร้อม)
     const color = typeof window.getStarColor === "function" ? window.getStarColor(starId) : "#ffd700";
     
@@ -122,6 +135,81 @@ function renderYarmRow(timeRange, starId) {
     return div;
 }
 
+
+function showDailytable() {
+    const contianer = document.getElementById('showdailytablepage')
+    if (!contianer) return;
+
+    const html = `
+            <div class="card shadow-lg border-gold bg-dark text-white">
+            <div class="card-header bg-dark border-gold py-3 text-center">
+                <h2 class="text-gold mb-1">📅 แผนที่ฤกษ์มงคลรายวัน</h2>
+                <span class="text-white-50">วางแผนชีวิตตามจังหวะดวงดาว</span>
+            </div>
+            <div class="card-body">
+                <div class="form-row justify-content-center mb-4">
+                    <div class="col-md-6">
+                        <label class="text-white-50">เลือกวันที่ต้องการวางแผน</label>
+                        <input type="date" id="highlightDatePicker" class="form-control bg-dark text-white border-gold"
+                            onchange="generateDailyMap()">
+                    </div>
+                </div>
+                <div id="dailyMapCapture" class="p-3 rounded bg-dark" style="border: 2px solid #d4af37;">
+                    <div class="text-center mb-3">
+                        <h4 id="mapDateTitle" class="text-gold"></h4>
+                        <hr class="border-gold opacity-25">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-warning text-center"><i class="fas fa-sun"></i> ภาคกลางวัน</h6>
+                            <div id="dayYarmList"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-info text-center mt-3 mt-md-0"><i class="fas fa-moon"></i> ภาคกลางคืน</h6>
+                            <div id="nightYarmList"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-gold btn-lg px-5 download-btn" onclick="downloadDailyMap(this)">
+                        <i class="fas fa-image mr-2"></i> เซฟเป็นรูปภาพเก็บไว้
+                    </button>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                <i class="fas fa-home"></i> กลับหน้าหลัก
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    contianer.innerHTML = html;
+}
+
+
+function showtabledaily() {
+    const contianer = document.getElementById('showtabledailypage')
+    if (!contianer) return;
+
+    const html = `
+    
+    `;
+    contianer.innerHTML = html;   
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showDailytable();
+});
+
+
 /**
  * ดาวน์โหลดรูปภาพแผนที่ฤกษ์ประจำวัน
  */
@@ -135,7 +223,9 @@ async function downloadDailyMap(element) {
     const area = document.getElementById('dailyMapCapture');
     if (!area) return;
 
-    const btn = element instanceof HTMLElement ? element : document.querySelector('.download-btn');
+    // [BUG FIX #2] ใช้ instanceof HTMLElement อย่างเดียวและ fallback ที่ชัดเจน
+    // หาก element ที่ส่งมาไม่ใช่ HTMLElement (เช่น event object หรือ string) จะ query ใหม่
+    const btn = (element instanceof HTMLElement) ? element : document.querySelector('.download-btn');
     const originalContent = btn ? btn.innerHTML : "";
 
     if (btn) {
@@ -160,15 +250,15 @@ async function downloadDailyMap(element) {
         <div style="font-size: 11px; opacity: 0.7;">ลิขสิทธิ์ข้อมูลตามตำราทักษาพยากรณ์</div>
     `;
 
-    try {
-        const originalStyle = area.style.cssText;
-        
-        // ปรับแต่ง Area ให้เหมาะสมกับการเป็นรูปภาพ (Fixed Width)
-        area.style.width = "500px";
-        area.style.padding = "25px";
-        area.style.background = "#121212"; // พื้นหลังเข้มเพื่อให้ตัวหนังสือชัดเจน
-        area.appendChild(footer);
+    // [BUG FIX #3] บันทึก originalStyle และเพิ่ม footer ก่อน try
+    // เพื่อให้ finally สามารถคืนค่าและลบ footer ได้เสมอ แม้เกิด error กลางคัน
+    const originalStyle = area.style.cssText;
+    area.style.width = "500px";
+    area.style.padding = "25px";
+    area.style.background = "#121212";
+    area.appendChild(footer);
 
+    try {
         const canvas = await html2canvas(area, {
             backgroundColor: '#121212',
             scale: 2, // เพิ่มความชัด
@@ -176,10 +266,6 @@ async function downloadDailyMap(element) {
             logging: false,
             width: 500
         });
-        
-        // คืนค่า
-        area.removeChild(footer);
-        area.style.cssText = originalStyle;
 
         // ดาวน์โหลด
         const dateTitle = document.getElementById('mapDateTitle')?.innerText || 'Daily';
@@ -192,9 +278,16 @@ async function downloadDailyMap(element) {
         console.error("Capture Error:", e);
         alert("ไม่สามารถสร้างรูปภาพได้: " + e.message);
     } finally {
+        // [BUG FIX #3] คืนค่า style และลบ footer ใน finally เสมอ ไม่ว่าจะ success หรือ error
+        if (area.contains(footer)) {
+            area.removeChild(footer);
+        }
+        area.style.cssText = originalStyle;
+
         if (btn) {
             btn.innerHTML = originalContent;
             btn.disabled = false;
         }
     }
 }
+
