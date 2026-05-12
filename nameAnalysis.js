@@ -232,6 +232,75 @@ const TaksaMeanings = {
 };
 
 
+
+function showname() {
+    const contianer = document.getElementById('shownamepage')
+    if (contianer) {
+        contianer.style.display = 'block';
+    }
+
+    const html = `
+            <div class="container py-4">
+            <div class="card bg-dark border-gold text-white p-3 text-center">
+                <h2 class="text-gold">🔮 วิเคราะห์เลขศาสตร์ ชื่อ-นามสกุล</h2>
+                <h5 class="small text-white-50">ถอดรหัสตัวเลขและตรวจสอบอักษรกาลกิณี</h5>                
+                <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                <select id="memberSelect" class="form-control bg-dark text-white border-gold member-selector-shared"
+                    onchange="autoFillMemberData(this.value); analyzeName()">
+                    <option value="">-- เลือกสมาชิก --</option>
+                </select>
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-2">
+                        <input type="text" id="firstName" class="form-control bg-dark text-white border-gold"
+                            placeholder="กรอกชื่อ">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <input type="text" id="lastName" class="form-control bg-dark text-white border-gold"
+                            placeholder="กรอกนามสกุล">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <select id="birthDaynumSelect" class="form-control bg-dark text-white border-gold">
+                            <option value="">-- เลือกวันเกิด (เพื่อเช็คกาลกิณี) --</option>
+                            <option value="0">วันอาทิตย์</option>
+                            <option value="1">วันจันทร์</option>
+                            <option value="2">วันอังคาร</option>
+                            <option value="3">วันพุธ (กลางวัน)</option>
+                            <option value="7">วันพุธ (กลางคืน)</option>
+                            <option value="4">วันพฤหัสบดี</option>
+                            <option value="5">วันศุกร์</option>
+                            <option value="6">วันเสาร์</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <button class="btn btn-gold btn-block" onclick="analyzeName()">วิเคราะห์รหัสชีวิต</button>
+                    </div>
+                </div>
+                <div id="nameResultArea" style="display: none;"></div>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+    `;
+    contianer.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () =>{
+    showname();
+});
+
+
 // ฟังก์ชันหาอักษรกาลกิณีในชื่อ
 function getKalakiniInName(name, dayIndex) {
     // แก้ไขจุดผิด: ตรวจสอบว่า name เป็น string และไม่ว่าง

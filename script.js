@@ -440,6 +440,7 @@ function navigateTo(pageId, addHistory = true) {
     }, 50); // หน่วงเวลา 0.05 วินาที
 }
 
+
     // 3. สั่งซ่อนทุกหน้าที่มีคลาส .main-section
     const allPages = document.querySelectorAll('.main-section');
     allPages.forEach(page => {
@@ -464,6 +465,16 @@ function navigateTo(pageId, addHistory = true) {
     // 7. เลื่อนหน้าจอกลับไปบนสุดแบบนุ่มนวล
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    // 8. เรียก render function สำหรับหน้าที่ต้องสร้าง HTML แบบ Dynamic
+    //    ต้องอยู่หลัง display:'block' เพื่อให้ getElementById เจอ element
+    if (pageId === 'planetRelationPage') {
+        setTimeout(() => {
+            if (typeof renderTablerelation === 'function') {
+                renderTablerelation();
+            }
+        }, 50);
+    }
+
     // 8. โหลดข้อมูลผู้ใช้มาเติม (ถ้ามีระบบ Profile)
     if (typeof UserProfile !== 'undefined') UserProfile.load();
 }
@@ -484,8 +495,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (lastPage === 'auspiciousPage' && typeof renderAuspiciousCalendar === 'function') {
             renderAuspiciousCalendar();
         }
-        if (lastPage === 'planetRelationPage' && typeof renderRelationTable === 'function') {
-            renderRelationTable();
+        if (lastPage === 'planetRelationPage' && typeof renderTablerelation === 'function') {
+            renderTablerelation();
         }
     } else {
         navigateTo('mainContent'); 

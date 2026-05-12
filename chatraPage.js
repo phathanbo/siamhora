@@ -1,9 +1,91 @@
+"use strict";
+
 /**
  * Logic: ฉัตร 3 ชั้น (สูตรคำนวณเศษอายุ)
  * ชั้น 1: อายุ + 1 % 3
  * ชั้น 2: อายุ + 2 % 7
  * ชั้น 3: อายุ + 3 % 8
  */
+
+function showchatri(){
+    const contianer = document.getElementById('showchatriPage')
+    if (!contianer) return ;
+
+    const html = `
+    <div class="container mt-4">
+            <div class="card shadow-lg"
+                style="background: rgba(20, 20, 20, 0.95); border: 1px solid #d4af37; border-radius: 15px;">
+                <div class="card-header text-center py-4" style="border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h2 class="text-gold" style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
+                        <i class="fas fa-umbrella-beach mr-2"></i> วิชามหามงคล "ฉัตร 3 ชั้น"
+                    </h2>
+                    <span class="text-muted small mb-0">พยากรณ์เกณฑ์ชะตา บารมี และลาภผลรายปี</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-md-6 col-lg-4 text-center">
+                        <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                            <select id="memberSelect"
+                                class="form-control bg-dark text-white border-gold member-selector-shared"
+                                onchange="autoFillMemberData(this.value)">
+                                <option value="">-- เลือกสมาชิก --</option>
+                            </select>
+                            <label class="text-gold mb-2">ระบุอายุที่ต้องการตรวจ (ปีปัจจุบัน)</label>
+                            <input type="number" id="chatraAge" placeholder="กรอกอายุ (เช่น 25)"
+                                onkeypress="if(event.key === 'Enter') { event.preventDefault(); calculateChatra(); }"
+                                class="btn btn-outline-gold px-5 py-2" /><br>                            
+                            <button type="button" onclick="calculateChatra()" class="btn btn-gold mt-3"> คำนวณฉัตร 3 ชั้น</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chatraDisplay" style="display: none;">
+                    <div class="chatra-visual-area d-flex flex-column align-items-center mt-4">
+                        <div class="chatra-pinnacle"></div>
+                        <div class="chatra-tier tier-top" id="chatraTier3">
+                            <div class="tier-label">ชั้นที่ 3: บารมี/บริวาร</div>
+                            <div class="tier-value" id="resTier3">-</div>
+                        </div>
+                        <div class="chatra-tier tier-mid" id="chatraTier2">
+                            <div class="tier-label">ชั้นที่ 2: การงาน/การเงิน</div>
+                            <div class="tier-value" id="resTier2">-</div>
+                        </div>
+                        <div class="chatra-tier tier-base" id="chatraTier1">
+                            <div class="tier-label">ชั้นที่ 1: พื้นฐานดวงปีนี้</div>
+                            <div class="tier-value" id="resTier1">-</div>
+                        </div>
+                        <div class="chatra-pole"></div>
+                    </div>
+                    <div class="fortune-box mt-4 p-4 text-center rounded">
+                        <h4 class="text-gold mb-3"><i class="fas fa-scroll mr-2"></i> บันทึกมหาพยากรณ์</h4>
+                        <p id="chatraInterpretation" class="text-white lead mb-0"></p>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-gold px-5 py-2" onclick="downloadChatraImage()">
+                            <i class="fas fa-camera mr-2"></i> บันทึกภาพคำทำนาย
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    `;
+    contianer.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showchatri()
+});
 
 
 function showChatraPage() {

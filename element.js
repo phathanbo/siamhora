@@ -20,24 +20,24 @@ const ELEMENT_INFO = {
  */
 const MONTH_ELEMENTS = {
     // ธาตุน้ำ
-    0: { name: "ธาตุน้ำ", level: "(ต้นธาตุ)", color: "#0077b6", strength: "แข็ง/นิ่ง", desc: "สุขุมลุ่มลึก เยือกเย็นเหมือนน้ำแข็ง" },
-    1: { name: "ธาตุน้ำ", level: "(กลางธาตุ)", color: "#00b4d8", strength: "ใสสะอาด", desc: "ร่าเริง แจ่มใส ปรับตัวเก่งเหมือนน้ำในแก้ว" },
-    2: { name: "ธาตุน้ำ", level: "(ปลายธาตุ)", color: "#90e0ef", strength: "อ่อนไหว", desc: "ช่างเพ้อฝัน อ่อนไหวง่ายเหมือนละอองหมอก" },
+    0: { name: "ธาตุน้ำ", level: "(ต้นธาตุ)", power: "สูง", color: "#0077b6", strength: "แข็ง/นิ่ง", desc: "สุขุมลุ่มลึก เยือกเย็นเหมือนน้ำแข็ง" },
+    1: { name: "ธาตุน้ำ", level: "(กลางธาตุ)", power: "ปานกลาง", color: "#00b4d8", strength: "ใสสะอาด", desc: "ร่าเริง แจ่มใส ปรับตัวเก่งเหมือนน้ำในแก้ว" },
+    2: { name: "ธาตุน้ำ", level: "(ปลายธาตุ)", power: "ปานกลาง",color: "#90e0ef", strength: "อ่อนไหว", desc: "ช่างเพ้อฝัน อ่อนไหวง่ายเหมือนละอองหมอก" },
 
     // ธาตุไฟ
-    3: { name: "ธาตุไฟ", level: "(ต้นธาตุ)", level: "สูง", color: "#d00000", strength: "แรงกล้า", desc: "ร้อนแรง มุ่งมั่น มีพลังความเป็นผู้นำสูงมาก" },
-    4: { name: "ธาตุไฟ", level: "(กลางธาตุ)", level: "ปานกลาง", color: "#dc2f02", strength: "สม่ำเสมอ", desc: "อบอุ่น มีเหตุผล เป็นที่พึ่งพาให้ผู้อื่นได้" },
-    5: { name: "ธาตุไฟ", level: "(ปลายธาตุ)", level: "ปานกลาง", color: "#ffba08", strength: "อ่อนแรง", desc: "อารมณ์แปรปรวนง่าย ทำอะไรตามใจตัวเอง" },
+    3: { name: "ธาตุไฟ", level: "(ต้นธาตุ)", power: "สูง", color: "#d00000", strength: "แรงกล้า", desc: "ร้อนแรง มุ่งมั่น มีพลังความเป็นผู้นำสูงมาก" },
+    4: { name: "ธาตุไฟ", level: "(กลางธาตุ)", power: "ปานกลาง", color: "#dc2f02", strength: "สม่ำเสมอ", desc: "อบอุ่น มีเหตุผล เป็นที่พึ่งพาให้ผู้อื่นได้" },
+    5: { name: "ธาตุไฟ", level: "(ปลายธาตุ)", power: "ปานกลาง", color: "#ffba08", strength: "อ่อนแรง", desc: "อารมณ์แปรปรวนง่าย ทำอะไรตามใจตัวเอง" },
 
     // ธาตุดิน
-    6: { name: "ธาตุดิน", level: "(ต้นธาตุ)", level: "สูง", color: "#6c584c", strength: "แข็งแกร่ง", desc: "หนักแน่น มั่นคงมาก ไม่ชอบการเปลี่ยนแปลง" },
-    7: { name: "ธาตุดิน", level: "(กลางธาตุ)", level: "ปานกลาง", color: "#a98467", strength: "อุดมสมบูรณ์", desc: "จิตใจดี มีเมตตา อดทนต่ออุปสรรคได้ดี" },
-    8: { name: "ธาตุดิน", level: "(ปลายธาตุ)", level: "ปานกลาง", color: "#adc178", strength: "อ่อนนุ่ม", desc: "ขี้เกรงใจ อ่อนโยน แต่ขาดความเด็ดขาด" },
+    6: { name: "ธาตุดิน", level: "(ต้นธาตุ)", power: "สูง", color: "#6c584c", strength: "แข็งแกร่ง", desc: "หนักแน่น มั่นคงมาก ไม่ชอบการเปลี่ยนแปลง" },
+    7: { name: "ธาตุดิน", level: "(กลางธาตุ)", power: "ปานกลาง", color: "#a98467", strength: "อุดมสมบูรณ์", desc: "จิตใจดี มีเมตตา อดทนต่ออุปสรรคได้ดี" },
+    8: { name: "ธาตุดิน", level: "(ปลายธาตุ)", power: "ปานกลาง", color: "#adc178", strength: "อ่อนนุ่ม", desc: "ขี้เกรงใจ อ่อนโยน แต่ขาดความเด็ดขาด" },
 
     // ธาตุลม
-    9: { name: "ธาตุลม", level: "(ต้นธาตุ)", level: "สูง", color: "#48cae4", strength: "รวดเร็ว", desc: "ว่องไว คิดเร็วทำเร็วเหมือนพายุ" },
-    10: { name: "ธาตุลม", level: "(กลางธาตุ)", level: "ปานกลาง", color: "#ade8f4", strength: "นุ่มนวล", desc: "มีวาทศิลป์ดี ติดต่อประสานงานเก่ง" },
-    11: { name: "ธาตุลม", level: "(ปลายธาตุ)", level: "ปานกลาง", color: "#caf0f8", strength: "แผ่วเบา", desc: "รักสันโดษ มีโลกส่วนตัวสูง ชอบคิดค้น" }
+    9: { name: "ธาตุลม", level: "(ต้นธาตุ)", power: "สูง", color: "#48cae4", strength: "รวดเร็ว", desc: "ว่องไว คิดเร็วทำเร็วเหมือนพายุ" },
+    10: { name: "ธาตุลม", level: "(กลางธาตุ)", power: "ปานกลาง", color: "#ade8f4", strength: "นุ่มนวล", desc: "มีวาทศิลป์ดี ติดต่อประสานงานเก่ง" },
+    11: { name: "ธาตุลม", level: "(ปลายธาตุ)", power: "ปานกลาง", color: "#caf0f8", strength: "แผ่วเบา", desc: "รักสันโดษ มีโลกส่วนตัวสูง ชอบคิดค้น" }
 };
 
 /**
@@ -89,12 +89,106 @@ function getMonthElement(monthIndex) {
  * @param {number} zodiacIndex - 0-11
  * @returns {object} ข้อมูลนักษัตร + ธาตุ
  */
-function getZodiacElement(zodiacIndex) {
-    if (typeof zodiacIndex !== "number") {
-        return { name: "ไม่ระบุ", element: "-", color: "#ccc", desc: "-", job: "-" };
+/**
+ * ดึงธาตุตามปีนักษัตร
+ * รองรับ:
+ * - เลข index 0-11
+ * - Date object
+ * - yyyy-mm-dd
+ * - dd/mm/yyyy
+ * - พ.ศ.
+ */
+function getZodiacElement(input) {
+
+    let idx = null;
+
+    // =========================
+    // กรณีส่งเป็นเลข 0-11 มา
+    // =========================
+    if (typeof input === "number" && Number.isFinite(input)) {
+
+        idx = ((input % 12) + 12) % 12;
+
+    } else {
+
+        // =========================
+        // กรณีส่งวันเกิดมา
+        // =========================
+
+        let dateObj = null;
+
+        // Date object
+        if (input instanceof Date) {
+            dateObj = input;
+        }
+
+        // string
+        else if (typeof input === "string") {
+
+            // yyyy-mm-dd
+            if (input.includes("-")) {
+
+                dateObj = new Date(input);
+
+            }
+
+            // dd/mm/yyyy หรือ พ.ศ.
+            else if (input.includes("/")) {
+
+                const parts = input.split("/");
+
+                if (parts.length === 3) {
+
+                    let day = parseInt(parts[0], 10);
+                    let month = parseInt(parts[1], 10) - 1;
+                    let year = parseInt(parts[2], 10);
+
+                    // แปลง พ.ศ. -> ค.ศ.
+                    if (year > 2400) {
+                        year -= 543;
+                    }
+
+                    dateObj = new Date(year, month, day);
+                }
+            }
+        }
+
+        // =========================
+        // ตรวจสอบ date
+        // =========================
+        if (!dateObj || isNaN(dateObj.getTime())) {
+            return {
+                name: "ไม่ระบุ",
+                element: "-",
+                color: "#ccc",
+                desc: "-",
+                job: "-"
+            };
+        }
+
+        // =========================
+        // ปีนักษัตรไทย
+        // ก่อน 13 เม.ย. นับปีเก่า
+        // =========================
+
+        let year = dateObj.getFullYear();
+        const month = dateObj.getMonth() + 1;
+        const day = dateObj.getDate();
+
+        if (month < 4 || (month === 4 && day < 13)) {
+            year -= 1;
+        }
+
+        idx = Math.abs(year - 4) % 12;
     }
-    const idx = ((zodiacIndex % 12) + 12) % 12;
-    return ZODIAC_ELEMENTS[idx] || { name: "ไม่ระบุ", element: "-", color: "#ccc", desc: "-", job: "-" };
+
+    return ZODIAC_ELEMENTS[idx] || {
+        name: "ไม่ระบุ",
+        element: "-",
+        color: "#ccc",
+        desc: "-",
+        job: "-"
+    };
 }
 
 /**

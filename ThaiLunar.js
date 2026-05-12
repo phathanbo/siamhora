@@ -116,10 +116,24 @@ function getThaiLunar(dateInput) {
     const year = d.getFullYear();
     const time = d.getTime();
 
+    // FIX 1: Guard สำหรับปีที่อยู่นอกช่วง anchor data
+    const minYear = Math.min(...Object.keys(THAI_ANCHORS).map(Number));
+    const maxYear = Math.max(...Object.keys(THAI_ANCHORS).map(Number));
+    if (year < minYear || year > maxYear) {
+        console.warn(`getThaiLunar: ปี ${year} อยู่นอกช่วง ${minYear}–${maxYear} ที่รองรับ`);
+        return null;
+    }
+
     // 1. เลือก Anchor (วันเริ่มปีนักษัตรไทย ขึ้น 1 ค่ำ เดือน 5)
     let anchorYear = year;
     if (time < THAI_ANCHORS[year].date.getTime()) {
         anchorYear = year - 1;
+    }
+
+    // FIX 1 (ต่อ): ตรวจ anchorYear ด้วย
+    if (!THAI_ANCHORS[anchorYear]) {
+        console.warn(`getThaiLunar: ไม่พบ anchor สำหรับปี ${anchorYear}`);
+        return null;
     }
 
     const anchor = THAI_ANCHORS[anchorYear];
@@ -133,12 +147,9 @@ function getThaiLunar(dateInput) {
     while (true) {
         let daysInMonth;
 
-        // กฎการหาจำนวนวันในเดือนนั้นๆ
-        if (currentMonth === 8 && anchor.isAthikamat && !isSecondMonth8) {
-            // เดือน 8 แรก ของปีอธิกมาส มี 30 วัน
-            daysInMonth = 30;
-        } else if (currentMonth === 8 && anchor.isAthikamat && isSecondMonth8) {
-            // เดือน 8 หลัง ของปีอธิกมาส มี 30 วัน
+        // FIX 3: รวม logic เดือน 8 ที่ซ้ำกันเป็นเงื่อนไขเดียว
+        if (currentMonth === 8 && anchor.isAthikamat) {
+            // เดือน 8 ทุกหน (ทั้งหนแรกและหนหลัง) ของปีอธิกมาส มี 30 วัน
             daysInMonth = 30;
         } else if (currentMonth % 2 === 0) {
             // เดือนคู่ปกติ (2, 4, 6, 10, 12) มี 30 วัน
@@ -146,8 +157,8 @@ function getThaiLunar(dateInput) {
         } else {
             // เดือนคี่ปกติ (1, 3, 5, 7, 9, 11) มี 29 วัน
             daysInMonth = 29;
-            // กรณีพิเศษ: ถ้าเป็นปีอธิกวาร เดือน 7 จะมี 30 วัน
-            if (currentMonth === 7 && anchor.isAthikawan) daysInMonth = 30;
+            // FIX 2: ใช้ !! ป้องกัน undefined สำหรับปีก่อน 2017 ที่ไม่มี field isAthikawan
+            if (currentMonth === 7 && !!anchor.isAthikawan) daysInMonth = 30;
         }
 
         // ตรวจสอบว่าจำนวนวันที่เหลือ "พอ" สำหรับเดือนนี้ไหม

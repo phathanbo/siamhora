@@ -180,3 +180,7 @@ const PersonalFortune = {
         `;
     }
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    PersonalFortune.renderProfileFortune();
+});

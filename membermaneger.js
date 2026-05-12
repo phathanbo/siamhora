@@ -133,11 +133,19 @@ async function deleteMember(docId) {
 let isViewingHistory = false;
 
 // 3. แก้ไขจุดเริ่มต้นทำงาน (เรียก Sync เมื่อเปิดหน้าเว็บ)
-window.onload = async function () {
-    await syncDataFromFirestore(); // ✅ ใช้ชื่อให้ตรงกับฟังก์ชันที่ประกาศไว้ด้านล่าง
-    if (typeof checkLoginStatus === 'function') checkLoginStatus();
-    if (typeof fillUserData === 'function') fillUserData();
-};
+window.addEventListener('load', async () => {
+
+    await syncDataFromFirestore();
+
+    if (typeof checkLoginStatus === 'function') {
+        checkLoginStatus();
+    }
+
+    if (typeof fillUserData === 'function') {
+        fillUserData();
+    }
+
+});
 
 // --- เพิ่มฟังก์ชันนี้เพื่อกรอกข้อมูลอัตโนมัติ ---
 function fillUserData() {
@@ -181,25 +189,85 @@ function checkLoginStatus() {
 
 function getYarmFromTime(timeStr) {
 
+    // =========================
+    // ตรวจ dependency
+    // =========================
+
+    if (
+        typeof YARM_CHART === 'undefined' ||
+        typeof YARM_INFO === 'undefined'
+    ) {
+
+        console.warn('⚠️ YARM system not loaded');
+
+        return "ไม่ระบุ";
+    }
+
+    // =========================
+    // ตรวจเวลา
+    // =========================
+
+    if (!timeStr || !timeStr.includes(":")) {
+        return "ไม่ระบุ";
+    }
+
     const [h, m] = timeStr.split(":").map(Number);
+
+    if (isNaN(h) || isNaN(m)) {
+        return "ไม่ระบุ";
+    }
+
     const total = h * 60 + m;
 
-    let yarmIndex, isDay;
+    let yarmIndex;
+    let isDay;
 
+    // กลางวัน
     if (total >= 360 && total < 1080) {
+
         yarmIndex = Math.floor((total - 360) / 90);
         isDay = true;
+
     } else {
-        let nTotal = total < 360 ? total + 1440 : total;
+
+        // กลางคืน
+        let nTotal = total < 360
+            ? total + 1440
+            : total;
+
         yarmIndex = Math.floor((nTotal - 1080) / 90);
+
         isDay = false;
     }
 
     const day = new Date().getDay();
 
-    const starId = isDay
-        ? YARM_CHART.day[day][yarmIndex]
-        : YARM_CHART.night[day][yarmIndex];
+    // =========================
+    // อ่านข้อมูลยาม
+    // =========================
+
+    const chart = isDay
+        ? YARM_CHART.day
+        : YARM_CHART.night;
+
+    if (
+        !chart ||
+        !chart[day] ||
+        typeof chart[day][yarmIndex] === 'undefined'
+    ) {
+
+        return "ไม่ระบุ";
+    }
+
+    const starId = chart[day][yarmIndex];
+
+    if (
+        !YARM_INFO[starId] ||
+        !YARM_INFO[starId].name
+    ) {
+
+        return "ไม่ระบุ";
+    }
 
     return YARM_INFO[starId].name;
 }
@@ -303,20 +371,64 @@ function saveToHistory(data) {
 // --- ฟังก์ชันสร้างรหัสสมาชิก 10 หลัก (YYYYMMDDXX) ---
 // --- แก้ไขฟังก์ชัน generateMemberId ---
 async function generateMemberId() {
-    const now = new Date();
-    const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
 
-    let maxSeq = 0;
-    const querySnapshot = await getDocs(membersCol); // ดึงมาเช็ค ID ล่าสุด
-    querySnapshot.forEach(doc => {
-        const mId = String(doc.data().memberId);
-        if (mId.startsWith(dateStr)) {
-            const seq = parseInt(mId.substring(8));
-            if (seq > maxSeq) maxSeq = seq;
+    try {
+
+        const now = new Date();
+
+        const dateStr =
+            `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+
+        // =========================
+        // ดึงล่าสุดแค่ 1 รายการ
+        // =========================
+
+        const q = query(
+            membersCol,
+            orderBy("memberId", "desc"),
+            limit(1)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        let nextSeq = 1;
+
+        if (!querySnapshot.empty) {
+
+            const latestDoc = querySnapshot.docs[0].data();
+
+            const latestId = String(
+                latestDoc.memberId || ""
+            );
+
+            // =========================
+            // ถ้าเป็นวันเดียวกัน
+            // =========================
+
+            if (latestId.startsWith(dateStr)) {
+
+                const latestSeq =
+                    parseInt(latestId.substring(8), 10);
+
+                if (!isNaN(latestSeq)) {
+                    nextSeq = latestSeq + 1;
+                }
+            }
         }
-    });
 
-    return dateStr + String(maxSeq + 1).padStart(2, '0');
+        return dateStr +
+            String(nextSeq).padStart(2, '0');
+
+    } catch (err) {
+
+        console.error(
+            "generateMemberId error:",
+            err
+        );
+
+        // fallback กันระบบล่ม
+        return Date.now().toString();
+    }
 }
 
 // --- ฟังก์ชัน Render ตารางแยกออกมาเพื่อให้ใช้ซ้ำได้ทั้ง Load ปกติ และ ค้นหา
@@ -370,12 +482,39 @@ function viewHistory(docId) {
 
 // ระบบค้นหา
 function searchHistory() {
-    const term = document.getElementById('searchInput').value.toLowerCase();
-    const history = JSON.parse(localStorage.getItem('horo_history')) || [];
-    const filtered = history.filter(item =>
-        item.name.toLowerCase().includes(term) ||
-        (item.memberId && item.memberId.includes(term))
+
+    const input = document.getElementById('searchInput');
+
+    if (!input) {
+        console.warn('searchInput not found');
+        return;
+    }
+
+    const term = (input.value || "")
+        .toLowerCase()
+        .trim();
+
+    const history = JSON.parse(
+        localStorage.getItem('horo_history') || '[]'
     );
+
+    const filtered = history.filter(item => {
+
+        const name = (item?.name || "")
+            .toLowerCase();
+
+        const lastName = (item?.lastName || "")
+            .toLowerCase();
+
+        const memberId = String(item?.memberId || "");
+
+        return (
+            name.includes(term) ||
+            lastName.includes(term) ||
+            memberId.includes(term)
+        );
+    });
+
     renderTable(filtered);
 }
 
@@ -533,8 +672,14 @@ function showProfilePage(data) {
         : { name: "ไม่ระบุ", color: "#ccc", strength: "-", desc: "-" };
 
     const zElement = typeof window.getZodiacElement === 'function'
-        ? window.getZodiacElement(year+7)
-        : { name: "ไม่ระบุ", color: "#ccc", element: "-", desc: "-", job: "-" };
+    ? window.getZodiacElement(birthDateObj)
+    : {
+        name: "ไม่ระบุ",
+        color: "#ccc",
+        element: "-",
+        desc: "-",
+        job: "-"
+    };
 
     // 3. วิเคราะห์ความสัมพันธ์ธาตุ
     let relDayMonth = "ทั่วไป";
@@ -574,7 +719,7 @@ function showProfilePage(data) {
         <div id="captureArea" class="p-4" style="background:#fdfaf0;border:1px solid #d4af37">
             <div class="text-center">
                 <h2 style="color:#b8860b">🔮 แผ่นดวงชะตา</h2>
-                <p style="color:#333; font-weight: bold; font-size: 25px;">คุณ ${data.name} ${data.lastName || ''}</p>
+                <h4 style="color:#333; font-weight: bold; font-size: 25px;">คุณ ${data.name} ${data.lastName || ''}</h4>
             </div>
             <hr style="border-top:2px double #d4af37">
             <div class="prediction-content">
@@ -645,15 +790,7 @@ window.calculateEsh = calculateEsh;
 window.deleteItem = deleteItem;
 window.viewHistory = viewHistory;
 window.showProfilePage = showProfilePage;
-window.searchHistory = () => {
-    const term = document.getElementById('searchInput').value.toLowerCase();
-    const history = JSON.parse(localStorage.getItem('horo_history')) || [];
-    const filtered = history.filter(item =>
-        item.name.toLowerCase().includes(term) || (item.memberId && item.memberId.includes(term))
-    );
-    renderTable(filtered);
-};
-// expose auxiliary functions used by inline handlers or other scripts
+window.searchHistory = searchHistory;// expose auxiliary functions used by inline handlers or other scripts
 window.login = login;
 window.logout = logout; // original function includes confirmation
 window.fillUserData = fillUserData;
@@ -737,9 +874,25 @@ window.autoFillMemberData = function (birthDate) {
     const formattedDate = formatToInputDate(birthDate);
 
     // 3. ตรวจเช็คว่าตอนนี้อยู่หน้าไหน
-    const isMahathaksaPage = document.getElementById('mahathaksaPage')?.style.display !== 'none';
-    const isChatraPage = document.getElementById('chatraPage')?.style.display !== 'none';
-    const isNamePage = document.getElementById('nameAnalysisPage')?.style.display !== 'none';
+    const isPageVisible = (id) => {
+
+        const el = document.getElementById(id);
+
+        if (!el) return false;
+
+        return !el.classList.contains('hidden') &&
+            getComputedStyle(el).display !== 'none';
+    };
+
+    const isMahathaksaPage =
+        isPageVisible('mahathaksaPage');
+
+    const isChatraPage =
+        isPageVisible('chatraPage');
+
+    const isNamePage =
+        isPageVisible('nameAnalysisPage');
+    
 
     // --- กรณีหน้าวิเคราะห์ชื่อ (Name Analysis) ---
     if (isNamePage && member) {
@@ -784,8 +937,8 @@ window.autoFillMemberData = function (birthDate) {
             setTimeout(() => { if (typeof calculateChatra === 'function') calculateChatra(); }, 100);
         }
     }
-    const isAscendantPage = document.getElementById('ascendantPage')?.style.display !== 'none';
-    if (isAscendantPage) {
+    const isAscendantPage =
+        isPageVisible('ascendantPage');    if (isAscendantPage) {
         const dateInput = document.getElementById('ascBirthDate');
         const timeInput = document.getElementById('ascBirthTime');
 
@@ -793,6 +946,36 @@ window.autoFillMemberData = function (birthDate) {
         if (timeInput && member.birthtime) {
             // เติมเวลาเกิดจาก Firebase (สมมติเก็บในชื่อ birthtime)
             timeInput.value = member.birthtime;
+        }
+    }
+// --- ส่วนของหน้า ฉัตร 9 ชั้น (ฉบับแก้ไข) ---
+    const ischatninePage = isPageVisible('showchatraninePage'); 
+    
+    if (ischatninePage) {
+        const ninebirthDaySelect = document.getElementById('chatraninebirthDaySelect');
+        const nineageselect = document.getElementById('chatranineAge');
+
+        if (formattedDate) {
+            // 1. จัดการเรื่องวันเกิด
+            let dayOfWeek = new Date(formattedDate).getDay();
+            if (dayOfWeek === 0) dayOfWeek = 7; // เปลี่ยนอาทิตย์จาก 0 เป็น 7 ให้ตรงกับ HTML
+            
+            if (ninebirthDaySelect) {
+                ninebirthDaySelect.value = dayOfWeek;
+            }
+
+            // 2. จัดการเรื่องอายุ
+            if (nineageselect) {
+                const birthYear = new Date(formattedDate).getFullYear();
+                const currentYear = new Date().getFullYear();
+                // คำนวณอายุย่าง (ปีปัจจุบัน - ปีเกิด) + 1 (หรือตามสูตรที่คุณใช้)
+                nineageselect.value = currentYear - birthYear + 1;
+                
+                // 3. สั่งคำนวณอัตโนมัติ
+                setTimeout(() => { 
+                    if (typeof calculateChatnine === 'function') calculateChatnine(); 
+                }, 150);
+            }
         }
     }
 };

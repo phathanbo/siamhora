@@ -73,10 +73,131 @@ const adviceDict = {
     }
 };
 
+
+function showlifeextension() {
+    const contianer = document.getElementById('showlifeextensionpage')
+    if (!contianer) return;
+    
+    const html = `
+            <div class="container mt-4">
+            <div class="card shadow-lg"
+                style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%); border: 1px solid #d4af37; border-radius: 20px;">
+                <div class="card-header text-center py-4 border-gold">
+                    <h2 class="text-gold"><i class="fas fa-praying-hands mr-2"></i> วิชามหามงคล "ต่อชะตาชีวิต"</h2>
+                    <h4 class="text-muted">เสริมสิริมงคล แก้เคล็ดดวงชะตา ตามตำรับสยามโหรามงคล</h4>
+                </div>
+                <div class="card-body text-center p-5">
+                    <div class="candle-container mb-5">
+                        <div class="flame"></div>
+                        <div class="candle"></div>
+                    </div>
+                    <div id="setupExtension">
+                        <h4 class="text-white mb-4">ระบุเดือนเกิดของท่านเพื่อเริ่มพิธี</h4>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <select id="birthMonth" class="form-control bg-dark text-white border-gold mb-4" onclick="startRitual()">
+                                    <option value="">-- เลือกเดือนเกิด --</option>
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนายน</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
+                                </select>
+                                <button class="btn btn-gold btn-lg btn-block" onclick="startRitual()">
+                                    <i class="fas fa-fire mr-2"></i> เริ่มพิธีต่อชะตา
+                                </button>
+                                <button class="btn btn-outline-secondary btn-block mt-4 border-0"
+                                    onclick="navigateTo('mainpage')">
+                                    <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ritualResult" style="display: none;" class="mt-4">
+                        <div class="ritual-box p-4 rounded"
+                            style="background: rgba(0, 0, 0, 0.6); border: 1px solid #d4af37; overflow: hidden; position: relative; min-height: 400px;">
+                            <div id="prayerScroll" class="prayer-text-container">
+                                <div class="prayer-content">
+                                    <p>นะโม ตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ (3 จบ)</p>
+                                    <p>สัพพะพุทธานุภาเวนะ สัพพะธัมมานุภาเวนะ สัพพะสังฆานุภาเวนะ</p>
+                                    <p>พุทธะระตะนัง ธัมมะระตะนัง สังฆะระตะนัง</p>
+                                    <p>โอสะถัง อุตตะมัง วะรัง สัพพะทุกขะ สัพพะภะยะ สัพพะโรคะ</p>
+                                    <p>วินาสสะเมนตุ อะเสสะโต...</p>
+                                    <p>✨ ตั้งจิตอธิษฐาน ขอให้ชะตาร้ายกลายเป็นดี ✨</p>
+                                </div>
+                            </div>
+
+                            <div id="finalAdvice" style="display: none; position: relative; z-index: 10;">
+                                <div id="captureRitualArea" class="p-4"
+                                    style="background: rgba(0,0,0,0.4); border-radius: 15px;">
+                                    <h2 class="text-gold mb-4">✨ ผลพิธีต่อชะตาชีวิต ✨</h2>
+
+                                    <div class="prayer-summary-box mb-4 p-3"
+                                        style="border: 1px double #d4af37; background: rgba(212, 175, 55, 0.05);">
+                                        <small class="text-gold-50">บทสวดมงคลประจำชะตาของท่าน</small>
+                                        <p id="summaryPrayer" class="text-white mt-2 mb-0"
+                                            style="font-size: 1.3rem; font-weight: bold;"></p>
+                                    </div>
+
+                                    <div class="row text-left mb-4">
+                                        <div class="col-12 mb-3">
+                                            <label class="text-muted small">เกณฑ์ชะตาปีนี้:</label>
+                                            <p id="extensionAdvice" class="text-white" style="font-size: 1.1rem;"></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="text-success-gold small">สิ่งที่ควรทำเสริมดวง:</label>
+                                            <p id="toDo" class="text-white"></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="text-danger small">สิ่งที่ควรระวัง:</label>
+                                            <p id="toAvoid" class="text-white"></p>
+                                        </div>
+                                    </div>
+                                    <small class="text-gold-50 italic">สยามโหรามงคล 🔮 ประธานโบ้</small>
+                                </div>
+
+                                <button class="btn btn-outline-gold mt-4 px-5" onclick="downloadRitualImage()">
+                                    <i class="fas fa-camera mr-2"></i> บันทึกภาพมงคลนี้
+                                </button>
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                                        </button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    `;
+    contianer.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showlifeextension();
+});
+
+
 function startRitual() {
     const month = document.getElementById('birthMonth').value;
     if (!month) {
-        alert("โปรดเลือกเดือนเกิดครับประธาน");
         return;
     }
 

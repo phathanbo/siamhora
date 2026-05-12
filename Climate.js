@@ -1,5 +1,86 @@
 "use strict";
 
+function showclimate(){
+    const container = document.getElementById("showclimatepage");
+    if (!container) return;
+
+    const html = `
+    <div class="container wiki-article">
+            <h2 style="text-align: center;">เกณฑ์พิรุณศาสตร์และชะตาโลก</h2>
+            <p style="text-align: center;">พยากรณ์ปริมาณน้ำฝน ความอุดมสมบูรณ์ของธัญญาหาร และเกณฑ์นาคให้น้ำประจำปี</p>
+            <div style="text-align: center;">
+                    <div>
+                        <label color: #000000>ระบุปี พ.ศ. :</label>
+                        <div>
+                            <input type="number" id="beYearInput" value="2569"
+                                oninput="calculateClimate()">
+                            <span id="displayCSYear" style="font-size: 1rem; color: #28a745; font-weight: bold;">(ป้อนปี พ.ศ.เพื่อเริ่มคำนวณ)</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="zodiacInput">
+                    <br>
+                    <div id="climate-result-box" class="row d-none">
+                <div class="col-md-8">
+                    <div class="wiki-card p-3 border rounded shadow-sm">
+                        <h5 class="border-bottom pb-2 text-primary">
+                        <i class="fas fa-seedling"></i>เกณฑ์ธัญญาหารและธาราธิคุณ</h5>
+                        <p id="res-crop-text" class="wiki-text"></p>
+                        <p id="res-thara-text" class="wiki-text"></p>
+                        <hr>
+                        <h5 class="text-info"><i class="fas fa-dragon"></i> เกณฑ์นาคให้น้ำ</h5>
+                        <p id="res-naga-text" class="wiki-text mb-0"></p>
+                    <table class="rain-table mt-4" style="width: 100%; min-width: 200px; margin: 0 auto;">
+                        <tr class="bg-primary text-white text-center">
+                            <th colspan="2" style="font-size: 1rem; padding: 8px 4px;">ปริมาณน้ำฝน (ห่า)</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 50%; font-size: 0.85rem;text-align: center;">จักรวาล</th>
+                            <td id="rain-uni" style="width: 40%;"></td>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 0.85rem;text-align: center;">หิมพานต์</th>
+                            <td id="rain-him"></td>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 0.85rem;text-align: center;">มหาสมุทร</th>
+                            <td id="rain-ocean"></td>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 0.85rem;text-align: center;">มนุษย์โลก</th>
+                            <td id="rain-human" class="fw-bold text-success"></td>
+                        </tr>
+                        <tr class="table-info">
+                            <th style="font-size: 0.85rem;text-align: center;">รวม</th>
+                            <td id="rain-total" class="fw-bold"></td>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            </div>            
+            <div class="row mt-4">
+                <div class="col-6">
+                    <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                        <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                        <i class="fas fa-home"></i> กลับหน้าหลัก
+                    </button>
+                </div>
+            </div>
+        </div>    
+    `;
+    container.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showclimate();
+});
+
+
+
 // ---------------------------------------------------------------------------
 // ข้อมูลปีนักษัตร
 // เรียงให้ พ.ศ. 2563 (ปีชวด) % 12 === 3 → index 3 = "rat"

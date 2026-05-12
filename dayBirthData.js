@@ -28,7 +28,7 @@ const DIRECTION_LABELS = {
 const dayBirthData = {
     sunday: {
         name:      "วันอาทิตย์",
-        meta:      "นามครุฑสิทธิ | ธาตุทองคำ",
+        meta:      "นามครุฑ ",
         character: "จิตใจเป็นกุศลยิ่งใหญ่ ทำคุณคนมักไม่ค่อยขึ้นเหมือนรดน้ำบนต้นไม้เหี่ยว เชื่อคนง่ายจนบางครั้งต้องลำบากภายหลัง",
         milestones: [
             { age: 21,      detail: "พบความทุกข์ร้อน จิตใจไม่ตั้งมั่น" },
@@ -47,7 +47,7 @@ const dayBirthData = {
     },
     monday: {
         name:      "วันจันทร์",
-        meta:      "นามพยัคฆ์ (เสือ) | ธาตุเงิน",
+        meta:      "นามพยัคฆ์ (เสือ)",
         character: "มีวาทศิลป์ดี แต่ปากร้ายทำให้คนมักเป็นศัตรู โกรธง่ายหายเร็ว เก็บเงินไม่อยู่มักเรี่ยราดร่อยหรอ",
         milestones: [
             { age: 15,   detail: "ร้อนใจเพราะคบคนพาล" },
@@ -66,7 +66,7 @@ const dayBirthData = {
     },
     tuesday: {
         name:      "วันอังคาร",
-        meta:      "นามสีหราช (สิงโต) | ธาตุเหล็ก",
+        meta:      "นามสีหราช (สิงโต) ",
         character: "ใจแข็ง มั่นคงในตัวเอง ชอบอาสา มักมีไฝปานที่ใบหน้า พึ่งพาญาติพี่น้องไม่ได้ ต้องสร้างตัวด้วยตัวเองเท่านั้น",
         milestones: [
             { age: 15,      detail: "ช่วงชีวิตที่โศกเศร้า" },
@@ -85,7 +85,7 @@ const dayBirthData = {
     },
     wednesday: {
         name:      "วันพุธ",
-        meta:      "นามสุนัข | ธาตุปรอท",
+        meta:      "นามสุนัข ",
         character: "รอบรู้ในสรรพการ ขยันขันแข็ง พูดจาอาจหาญไม่กลัวใคร มักต้องไปได้ดีในถิ่นอื่นที่ไม่ใช่บ้านเกิด",
         milestones: [
             { age: 13, detail: "ระวังโรคภัยและคดีความรบกวน" },
@@ -104,7 +104,7 @@ const dayBirthData = {
     },
     thursday: {
         name:      "วันพฤหัสบดี",
-        meta:      "นามมฤคราช (กวาง) | ธาตุสังกะสี",
+        meta:      "นามมฤคราช (กวาง) ",
         character: "ปัญญาสูง รักการศึกษาเชี่ยวชาญการเขียนและโวหาร โมโหดุแต่จิตใจดี เป็นที่รักของคนทั่วไป",
         milestones: [
             { age: 15,          detail: "พบความโศกเศร้าอาภัพ" },
@@ -122,7 +122,7 @@ const dayBirthData = {
     },
     friday: {
         name:      "วันศุกร์",
-        meta:      "นามอุสุภราช (วัว) | ธาตุทองแดง",
+        meta:      "นามอุสุภราช (วัว)",
         character: "จิตใจมักทะเยอทะยาน มีวาทศิลป์ดีแต่บางครั้งปากร้าย โกรธง่ายหายเร็ว หาเงินเก่งแต่ใช้เก่ง",
         milestones: [
             { age: 11, detail: "มีอาการเจ็บป่วยบ่อยครั้ง" },
@@ -141,7 +141,7 @@ const dayBirthData = {
     },
     saturday: {
         name:      "วันเสาร์",
-        meta:      "นามนาคา (พญานาค) | ธาตุตะกั่ว",
+        meta:      "นามนาคา (พญานาค)",
         character: "จิตใจดุร้ายโกรธหนัก รักพวกพ้องแบบนักเลง มีกามราคีสูง มักมีรอยแผลตามตัว ชีวิตมีอุปสรรคแต่จะรวยตอนท้าย",
         milestones: [
             { age: 15,   detail: "ต้องเสียของรัก" },
@@ -410,6 +410,96 @@ const DAY_COLORS = {
     saturday:  "#6c5ce7"
 };
 
+
+function showdaybirth(){
+    const contianer = document.getElementById('showdaybirthpage')
+    if (contianer) {
+        contianer.style.display = 'block';
+    }
+
+    const html = `
+    <div class="container">
+            <h2 class="text-center mb-4">ทำนายลักษณะตามวันเกิด</h2>
+            <div class="day-selector d-flex justify-content-center flex-wrap gap-2 mb-4" style="gap: 10px;">
+                <button class="btn-day"
+                    onclick="showDayInfo('sunday', event); showPlanet(1); showPlanetaryData(1); showBuddha(1); showDetailDay('sunday'); showThaksaDay(1);"
+                    style="--day-color: #FF0000;">อา.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('monday', event); showPlanet(2); showPlanetaryData(2); showBuddha(2); showDetailDay('monday'); showThaksaDay(2);"
+                    style="--day-color: #FFD700;">จ.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('tuesday', event); showPlanet(3); showPlanetaryData(3); showBuddha(3); showDetailDay('tuesday'); showThaksaDay(3);"
+                    style="--day-color: #FFC0CB;">อ.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('wednesday', event); showPlanet(4); showPlanetaryData(4); showBuddha(4); showDetailDay('wednesday'); showThaksaDay(4);"
+                    style="--day-color: #008000;">พ.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('thursday', event); showPlanet(5); showPlanetaryData(5); showBuddha(5); showDetailDay('thursday'); showThaksaDay(5);"
+                    style="--day-color: #FFA500;">พฤ.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('friday', event); showPlanet(6); showPlanetaryData(6); showBuddha(6); showDetailDay('friday'); showThaksaDay(6);"
+                    style="--day-color: #87CEEB;">ศ.</button>
+                <button class="btn-day"
+                    onclick="showDayInfo('saturday', event); showPlanet(7); showPlanetaryData(7); showBuddha(7); showDetailDay('saturday'); showThaksaDay(7);"
+                    style="--day-color: #800080;">ส.</button>
+            </div>
+            <div id="prediction-card" class="prediction-card shadow-sm d-none">
+                <div class="card-header text-white" id="card-name-bg">
+                    <h3 id="display-name" class="m-0"></h3>
+                    <small id="display-meta"></small>
+                    <small id="planetarydatadisplay" class="text"></small><br>
+                    <small id="detailelement" class="text"></small><small id="buddhadisplay" class="text"></small><br>
+                    <small id="detaildaybody" class="text"></small><br>
+
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5 class="text-primary"><i class="fas fa-user"></i> ลักษณะนิสัย</h5>
+                        <p id="display-character" class="text-muted"></p>
+                        <p id="detailday" class="text-muted"></p>
+                        <p id="detailemployment" class="text-muted"></p>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <h5 class="text-danger"><i class="fas fa-calendar-alt"></i> เกณฑ์อายุสำคัญ</h5>
+                        <ul id="displaymilestones" class="listunstyled"></ul>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5 class="text-success"><i class="fas fa-compass"></i> ทิศมงคลและการจัดบ้าน</h5>
+                        <div id="display-directions" class="listunstyled"></div>
+                    </div>
+                    <hr>
+                    <div id="planetinfodisplay" class="listunstyled"></div>
+                    <hr>
+                    <div id="thaksaday" class="listunstyled"></div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    `;
+
+    contianer.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () =>{
+    showdaybirth();
+});
 // ---------------------------------------------------------------------------
 // helper — เขียนค่าลง DOM พร้อม null-check
 // ---------------------------------------------------------------------------
@@ -428,37 +518,68 @@ function setElHTML(id, html) {
 // แก้ไข: รับ event เป็น parameter / แสดงชื่อทิศภาษาไทยแทน key
 // ---------------------------------------------------------------------------
 function showDayInfo(dayKey, event) {
-    const data = dayBirthData[dayKey];
-    if (!data) return;
+const data = dayBirthData[dayKey];
+if (!data) return;
 
-    const card = document.getElementById("prediction-card");
-    if (card) card.classList.remove("d-none");
+// แสดงการ์ด
+const card = document.getElementById("prediction-card");
+if (card) card.classList.remove("d-none");
 
-    setEl("display-name",      data.name);
-    setEl("display-meta",      data.meta);
-    setEl("display-character", data.character);
+// ข้อมูลหลัก
+setEl("display-name", data.name);
+setEl("display-meta", data.meta);
+setEl("display-character", data.character);
 
-    const bg = document.getElementById("card-name-bg");
-    if (bg) bg.style.backgroundColor = DAY_COLORS[dayKey] || "#888";
+// สี header
+const bg = document.getElementById("card-name-bg");
+if (bg) bg.style.backgroundColor = DAY_COLORS[dayKey] || "#888";
 
-    const milestoneList = document.getElementById("display-milestones");
-    if (milestoneList) {
-        milestoneList.innerHTML = data.milestones.map(m =>
-            `<li class="mb-1"><b>อายุ ${m.age}:</b> ${m.detail}</li>`
-        ).join("");
-    }
-
-    const directionDiv = document.getElementById("display-directions");
-    if (directionDiv) {
-        directionDiv.innerHTML = Object.entries(data.directions).map(([key, val]) => {
-            const label = DIRECTION_LABELS[key] || key;
-            return `<div class="col-6"><b>${label}:</b> ${val}</div>`;
-        }).join("");
-    }
-
-    document.querySelectorAll(".btn-day").forEach(btn => btn.classList.remove("active"));
-    if (event && event.target) event.target.classList.add("active");
+// milestones
+if (data.milestones) {
+    const milestonesHTML = data.milestones.map(m =>
+        `<li class="mb-1"><b>อายุ ${m.age}:</b> ${m.detail}</li>`
+    ).join("");
+    setElHTML("displaymilestones", milestonesHTML);
 }
+
+// directions
+if (data.directions) {
+    const directionsHTML = Object.entries(data.directions).map(([key, val]) => {
+        const label = DIRECTION_LABELS[key] || key;
+        return `<div class="col-6"><b>${label}:</b> ${val}</div>`;
+    }).join("");
+    setElHTML("display-directions", directionsHTML);
+}
+
+// =========================
+// ✅ จัดการ active (แก้ใหม่)
+// =========================
+document.querySelectorAll(".btn-day").forEach(btn => btn.classList.remove("active"));
+
+if (event && event.currentTarget) {
+    event.currentTarget.classList.add("active");
+}
+}
+
+document.querySelectorAll(".btn-day").forEach(btn => {
+btn.addEventListener("click", (e) => {
+const day = btn.dataset.day;
+const num = parseInt(btn.dataset.num);
+
+    // active
+    document.querySelectorAll(".btn-day").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // call functions
+    showDayInfo(day);
+    showPlanet(planetNum);
+    showPlanetaryData(planetNum);
+    showBuddha(planetNum);
+    showDetailDay(day);
+    showThaksaDay(num);
+});
+});
+
 
 // ---------------------------------------------------------------------------
 // วิเคราะห์และแสดงข้อมูลพระเคราะห์ (รวมสีและคู่ธาตุ)
@@ -485,7 +606,7 @@ function analyzePlanetElement(planetNum) {
 }
 
 function showPlanet(num) {
-    setElHTML("planet-info-display", analyzePlanetElement(num));
+    setElHTML("planetinfodisplay", analyzePlanetElement(num));
 }
 
 // ---------------------------------------------------------------------------
@@ -493,7 +614,7 @@ function showPlanet(num) {
 // ---------------------------------------------------------------------------
 function showPlanetaryData(planetNum) {
     const planet = planetData[planetNum];
-    const el = document.getElementById("planetary-data-display");
+    const el = document.getElementById("planetarydatadisplay");
     if (!el) return;
     if (!planet) { el.innerHTML = "ไม่พบข้อมูลพระเคราะห์"; return; }
     el.innerHTML = `สีประจำตัว: ${planet.colors.join(", ")}`;
@@ -507,7 +628,7 @@ function showBuddha(planetNum) {
     if (!el) return;
     const data = buddha[planetNum];
     el.innerHTML = data
-        ? `<b>พระพุทธรูปประจำ:</b> ${data.name}`
+        ? `<b> พระพุทธรูปประจำ:</b> ${data.name}`
         : "ไม่พบข้อมูลพระพุทธรูปประจำเคราะห์";
 }
 

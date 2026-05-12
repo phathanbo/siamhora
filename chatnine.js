@@ -22,18 +22,105 @@ const chatra9FullData = {
     6: { name: "อุศุภอิงแอบลาภ", god: "พระศุกร์ (ทรงวัว)", style: "glow-blue", color: "#007bff", desc: "หนอุดร สถาพรโภคผล ระวังคนจงมาก ระวังปากจงดี อย่าสู่ความเขา เราจะเกิดร้อนรน อย่าเดินหนผิดกาล ภัยจักพาลติดตน" }
 };
 
+
+function showchatranine(){
+    // FIX 1: แก้ชื่อตัวแปร contianer → container
+    const container = document.getElementById('showchatraninePage');
+    if (!container) return;
+
+    const html = `
+        <div class="container-fluid py-4">
+            <div class="text-center mb-4">
+                <h1>📜 ตำราฉัตร 9 ชั้น</h1>
+                <p class="text-gold">พยากรณ์ดวงชะตารายปีตามตำรับหลวงทรงพล</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card bg-dark-custom border-gold p-4">
+                        <div class="form-group mb-3">
+                            <label class="text-gold">เลือกจากรายชื่อสมาชิก (ประวัติ):</label>
+                            <select id="memberSelect"
+                                class="form-control bg-dark text-white border-gold member-selector-shared"
+                                onchange="autoFillMemberData(this.value)">
+                                <option value="">-- เลือกสมาชิก --</option>
+                            </select>
+                            <label class="text-dark mb-2">วันเกิดของท่าน:</label>
+                            <select id="chatraninebirthDaySelect"
+                                class="form-control bg-dark text-gold border-gold-subtle">
+                                <option value="7">วันอาทิตย์ (สีหะโฉลก)</option>
+                                <option value="1">วันจันทร์ (จันโทบูรพา)</option>
+                                <option value="2">วันอังคาร (มหิงษาภัยพิพิธ)</option>
+                                <option value="3">วันพุธ (คชสิทธิชัยโย)</option>
+                                <option value="6">วันเสาร์ (พยัคโฆภัยหลาก)</option>
+                                <option value="4">วันพฤหัสบดี (มฤคมากลาภหลาย)</option>
+                                <option value="5">วันศุกร์ (อุศุภอิงแอบลาภ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="text-gold mb-2">ระบุอายุย่างของท่าน:</label>
+                            <input type="number" id="chatranineAge"
+                                class="form-control bg-dark text-gold border-gold-subtle" placeholder="ตัวอย่าง: 43">
+                        </div>
+                        <button onclick="calculateChatnine()" class="btn btn-gold w-100 py-2 fw-bold">
+                            🔮 ทำนายดวงชะตาตามตำรา
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FIX 2: แก้โครงสร้าง HTML ให้ถูกต้อง -->
+            <div id="chatranineDisplay" class="mt-5" style="display: none; position: relative;">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <div class="prediction-box p-4 rounded shadow">
+                            <h4 class="text-gold mb-3">คำพยากรณ์ประจำปี</h4>
+                            <p id="chatraLongPrediction" class="text-white lead px-2 px-md-5">
+                                -- ผลคำทำนายจะปรากฏที่นี่ --
+                            </p>
+                            <hr class="border-gold-subtle my-4">
+                            <p class="text-muted small">คำแนะนำ: ควรหมั่นทำบุญ สวดมนต์ และมีสติในการใช้ชีวิต</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 d-flex justify-content-center gap-2">
+                    <button onclick="downloadChatnineImage()" class="btn btn-outline-gold btn-sm">
+                        <i class="fas fa-download me-1"></i> บันทึกรูปภาพ
+                    </button>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    // FIX 1: ใช้ชื่อที่ถูกต้อง
+    container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showchatranine();
+});
+
 function calculateChatnine() {
-    // ดึงค่าจาก ID ตาม HTML ล่าสุดของคุณ
     const ageInput = document.getElementById('chatranineAge');
     const birthDayInput = document.getElementById('chatraninebirthDaySelect');
-    
+
     if (!ageInput || !birthDayInput) {
         console.error("หาองค์ประกอบ HTML ไม่เจอ ตรวจสอบ ID อีกครั้ง");
         return;
     }
 
     const age = parseInt(ageInput.value);
-    const startDay = parseInt(birthDayInput.value); // ค่าเลขวันเกิด (1-7)
+    const startDay = parseInt(birthDayInput.value);
 
     if (!age || age <= 0) {
         alert("กรุณากรอกอายุย่างของท่าน");
@@ -45,7 +132,7 @@ function calculateChatnine() {
 
     // 2. หาตำแหน่งเริ่มต้นในยันต์ตามวันเกิด (หน้า 10)
     let startIndex = chatraSequence.indexOf(startDay);
-    
+
     // 3. นับเวียนไปตามจำนวนก้าว (ถ้าเศษ 0 จะได้ก้าวเดิม)
     let finalIndex = (startIndex + steps) % 9;
     let finalNumber = chatraSequence[finalIndex];
@@ -54,21 +141,18 @@ function calculateChatnine() {
 
     // 4. การแสดงผล UI
     const display = document.getElementById('chatranineDisplay');
-    const tierName = document.getElementById('tier1Text'); 
     const predictionText = document.getElementById('chatraLongPrediction');
-    const mainTier = document.getElementById('tier1');
 
     if (display && result) {
-        // อัปเดตกราฟิกฉัตร
-        mainTier.className = `chatra-tier ${result.style}`;
-        tierName.innerText = result.name;
-        tierName.style.color = result.color;
-        
-        // อัปเดตเนื้อหาคำทำนาย
+
+        // FIX 3 & FIX 5: แก้ HTML ใน innerHTML ให้ถูกต้อง (เพิ่ม div ที่หายไป, แก้ CSS class)
         predictionText.innerHTML = `
             <div class="mb-3">
-                <span class="badge bg-gold text-dark p-2" style="font-size: 1rem;">
-                    💠 ${result.god}
+                ${result.name}
+            </div>
+            <div class="mb-3">
+                <span class="badge bg-gold text-dark fw-bold p-2" style="font-size: 1rem;">
+                    💠 ${result.god} 💠
                 </span>
             </div>
             <div class="text-white fw-light" style="line-height: 1.8;">
@@ -78,7 +162,7 @@ function calculateChatnine() {
 
         // แสดงผลด้วย Animation
         $(display).fadeIn(600);
-        
+
         // เลื่อนหน้าจอไปที่ผลลัพธ์
         display.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
