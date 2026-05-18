@@ -68,11 +68,11 @@ const THAI_ANCHORS = {
     2019: { date: new Date(2019, 3, 5),  zodiac: "กุน",  isAthikamat: true,  isAthikawan: false }, // 2562 (8 สองหน)
     2020: { date: new Date(2020, 2, 24), zodiac: "ชวด",  isAthikamat: false, isAthikawan: false }, // 2563
     2021: { date: new Date(2021, 3, 12), zodiac: "ฉลู",  isAthikamat: false, isAthikawan: true  }, // 2564 (อธิกวาร - เดือน 7 มี 30 วัน)
-    2022: { date: new Date(2022, 3, 1),  zodiac: "ขาล",  isAthikamat: true,  isAthikawan: true }, // 2565 (8 สองหน)
-    2023: { date: new Date(2023, 2, 22), zodiac: "เถาะ", isAthikamat: true,  isAthikawan: true }, // 2566 (8 สองหน) **แก้จากเดิมที่เป็น false**
+    2022: { date: new Date(2022, 3, 1),  zodiac: "ขาล",  isAthikamat: false, isAthikawan: false }, // 2565 (ปกติมาส ปกติวาร)
+    2023: { date: new Date(2023, 2, 22), zodiac: "เถาะ", isAthikamat: true,  isAthikawan: false }, // 2566 (8 สองหน ปกติวาร)
     2024: { date: new Date(2024, 3, 9),  zodiac: "มะโรง", isAthikamat: false, isAthikawan: true  }, // 2567 (อธิกวาร - เดือน 7 มี 30 วัน)
     2025: { date: new Date(2025, 2, 29), zodiac: "มะเส็ง", isAthikamat: true,  isAthikawan: false }, // 2568 (8 สองหน)
-    2026: { date: new Date(2026, 2, 18), zodiac: "มะเมีย", isAthikamat: false, isAthikawan: false }, // 2569
+    2026: { date: new Date(2026, 2, 16), zodiac: "มะเมีย", isAthikamat: false, isAthikawan: false },    
     2027: { date: new Date(2027, 3, 7),  zodiac: "มะแม",  isAthikamat: false, isAthikawan: false },  // 2570
     2028: { date: new Date(2028, 2, 26), zodiac: "วอก", isAthikamat: true },    // 2571 (อธิกมาส)
     2029: { date: new Date(2029, 2, 15), zodiac: "ระกา", isAthikamat: false },  // 2572
@@ -124,9 +124,13 @@ function getThaiLunar(dateInput) {
         return null;
     }
 
+    // สร้าง anchor time ของปีปัจจุบันที่เวลา 12:00:00 เพื่อให้เทียบกันได้พอดี
+    const currentAnchorDate = new Date(THAI_ANCHORS[year].date.getTime());
+    currentAnchorDate.setHours(12, 0, 0, 0);
+
     // 1. เลือก Anchor (วันเริ่มปีนักษัตรไทย ขึ้น 1 ค่ำ เดือน 5)
     let anchorYear = year;
-    if (time < THAI_ANCHORS[year].date.getTime()) {
+    if (time < currentAnchorDate.getTime()) {
         anchorYear = year - 1;
     }
 
@@ -137,7 +141,12 @@ function getThaiLunar(dateInput) {
     }
 
     const anchor = THAI_ANCHORS[anchorYear];
-    let daysRemaining = Math.round((time - anchor.date.getTime()) / (1000 * 60 * 60 * 24));
+    
+    // ตั้งเวลา 12:00:00 ให้เหมือนกับ d เพื่อให้ลบกันแล้วได้จำนวนวันเต็มๆ (ไม่มีเศษทศนิยมตกค้าง)
+    const anchorTime = new Date(anchor.date.getTime());
+    anchorTime.setHours(12, 0, 0, 0);
+    
+    let daysRemaining = Math.round((time - anchorTime.getTime()) / (1000 * 60 * 60 * 24));
 
     // 2. ตั้งค่าเริ่มต้นการนับเดือน (เริ่มที่เดือน 5)
     let currentMonth = 5;

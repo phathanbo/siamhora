@@ -358,9 +358,9 @@ function showseven(){
                 <h2 class="text-gold mb-1">🔢 เลข 7 ตัว 4 ฐาน</h2>
                 <span class="text-white-50 mb-0">พยากรณ์ดวงชะตาพื้นฐานและเหตุการณ์จรตามตำราพรหมชาติ</span>
             </div>
-            <div class=".compatibility-container">
+            <div class="compatibility-container">
                 <div id="sevenDigitsInput" class="text-center py-4">
-                    <i class="fas fa- dice-d6 fa-4x text-gold mb-4"></i>
+                    <i class="fas fa-dice-d6 fa-4x text-gold mb-4"></i>
                     <div class="row justify-content-center">
                         <div class="col-md-6">
                             <div class="form-group text-left">
@@ -420,47 +420,41 @@ function showseven(){
                             <button class="btn btn-gold btn-block btn-lg mt-4" onclick="calculateSevenDigits()">✨
                                 ตั้งดวงพยากรณ์</button>
                         </div>
+                    </div>
+                </div>
 
-                            <div id="sevenDigitsResult" class="container" style="display: none;">
-                                <div id="resultArea" class="container">
-                                    <h4 class="text-gold text-center mb-3">ดวงชะตาของคุณ</h4>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-white text-center"
-                                            id="sevenDigitsTable">
-                                        </table>
-                                    </div>
-                                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark"></div>
-                                </div>
+                <!-- ผลลัพธ์ (ซ่อนจนกว่าจะคำนวณ) -->
+                <div id="summarySection" class="mt-3"></div>
 
-                                <div class="row mt-4">
-                                <button onclick="exportToImage()" class="btn btn-secondary btn-block mt-2">💾
-                                    บันทึกรูปภาพ</button>
-                                </div>
-                            </div>
-                            
+                <div id="sevenDigitsResult" class="mt-4" style="display: none;">
+                    <div id="resultArea" class="container">
+                        <h4 class="text-gold text-center mb-3">ดวงชะตาของคุณ</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-white text-center"
+                                id="sevenDigitsTable">
+                            </table>
+                        </div>
+                        <div id="sdInterpretation" class="alert alert-light mt-3 text-dark"></div>
+                    </div>
+                    <div class="row mt-2">
+                        <button onclick="exportToImage()" class="btn btn-secondary btn-block mt-2">💾
+                            บันทึกรูปภาพ</button>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
+                            <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
+                            <i class="fas fa-home"></i> กลับหน้าหลัก
+                        </button>
                     </div>
                 </div>
             </div>
-                <div id="sevenDigitsResult" class="mt-4" style="display: none;">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-white text-center" id="sevenDigitsTable">
-                        </table>
-                    </div>
-                    <div id="sdInterpretation" class="alert alert-light mt-3 text-dark">
-                    </div>
-                </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <button class="btn btn-outline-secondary btn-block border-0" onclick="navigateTo('mainpage')">
-                                <i class="fas fa-chevron-left"></i> กลับหน้าห้องพยากรณ์
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-secondary btn-block border-0" onclick="goBack()">
-                                <i class="fas fa-home"></i> กลับหน้าหลัก
-                            </button>
-                        </div>
-                    </div>
         </div>    
     `;
     contianer.innerHTML = html;

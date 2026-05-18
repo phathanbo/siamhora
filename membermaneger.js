@@ -937,6 +937,8 @@ window.autoFillMemberData = function (birthDate) {
             setTimeout(() => { if (typeof calculateChatra === 'function') calculateChatra(); }, 100);
         }
     }
+
+    //----ส่วนของหน้าลัคนา---
     const isAscendantPage =
         isPageVisible('ascendantPage');    if (isAscendantPage) {
         const dateInput = document.getElementById('ascBirthDate');
@@ -978,4 +980,30 @@ window.autoFillMemberData = function (birthDate) {
             }
         }
     }
+
+        // ---- ส่วนของหน้าทักษาพยากรณ์ (thaksanine.js) ----    
+    const isshowthaksaninepage = isPageVisible('showthaksaninepage');
+    
+    if (isshowthaksaninepage) {
+        const weekdaySelect = document.getElementById('weekday'); 
+        const ageInput = document.getElementById('age');
+        
+        if (weekdaySelect) {
+            const birthDay = new Date(formattedDate).getDay();
+            weekdaySelect.value = birthDay;
+        }
+
+        if (ageInput) {
+            const birthYear = new Date(formattedDate).getFullYear();
+            const currentYear = new Date().getFullYear();
+            // คำนวณอายุย่าง
+            ageInput.value = currentYear - birthYear + 1;
+        }
+        
+        // สั่งคำนวณอัตโนมัติ (ใช้ calculateAll สำหรับหน้านี้)
+        setTimeout(() => { 
+            if (typeof calculateAll === 'function') calculateAll(); 
+        }, 100);
+    }
+
 };

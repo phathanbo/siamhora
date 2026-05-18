@@ -33,6 +33,7 @@ const APP_MENU = [
     { id: 'reuxpage', title: 'คำนวณฤกษ์อายุ', icon: 'fa-tree', color: '#d4af37' },
     { id: 'dailyHighlightPage',title: 'แผนที่ฤกษ์มงคลรายวัน', icon: 'fa-calendar-alt', color: '#d4af37' },
     { id: 'lifeExtensionPage',title: 'ต่อชะตา', icon:'fa-candle-holder', color: '#d4af37' },
+    { id: 'lunarSection' ,title: 'คำนวณจันทรคติ' ,icon: 'fa-calendar-alt', color: '#d4af37' },
 ];
 
 const UserProfile = {
