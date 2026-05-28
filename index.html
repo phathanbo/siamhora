@@ -3,13 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="สยามโหรามงคล - เว็บไซต์ดูดวงชะตา พยากรณ์ตามตำราโบราณ ทำนายดวงชะตารายปี ปีนักษัตร ยามอัฏฐกาล ฉัตร ๙ ชั้น มหาทักษา และอีกมากมาย">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=5, minimum-scale=1">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="สยามโหรามงคล">
+    <meta name="description"
+        content="สยามโหรามงคล - เว็บไซต์ดูดวงชะตา พยากรณ์ตามตำราโบราณ ทำนายดวงชะตารายปี ปีนักษัตร ยามอัฏฐกาล ฉัตร ๙ ชั้น มหาทักษา และอีกมากมาย">
     <title>สยามโหรามงคล</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -27,11 +33,6 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#mainContent" onclick="goBack()">
-                            <i class="fas fa-home mr-2"></i> หน้าหลัก
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-white" href="#mainpage" onclick="navigateTo('mainpage')">
                             <i class="fas fa-place-of-worship mr-2"></i> ห้องพยากรณ์
                         </a>
@@ -46,14 +47,19 @@
                             <i class="fas fa-user-clock mr-2"></i> ทะเบียนสมาชิก
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="taksasattalek.html">
+                            <i class="fas fa-gem mr-2"></i> มหาทักษาสัตตเลข
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
         <div id="dailyColorHeader" class="container"></div> <!-- colors.js -->
     </header>
 
-    <!--<main id="mainContent" class="main-section" style="display: none;">
-        <div id="auth-section" class="container mt-4">
+    
+        <!--<div id="auth-section" class="container mt-4">
                 <div id="logged-out-view" class="card p-4 shadow-sm">
                     <h3 class="text-center">🔮 เข้าสู่ระบบสมาชิก</h3>
                     <div id="login-form">
@@ -94,39 +100,15 @@
                     </div>
                 </div>
             </div>
-    </main> -->
+    </main>-->
 
 
     <!-- 1.หน้าหลัก กรอกชื่อสมัคร ไฟล์ membermanager.js -->
-    <div id="mainContent" class="main-section">
-        <span id="userGreeting" class="text-center font-weight-bold mb-4 d-block" style="font-size: 50px;">✨
-            ยินดีต้อนรับท่านเจ้าชะตา ✨</span>
-        <section id="form" class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h2 class="text-center mb-4">กรอกข้อมูลเพื่อทำนายดวง</h2>
-                <div class="form-group">
-                    <label>ชื่อผู้รับคำทำนาย:</label>
-                    <input type="text" class="form-control" id="targetName" placeholder="กรุณากรอกชื่อ" required>
-                </div>
-                <div class="form-group">
-                    <label>นามสกุล:</label>
-                    <input type="text" class="form-control" id="targetLastName" placeholder="กรุณากรอกนามสกุล" required>
-                </div>
-                <div class="form-group">
-                    <label for="birthdate">วันเกิด (ปี ค.ศ.):</label>
-                    <input type="text" class="form-control" id="birthdate" placeholder="วว/ดด/ปปปป" required
-                        autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="birthtime">เวลาเกิด:</label>
-                    <input type="time" class="form-control" id="birthtime" required>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-gold btn-block" onclick="calculateEsh()">ดูดวงชะตา</button>
-                </div>
-            </div>
-        </section>
-    </div>
+
+    <section id="mainContent" class="main-section">
+        <title>หน้าหลัก</title>
+        <div id="mainContentpage"></div>
+    </section>
 
 
     <!-- 2.หน้าประวัติ ไฟล์ membermanager.js-->
@@ -171,9 +153,10 @@
                             <p><strong>วันเกิด:</strong> <span id="profBirth">-</span></p>
                             <p><strong>เวลาเกิด:</strong> <span id="profTime">-</span></p>
                             <p><strong>ปีนักษัตร:</strong> <span id="profZodiac">-</span></p>
-                            <p><strong>ยามที่:</strong> <span id="profYam">-</span></p>                            
+                            <p><strong>ยามที่:</strong> <span id="profYam">-</span></p>
                         </div>
-                            <p>ตรวจดวงประจำวันเกิด <strong onclick= "navigateTo('daily-horoscope')" style="cursor: pointer;">คลิก</strong> </p>
+                        <p>ตรวจดวงประจำวันเกิด <strong onclick="navigateTo('daily-horoscope')"
+                                style="cursor: pointer;">คลิก</strong> </p>
                     </div>
                 </div>
                 <div id="personalFortuneArea" class="mt-4"></div>
@@ -182,7 +165,7 @@
                 <button type="button" class="btn btn-outline-gold btn-block mt-2"
                     onclick="navigateTo('nameAnalysisPage'); analyzeName();">🔮 วิเคราะห์ชื่อสมาชิกทันที</button>
                 <button type="button" class="btn btn-outline-warning btn-block mt-2"
-                    onclick="navigateTo('mahathaksaPage'); calculateThaksa(false);"><i
+                    onclick="calculatemahataksa()"><i
                         class="fas fa-dharmachakra mr-2"></i> มหาทักษาพยากรณ์</button>
                 <button class="btn btn-secondary btn-block mb-3" onclick="goBack()">🔙 กลับหน้าหลัก</button>
                 <button class="btn btn-secondary btn-block mb-3" onclick="navigateTo('historySection')">🔙
@@ -376,7 +359,7 @@
                     <label class="text-white-50 small d-block">ระบุวันเดือนปีเกิดเพื่อคำนวณอายุย่าง
                         (วัน/เดือน/ค.ศ.)</label>
                     <input type="date" id="birthDate" class="form-control bg-black text-gold border-gold mx-auto"
-                        style="max-width: 250px;" onchange="calculateThaksa(false)">
+                        style="max-width: 250px;" onchange="calculateThaksa(true)">
 
                     <div id="displayAgeYang" class="mt-2 badge badge-warning p-2 px-3"
                         style="font-size: 1.1rem; color: #000;">
@@ -417,13 +400,13 @@
 
     <!-- 23.คำนวณลัคนาพยากรณ์ ไฟล์ ascendant.js-->
     <section id="ascendantPage" class="main-section" style="display: none;">
-            <div id="showascPage"></div>
+        <div id="showascPage"></div>
     </section>
 
 
     <!-- 24.ฉัตร 9 ชั้น ไฟล์ chatnine.js-->
     <section id="chatninePage" class="main-section" style="display: none;">
-            <div id="showchatraninePage"></div>
+        <div id="showchatraninePage"></div>
     </section>
 
     <!-- 25.หาคู่รักหรือคู่สมรส ไฟล์ ElementMatch.js -->
@@ -559,22 +542,29 @@
 
 
 
-    <section id="birth-fortune" class="main-section" style="display: none;">
+    <section id="birthfortune" class="main-section" style="display: none;">
         <div class="compatibility-container">
             <h2 class="section-title">คำนวณโชคกำเนิด (พยากรณ์อาชีพ)</h2>
             <p class="section-subtitle">วิเคราะห์อาชีพที่ถูกโฉลกตามวันเดือนปีเกิดและจุลศักราช</p>
+            <div class="form-group mb-3">
+                    <label class="text-gold">เลือกสมาชิกจากประวัติ:</label>
+                    <select class="form-control bg-black text-black border-gold member-selector-shared"
+                        onchange="autoFillMemberData(this.value);calculateBirthFortune()"> >
+                        <option value="">-- เลือกสมาชิก --</option>
+                    </select>
+            </div>
 
             <div class="selection-grid">
                 <div class="input-box">
                     <label>วันเกิด (๑-๗)</label>
                     <select id="fortuneDay" class="form-control">
-                        <option value="1">วันอาทิตย์ (๑)</option>
-                        <option value="2">วันจันทร์ (๒)</option>
-                        <option value="3">วันอังคาร (๓)</option>
-                        <option value="4">วันพุธ (๔)</option>
-                        <option value="5">วันพฤหัสบดี (๕)</option>
-                        <option value="6">วันศุกร์ (๖)</option>
-                        <option value="7">วันเสาร์ (๗)</option>
+                        <option value="0">วันอาทิตย์ (๑)</option>
+                        <option value="1">วันจันทร์ (๒)</option>
+                        <option value="2">วันอังคาร (๓)</option>
+                        <option value="3">วันพุธ (๔)</option>
+                        <option value="4">วันพฤหัสบดี (๕)</option>
+                        <option value="5">วันศุกร์ (๖)</option>
+                        <option value="6">วันเสาร์ (๗)</option>
                     </select>
                 </div>
                 <div class="input-box">
@@ -585,18 +575,18 @@
                 <div class="input-box">
                     <label>ปีเกิด (ลำดับนักษัตร ๑-๑๒)</label>
                     <select id="fortuneYear" class="form-control">
-                        <option value="1">ปีชวด (๑)</option>
-                        <option value="2">ปีฉลู (๒)</option>
-                        <option value="3">ปีขาล (๓)</option>
-                        <option value="4">ปีเถาะ (๔)</option>
-                        <option value="5">ปีมะโรง (๕)</option>
-                        <option value="6">ปีมะเส็ง (๖)</option>
-                        <option value="7">ปีมะเมีย (๗)</option>
-                        <option value="8">ปีมะแม (๘)</option>
-                        <option value="9">ปีวอก (๙)</option>
-                        <option value="10">ปีระกา (๑๐)</option>
-                        <option value="11">ปีจอ (๑๑)</option>
-                        <option value="12">ปีกุน (๑๒)</option>
+                        <option value="0">ปีชวด (๑)</option>
+                        <option value="1">ปีฉลู (๒)</option>
+                        <option value="2">ปีขาล (๓)</option>
+                        <option value="3">ปีเถาะ (๔)</option>
+                        <option value="4">ปีมะโรง (๕)</option>
+                        <option value="5">ปีมะเส็ง (๖)</option>
+                        <option value="6">ปีมะเมีย (๗)</option>
+                        <option value="7">ปีมะแม (๘)</option>
+                        <option value="8">ปีวอก (๙)</option>
+                        <option value="9">ปีระกา (๑๐)</option>
+                        <option value="10">ปีจอ (๑๑)</option>
+                        <option value="11">ปีกุน (๑๒)</option>
                     </select>
                 </div>
                 <div class="input-box">
@@ -841,6 +831,13 @@
         <div class="container">
             <h2 class="title">ทำนายดวงชะตาตามอายุ (ตำราพรหมชาติ)</h2>
             <div class="calc-box">
+            <div class="form-group mb-3">
+                    <label class="text-gold">เลือกสมาชิกจากประวัติ:</label>
+                    <select class="form-control bg-black text-black border-gold member-selector-shared"
+                        onchange="autoFillMemberData(this.value);calculateFortune()"> >
+                        <option value="">-- เลือกสมาชิก --</option>
+                    </select>
+            </div>
                 <div class="input-group">
                     <label>ระบุเพศ:</label>
                     <select id="userGender">
@@ -983,7 +980,7 @@
                             <select id="dynamicMonth" class="form-select" onchange="calculateDynamicFortune()"></select>
                         </div>
                         <div class="form-col">
-                            <label>  เลือกวันเกิด:</label>
+                            <label> เลือกวันเกิด:</label>
                             <select id="dynamicDay" class="form-select" onchange="calculateDynamicFortune()">
                                 <option value="0">วันอาทิตย์</option>
                                 <option value="1">วันจันทร์</option>
@@ -1130,32 +1127,40 @@
         <div id="showclimatepage"></div>
     </section>
 
-     <!-- เกณฑ์พิรุณศาสตร์และชะตาโลก ไฟล์ thaksanine.js -->
+    <!-- เกณฑ์พิรุณศาสตร์และชะตาโลก ไฟล์ thaksanine.js -->
     <section id="thaksaninesection" class="main-section" style="display: none;">
         <div id="showthaksaninepage"></div>
     </section>
 
 
     <!-- ไฟล์ horoscopeseven.js-->
-    <section id="horoscope-seven" class="main-section" style="display:none;">
+    <section id="horoscopeseven" class="main-section" style="display:none;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-dark text-white p-3">
                         <h4 class="mb-0"><i class="bi bi-pentagon-fill me-2"></i>ตารางพยากรณ์เลข ๗ ตัว</h4>
+                                    <div class="form-group mb-3">
+                    <label class="text-gold">เลือกสมาชิกจากประวัติ:</label>
+                    <select class="form-control bg-black text-black border-gold member-selector-shared"
+                        onchange="autoFillMemberData(this.value);calculateHoroscope()"> >
+                        <option value="">-- เลือกสมาชิก --</option>
+                    </select>
+            </div>
                     </div>
+                    
                     <div class="card-body p-4">
                         <div class="row g-3 mb-4">
                             <div class="col-md-3">
-                            <label>วันเกิด</label>
+                                <label>วันเกิด</label>
                                 <select id="input-day" class="form-select border-primary">
-                                    <option value="1">วันอาทิตย์</option>
-                                    <option value="2">วันจันทร์</option>
-                                    <option value="3">วันอังคาร</option>
-                                    <option value="4">วันพุธ</option>
-                                    <option value="5">วันพฤหัสบดี</option>
-                                    <option value="6">วันศุกร์</option>
-                                    <option value="7">วันเสาร์</option>
+                                    <option value="0">วันอาทิตย์</option>
+                                    <option value="1">วันจันทร์</option>
+                                    <option value="2">วันอังคาร</option>
+                                    <option value="3">วันพุธ</option>
+                                    <option value="4">วันพฤหัสบดี</option>
+                                    <option value="5">วันศุกร์</option>
+                                    <option value="6">วันเสาร์</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -1178,21 +1183,21 @@
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">ปีนักษัตร</label>
                                 <select id="input-zodiac" class="form-select border-primary">
-                                    <option value="1">ปีชวด</option>
-                                    <option value="2">ปีฉลู</option>
-                                    <option value="3">ปีขาล</option>
-                                    <option value="4">ปีเถาะ</option>
-                                    <option value="5">ปีมะโรง</option>
-                                    <option value="6">ปีมะเส็ง</option>
-                                    <option value="7">ปีมะเมีย</option>
-                                    <option value="8">ปีมะแม</option>
-                                    <option value="9">ปีวอก</option>
-                                    <option value="10">ปีระกา</option>
-                                    <option value="11">ปีจอ</option>
-                                    <option value="12">ปีกุน</option>
+                                    <option value="0">ปีชวด</option>
+                                    <option value="1">ปีฉลู</option>
+                                    <option value="2">ปีขาล</option>
+                                    <option value="3">ปีเถาะ</option>
+                                    <option value="4">ปีมะโรง</option>
+                                    <option value="5">ปีมะเส็ง</option>
+                                    <option value="6">ปีมะเมีย</option>
+                                    <option value="7">ปีมะแม</option>
+                                    <option value="8">ปีวอก</option>
+                                    <option value="9">ปีระกา</option>
+                                    <option value="10">ปีจอ</option>
+                                    <option value="11">ปีกุน</option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">
                                     เวลาเกิด <span class="text-muted">(สำหรับคำนวณยาม)</span>
@@ -1206,7 +1211,7 @@
                                     placeholder="เช่น 20" min="1">
                             </div>
                             <div class="col-12 text-center mt-3">
-                            
+
                                 <button type="button" class="btn btn-primary px-5 shadow-sm"
                                     onclick="calculateHoroscope()">
                                     <i class="bi bi-magic me-2"></i>คำนวณดวงชะตา
@@ -1244,8 +1249,8 @@
 
     <section id="kaliyokepage" class="main-section" style="display: none;">
         <div class="container text-center">
-            <h1>🔮 เครื่องคำนวณกาลโยค</h1>
-            <p>คำนวณตามคัมภีร์กาลโยค (ฉบับมาตรฐาน)</p>
+            <h1 style="color:white">🔮 เครื่องคำนวณกาลโยค 🔮</h1>
+            <p style="color:white">คำนวณตามคัมภีร์กาลโยค (ฉบับมาตรฐาน)</p>
         </div>
 
         <div class="input-group">
@@ -1407,11 +1412,18 @@
 
 
 
+
     <section id="mainpage" class="main-section" style="display: none;">
         <div class="container text-center py-5">
             <h1 class="text-gold mb-4">ห้องพยากรณ์</h1>
             <div class="row" id="menuGrid"></div>
+            
         </div>
+    </section>
+
+    <!-- เกณฑ์พิรุณศาสตร์และชะตาโลก ไฟล์ TaksaSattalek.js -->
+    <section id="TaksaSattalek" class="main-section" style="display: none;">
+        <div id="showTaksaSattalekpage"></div>
     </section>
 
 
@@ -1431,6 +1443,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="mainContent.js"></script>
     <script src="dayBirthData.js"></script>
     <script src="element.js"></script>
     <script src="namesdb.js"></script>
@@ -1457,7 +1470,7 @@
     <script src="chatnine.js"></script>
     <script src="knowledge-data.js"></script>
     <script src="knowledge.js"></script>
-    <script type="module" src="REUX.js"></script>
+    <script type="module" src="reux.js"></script>
     <script src="mainpage.js"></script>
     <script src="ascendant.js"></script>
     <script src="ElementMatch.js"></script>
@@ -1478,7 +1491,8 @@
     <script src="kaliyoke.js"></script>
     <script src="elementmanual.js"></script>
     <script src="thaksanine.js"></script>
-    <script type="module" src="membermaneger.js"></script>
+    <script src="TaksaSattalek.js"></script>
+    <script type="module" src="membermanager.js"></script>
 
 
 
@@ -1487,7 +1501,7 @@
 
 
     <script>
-        const year = new Date().getFullYear() + 543;
+        const year = new Date().getFullYear();
         document.getElementById("yearTH").innerText = year;
     </script>
 

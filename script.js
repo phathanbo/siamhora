@@ -415,6 +415,52 @@ function downloadImageFromProfile() {
 /**
  * ฟังก์ชันนำทางหลัก - รองรับปุ่มย้อนกลับ และจัดการสถานะหน้าจอ
  */
+
+// ตารางเชื่อมโยง pageId กับ title
+const PAGE_TITLES = {
+    'mainContent': '🔮 สยามโหรามงคล - หน้าหลัก',
+    'mainpage': '🔮 สยามโหรามงคล - ห้องพยากรณ์',
+    'historySection': '📜 ประวัติสมาชิก - สยามโหรามงคล',
+    'profilePage': '👤 โปรไฟล์สมาชิก - สยามโหรามงคล',
+    'knowledgePage': '📚 คลังความรู้ - สยามโหรามงคล',
+    'ascendantPage': '🌟 คำนวณลัคนา - สยามโหรามงคล',
+    'auspiciousPage': '📅 ปฏิทินฤกษ์มงคล - สยามโหรามงคล',
+    'sevenDigitsPage': '🔢 เลข 7 ตัว ฐาน 9 - สยามโหรามงคล',
+    'taksaPage': '📊 ทักษา - สยามโหรามงคล',
+    'yarmPage': '🕐 ยามอัฏฐกาล - สยามโหรามงคล',
+    'chatraPage': '🏛️ ฉัตร 3 ชั้น - สยามโหรามงคล',
+    'weeklyColorSection': '🎨 สีมงคลประจำวัน - สยามโหรามงคล',
+    'planetRelationPage': '🪐 คู่มิตร-ศัตรู - สยามโหรามงคล',
+    'numerologyPage': '🔤 เบอร์มงคล - สยามโหรามงคล',
+    'dreamPage': '💭 ทำนายฝัน - สยามโหรามงคล',
+    'nameAnalysisPage': '✍️ วิเคราะห์ชื่อ - สยามโหรามงคล',
+    'lottoPage': '🎰 เลขเด็ด - สยามโหรามงคล',
+    'elementManualPage': '🌊 องค์ประกอบธาตุ - สยามโหรามงคล',
+    'compatibilityPage': '💑 วิเคราะห์ดวงสมพงษ์ - สยามโหรามงคล',
+    'mahathaksaPage': '🕉️ มหาทักษาพยากรณ์ - สยามโหรามงคล',
+    'chatninePage': '🏯 ฉัตร 9 ชั้น - สยามโหรามงคล',
+    'marriage-compatibility': '👰 หาคู่รักหรือคู่สมรส - สยามโหรามงคล',
+    'patient-prognosis': '⚕️ วิธีพยากรณ์ตัดอายุคนป่วย - สยามโหรามงคล',
+    'soulmate-direction': '💕 ดูที่อยู่เนื้อคู่ - สยามโหรามงคล',
+    'birthfortune': '🍀 โชคกำเนิด - สยามโหรามงคล',
+    'auspicious-day': '☀️ ตารางฤกษ์มงคล - สยามโหรามงคล',
+    'ubakong-yarm': '🧭 ยามอุบากอง - สยามโหรามงคล',
+    'lunarSection': '🌙 จันทรคติ - สยามโหรามงคล',
+    'lifeGraphPage': '📈 กราฟชีวิตพยากรณ์ - สยามโหรามงคล',
+    'lifeExtensionPage': '⏳ ต่อชะตาชีวิต - สยามโหรามงคล',
+    'zodiacdetailsection': '🐉 ดูดวงตามปีนักษัตร - สยามโหรามงคล',
+    'daily-horoscope': '📖 ตรวจดวงประจำวัน - สยามโหรามงคล',
+    'sompong-wealth': '💰 สมพงศ์มหาสมบัติ - สยามโหรามงคล',
+    'climate-section': '🌍 ลัทธิพิรุณศาสตร์ - สยามโหรามงคล',
+    'thaksaninesection': '⚡ ทักษา 9 - สยามโหรามงคล',
+    'horoscopeseven': '7️⃣ ตารางพยากรณ์เลข 7 - สยามโหรามงคล',
+    'kaliyokepage': '⏰ กาลโยค - สยามโหรามงคล',
+    'reuxpage': '✨ การให้ฤกษ์ - สยามโหรามงคล',
+    'package': '📦 Package - สยามโหรามงคล',
+    'promchartsection': '🎡 วงล้อพยากรณ์ - สยามโหรามงคล',
+    'TaksaSattalek': '🧿 ทักษา 7 - สยามโหรามงคล'
+};
+
 function navigateTo(pageId, addHistory = true) {
     console.log("🚀 กำลังนำทางไปที่หน้า:", pageId);
 
@@ -453,6 +499,11 @@ function navigateTo(pageId, addHistory = true) {
     targetPage.classList.remove('hidden');
     targetPage.classList.add('active');
     targetPage.style.display = 'block'; // บังคับแสดงผล
+
+    // 4.5 เปลี่ยนชื่อแท็บ
+    if (PAGE_TITLES[pageId]) {
+        document.title = PAGE_TITLES[pageId];
+    }
 
     // 5. บันทึกประวัติลง Browser (เพื่อให้กดย้อนกลับที่มือถือได้)
     if (addHistory) {

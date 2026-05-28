@@ -296,6 +296,13 @@ function downloadHoroscopeImage() {
   });
 }
 
+function shareToFacebook() {
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
 window.calculateFortune = calculateFortune;
 window.downloadHoroscopeImage = downloadHoroscopeImage;
 window.createShareImage = createShareImage;
+window.shareToFacebook = shareToFacebook;
+

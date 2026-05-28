@@ -8,7 +8,7 @@ const packages = [
     { name: "เงิน", m: 150, y: 1500 },
     { name: "ทองคำ", m: 300, y: 3000 },
     { name: "ทองคำขาว", m: 600, y: 6000 },
-    { name: "ใข่มุก", m: 900, y: 9000 },
+    { name: "ไข่มุก", m: 900, y: 9000 },
     { name: "ทับทิม", m: 1200, y: 12000 },
     { name: "ไพฑูรย์", m: 1500, y: 15000 },
     { name: "มรกต", m: 3000, y: 30000 },
@@ -17,7 +17,7 @@ const packages = [
     { name: "มงกุฎเพชร", m: 18000, y: 180000 },
     { name: "ไตรมงกุฎ", m: 27000, y: 270000 },
     { name: "เพชรยอดมงกุฎ", m: 36000, y: 360000 },
-    { name: "วิมาน", m: "ติดต่อ", y: "ติดต่อ" } 
+    { name: "วิมาน", m: "ติดต่อ", y: "ติดต่อ" }
 ];
 
 // 2. รายการบริการทั้งหมด 42 รายการ
@@ -51,10 +51,10 @@ function buildTable() {
         const th = document.createElement('th');
         th.textContent = pkg.name;
         head.appendChild(th);
-        
+
         // แถวราคามรายเดือน
         const tdM = document.createElement('td');
-        tdM.className = "price-cell";
+        tdM.className = 'price-cell';
         tdM.textContent = typeof pkg.m === 'number' ? pkg.m.toLocaleString() : pkg.m;
         mRow.appendChild(tdM);
 
