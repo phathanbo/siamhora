@@ -978,7 +978,7 @@ function calculateSevenDigits() {
     globalRows = [[], [], [], []];
     for (let i = 0; i < 7; i++) {
         // ฐานที่ 1 (วัน), 2 (เดือน), 3 (ปี) - ปรับปรุงสูตรป้องกันค่า 0
-        globalRows[0].push(((day - 1 + i) % 7) + 1);
+        globalRows[0].push(((day - 1 + i) % 7) + 2);
         globalRows[1].push(((month - 1 + i) % 7) + 1);
         globalRows[2].push((( (year % 7) + i) % 7) + 1);
     }

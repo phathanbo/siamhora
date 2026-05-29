@@ -34,6 +34,7 @@ const APP_MENU = [
     { id: 'dailyHighlightPage',title: 'แผนที่ฤกษ์มงคลรายวัน', icon: 'fa-calendar-alt', color: '#d4af37' },
     { id: 'lifeExtensionPage',title: 'ต่อชะตา', icon:'fa-candle-holder', color: '#d4af37' },
     { id: 'lunarSection' ,title: 'คำนวณจันทรคติ' ,icon: 'fa-calendar-alt', color: '#d4af37' },
+    { id: 'showdaylife', title: 'คำนวณวันเกิด', icon: 'fa-birthday-cake', color: '#d4af37' }
     
 ];
 

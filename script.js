@@ -465,7 +465,12 @@ function navigateTo(pageId, addHistory = true) {
     console.log("🚀 กำลังนำทางไปที่หน้า:", pageId);
 
     // 1. หาหน้าเป้าหมายใน HTML
-    const targetPage = document.getElementById(pageId);
+    let targetPage = document.getElementById(pageId);
+    if (targetPage && !targetPage.classList.contains('main-section')) {
+        // If the ID points to an inner element (like the inner div), use its parent section
+        const parentSection = targetPage.closest('.main-section');
+        if (parentSection) targetPage = parentSection;
+    }
     if (!targetPage) {
         console.error(`❌ หาหน้า ID "${pageId}" ไม่เจอใน HTML!`);
         // ถ้าหาไม่เจอ ให้เด้งกลับหน้าหลักกันหน้าขาว
@@ -524,6 +529,11 @@ function navigateTo(pageId, addHistory = true) {
                 renderTablerelation();
             }
         }, 50);
+    }
+
+    // If navigating to showdaylife, ensure its initializer runs
+    if (pageId === 'showdaylife' && typeof showdaylife === 'function') {
+        try { showdaylife(); } catch (e) { console.error('showdaylife init error', e); }
     }
 
     // 8. โหลดข้อมูลผู้ใช้มาเติม (ถ้ามีระบบ Profile)
