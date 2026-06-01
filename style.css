@@ -68,11 +68,11 @@ text {
 .main-section {
     display: none;
     padding: 20px;
-    max-width: 1800px;
+    max-width: 100%;
     margin: 0 auto;
     animation: fadeIn 0.5s ease;
     padding: 10px;
-
+    width: 100%;
 }
 
 .main-section.active {
@@ -1416,6 +1416,21 @@ body.light-mode .card { border-radius: 16px; }
         transform: rotate(180deg);
         transition: 0.3s;
     }
+
+    /* 🖥️ ปรับให้กว้างบน Desktop */
+    .main-section {
+        padding: 30px 40px;
+        margin: 0 auto;
+    }
+
+    .container {
+        max-width: 95% !important;
+        margin: 0 auto;
+    }
+
+    .card, .compatibility-container {
+        padding: 30px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -2151,9 +2166,9 @@ body.light-mode .card { border-radius: 16px; }
 
   /* ====== MAIN LAYOUT ====== */
   .main-wrapper {
-    max-width: 1100px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 2rem 1rem 4rem;
+    padding: 2rem 2rem 4rem;
     display: grid;
     gap: 2rem;
   }
@@ -2218,10 +2233,17 @@ body.light-mode .card { border-radius: 16px; }
 }
 
 .card-title {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: bold;
     color: var(--gold);
     text-shadow: 0 0 5px rgba(201, 168, 76, 0.5);
+    text-align: center;
+}
+
+.card-body {
+    padding: 20px;
+    color: #000;
+    font-size: 1rem;
 }
 
 .box{
@@ -2574,3 +2596,68 @@ img {
         .auth-particles span:nth-child(6)  { width: 25px;  height: 25px;  left: 5%;  top: 50%; animation-duration: 6s;  animation-delay: 3s;   }
         .auth-particles span:nth-child(7)  { width: 70px;  height: 70px;  left: 70%; top: 35%; animation-duration: 12s; animation-delay: 0.8s; }
         .auth-particles span:nth-child(8)  { width: 35px;  height: 35px;  left: 35%; top: 40%; animation-duration: 9s;  animation-delay: 2.5s; }
+
+        .Usename{
+            color:#d4af37;
+            font-size:0.85rem;
+            display:inline-flex;
+            align-content:center;
+            justify-content:center;
+            padding: 4px 12px;
+        }
+
+/* ===== Auth User Badge Styling ===== */
+#authUserBadge .Usename span:first-child {
+    transition: all 0.2s ease;
+}
+
+#authUserBadge .Usename span:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   ปุ่มกลับไปบนสุด (Back to Top Button)
+   -------------------------------------------------------------------------- */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #d4af37, #b8960c);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+    background: linear-gradient(135deg, #e8c547, #c7a91f);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px);
+}
+
+/* สำหรับ Mobile */
+@media (max-width: 768px) {
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1rem;
+    }
+}

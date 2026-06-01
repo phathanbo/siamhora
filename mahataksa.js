@@ -642,12 +642,12 @@ function showBirthDestiny(startDayIndex) {
 
     return `
         <div class="mt-4 p-3">
-            <h4 class="text-gold"><i class="fas fa-star mr-2"></i>พื้นดวงชะตาภูมิกำเนิด  <i class="fas fa-star mr-2"></i></h4> 
-            <p class="text-gold" style="font-size: 50px; font-weight: bold;"><span style="color:${angel.bg}">วัน${destiny.day}</span></p>
-            <div class="badge ${angel.type === 'บาปเคราะห์' ? 'badge-danger' : 'badge-success'} mb-2"> ฝ่าย${angel.type}</div></p>
-            <p class="text-gold">ทรง ${angel.vehicle} เป็นพาหนะ มีกำลังดาว ${angel.power} ${angel.animal} ${angel.desc} ${angel.location}</p>
-            <p class="text-white" style="line-height: 1.6;">${destiny.text}</p>
-            <p class="text-white"> สีมงคล: ${angel.luckyColor} สีไม่มงคล: ${angel.unluckyColor}</p>
+            <h4 class="text-gold"><i class="fas fa-star mr-2"></i>พื้นดวงชะตาภูมิกำเนิด <i class="fas fa-star mr-2"></i></h4> 
+            <span class="text-gold" style="font-size: 50px; font-weight: bold;"><span style="color:${angel.bg}">วัน${destiny.day}</span></span><br>
+            <div class="badge ${angel.type === 'บาปเคราะห์' ? 'badge-danger' : 'badge-success'} mb-2"> ฝ่าย${angel.type}</div><br>
+            <span class="text-gold">ทรง ${angel.vehicle} เป็นพาหนะ มีกำลังดาว ${angel.power} ${angel.animal} ${angel.desc} ${angel.location}</p>
+            <span class="text-gold" style="line-height: 1.6;">${destiny.text}</p>
+            <span class="text-gold"> สีมงคล: ${angel.luckyColor} สีไม่มงคล: ${angel.unluckyColor}</p>
         </div>
     `;
 }
@@ -796,10 +796,10 @@ window.calculateThaksa = function (isManualChange = false) {
                 </div>
         <div class="text-center mb-4 p-3 border-gold" style="background: rgba(0,0,0,0.5); border-radius: 15px;">
             <h4 class="text-gold">ปีนี้อายุย่าง ${ageYang || '--'} ปี</h4>
-            <p class="text-warning">เทวดาเสวยอายุ ${angel.name} <span class="small text-gold">( ${angel.desc} )</span></p>
-            <p class="small text-gold"><i class="fas fa-shield-alt"></i> มีดาวคู่ต้านทานภัยปีนี้: <b>${resister}</b></p>
-            <p class="text-gold mb-0"><b>คำทำนาย:</b> ${angel.prediction}</p>
-            <p class="small text-white-50"><i class="fas fa-magic"></i> <b>เคล็ดลับ:</b> ${angel.shrine}</p>
+            <span class="text-warning">เทวดาเสวยอายุ ${angel.name} <span class="small text-gold">( ${angel.desc} )</span></span><br>
+            <span class="small text-gold"><i class="fas fa-shield-alt"></i> มีดาวคู่ต้านทานภัยปีนี้: <b>${resister}</b></span><br>
+            <span class="text-gold mb-0"><b>คำทำนาย:</b> ${angel.prediction}</span><br>
+            <span class="small text-white-50"><i class="fas fa-magic"></i> <b>เคล็ดลับ:</b> ${angel.shrine}</span>
         </div>
     </div>
         `;
@@ -1007,39 +1007,63 @@ window.saveCard = function (cardId) {
     });
 };
 
+// ✅ ฟังก์ชันแปลงวันเกิด
+function parseBirthdate(input) {
+    if (!input) return null;
+
+    // รูปแบบ: dd/mm/yyyy หรือ yyyy-mm-dd
+    if (input.includes('/')) {
+        const parts = input.split('/');
+        if (parts.length === 3) {
+            const day = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            let year = parseInt(parts[2]);
+            if (year > 2400) year -= 543; // แปลง BE ≈ AD
+            return new Date(year, month - 1, day);
+        }
+    } else if (input.includes('-')) {
+        return new Date(input);
+    }
+    return null;
+}
+
 window.calculatemahataksa = function () {
-    // 1. ลองดึงจากฟอร์มอินพุตของหน้าทักษาก่อน
+    // 1️⃣ ดึงจากฟอร์ม
     let input = document.getElementById('birthdate')?.value;
 
-    // 2. ถ้าไม่มี ให้ดึงจากข้อมูลสมาชิกล่าสุดที่เลือกไว้ในระบบ (ดึงผ่าน localStorage ที่ค่อนข้างชัวร์)
+    // 2️⃣ ถ้าไม่มี → ดึงจาก localStorage
     if (!input) {
         const localData = localStorage.getItem('horo_history');
         if (localData) {
             try {
                 const parsed = JSON.parse(localData);
-                // ตรวจสอบโครงสร้างข้อมูล เช่น parsed.birthDate หรือ parsed[0].birthDate ตามที่เซฟไว้
-                input = parsed.birthDate || parsed.birthdate; 
-            } catch(e) { console.error(e); }
+                // ✅ แก้: เข้า Array [0]
+                input = parsed[0]?.birthdate || parsed[0]?.birthDate;
+            } catch(e) {
+                console.error('Parse error:', e);
+            }
         }
     }
 
-    // 3. (Fallback) ดึงจาก ID บนหน้าโปรไฟล์ 
+    // 3️⃣ Fallback → โปรไฟล์
     if (!input) {
         input = document.getElementById('profBirth')?.innerText;
     }
 
+    // ตรวจสอบ
     const birthDate = parseBirthdate(input);
     if (!birthDate) {
         alert("🔮 กรุณากรอกวันเกิด หรือเลือกสมาชิกก่อนคำนวณมหาทักษา");
         return;
     }
 
-        // save normalized
+    // บันทึก
     localStorage.setItem('userBirthdate', birthDate.toISOString().split('T')[0]);
 
-    calculateThaksa();    
+    // คำนวณ + Navigate
+    calculateThaksa();
 
     if (typeof navigateTo === "function") {
         navigateTo('mahathaksaPage');
-    }    
+    }
 };

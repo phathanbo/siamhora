@@ -7,10 +7,44 @@ function showmainpage() {
         contianer.style.display = 'block';
     }
 
+    // ✅ เติมชื่อจาก Single Profile (ข้อมูลล่าสุด) หรือ displayName
+    setTimeout(() => {
+        const targetNameField = document.getElementById('targetName');
+        if (targetNameField && !targetNameField.value) {
+            try {
+                // 1️⃣ ลองดึง Single Profile ก่อน
+                if (typeof SingleProfileManager !== 'undefined' && SingleProfileManager) {
+                    const profile = SingleProfileManager.load();
+                    if (profile && profile.name) {
+                        targetNameField.value = profile.name;
+                        console.log('✅ เติมชื่อจาก Single Profile:', profile.name);
+                        return; // ใช้ Single Profile แล้ว
+                    }
+                }
+
+                // 2️⃣ ถ้าไม่มี Single Profile ให้ใช้ displayName จากหน้าสมัคร
+                const session = localStorage.getItem('siamhora_auth_session');
+                if (session) {
+                    const data = JSON.parse(session);
+                    const displayName = data.displayName || '';
+                    if (displayName) {
+                        targetNameField.value = displayName;
+                        console.log('✅ เติมชื่อแสดงผล:', displayName);
+                    } else {
+                        console.warn('⚠️ ไม่พบ displayName ใน session');
+                    }
+                }
+            } catch (e) {
+                console.warn('⚠️ ไม่สามารถดึงชื่อ:', e);
+            }
+        }
+    }, 100);
+
+
     const html = `
     
-        <span id="userGreeting" class="text-center font-weight-bold mb-4 d-block" style="font-size: 50px;">✨
-            ยินดีต้อนรับท่านเจ้าชะตา ✨</span>
+        <p id="userGreeting" style="font-size: 3rem; text-align: center;">✨
+            ยินดีต้อนรับท่านเจ้าชะตา ✨</p>
         <section id="form" class="card shadow-sm mb-4">
             <div class="card-body">
                 <h2 style="color: #1a1a1a;" class="text-center">กรอกข้อมูลเพื่อทำนายดวง</h2>

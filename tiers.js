@@ -1,5 +1,11 @@
 "use strict";
 
+const siteSeo = {
+    title: "สยามโหรามงคล - ดูดวงโหราศาสตร์ไทยแม่นยำ",
+    description: "สยามโหรามงคล - เว็บดูดวงตามหลักโหราศาสตร์ไทยที่แม่นยำ พยากรณ์ตามตำราโบราณ ทำนายดวงชะตารายปี ปีนักษัตร ยามอัฏฐกาล ฉัตร ๙ ชั้น มหาทักษา และอีกมากมาย",
+    packageTitle: "ดูดวงตามหลักโหราศาสตร์ไทยที่แม่นยำ"
+};
+
 // 1. ข้อมูลระดับของ Package และราคา
 const packages = [
     { name: "ทดลองใช้", m: 30, y: 300 },
@@ -32,7 +38,19 @@ const services = [
     "37. บูชาเทวดาและสะเดาะเคราะห์", "38. แก้เรื่องอุบาทว์", "39. ตรวจดูนรลักษณ์", "40. ตรวจลายมือ", "41. ผูกดวงพิชัยสงคราม", "42. สร้างพระประจำวัน"
 ];
 
+function applySiteSeo() {
+    document.title = siteSeo.title;
+
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    if (descriptionMeta) {
+        descriptionMeta.setAttribute('content', siteSeo.description);
+    }
+}
+
 function buildTable() {
+    applySiteSeo();
+
+    const title = document.querySelector('#package .title');
     const head = document.getElementById('headerRow');
     const body = document.getElementById('serviceBody');
     const mRow = document.querySelector('.row-m');
@@ -40,6 +58,10 @@ function buildTable() {
 
     // ตรวจสอบว่า Element ครบถ้วนก่อนทำงาน
     if (!head || !body || !mRow || !yRow) return;
+
+    if (title) {
+        title.textContent = siteSeo.packageTitle;
+    }
 
     // ล้างข้อมูลเก่า (เผื่อมีการเรียกใช้ซ้ำ)
     head.innerHTML = '<th class="sticky-col">รายการพยากรณ์</th>';

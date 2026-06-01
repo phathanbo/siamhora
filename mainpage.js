@@ -34,8 +34,14 @@ const APP_MENU = [
     { id: 'dailyHighlightPage',title: 'แผนที่ฤกษ์มงคลรายวัน', icon: 'fa-calendar-alt', color: '#d4af37' },
     { id: 'lifeExtensionPage',title: 'ต่อชะตา', icon:'fa-candle-holder', color: '#d4af37' },
     { id: 'lunarSection' ,title: 'คำนวณจันทรคติ' ,icon: 'fa-calendar-alt', color: '#d4af37' },
-    { id: 'showdaylife', title: 'คำนวณวันเกิด', icon: 'fa-birthday-cake', color: '#d4af37' }
-    
+    { id: 'showdaylife', title: 'คำนวณวันเกิด', icon: 'fa-birthday-cake', color: '#d4af37' },
+    { id: 'fengshuiCalendar', title: '🧭 ปฏิทินฮวงจุ้ย<br>(ทิศมงคล)', icon: 'fa-compass', color: '#d4af37' },
+    { id: 'fengShuiPage', title: '🏠 วิเคราะห์ฮวงจุ้ย<br>(เฉพาะบุคคล)', icon: 'fa-home', color: '#d4af37' },
+    { id: 'businessFortune', title: '💼 พยากรณ์ธุรกิจ<br>/การเงิน', icon: 'fa-chart-line', color: '#d4af37' },
+    { id: 'auspiciousOpening', title: '🏠 วันเปิดร้าน<br>/ลงหลัก', icon: 'fa-store', color: '#d4af37' },
+    { id: 'ceremonyDate', title: '💍 กำหนดวัน<br>ประกอบพิธี', icon: 'fa-ring', color: '#d4af37' },
+    { id: 'thaiAstrology', title: '🔮 โหราศาสตร์ไทย<br>(ดาวเกิด)', icon: 'fa-stars', color: '#d4af37' }
+
 ];
 
 const UserProfile = {
@@ -65,19 +71,93 @@ function buildDashboard() {
     const menuGrid = document.getElementById('menuGrid');
     if (!menuGrid) return;
 
-    menuGrid.innerHTML = APP_MENU.map(item => `
-        <div class="col-6 col-md-4 col-lg-3 mb-4"> <div class="card h-100 bg-dark border-gold py-3 shadow-sm" 
-                 style="cursor:pointer; transition: 0.3s; border: 1px solid #d4af37;" 
+    menuGrid.innerHTML = APP_MENU.map((item, index) => `
+        <div class="col-6 col-md-4 col-lg-3 mb-4" style="animation: fadeIn 0.5s ease ${index * 0.05}s both;">
+            <div class="dashboard-card"
+                 style="cursor:pointer; transition: all 0.35s cubic-bezier(0.23, 1, 0.320, 1);"
                  onclick="navigateTo('${item.id}')"
-                 onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='translateY(-5px)'"
-                 onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
-                <div class="card-body text-center">
-                    <i class="fas ${item.icon} fa-3x mb-3" style="color:${item.color}"></i>
-                    <h6 class="text-white mb-0">${item.title}</h6>
+                 onmouseover="this.style.transform='translateY(-12px) scale(1.05)'; this.style.boxShadow='0 20px 50px rgba(212, 175, 55, 0.35)';"
+                 onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 25px rgba(212, 175, 55, 0.15)';">
+
+                <div class="card-icon-wrapper">
+                    <i class="fas ${item.icon}" style="color: ${item.color};"></i>
                 </div>
+
+                <div class="card-body text-center px-3 py-4">
+                    <h6 class="card-body" style="font-weight: 600; line-height: 1.4;">${item.title}</h6>
+                </div>
+
+                <div class="card-shine"></div>
             </div>
         </div>
     `).join('');
+
+    // เพิ่ม CSS สำหรับ dashboard cards
+    if (!document.getElementById('dashboardStyles')) {
+        const style = document.createElement('style');
+        style.id = 'dashboardStyles';
+        style.textContent = '.dashboard-card {' +
+            'background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 245, 235, 0.92) 100%);' +
+            'border: 2px solid #d4af37;' +
+            'border-radius: 18px;' +
+            'padding: 20px 15px;' +
+            'height: 100%;' +
+            'position: relative;' +
+            'overflow: hidden;' +
+            'box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);' +
+            'backdrop-filter: blur(10px);' +
+            '}' +
+            '.dashboard-card::before {' +
+            'content: "";' +
+            'position: absolute;' +
+            'top: 0;' +
+            'left: -100%;' +
+            'width: 100%;' +
+            'height: 100%;' +
+            'background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);' +
+            'transition: left 0.5s;' +
+            '}' +
+            '.dashboard-card:hover::before { left: 100%; }' +
+            '.card-icon-wrapper {' +
+            'font-size: 2.8rem;' +
+            'margin-bottom: 12px;' +
+            'display: flex;' +
+            'justify-content: center;' +
+            'align-items: center;' +
+            'height: 70px;' +
+            'background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.03) 100%);' +
+            'border-radius: 12px;' +
+            'transition: transform 0.3s ease;' +
+            '}' +
+            '.dashboard-card:hover .card-icon-wrapper { transform: scale(1.15) rotate(5deg); }' +
+            '.card-title {' +
+            'color: #2c1810;' +
+            'font-size: 0.95rem;' +
+            'letter-spacing: 0.3px;' +
+            '}' +
+            '.card-shine {' +
+            'position: absolute;' +
+            'top: 0;' +
+            'left: 0;' +
+            'width: 100%;' +
+            'height: 100%;' +
+            'background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);' +
+            'pointer-events: none;' +
+            'opacity: 0;' +
+            'transition: opacity 0.3s;' +
+            '}' +
+            '.dashboard-card:hover .card-shine { opacity: 1; }' +
+            '@keyframes fadeIn {' +
+            'from { opacity: 0; transform: translateY(20px); }' +
+            'to { opacity: 1; transform: translateY(0); }' +
+            '}' +
+            '@media (max-width: 767px) {' +
+            '.dashboard-card { padding: 15px 12px; }' +
+            '.card-icon-wrapper { font-size: 2.2rem; height: 60px; }' +
+            '.card-title { font-size: 0.9rem; }' +
+            '}';
+        document.head.appendChild(style);
+    }
 }
 
 $(document).ready(function () {
