@@ -147,7 +147,7 @@ function calculateFortune() {
     const resultEl = document.getElementById('fortuneResult');
 
     if (!birthDateEl.value) {
-        alert('⚠️ กรุณากรอกวันเกิด');
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกวันเกิด', 'warning');
         return;
     }
 
@@ -223,7 +223,6 @@ function calculateFortune() {
 
 document.addEventListener("DOMContentLoaded", () => {
     showFortunePage();
-    console.log("✅ Fortune.js loaded - อิงลัคนา บ้าน 11 (authentic Thai astrology)");
 });
 
 window.calculateFortune = calculateFortune;

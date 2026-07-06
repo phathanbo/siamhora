@@ -5,22 +5,7 @@ const LIFE_GRAPH_LABELS = [
     "ศัตรู", "คู่ครอง", "โรคภัย", "ความสุข", "การงาน", "ลาภยศ"
 ];
 
-function parseBirthdate(input) {
-    if (!input || input === "undefined") return null;
-    try {
-        if (input.includes('/')) {
-            const [d, m, yRaw] = input.split('/');
-            let y = parseInt(yRaw);
-            if (y > 2400) y -= 543;
-
-            input = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-        }
-        const date = new Date(input);
-        return isNaN(date.getTime()) ? null : date;
-    } catch {
-        return null;
-    }
-}
+/* หมายเหตุ: ฟังก์ชัน parseBirthdate ถูกย้ายไปที่ utils-helpers.js แล้ว */
 
 function calculateFortuneScore(points) {
     const maxTotal = 7 * 12; // คะแนนเต็ม
@@ -117,16 +102,37 @@ function calculateLifeGraph(passedMemberId) {
 
     const birthDate = parseBirthdate(input);
     if (!birthDate) {
-        alert("🔮 กรุณากรอกวันเกิดให้ถูกต้อง");
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกวันเกิดให้ถูกต้อง', 'warning');
         return;
     }
 
     localStorage.setItem('userBirthdate', birthDate.toISOString().split('T')[0]);
  
-    const d = birthDate.getDay() + 1;
-    const m = birthDate.getMonth() + 1;
-    const y = (birthDate.getFullYear() % 12) + 1;
- 
+    // 1. คำนวณวัน (Day) ตามหลักโหราศาสตร์ไทย (ตัดวันตอน 6.00 น.)
+    let d = birthDate.getDay() + 1; // 1=Sun, 2=Mon...
+    if (birthDate.getHours() < 6) {
+        d = d - 1;
+        if (d < 1) d = 7;
+    }
+
+    // 2. คำนวณเดือน (Month) แบบไทย (เดือนอ้าย=1(ธ.ค.), ยี่=2(ม.ค.), ..., 5(เม.ย.))
+    // getMonth() คืนค่า 0=ม.ค., 1=ก.พ. ... 11=ธ.ค.
+    // ดังนั้น ม.ค.(0)+2 = 2, ก.พ.(1)+2 = 3, ธ.ค.(11)+2 = 13%12 = 1
+    let m = (birthDate.getMonth() + 2) % 12;
+    if (m === 0) m = 12;
+
+    // 3. คำนวณปีนักษัตร (Year) ตามหลักโหราศาสตร์ (เปลี่ยนปีนักษัตรในช่วงเดือนเมษายน หรือเดือน 5)
+    // ถือคติแบบง่ายคือ ถ้าเกิด ม.ค. - มี.ค. (ก่อนเดือนเมษายน) ให้นับเป็นปีนักษัตรเก่า
+    let yearThai = birthDate.getFullYear();
+    if (birthDate.getMonth() < 3) {
+        yearThai -= 1;
+    }
+    // คำนวณรหัสปีนักษัตร (ชวด=1, ฉลู=2 ... กุน=12)
+    // ปี ค.ศ. 1984 คือปีชวด (1)
+    let y = (yearThai - 1983) % 12;
+    if (y <= 0) y += 12;
+
+    // 4. คำนวณจุดทั้ง 12 ภพ
     const points = Array.from({ length: 12 }, (_, i) => {
         let val = (d + m + y + i) % 7;
         return val === 0 ? 7 : val;
@@ -235,7 +241,8 @@ function getTransitAdvice(type, label, score) {
 
 function getLuckyNumbers(birthInput) {
     const today = new Date();
-    const birth = new Date(birthInput).getDate();
+    const birthDate = typeof parseThaiDate === 'function' ? parseThaiDate(birthInput) : new Date(birthInput);
+    const birth = birthDate ? birthDate.getDate() : 1;
     const s = today.getDate() + today.getMonth() + birth;
     const n = (val) => (Math.abs(val) % 10).toString();
     return {
@@ -247,7 +254,7 @@ function getLuckyNumbers(birthInput) {
 
 // 1. ฟังก์ชันคำนวณดวงจรรายปี (ชันษาจร)
 function calculateTransit(birthInput) {
-    const birthDate = new Date(birthInput);
+    const birthDate = typeof parseThaiDate === 'function' ? parseThaiDate(birthInput) : new Date(birthInput);
     const today = new Date();
 
     // คำนวณอายุเต็ม และ อายุย่าง
@@ -321,15 +328,15 @@ function renderLifeGraph(points) {
 
 function renderLifeGraphTable(points) {
     const resultDiv = document.getElementById('lifeGraphResult');
-    const birthInput = document.getElementById('birthdate')?.value || localStorage.getItem('userBirthdate');
+    // ใช้ ISO format จาก localStorage (calculateLifeGraph บันทึกไว้แล้ว) เป็นหลัก
+    // ไม่อ่านจาก form field โดยตรง เพราะ form เก็บ DD/MM/YYYY ซึ่ง new Date() parse ไม่ได้
+    const birthInput = localStorage.getItem('userBirthdate') || document.getElementById('birthdate')?.value;
     const monthlyFortuneHtml = renderMonthlyFortune(points);
 
     if (!birthInput) return;
-    // บันทึกลง LocalStorage ทันทีที่คำนวณ
-    localStorage.setItem('userBirthdate', birthInput);
 
     // --- 1. คำนวณอายุและจุดดวงจร ---
-    const birthDate = new Date(birthInput);
+    const birthDate = typeof parseThaiDate === 'function' ? parseThaiDate(birthInput) : new Date(birthInput);
     const today = new Date();
     const day = today.getDate();
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
@@ -409,8 +416,9 @@ function renderLifeGraphTable(points) {
                 <div class="mb-3 p-2 rounded" style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107;">
                     <small class="text-warning d-block font-weight-bold"><i class="fas fa-calendar-alt mr-1"></i> รายปี (${LIFE_GRAPH_LABELS[yearlySlot]})</small>
                     <div class="text-white small mt-1">${getTransitAdvice("ปีนี้", LIFE_GRAPH_LABELS[yearlySlot], points[yearlySlot])}</div>
-                    ${monthlyFortuneHtml}
                 </div>
+
+                ${monthlyFortuneHtml}
 
                 <div class="mb-3 p-2 rounded" style="background: rgba(23, 162, 184, 0.1); border-left: 3px solid #17a2b8;">
                     <small class="text-info d-block font-weight-bold"><i class="fas fa-moon mr-1"></i> รายเดือน (${LIFE_GRAPH_LABELS[monthlySlot]})</small>
@@ -554,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function downloadLifeGraphImage(element) {
     const area = document.getElementById('lifeGraphResult');
     if (!area || area.innerHTML === "") {
-        alert("กรุณาคำนวณกราฟชีวิตก่อนทำการเซฟภาพครับ");
+        Swal.fire('แจ้งเตือน', 'กรุณาคำนวณกราฟชีวิตก่อนทำการเซฟภาพครับ', 'warning');
         return;
     }
 
@@ -568,7 +576,7 @@ async function downloadLifeGraphImage(element) {
 
     // สร้าง Header และ Footer สำหรับแบรนด์ในรูปภาพ
     if (typeof html2canvas === "undefined") {
-        alert("ระบบสร้างภาพยังไม่พร้อมใช้งาน");
+        Swal.fire('เกิดข้อผิดพลาด', 'ระบบสร้างภาพยังไม่พร้อมใช้งาน', 'error');
         return;
     }
 
@@ -628,7 +636,7 @@ async function downloadLifeGraphImage(element) {
 
     } catch (e) {
         console.error("Graph Share Error:", e);
-        alert("ไม่สามารถสร้างภาพกราฟได้: " + e.message);
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถสร้างภาพกราฟได้: ' + e.message, 'error');
     } finally {
         if (btn) {
             btn.innerHTML = originalText;

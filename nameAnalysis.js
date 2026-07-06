@@ -471,7 +471,11 @@ function analyzeName(passedMemberId) {
     const sumL = NameAnalysis.calculate(lname);
     const sumTotal = sumF + sumL;
 
-    renderNameUI(fname, lname, sumF, sumL, sumTotal, finalDayIdx, kalakiniList);
+    // ป้องกัน XSS จากการกรอกชื่อ-นามสกุล
+    const safeFname = typeof escapeHTML === 'function' ? escapeHTML(fname) : fname;
+    const safeLname = typeof escapeHTML === 'function' ? escapeHTML(lname) : lname;
+
+    renderNameUI(safeFname, safeLname, sumF, sumL, sumTotal, finalDayIdx, kalakiniList);
 }
 
 
@@ -501,54 +505,94 @@ function showLuckyChars(target, dayIdx) {
 }
 
 // ฟังก์ชันสุ่มชื่อแนะนำ (ใส่ไว้ในไฟล์ main.js)
-function suggestLuckyNames(dayIdx) {
+function suggestLuckyNames(dayIdx, preferredTag = '') {
     if (dayIdx === null || !NameDatabase[dayIdx]) {
         return Swal.fire('ระบุวันเกิด', 'เลือกวันเกิดก่อนครับประธาน', 'warning');
     }
 
-    const names = NameDatabase[dayIdx];
-    const shuffled = [...names].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
+    // ถ้ากดผ่าน UI ให้ดึงค่า filter มาใช้
+    const filterSelect = document.getElementById('nameFilterSelect');
+    if (filterSelect) {
+        preferredTag = filterSelect.value;
+    }
 
-    let html = `
-        <div class="text-left animate__animated animate__fadeIn">
-            <p class="small text-white-50 mb-3 text-center">อักษรถูกคัดกรองตามหลักทักษาประจำวันเกิดของคุณแล้ว</p>
-    `;
-
-    selected.forEach(item => {
-        html += `
-            <div class="mb-3 p-3 rounded" style="background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2);">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="h4 text-gold mb-0">${item.name}</span>
-                    <span class="badge badge-info">เลขรวม ${item.sum}</span>
+    const generateNamesHTML = () => {
+        let selected = [];
+        if (typeof generateDynamicNames === 'function') {
+            selected = generateDynamicNames(dayIdx, 3, preferredTag);
+        }
+        
+        // ถ้าได้ชื่อไม่ครบ 3 ชื่อ (หรือระบบใหม่ขัดข้อง) ให้ดึงจาก NameDatabase เดิมมาเสริม
+        if (selected.length < 3) {
+            const names = NameDatabase[dayIdx] || [];
+            // ถ้ามีการฟิลเตอร์ พยายามหาในฐานข้อมูลเดิมด้วย
+            let filteredDb = preferredTag ? names.filter(n => n.tags.includes(preferredTag)) : names;
+            if (filteredDb.length === 0) filteredDb = names; // fallback
+            
+            const shuffled = [...filteredDb].sort(() => 0.5 - Math.random());
+            const needed = 3 - selected.length;
+            selected = selected.concat(shuffled.slice(0, needed));
+        }
+        
+        let html = '';
+        selected.forEach(item => {
+            html += `
+                <div class="mb-3 p-3 rounded animate__animated animate__fadeIn" style="background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h4 text-gold mb-0">${item.name}</span>
+                        <span class="badge badge-info">เลขรวม ${item.sum}</span>
+                    </div>
+                    <div class="mt-2">
+                        ${item.tags.map(t => `<span class="badge badge-outline-gold mr-1" style="font-size: 0.6rem;">${t}</span>`).join('')}
+                    </div>
+                    <div class="small text-white-50 mt-1 italic" style="font-size: 0.75rem;">
+                        ความหมาย: ${item.desc}
+                    </div>
                 </div>
-                <div class="mt-2">
-                    ${item.tags.map(t => `<span class="badge badge-outline-gold mr-1" style="font-size: 0.6rem;">${t}</span>`).join('')}
-                </div>
-                <div class="small text-white-50 mt-1 italic" style="font-size: 0.75rem;">
-                    ความหมาย: ${item.desc}
-                </div>
-            </div>
-        `;
-    });
+            `;
+        });
+        return html;
+    };
 
-    html += `
-        <div class="mt-3 text-center">
-            <button onclick="suggestLuckyNames(${dayIdx})" class="btn btn-sm btn-outline-gold">
-                <i class="fas fa-sync-alt mr-1"></i> สุ่มใหม่
-            </button>
-        </div>
-    </div>`;
+    const existingContainer = document.getElementById('luckyNamesContainer');
+    
+    if (existingContainer && Swal.isVisible()) {
+        existingContainer.innerHTML = generateNamesHTML();
+    } else {
+        let fullHtml = `
+            <div class="text-left">
+                <p class="small text-white-50 mb-2 text-center">อักษรถูกคัดกรองตามหลักทักษาประจำวันเกิดของคุณแล้ว</p>
+                <div class="form-group px-2">
+                    <select id="nameFilterSelect" class="form-control form-control-sm bg-dark text-white border-warning" onchange="suggestLuckyNames(${dayIdx})">
+                        <option value="">🌟 สุ่มแบบรวม (ทุกหมวดหมู่)</option>
+                        <option value="เดช">⚔️ เสริมอำนาจบารมี (เดช)</option>
+                        <option value="ศรี">💖 เสริมเสน่ห์/โชคลาภ (ศรี)</option>
+                        <option value="มูละ">💰 เสริมทรัพย์สินการเงิน (มูละ)</option>
+                        <option value="อายุ">🌿 เสริมสุขภาพ/อายุยืน (อายุ)</option>
+                        <option value="มนตรี">🤝 เสริมผู้ใหญ่เมตตา (มนตรี)</option>
+                        <option value="ปัญญา">🧠 เสริมสติปัญญา (ปัญญา)</option>
+                    </select>
+                </div>
+                <div id="luckyNamesContainer">
+                    ${generateNamesHTML()}
+                </div>
+                <div class="mt-3 text-center">
+                    <button onclick="suggestLuckyNames(${dayIdx})" class="btn btn-sm btn-outline-gold">
+                        <i class="fas fa-sync-alt mr-1"></i> สุ่มใหม่
+                    </button>
+                </div>
+            </div>`;
 
-    Swal.fire({
-        title: '🌟 ชื่อมงคลแนะนำ',
-        html: html,
-        showConfirmButton: false,
-        showCloseButton: true,
-        background: '#121212',
-        color: '#d4af37',
-        customClass: { popup: 'border-gold' }
-    });
+        Swal.fire({
+            title: '🌟 ชื่อมงคลแนะนำ',
+            html: fullHtml,
+            showConfirmButton: false,
+            showCloseButton: true,
+            background: '#121212',
+            color: '#d4af37',
+            customClass: { popup: 'border-gold' }
+        });
+    }
 }
 
 /**

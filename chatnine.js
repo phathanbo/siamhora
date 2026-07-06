@@ -57,9 +57,9 @@ function showchatranine(){
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="text-gold mb-2">ระบุอายุย่างของท่าน:</label>
+                            <label class="text-gold mb-2">อายุย่างตามปฏิทิน (คำนวณอัตโนมัติ):</label>
                             <input type="number" id="chatranineAge"
-                                class="form-control bg-dark text-gold border-gold-subtle" placeholder="ตัวอย่าง: 43">
+                                class="form-control bg-dark text-gold border-gold-subtle" placeholder="ตัวอย่าง: 43" readonly>
                         </div>
                         <button onclick="calculateChatnine()" class="btn btn-gold w-100 py-2 fw-bold">
                             🔮 ทำนายดวงชะตาตามตำรา
@@ -123,7 +123,7 @@ function calculateChatnine() {
     const startDay = parseInt(birthDayInput.value);
 
     if (!age || age <= 0) {
-        alert("กรุณากรอกอายุย่างของท่าน");
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกอายุย่างของท่าน', 'warning');
         return;
     }
 

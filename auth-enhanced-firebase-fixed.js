@@ -76,11 +76,15 @@ const AUTH_CONFIG = {
     usersStorageKey: 'siamhora_users'
 };
 
+// ⚠️ ความปลอดภัย: DEFAULT_USERS เป็น fallback credentials ที่ hardcode อยู่ในโค้ด
+// ควรเปลี่ยนรหัสผ่านหรือลบ entry เหล่านี้ออก และจัดการ user ผ่าน Firestore แทน
+// admin hash = SHA-256("1234567") — เปลี่ยนก่อน deploy จริง
+// user  hash = SHA-256("123456")  — เปลี่ยนก่อน deploy จริง
 const DEFAULT_USERS = [
     {
         username: "admin",
         passwordHash: "1035cdf4255b95ca16f9240a9cd8c13b8415d5bc3575ea8b20116296655486e8",
-        displayName: "ประธานโบ้",    
+        displayName: "ประธานโบ้",
         role: "admin"
     },
     {
@@ -90,6 +94,16 @@ const DEFAULT_USERS = [
         role: "user"
     }
 ];
+
+// ===================================================
+// HTML ESCAPE (ป้องกัน XSS)
+// ===================================================
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
 
 // ===================================================
 // SHA-256
@@ -185,11 +199,17 @@ function saveSession(user) {
         loginAt: new Date().toISOString()
     };
     localStorage.setItem(AUTH_CONFIG.storageKey, JSON.stringify(session));
+    // 🔐 สำหรับระบบการยินยอม (PDPA Consent)
+    localStorage.setItem('userId', user.username);
     return session;
 }
 
 function clearSession() {
     localStorage.removeItem(AUTH_CONFIG.storageKey);
+    // 🔐 ลบข้อมูลการยินยอม PDPA
+    localStorage.removeItem('userId');
+    localStorage.removeItem('pdpaConsent');
+    localStorage.removeItem('pdpaConsentDate');
 }
 
 // ===================================================
@@ -298,26 +318,34 @@ function hideLoginOverlay() {
     document.body.style.overflow = '';
 }
 
+function getActiveAuthErrorEl() {
+    const registerForm = document.getElementById('authRegisterForm');
+    if (registerForm && registerForm.style.display !== 'none') {
+        return document.getElementById('authRegisterError');
+    }
+    return document.getElementById('authError');
+}
+
 function showAuthError(message) {
-    const errorEl = document.getElementById('authError');
+    const errorEl = getActiveAuthErrorEl();
     if (errorEl) {
         errorEl.textContent = message;
         errorEl.style.display = 'block';
+        errorEl.style.color = '#ff6b6b';
         errorEl.style.animation = 'none';
         setTimeout(() => { errorEl.style.animation = 'authShake 0.4s ease'; }, 10);
     }
 }
 
 function clearAuthError() {
-    const errorEl = document.getElementById('authError');
-    if (errorEl) {
-        errorEl.style.display = 'none';
-        errorEl.textContent = '';
-    }
+    ['authError', 'authRegisterError'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.style.display = 'none'; el.textContent = ''; }
+    });
 }
 
 function showAuthSuccess(message) {
-    const errorEl = document.getElementById('authError');
+    const errorEl = getActiveAuthErrorEl();
     if (errorEl) {
         errorEl.textContent = message;
         errorEl.style.display = 'block';
@@ -401,6 +429,10 @@ async function doLogin() {
             setTimeout(() => {
                 hideLoginOverlay();
                 updateUserBadge(session);
+                // 🔐 ตรวจสอบการยินยอม PDPA
+                if (typeof checkConsentStatus === 'function') {
+                    checkConsentStatus();
+                }
             }, 1200);
 
         } else {
@@ -499,7 +531,7 @@ function showWelcomeMessage(name) {
         <div style="text-align:center; padding: 20px 0;">
             <div style="font-size: 64px; margin-bottom: 16px; animation: authPop 0.5s ease;">✨</div>
             <h3 style="color:#d4af37; margin-bottom: 8px;">ยินดีต้อนรับ</h3>
-            <p style="color:#fff; font-size: 1.2rem;">${name}</p>
+            <p style="color:#fff; font-size: 1.2rem;">${escapeHtml(name)}</p>
             <p style="color:#aaa; font-size: 0.9rem;">กำลังเข้าสู่ระบบ...</p>
         </div>
     `;
@@ -509,13 +541,13 @@ function updateUserBadge(session) {
     const badge = document.getElementById('authUserBadge');
     if (badge) {
         badge.innerHTML = `
-        <div class="Usename" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-            <span id="userProfileLink" style="font-weight:bold; font-size:16px; cursor: pointer; flex: 1; padding: 8px 12px; border-radius: 8px; transition: all 0.2s ease;"
+        <div class="Usename" style="display: flex; justify-content: space-between; width: 100%; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <span id="userProfileLink" style="font-weight:bold; font-size:16px; cursor: pointer; padding: 4px; border-radius: 4px;"
                   title="คลิกเพื่อไปหน้าโปรไฟล์">
-                    <i class="fas fa-user-circle"></i>
-                    ${session.displayName} ${session.role === 'admin' ? '(ผู้ดูแลระบบ)' : '(ผู้ใช้งานทั่วไป)'}
+                    <i class="fas fa-user-circle" style="color: #d4af37;"></i>
+                    ${escapeHtml(session.displayName)} ${session.role === 'admin' ? '<span class="text-danger ml-1" style="font-size: 0.8em;"><i class="fas fa-crown"></i> ผู้ดูแลระบบ</span>' : ''}
             </span>
-            <span id="logoutBtn" class="btn btn-link btn-sm p-0 ml-2" style="cursor: pointer;">
+            <span id="logoutBtn" class="btn-eixt btn-link btn-sm p-0 ml-2" style="cursor: pointer; color: #ff6b6b;">
                 <i class="fas fa-sign-out-alt mr-1"></i> ออกจากระบบ
             </span>
         </div>
@@ -543,16 +575,27 @@ function updateUserBadge(session) {
 
 function navigateToProfile() {
     const session = getSession();
+
+    // ถ้าเป็น Admin ให้ไปแดชบอร์ด
+    if (session && typeof isAdmin === 'function' && isAdmin()) {
+        if (typeof openAdminDashboard === 'function') {
+            openAdminDashboard();
+        } else {
+            console.warn('⚠️ Admin Dashboard not loaded yet');
+        }
+        return;
+    }
+
+    // ถ้าเป็น User ปกติ ให้ไปโปรไฟล์
     if (session && session.username) {
-        // ใช้ฟังก์ชัน viewMemberProfile เพื่อแสดงโปรไฟล์ โดยใช้ username
         if (typeof viewMemberProfile === 'function') {
             console.log('🔐 navigateToProfile: ใช้ username =', session.username);
             viewMemberProfile(session.username);
         } else {
-            alert('⚠️ ระบบยังไม่พร้อม กรุณารีเฟรชหน้า');
+            Swal.fire('แจ้งเตือน', 'ระบบยังไม่พร้อม กรุณารีเฟรชหน้า', 'warning');
         }
     } else {
-        alert('⚠️ ไม่สามารถโหลดข้อมูลโปรไฟล์ได้');
+        Swal.fire('แจ้งเตือน', 'ไม่สามารถโหลดข้อมูลโปรไฟล์ได้', 'warning');
     }
 }
 
@@ -647,7 +690,7 @@ function getCurrentUser() {
 
 function checkAdminAccess() {
     if (!isAdmin()) {
-        alert('⛔ เฉพาะผู้ดูแลระบบเท่านั้น');
+        Swal.fire('ไม่มีสิทธิ์', 'เฉพาะผู้ดูแลระบบเท่านั้น', 'error');
         return false;
     }
     return true;
@@ -684,7 +727,7 @@ async function resetUserPassword(username, newPassword) {
         const userIndex = users.findIndex(u => u.username === username);
         
         if (userIndex === -1) {
-            alert('ไม่พบผู้ใช้');
+            Swal.fire('เกิดข้อผิดพลาด', 'ไม่พบผู้ใช้', 'error');
             return false;
         }
         
@@ -706,6 +749,7 @@ async function resetUserPassword(username, newPassword) {
 
 window.doLogin = doLogin;
 window.doRegister = doRegister;
+window.doGoogleLogin = doGoogleLogin; // Export Google Login
 window.doLogout = doLogout;
 window.checkAuth = checkAuth;
 window.switchToRegister = switchToRegister;
@@ -720,4 +764,100 @@ window.resetUserPassword = resetUserPassword;
 window.syncUsersFromFirestore = syncUsersFromFirestore;
 window.saveUserToFirestore = saveUserToFirestore;
 
-console.log("✅ ใช้ Firebase จาก membermanager.js");
+// ===================================================
+// GOOGLE SIGN-IN FUNCTIONS
+// ===================================================
+
+async function doGoogleLogin() {
+    if (!window.firebaseApp) {
+        Swal.fire('ข้อผิดพลาด', 'ระบบจัดการฐานข้อมูลยังไม่พร้อมทำงาน (Firebase App not found)', 'error');
+        return;
+    }
+
+    try {
+        Swal.fire({
+            title: 'กำลังเชื่อมต่อกับ Google...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
+        // 1. นำเข้าโมดูล Firebase Auth แบบ Dynamic
+        const { getAuth, GoogleAuthProvider, signInWithPopup } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
+        
+        const auth = getAuth(window.firebaseApp);
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+
+        // 2. เรียกหน้าต่าง Popup ล็อกอิน Google
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // 3. กำหนดข้อมูลบัญชี
+        const username = user.email.split('@')[0];
+        // ตรวจสอบว่าเป็น admin หรือไม่ (สามารถเพิ่มอีเมลแอดมินที่นี่ได้)
+        const role = (user.email === 'admin@siamhora.com') ? 'admin' : 'user';
+
+        const userData = {
+            username: username,
+            displayName: user.displayName || username,
+            email: user.email,
+            role: role,
+            uid: user.uid,
+            provider: 'google',
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString()
+        };
+
+        // 4. บันทึกลง Firestore (ใช้ฟังก์ชันที่มีอยู่)
+        // เพื่อไม่ให้ซ้ำซ้อนและสามารถใช้คู่กับข้อมูลเก่าได้ 
+        const { collection, getDocs, query, where, updateDoc, doc, addDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+        const usersRef = collection(window.firebaseDb, "users");
+        const q = query(usersRef, where("email", "==", user.email));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            // สร้างผู้ใช้ใหม่
+            await addDoc(usersRef, userData);
+        } else {
+            // อัปเดตการเข้าสู่ระบบล่าสุด
+            const userDoc = snapshot.docs[0];
+            await updateDoc(doc(window.firebaseDb, "users", userDoc.id), {
+                lastLogin: new Date().toISOString()
+            });
+        }
+
+        // 5. บันทึก Session และเข้าสู่ระบบ
+        setSession({
+            username: username,
+            role: role,
+            provider: 'google',
+            email: user.email,
+            loginAt: Date.now()
+        });
+
+        Swal.fire({
+            icon: 'success',
+            title: 'เข้าสู่ระบบสำเร็จ',
+            text: `ยินดีต้อนรับ ${user.displayName || username}`,
+            timer: 1500,
+            showConfirmButton: false
+        }).then(() => {
+            hideLoginOverlay();
+            updateUserBadge(getSession());
+            location.reload();
+        });
+
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        
+        let errorMsg = 'ไม่สามารถเชื่อมต่อกับ Google ได้';
+        if (error.code === 'auth/popup-closed-by-user') {
+            errorMsg = 'ยกเลิกการเข้าสู่ระบบแล้ว';
+        } else if (error.code === 'auth/operation-not-allowed') {
+            errorMsg = 'กรุณาเปิดการใช้งาน Google Sign-in ใน Firebase Console ก่อน';
+        }
+        
+        Swal.fire('เกิดข้อผิดพลาด', errorMsg, 'error');
+    }
+}
+

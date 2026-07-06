@@ -72,34 +72,6 @@ const OPENING_TIMES = {
 /**
  * 📅 หาวันฤกษ์มงคลจากปฏิทิน
  */
-function getAuspiciousDays(month) {
-    // อิงจาก AuspiciousDay.js - AUSPICIOUS_DAYS_DETAIL
-    if (typeof AUSPICIOUS_DAYS_DETAIL !== 'undefined') {
-        const data = AUSPICIOUS_DAYS_DETAIL[month];
-        if (data) {
-            return data.goodDates || [];
-        }
-    }
-
-    // fallback: วันมงคลตัวแทน
-    const defaultGoodDates = {
-        1: [1, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30],
-        2: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27],
-        3: [1, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31],
-        4: [3, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30],
-        5: [1, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 29, 31],
-        6: [2, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30],
-        7: [1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31],
-        8: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27, 29],
-        9: [1, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30],
-        10: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27, 29],
-        11: [1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28],
-        12: [2, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30]
-    };
-
-    return defaultGoodDates[month] || [];
-}
-
 /**
  * 🏪 แสดงหน้าเลือกวันเปิดร้าน
  */
@@ -168,6 +140,20 @@ function showOpeningPage() {
 }
 
 /**
+ * 🎨 หาสีตามสถานะวัน
+ */
+function getColorByStatus(status) {
+    if (status.includes('ธงชัย')) return '#28a745'; // เขียวสว่าง
+    if (status.includes('อธิบดี')) return '#007bff'; // น้ำเงิน
+    if (status.includes('มหาสิทธิโชค')) return '#17a2b8'; // ฟ้า
+    if (status.includes('ราชาโชค')) return '#ffc107'; // เหลือง
+    if (status.includes('ชัยโชค')) return '#20c997'; // เขียวลึก
+    if (status.includes('อุบาทว์')) return '#fd7e14'; // ส้ม
+    if (status.includes('โลกาวินาศ')) return '#dc3545'; // แดง
+    return '#6c757d'; // เทาธรรมดา (ปกติ)
+}
+
+/**
  * 🔍 หาวันมงคลและทิศมงคล
  */
 function findOpeningDate() {
@@ -175,28 +161,56 @@ function findOpeningDate() {
     const monthEl = document.getElementById('openingMonth');
     const resultEl = document.getElementById('openingResult');
 
-    if (!typeEl.value || !monthEl.value) {
-        alert('⚠️ กรุณาเลือกประเภทธุรกิจและเดือน');
+    if (!typeEl || !monthEl || !resultEl) {
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่พบ element', 'error');
+        console.error('typeEl:', typeEl, 'monthEl:', monthEl, 'resultEl:', resultEl);
+        return;
+    }
+
+    if (!typeEl.value) {
+        Swal.fire('แจ้งเตือน', 'กรุณาเลือกประเภทธุรกิจ', 'warning');
+        return;
+    }
+
+    if (!monthEl.value) {
+        Swal.fire('แจ้งเตือน', 'กรุณาเลือกเดือนและปี', 'warning');
         return;
     }
 
     const businessType = typeEl.value;
-    const [year, month] = monthEl.value.split('-');
+    const monthValue = monthEl.value; // format: "YYYY-MM"
+    const [year, month] = monthValue.split('-');
     const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
 
+    console.log('🔍 Debug:', { monthValue, year, month, monthNum, yearNum });
+
+    // ตรวจสอบ business type
     const business = OPENING_BUSINESS_TYPES[businessType];
-    const goodDays = getAuspiciousDays(monthNum);
-
-    if (!business || goodDays.length === 0) {
-        alert('❌ ไม่พบข้อมูลวันมงคล');
+    if (!business) {
+        Swal.fire('เกิดข้อผิดพลาด', 'ประเภทธุรกิจไม่ถูกต้อง', 'error');
         return;
     }
 
-    const daysHTML = goodDays.map(day => `
-        <span style="display: inline-block; margin: 5px; padding: 10px 15px; background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; border-radius: 5px; color: #28a745; font-weight: bold;">
-            วันที่ ${day}
-        </span>
-    `).join('');
+    // ดึงวันมงคล (ส่ง 2 parameters: month, year)
+    const goodDays = getAuspiciousDays(monthNum, yearNum);
+    console.log('📅 Good days:', goodDays);
+
+    if (!goodDays || goodDays.length === 0) {
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลวันมงคล - โปรดลองเดือนอื่น', 'error');
+        console.error('Error: goodDays empty or undefined');
+        return;
+    }
+
+    const daysHTML = goodDays.map(dayObj => {
+        const color = getColorByStatus(dayObj.status);
+        const bgColor = color + '22'; // เพิ่มความโปร่งใส
+        return `
+            <span style="display: inline-block; margin: 5px; padding: 10px 15px; background: ${bgColor}; border: 2px solid ${color}; border-radius: 6px; color: ${color}; font-weight: bold;">
+                วันที่ ${dayObj.day} ${dayObj.status}
+            </span>
+        `;
+    }).join('');
 
     // ดึงทิศมงคลสุ่มตามลัคนา
     const directionKey = (monthNum % 9) || 9;
@@ -243,11 +257,13 @@ function findOpeningDate() {
             </div>
         </div>
     `;
+
+    // แสดงผลลัพธ์
+    resultEl.style.display = 'block';
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     showOpeningPage();
-    console.log("✅ auspicious-opening.js loaded - อิงปฏิทินฤกษ์มงคล + ลัคนา");
 });
 
 window.findOpeningDate = findOpeningDate;

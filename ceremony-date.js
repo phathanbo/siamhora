@@ -99,35 +99,6 @@ const CEREMONY_DATA = {
 /**
  * 📅 หาวันฤกษ์มงคลจากปฏิทิน
  */
-function getAuspiciousDays(month) {
-    // อิงจาก AuspiciousDay.js - AUSPICIOUS_DAYS_DETAIL
-    // ถ้า AuspiciousDay.js ได้โหลด ให้ใช้ข้อมูลจากนั้น
-    if (typeof AUSPICIOUS_DAYS_DETAIL !== 'undefined') {
-        const data = AUSPICIOUS_DAYS_DETAIL[month];
-        if (data) {
-            return data.goodDates || [];
-        }
-    }
-
-    // fallback: วันมงคลตัวแทนหากไม่มี
-    const defaultGoodDates = {
-        1: [1, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30],
-        2: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27],
-        3: [1, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31],
-        4: [3, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30],
-        5: [1, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 29, 31],
-        6: [2, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30],
-        7: [1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31],
-        8: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27, 29],
-        9: [1, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30],
-        10: [2, 4, 7, 9, 12, 14, 17, 19, 22, 24, 27, 29],
-        11: [1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28],
-        12: [2, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30]
-    };
-
-    return defaultGoodDates[month] || [];
-}
-
 /**
  * 🎊 แสดงหน้าเลือกวันพิธี
  */
@@ -205,27 +176,44 @@ function findCeremonyDate() {
     const resultEl = document.getElementById('ceremonyResult');
 
     if (!typeEl.value || !monthEl.value) {
-        alert('⚠️ กรุณาเลือกประเภทพิธีและเดือน');
+        Swal.fire('แจ้งเตือน', 'กรุณาเลือกประเภทพิธีและเดือน', 'warning');
         return;
     }
 
     const ceremonyType = typeEl.value;
     const [year, month] = monthEl.value.split('-');
     const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
 
     const ceremony = CEREMONY_DATA[ceremonyType];
-    const goodDays = getAuspiciousDays(monthNum);
+    const goodDays = getAuspiciousDays(monthNum, yearNum);
 
-    if (!ceremony || goodDays.length === 0) {
-        alert('❌ ไม่พบข้อมูลวันมงคล');
+    if (!ceremony || !goodDays || goodDays.length === 0) {
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลวันมงคล - โปรดลองเดือนอื่น', 'error');
         return;
     }
 
-    const daysHTML = goodDays.map(day => `
-        <span style="display: inline-block; margin: 5px; padding: 10px 15px; background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; border-radius: 5px; color: #28a745; font-weight: bold;">
-            วันที่ ${day}
-        </span>
-    `).join('');
+    // สีตามสถานะ
+    function getColorByStatus(status) {
+        if (status.includes('ธงชัย')) return '#28a745'; // เขียว
+        if (status.includes('อธิบดี')) return '#007bff'; // น้ำเงิน
+        if (status.includes('มหาสิทธิโชค')) return '#17a2b8'; // ฟ้า
+        if (status.includes('ราชาโชค')) return '#ffc107'; // เหลือง
+        if (status.includes('ชัยโชค')) return '#20c997'; // เขียวลึก
+        if (status.includes('อุบาทว์')) return '#fd7e14'; // ส้ม
+        if (status.includes('โลกาวินาศ')) return '#dc3545'; // แดง
+        return '#6c757d'; // เทา
+    }
+
+    const daysHTML = goodDays.map(dayObj => {
+        const color = getColorByStatus(dayObj.status);
+        const bgColor = color + '22';
+        return `
+            <span style="display: inline-block; margin: 5px; padding: 10px 15px; background: ${bgColor}; border: 2px solid ${color}; border-radius: 6px; color: ${color}; font-weight: bold;">
+                วันที่ ${dayObj.day} ${dayObj.status}
+            </span>
+        `;
+    }).join('');
 
     resultEl.innerHTML = `
         <div class="card shadow-sm border-0 p-4" style="background: rgba(212, 175, 55, 0.05);">
@@ -255,11 +243,13 @@ function findCeremonyDate() {
             </div>
         </div>
     `;
+
+    // แสดงผลลัพธ์
+    resultEl.style.display = 'block';
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     showCeremonyPage();
-    console.log("✅ ceremony-date.js loaded - อิงปฏิทินฤกษ์มงคล + ลัคนา");
 });
 
 window.findCeremonyDate = findCeremonyDate;

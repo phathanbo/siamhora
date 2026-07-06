@@ -168,13 +168,8 @@
     </div>
 
     <script src="monthlyFortune.js"></script>
+    <script src="utils-helpers.js"></script>
     <script>
-        const monthNames = {
-            '1': 'มกราคม', '2': 'กุมภาพันธ์', '3': 'มีนาคม', '4': 'เมษายน',
-            '5': 'พฤษภาคม', '6': 'มิถุนายน', '7': 'กรรมฐาน', '8': 'สิงหาคม',
-            '9': 'กันยายน', '10': 'ตุลาคม', '11': 'พฤศจิกายน', '12': 'ธันวาคม'
-        };
-
         const colorMap = {
             'แดง': '#ff0000', 'เขียว': '#00aa00', 'ทอง': '#ffd700',
             'น้ำเงิน': '#0066ff', 'ม่วง': '#8b00ff', 'เหลือง': '#ffdd00',
@@ -188,7 +183,7 @@
             for (let i = 1; i <= 12; i++) {
                 const btn = document.createElement('button');
                 btn.className = `month-btn ${i === 1 ? 'active' : ''}`;
-                btn.textContent = monthNames[i];
+            btn.textContent = getMonthNameThai(i);
                 btn.onclick = () => selectMonth(i);
                 container.appendChild(btn);
             }
@@ -196,7 +191,7 @@
 
         function selectMonth(monthNum) {
             currentMonth = String(monthNum);
-            document.getElementById('selectedMonthDisplay').textContent = monthNames[currentMonth];
+            document.getElementById('selectedMonthDisplay').textContent = getMonthNameThai(monthNum);
 
             document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');

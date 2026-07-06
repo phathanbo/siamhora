@@ -365,7 +365,11 @@ async function loadMembersToThaksa() {
     if (!memberSelect) return;
 
     try {
-        const db = getFirestore();
+        const db = window.firebaseDb;
+        if (!db) {
+            console.warn("Firebase DB not initialized yet.");
+            return;
+        }
         const currentUser = localStorage.getItem('thaiHoroUserName');
 
         let q = collection(db, "horo_history");
@@ -384,7 +388,6 @@ async function loadMembersToThaksa() {
             memberSelect.appendChild(option);
         });
 
-        console.log("โหลดรายชื่อสมาชิกสำเร็จ");
     } catch (error) {
         console.error("Error loading members:", error);
     }
@@ -499,7 +502,7 @@ function getSawoeiContent(currentPlanet) {
  * @returns {Object} - อายุเต็ม, อายุย่าง, และดาวที่เสวยอายุขณะนั้น
  */
 function calculateThaksaAge(birthdateStr) {
-    const birthdate = new Date(birthdateStr);
+    const birthdate = typeof parseThaiDate === 'function' ? parseThaiDate(birthdateStr) : new Date(birthdateStr);
     const today = new Date(); // วันที่ปัจจุบัน
 
     // 1. คำนวณอายุเต็ม (ปี)
@@ -559,7 +562,7 @@ function calculateThaksaAge(birthdateStr) {
  * @param {string} targetDateStr - วันที่ต้องการดูดวง (ถ้าไม่ใส่จะใช้ปัจจุบัน)
  */
 function findSubPeriodByDate(birthdateStr, targetDateStr = null) {
-    const birthdate = new Date(birthdateStr);
+    const birthdate = typeof parseThaiDate === 'function' ? parseThaiDate(birthdateStr) : new Date(birthdateStr);
     const targetDate = targetDateStr ? new Date(targetDateStr) : new Date();
 
     // 1. คำนวณหาจำนวนวันที่ใช้ชีวิตมาทั้งหมด (1 ปีโหร = 360 วัน)
@@ -671,8 +674,8 @@ window.calculateThaksa = function (isManualChange = false) {
         const bDate = new Date(bDateInput.value);
         const today = new Date();
 
-        // ปีปัจจุบัน - ปีเกิด + 1 (หลักโหราศาสตร์ไทย)
-        ageYang = (today.getFullYear() - bDate.getFullYear()) + 1;
+        // ใช้ฟังก์ชันใหม่คำนวณอายุย่างเป๊ะๆ ถ้ามี
+        ageYang = window.calculateRunningAge ? window.calculateRunningAge(bDateInput.value) : ((today.getFullYear() - bDate.getFullYear()) + 1);
 
         if (ageLabel) {
             ageLabel.innerHTML = `อายุย่าง ${ageYang} ปี`;
@@ -681,7 +684,16 @@ window.calculateThaksa = function (isManualChange = false) {
 
         // ถ้าเปิดหน้ามาครั้งแรก หรือเปลี่ยนวันที่ปฏิทิน ให้ Auto Select วันเกิดในทักษา
         if (!isManualChange) {
-            const dayOfWeek = bDate.getDay();
+            // ลองดึงเวลาเกิดจากโปรไฟล์ที่เลือกไว้
+            let timeStr = null;
+            if (window.currentMemberId && typeof window.getProfileByMemberId === 'function') {
+                const profile = window.getProfileByMemberId(window.currentMemberId);
+                if (profile) timeStr = profile.birthtime;
+            }
+            
+            // หาเลขวันในสัปดาห์แบบตัด 06:00
+            const dayOfWeek = window.getAstrologicalDayOfWeek ? window.getAstrologicalDayOfWeek(bDateInput.value, timeStr) : bDate.getDay();
+            
             const thaksaMapping = [0, 1, 2, 3, 5, 7, 4]; // อา(0), จ(1), อ(2), พุธ(3), พฤ(5), ศ(7), ส(4)
             daySelect.value = thaksaMapping[dayOfWeek];
         }
@@ -731,7 +743,13 @@ window.calculateThaksa = function (isManualChange = false) {
     const enemy = PLANET_RELATIONS.enemies[planetNum];
     const somphon = PLANET_RELATIONS.somphon[planetNum];
     const elementPair = ELEMENT_PAIRS[planetNum];
-    const birthDay = document.getElementById('birthdate').value;
+    const birthdateEl = document.getElementById('birthdate');
+
+    if (!birthdateEl || !birthdateEl.value) {
+        return;
+    }
+
+    const birthDay = birthdateEl.value;
 
     const result = findSubPeriodByDate(birthDay);
 
@@ -1003,29 +1021,11 @@ window.saveCard = function (cardId) {
         event.target.disabled = false;
     }).catch(err => {
         console.error("Save image failed:", err);
-        alert("ไม่สามารถบันทึกรูปภาพได้ในขณะนี้");
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถบันทึกรูปภาพได้ในขณะนี้', 'error');
     });
 };
 
-// ✅ ฟังก์ชันแปลงวันเกิด
-function parseBirthdate(input) {
-    if (!input) return null;
-
-    // รูปแบบ: dd/mm/yyyy หรือ yyyy-mm-dd
-    if (input.includes('/')) {
-        const parts = input.split('/');
-        if (parts.length === 3) {
-            const day = parseInt(parts[0]);
-            const month = parseInt(parts[1]);
-            let year = parseInt(parts[2]);
-            if (year > 2400) year -= 543; // แปลง BE ≈ AD
-            return new Date(year, month - 1, day);
-        }
-    } else if (input.includes('-')) {
-        return new Date(input);
-    }
-    return null;
-}
+/* หมายเหตุ: ฟังก์ชัน parseBirthdate ถูกย้ายไปที่ utils-helpers.js แล้ว */
 
 window.calculatemahataksa = function () {
     // 1️⃣ ดึงจากฟอร์ม
@@ -1053,7 +1053,7 @@ window.calculatemahataksa = function () {
     // ตรวจสอบ
     const birthDate = parseBirthdate(input);
     if (!birthDate) {
-        alert("🔮 กรุณากรอกวันเกิด หรือเลือกสมาชิกก่อนคำนวณมหาทักษา");
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกวันเกิด หรือเลือกสมาชิกก่อนคำนวณมหาทักษา', 'warning');
         return;
     }
 

@@ -1,19 +1,6 @@
 "use strict";
 
-// ✅ ฟังก์ชันดึง username จาก auth session (ไม่ซ้ำกัน)
-function getCurrentUsername() {
-    try {
-        const session = localStorage.getItem('siamhora_auth_session');
-        if (session) {
-            const data = JSON.parse(session);
-            // 👤 ใช้ username (unique identifier) ไม่ใช่ displayName
-            return data.username || null;
-        }
-    } catch (e) {
-        console.warn('⚠️ ไม่สามารถดึง username จาก session:', e);
-    }
-    return localStorage.getItem('thaiHoroUserName') || null;
-}
+/* หมายเหตุ: ฟังก์ชัน getCurrentUsername ถูกย้ายไปที่ utils-helpers.js แล้ว */
 
 let previousPage = 'mainContent';
 
@@ -398,15 +385,17 @@ function goBackend() {
 function downloadImage() {
     const area = document.getElementById('captureArea');
     if (!area) {
-    alert("ไม่พบพื้นที่สำหรับบันทึกภาพ กรุณากดปุ่ม 'ทำนายดวง' ก่อนนะครับ");
+    Swal.fire('แจ้งเตือน', "ไม่พบพื้นที่สำหรับบันทึกภาพ กรุณากดปุ่ม 'ทำนายดวง' ก่อนนะครับ", 'warning');
     return;
     }
     html2canvas(area, {
     backgroundColor: "#fdf6e3",
     scale: 2
     }).then(canvas => {
+    const nameEl = document.getElementById('targetName');
+    const name = nameEl ? (nameEl.value || '') : '';
     const link = document.createElement('a');
-    link.download = `ดวงชะตา${document.getElementById('targetName').value}.png`;
+    link.download = `ดวงชะตา${name}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
     });
@@ -452,6 +441,7 @@ const PAGE_TITLES = {
     'lottoPage': '🎰 เลขเด็ด - สยามโหรามงคล',
     'elementManualPage': '🌊 องค์ประกอบธาตุ - สยามโหรามงคล',
     'compatibilityPage': '💑 วิเคราะห์ดวงสมพงษ์ - สยามโหรามงคล',
+    'deepSynastryPage': '💖 VIP ผูกดวงคู่สมพงษ์เชิงลึก - สยามโหรามงคล',
     'mahathaksaPage': '🕉️ มหาทักษาพยากรณ์ - สยามโหรามงคล',
     'chatninePage': '🏯 ฉัตร 9 ชั้น - สยามโหรามงคล',
     'marriage-compatibility': '👰 หาคู่รักหรือคู่สมรส - สยามโหรามงคล',
@@ -473,28 +463,44 @@ const PAGE_TITLES = {
     'reuxpage': '✨ การให้ฤกษ์ - สยามโหรามงคล',
     'package': '📦 Package - สยามโหรามงคล',
     'promchartsection': '🎡 วงล้อพยากรณ์ - สยามโหรามงคล',
-    'TaksaSattalek': '🧿 ทักษา 7 - สยามโหรามงคล'
+    'TaksaSattalek':      '🧿 ทักษา 7 - สยามโหรามงคล',
+    'yearClashPage':      '🐉 ปีชง-ปีเสริม - สยามโหรามงคล',
+    'planetaryHoursPage': '🌟 ฤกษ์ยาม 7 เจ้า - สยามโหรามงคล',
+    'ditheePage':         '🌙 ดิถีพยากรณ์ - สยามโหรามงคล',
+    'twelveHousesPage':   '🏛️ 12 ภพ - สยามโหรามงคล',
+    'dashaPage':          '🪐 ทศาดาว - สยามโหรามงคล'
 };
 
-function getProfileByMemberId(memberId) {
-    try {
-        const history = JSON.parse(localStorage.getItem('horo_history')) || [];
-        const profile = history.find(m => m.memberId === memberId);
-        
-        if (profile) {
-            console.log("✅ พบสมาชิก:", profile.name);
-            return profile;
-        } else {
-            console.warn("⚠️ ไม่พบสมาชิก ID:", memberId);
-        }
-    } catch (e) {
-        console.error('Error:', e);
+/**
+ * แสดง Loading Screen
+ */
+function showLoader() {
+    const loader = document.getElementById('loadingOverlay');
+    if (loader) {
+        loader.style.display = 'flex';
+        setTimeout(() => { loader.style.opacity = '1'; }, 10); // ให้ CSS transition ทำงาน
     }
-    return null;
+}
+
+/**
+ * ซ่อน Loading Screen
+ */
+function hideLoader() {
+    const loader = document.getElementById('loadingOverlay');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 400); // รอ transition จบ
+    }
 }
 
 function navigateTo(pageId, addHistory = true) {
-    console.log("🚀 กำลังนำทางไปที่หน้า:", pageId);
+    // บันทึกหน้าปัจจุบันไว้ใน previousPage ก่อนเปลี่ยน
+    const currentPageId = localStorage.getItem('currentPage');
+    if (currentPageId && currentPageId !== pageId) {
+        previousPage = currentPageId;
+    }
+
+    showLoader();
 
     // 1. หาหน้าเป้าหมายใน HTML
     let targetPage = document.getElementById(pageId);
@@ -505,8 +511,11 @@ function navigateTo(pageId, addHistory = true) {
     }
     if (!targetPage) {
         console.error(`❌ หาหน้า ID "${pageId}" ไม่เจอใน HTML!`);
-        // ถ้าหาไม่เจอ ให้เด้งกลับหน้าหลักกันหน้าขาว
-        if(pageId !== 'mainpage') navigateTo('mainpage', false);
+        // ถ้าหาไม่เจอ ให้เด้งกลับหน้าหลักกันหน้าขาว (และซ่อน loader)
+        if(pageId !== 'mainpage') {
+            hideLoader();
+            navigateTo('mainpage', false);
+        }
         return;
     }
 
@@ -515,14 +524,6 @@ function navigateTo(pageId, addHistory = true) {
         initKnowledgeTable();
     }
 
-    // 2.5 จัดการหน้า Feng Shui (วิเคราะห์ฮวงจุ้ย)
-    if (pageId === 'fengShuiPage') {
-        setTimeout(() => {
-            if (typeof showFengShuiPage === 'function') {
-                showFengShuiPage();
-            }
-        }, 50);
-    }
 
     if (pageId === 'auspiciousPage') {
     setTimeout(() => {
@@ -532,53 +533,132 @@ function navigateTo(pageId, addHistory = true) {
     }, 50); // หน่วงเวลา 0.05 วินาที
 }
 
-
-    // 3. สั่งซ่อนทุกหน้าที่มีคลาส .main-section
-    const allPages = document.querySelectorAll('.main-section');
-    allPages.forEach(page => {
-        page.classList.add('hidden');    // ใส่คลาสซ่อน (เผื่อมี CSS คุม)
-        page.classList.remove('active'); // เอาคลาสแสดงออก
-        page.style.display = 'none';     // บังคับซ่อนจริงๆ
-    });
-
-    // 4. แสดงหน้าเป้าหมาย
-    targetPage.classList.remove('hidden');
-    targetPage.classList.add('active');
-    targetPage.style.display = 'block'; // บังคับแสดงผล
-
-    // 4.5 เปลี่ยนชื่อแท็บ
-    if (PAGE_TITLES[pageId]) {
-        document.title = PAGE_TITLES[pageId];
-    }
-
-    // 5. บันทึกประวัติลง Browser (เพื่อให้กดย้อนกลับที่มือถือได้)
-    if (addHistory) {
-        history.pushState({ pageId: pageId }, "", "#" + pageId);
-    }
-
-    // 6. บันทึกลง LocalStorage (เผื่อผู้ใช้ปิดแอปแล้วเปิดใหม่)
-    localStorage.setItem('currentPage', pageId);
-
-    // 7. เลื่อนหน้าจอกลับไปบนสุดแบบนุ่มนวล
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // 8. เรียก render function สำหรับหน้าที่ต้องสร้าง HTML แบบ Dynamic
-    //    ต้องอยู่หลัง display:'block' เพื่อให้ getElementById เจอ element
-    if (pageId === 'planetRelationPage') {
+    // ตั้งค่าเดือนปัจจุบันและประเภทธุรกิจให้อัติโนมัติในหน้าเปิดร้าน
+    if (pageId === 'auspiciousOpening') {
         setTimeout(() => {
-            if (typeof renderTablerelation === 'function') {
-                renderTablerelation();
+            const businessTypeSelect = document.getElementById('businessType');
+            const openingMonthInput = document.getElementById('openingMonth');
+
+            // ตั้งค่าเดือนปัจจุบัน
+            if (openingMonthInput) {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                openingMonthInput.value = `${year}-${month}`;
             }
-        }, 50);
+
+            // ตั้งค่าประเภทธุรกิจเป็นร้านค้าโดยค่าเริ่มต้น
+            if (businessTypeSelect) {
+                businessTypeSelect.value = 'shop';
+            }
+
+            // เรียกใช้ฟังก์ชันค้นหาโดยอัติโนมัติ
+            if (typeof findAuspiciousOpeningDays === 'function') {
+                findAuspiciousOpeningDays();
+            }
+        }, 100);
     }
 
-    // If navigating to showdaylife, ensure its initializer runs
-    if (pageId === 'showdaylife' && typeof showdaylife === 'function') {
-        try { showdaylife(); } catch (e) { console.error('showdaylife init error', e); }
+    // ตั้งค่าเดือนปัจจุบันและประเภทพิธีให้อัติโนมัติในหน้าการกำหนดวันประกอบพิธี
+    if (pageId === 'ceremonyDate') {
+        setTimeout(() => {
+            const ceremonyTypeSelect = document.getElementById('ceremonyType');
+            const ceremonyMonthInput = document.getElementById('ceremonyMonth');
+
+            // ตั้งค่าเดือนปัจจุบัน
+            if (ceremonyMonthInput) {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                ceremonyMonthInput.value = `${year}-${month}`;
+            }
+
+            // ตั้งค่าประเภทพิธีเป็นแต่งงานโดยค่าเริ่มต้น
+            if (ceremonyTypeSelect) {
+                ceremonyTypeSelect.value = 'wedding';
+            }
+
+            // เรียกใช้ฟังก์ชันค้นหาโดยอัติโนมัติ
+            if (typeof findCeremonyDate === 'function') {
+                findCeremonyDate();
+            }
+        }, 100);
     }
 
-    // 8. โหลดข้อมูลผู้ใช้มาเติม (ถ้ามีระบบ Profile)
-    if (typeof UserProfile !== 'undefined') UserProfile.load();
+    // ใช้ setTimeout เพื่อให้ Loader แสดงผลก่อนเริ่มงานหนัก
+    setTimeout(() => {
+        // 3. สั่งซ่อนทุกหน้าที่มีคลาส .main-section
+        const allPages = document.querySelectorAll('.main-section');
+        allPages.forEach(page => {
+            page.classList.add('hidden');    // ใส่คลาสซ่อน (เผื่อมี CSS คุม)
+            page.classList.remove('active'); // เอาคลาสแสดงออก
+            page.style.display = 'none';     // บังคับซ่อนจริงๆ
+        });
+
+        // 4. แสดงหน้าเป้าหมาย
+        targetPage.classList.remove('hidden');
+        targetPage.classList.add('active');
+        targetPage.style.display = 'block'; // บังคับแสดงผล
+
+        // 4.5 เปลี่ยนชื่อแท็บ
+        if (PAGE_TITLES[pageId]) {
+            document.title = PAGE_TITLES[pageId];
+        }
+
+        // 5. บันทึกประวัติลง Browser (เพื่อให้กดย้อนกลับที่มือถือได้)
+        if (addHistory) {
+            history.pushState({ pageId: pageId }, "", "#" + pageId);
+        }
+
+        // 6. บันทึกลง LocalStorage (เผื่อผู้ใช้ปิดแอปแล้วเปิดใหม่)
+        localStorage.setItem('currentPage', pageId);
+
+        // 7. เลื่อนหน้าจอกลับไปบนสุดแบบนุ่มนวล
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // 8. เรียก render function สำหรับหน้าที่ต้องสร้าง HTML แบบ Dynamic
+        //    ต้องอยู่หลัง display:'block' เพื่อให้ getElementById เจอ element
+        if (pageId === 'planetRelationPage') {
+            setTimeout(() => {
+                if (typeof renderTablerelation === 'function') {
+                    renderTablerelation();
+                }
+            }, 50);
+        }
+
+        // If navigating to showdaylife, ensure its initializer runs
+        if (pageId === 'showdaylife' && typeof showdaylife === 'function') {
+            try { showdaylife(); } catch (e) { console.error('showdaylife init error', e); }
+        }
+
+        // Init dashboard สรุปดวงวันนี้
+        if (pageId === 'todayDashboard' && typeof initTodayDashboard === 'function') {
+            setTimeout(initTodayDashboard, 50);
+        }
+
+        // Init ปีชง-ปีเสริม (ดึงข้อมูลปัจจุบันเป็นค่าเริ่มต้นทันที)
+        if (pageId === 'yearClashPage' && typeof showYearClashPage === 'function') {
+            setTimeout(showYearClashPage, 50);
+        }
+
+        // 8. โหลดข้อมูลผู้ใช้มาเติม (ถ้ามีระบบ Profile)
+        if (typeof UserProfile !== 'undefined') UserProfile.load();
+
+        // 9. ถ้ามีสมาชิกที่เลือกอยู่ ให้กรอกข้อมูลโดยอัตโนมัติ
+        if (window.currentMemberId && typeof autoFillMemberData === 'function') {
+            setTimeout(() => {
+                const memberSels = targetPage.querySelectorAll('.member-selector-shared, #memberSelect');
+                if (memberSels.length > 0) {
+                    memberSels.forEach(sel => { sel.value = window.currentMemberId; });
+                    autoFillMemberData(window.currentMemberId);
+                }
+            }, 150);
+        }
+
+        // ซ่อน Loader หลังจากทำงานเสร็จ
+        hideLoader();
+
+    }, 300); // หน่วงเวลาเล็กน้อยเพื่อให้ UI ดูสมูท
 }
 
 // ฟังก์ชันย้อนกลับที่ใช้หน้าที่เก็บไว้
@@ -619,7 +699,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof SingleProfileManager !== 'undefined' && SingleProfileManager) {
             const profile = SingleProfileManager.load();
             if (profile) {
-                console.log('📋 โหลด Single Profile ของ User:', profile.name);
                 userBirthdateValue = profile.birthdate;
             }
         }
@@ -630,15 +709,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (userBirthdateValue && userBirthdateValue !== "undefined") {
-            birthField.value = userBirthdateValue;
-            console.log('📅 โหลดวันเกิด:', userBirthdateValue);
+            // แสดงในฟอร์มเป็น DD/MM/YYYY เสมอ
+            birthField.value = isoToDisplayDate(userBirthdateValue) || userBirthdateValue;
         }
 
-        // ตั้งค่าให้บันทึกทุกครั้งที่มีการเปลี่ยนวันที่
+        // ตั้งค่าให้บันทึกทุกครั้งที่มีการเปลี่ยนวันที่ — normalize เป็น ISO เสมอ
         birthField.addEventListener('change', function() {
             if (this.value) {
-                localStorage.setItem('userBirthdate', this.value);
-                console.log("บันทึกวันเกิดลงเครื่องใหม่:", this.value);
+                const iso = birthdateToISO(this.value);
+                localStorage.setItem('userBirthdate', iso || this.value);
             }
         });
     }
@@ -657,13 +736,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ฟังก์ชันเสริมสำหรับเรียกใช้ทั่วไป
+// ฟังก์ชันเสริมสำหรับเรียกใช้ทั่วไป — normalize เป็น ISO ก่อนเสมอ
 function saveBirthdateToStorage() {
     const field = document.getElementById('birthdate');
     if (!field) return;
     const birthdate = field.value;
     if (birthdate) {
-        localStorage.setItem('userBirthdate', birthdate);
+        const iso = birthdateToISO(birthdate);
+        localStorage.setItem('userBirthdate', iso || birthdate);
     }
 }
 
@@ -730,34 +810,109 @@ window.onpopstate = function(event) {
         pageId = 'mainContent';
     }
 
-    console.log("Navigation Change to:", pageId);
     navigateTo(pageId, false); // ส่ง false เพื่อไม่ให้เกิดการบันทึกประวัติซ้ำซ้อน
 };
 
-// แปลงวันที่ไทย dd/mm/พ.ศ. → Date Object
+// แปลงวันที่ไทย dd/mm/พ.ศ. หรือ YYYY-MM-DD → Date Object (local time เสมอ)
 function parseThaiDate(dateStr) {
     if (!dateStr) return null;
 
-    // ถ้าเป็น format yyyy-mm-dd ให้ใช้ตรงๆ
+    // ถ้าเป็น format YYYY-MM-DD ให้สร้างเป็น local time (ป้องกัน UTC off-by-one)
     if (dateStr.includes('-')) {
-        return new Date(dateStr);
+        const parts = dateStr.split('T')[0].split('-');
+        const y = parseInt(parts[0]);
+        const m = parseInt(parts[1]) - 1;
+        const d = parseInt(parts[2]);
+        return new Date(y, m, d);
     }
 
     const parts = dateStr.split('/');
-    if (parts.length !== 3) return new Date(dateStr);
+    if (parts.length !== 3) return null;
 
     let day = parseInt(parts[0]);
     let month = parseInt(parts[1]) - 1;
     let year = parseInt(parts[2]);
 
-    // แปลง พ.ศ. → ค.ศ.
-    if (year > 2400) {
-        year -= 543;
-    }
+    year = toCE(year);
 
     return new Date(year, month, day);
 }
 
-window.getProfileByMemberId = getProfileByMemberId;
-window.parseThaiDate = parseThaiDate;
+// แปลง Date หรือ ISO string → YYYY-MM-DD สำหรับเก็บ localStorage เสมอ
+function birthdateToISO(value) {
+    if (!value) return null;
+    const d = parseThaiDate(value);
+    if (!d || isNaN(d.getTime())) return null;
+    return [
+        d.getFullYear(),
+        String(d.getMonth() + 1).padStart(2, '0'),
+        String(d.getDate()).padStart(2, '0')
+    ].join('-');
+}
 
+// แปลง YYYY-MM-DD → DD/MM/YYYY สำหรับแสดงในฟอร์ม
+function isoToDisplayDate(iso) {
+    if (!iso || !iso.includes('-')) return iso;
+    const [y, m, d] = iso.split('T')[0].split('-');
+    return `${d}/${m}/${y}`;
+}
+
+// แปลง พ.ศ. → ค.ศ. (idempotent: ถ้า year ≤ 2400 คือ ค.ศ. อยู่แล้ว ไม่ต้องลบ)
+function toCE(year) {
+    const y = parseInt(year);
+    return y > 2400 ? y - 543 : y;
+}
+// แปลง ค.ศ. → พ.ศ. (idempotent: ถ้า year > 2400 คือ พ.ศ. อยู่แล้ว ไม่ต้องบวก)
+function toBE(year) {
+    const y = parseInt(year);
+    return y <= 2400 ? y + 543 : y;
+}
+
+window.parseThaiDate = parseThaiDate;
+window.birthdateToISO = birthdateToISO;
+window.isoToDisplayDate = isoToDisplayDate;
+window.toCE = toCE;
+window.toBE = toBE;
+
+
+        function updateRealtimeClock() {
+            const now = new Date();
+            
+            const days = ['วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'];
+            const months = [
+                'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+            ];
+            const julsakName =['สัมฤทธิศก','เอกศก','โทศก','ตรีศก','จัตวาศก','เบญจศก ','ฉศก','สัปตศก','อัฐศก ','นพศก'];
+            
+            const dayName = days[now.getDay()];
+            const day = now.getDate();
+            const monthName = months[now.getMonth()];
+            const yearBE = now.getFullYear() + 543;
+            const julsak = yearBE - 1181;
+            const julsakIndex = julsak % 10;
+            const julsakNameValue = julsakName[julsakIndex];
+            const chistsak = now.getFullYear();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            let timeString = `${dayName}ที่ ${day} ${monthName} พ.ศ. ${yearBE}  ค.ศ. ${chistsak} ${julsakNameValue} จ.ศ. ${julsak}`;
+            if (typeof getThaiLunar === 'function') {
+                const lunar = getThaiLunar(now);
+                if (lunar && lunar.fullString) {
+                    timeString += ` (${lunar.fullString})`;
+                }
+            }
+            timeString += ` เวลา ${hours}:${minutes}:${seconds} น.`;
+            
+            const clockEl = document.getElementById('realtimeClockDisplay');
+            if (clockEl) {
+                clockEl.textContent = timeString;
+            }
+        }
+        
+        // อัปเดตทันทีและตั้งเวลาให้ทำงานทุกๆ 1 วินาที
+        updateRealtimeClock();
+        setInterval(updateRealtimeClock, 1000);

@@ -26,7 +26,7 @@
         <div class="space-y-6">
             <!-- ส่วนเลือกสมาชิก -->
             <div class="mb-4">
-                <label class="text-xs text-slate-500 ml-2">ดึงข้อมูลจากทะเบียนสมาชิก</label>
+                <label class="text-xs text-slate-500 ml-2" for="member-select">ดึงข้อมูลจากทะเบียนสมาชิก</label>
                 <select id="member-select" onchange="loadMemberData()" class="w-full bg-slate-800/50 border border-yellow-500/20 rounded-2xl py-3 px-4 focus:border-yellow-500 outline-none transition text-yellow-400">
                     <option value="">-- เลือกรายชื่อสมาชิก --</option>
                 </select>
@@ -34,7 +34,7 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="text-xs text-slate-500 ml-2">วันเกิด (จ.-อา.)</label>
+                    <label class="text-xs text-slate-500 ml-2" for="in-day">วันเกิด (จ.-อา.)</label>
                     <select id="in-day" class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-3 px-4 focus:border-yellow-500 outline-none transition text-white">
                         <option value="1">อาทิตย์</option><option value="2">จันทร์</option>
                         <option value="3">อังคาร</option><option value="4">พุธ</option>
@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs text-slate-500 ml-2">ปีนักษัตร</label>
+                    <label class="text-xs text-slate-500 ml-2" for="in-year">ปีนักษัตร</label>
                     <select id="in-year" class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-3 px-4 focus:border-yellow-500 outline-none transition text-white">
                         <option value="1">ชวด/มะแม</option><option value="2">ฉลู/วอก</option>
                         <option value="3">ขาล/ระกา</option><option value="4">เถาะ/จอ</option>
@@ -80,6 +80,7 @@
     </div>
 
     <script src="horo-database.js"></script>
+    <script src="utils-helpers.js"></script>
     <script>
         // โหลดรายชื่อสมาชิกเมื่อเปิดหน้า
         window.addEventListener('load', () => {
@@ -102,16 +103,9 @@
             
             // 1. จัดการวันเกิด (1-7)
             if (member.birthdate) {
-                // แปลง dd/mm/yyyy เป็น Date object
-                const parts = member.birthdate.split('/');
-                if (parts.length === 3) {
-                    let day = parseInt(parts[0]);
-                    let month = parseInt(parts[1]) - 1;
-                    let year = parseInt(parts[2]);
-                    if (year > 2400) year -= 543;
-                    
-                    const dateObj = new Date(year, month, day);
-                    const dayOfWeek = dateObj.getDay(); // 0 = Sun, 1 = Mon...
+                const parsedDate = parseBirthdate(member.birthdate);
+                if (parsedDate) {
+                    const dayOfWeek = parsedDate.dateObj.getDay(); // 0 = Sun, 1 = Mon...
                     const finalDay = dayOfWeek === 0 ? 1 : dayOfWeek + 1; // ปรับให้ 1 = Sun, 2 = Mon...
                     document.getElementById('in-day').value = finalDay;
                 }

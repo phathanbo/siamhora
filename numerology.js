@@ -71,7 +71,7 @@ function analyzeNumber() {
     const resultDiv = document.getElementById('numResult');
 
     if (!inputField || !resultDiv || !inputField.value) {
-        alert('⚠️ กรุณากรอกหมายเลข');
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกหมายเลข', 'warning');
         return;
     }
 
@@ -104,7 +104,7 @@ function analyzeNumber() {
     const elementData = ThaiAstrologyData?.ELEMENTS_DATA?.[elementNum - 1];
 
     if (!planet) {
-        alert('❌ ไม่สามารถโหลดข้อมูลดาว 9 ดวง');
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถโหลดข้อมูลดาว 9 ดวง', 'error');
         return;
     }
 
@@ -173,16 +173,28 @@ function analyzeNumber() {
  * 🔤 แปลงตัวอักษรไทยเป็นตัวเลข
  */
 function getThaiBycodeValue(char) {
+    // อ้างอิงตามตารางเลขศาสตร์ไทย (คชาปกรณ์มาตรฐาน) แบบเดียวกับ nameAnalysis.js
     const thaiMap = {
-        "ก":1,"ข":1,"ค":1,"ฆ":1,"ง":1,
-        "จ":2,"ฉ":2,"ช":2,"ซ":2,"ฌ":2,
-        "ญ":3,"ฎ":3,"ฏ":3,"ฐ":3,"ฑ":3,"ฒ":3,"ณ":3,
-        "ด":4,"ต":4,"ถ":4,"ท":4,"ธ":4,"น":4,
-        "บ":5,"ป":5,"ผ":5,"ฝ":5,"พ":5,"ฟ":5,"ภ":5,"ม":5,
-        "ย":6,"ร":6,"ล":6,"ว":6,
-        "ศ":7,"ษ":7,"ส":7,"ห":7,"ฬ":7,"ฮ":7
+        // ค่าตัวเลข 1
+        'ก': 1, 'ด': 1, 'ถ': 1, 'ท': 1, 'ภ': 1, 'ส': 1,
+        // ค่าตัวเลข 2
+        'ข': 2, 'ช': 2, 'ง': 2, 'บ': 2, 'ป': 2,
+        // ค่าตัวเลข 3
+        'ฆ': 3, 'ต': 3, 'ฑ': 3, 'ฒ': 3,
+        // ค่าตัวเลข 4
+        'ค': 4, 'ธ': 4, 'ญ': 4, 'ร': 4,
+        // ค่าตัวเลข 5
+        'ฉ': 5, 'ฌ': 5, 'ฎ': 5, 'น': 5, 'ม': 5, 'ห': 5, 'ฮ': 5,
+        // ค่าตัวเลข 6
+        'จ': 6, 'ล': 6, 'ว': 6,
+        // ค่าตัวเลข 7
+        'ซ': 7, 'ศ': 7, 'ษ': 7,
+        // ค่าตัวเลข 8
+        'ย': 8, 'ผ': 8, 'ฝ': 8, 'พ': 8, 'ฟ': 8,
+        // ค่าตัวเลข 9
+        'ฏ': 9, 'ฐ': 9, 'อ': 9
     };
-    return thaiMap[char] || 1;
+    return thaiMap[char] || 0;
 }
 
 /**
@@ -243,5 +255,4 @@ function validateInput(input) {
 
 document.addEventListener("DOMContentLoaded", () => {
     Numbertable();
-    console.log("✅ numerology.js loaded - อิงลัคนา + ดาว 9 ดวง + ธาตุ 5 (authentic Thai astrology)");
 });

@@ -137,7 +137,7 @@ function calculatePirun() {
     const resultEl = document.getElementById('pirunResult');
 
     if (!birthDateEl.value) {
-        alert('⚠️ กรุณากรอกวันเกิด');
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกวันเกิด', 'warning');
         return;
     }
 
@@ -206,7 +206,6 @@ function calculatePirun() {
 
 document.addEventListener("DOMContentLoaded", () => {
     showClimate();
-    console.log("✅ Climate.js loaded - อิงพิรุณศาสตร์ (authentic Thai astrology)");
 });
 
 window.calculatePirun = calculatePirun;

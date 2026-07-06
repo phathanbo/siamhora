@@ -171,7 +171,7 @@ function analyzeWealth() {
     const resultEl = document.getElementById('wealthResult');
 
     if (!birthDateEl.value || !birthYearEl.value) {
-        alert('⚠️ กรุณากรอกวันเกิดและปีเกิด');
+        Swal.fire('แจ้งเตือน', 'กรุณากรอกวันเกิดและปีเกิด', 'warning');
         return;
     }
 
@@ -263,7 +263,6 @@ function analyzeWealth() {
 
 document.addEventListener("DOMContentLoaded", () => {
     showWealthDataPage();
-    console.log("✅ fortuneWealthData.js loaded - อิงลัคนา + ธาตุ 5 (authentic Thai astrology)");
 });
 
 window.analyzeWealth = analyzeWealth;
